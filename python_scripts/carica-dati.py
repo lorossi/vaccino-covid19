@@ -30,7 +30,7 @@ def main():
     # load timestamp that will be put inside the output
     now = datetime.now()
     data["script_timestamp"] = now.isoformat()
-    data["last_updated"] = now.strftime("%Y-%m-%d %H:%M")
+    data["last_updated"] = now.strftime("%Y-%m-%d ore %H:%M")
     # current working directory
     cwd = os.getcwd() + "/"
 
@@ -137,12 +137,12 @@ def main():
         if last_data is not None:
             for category in last_data["categorie"]:
                 if category["nome_categoria"] == category_name:
-                    variation = total_number - category["totale"]
+                    variation = total_number - category["totale_vaccinati"]
                     # init the dict with all the new data
                     new_data = {
                         "nome_categoria": category_name,
                         "totale_vaccinati": total_number,
-                        "variazione": variation
+                        "nuovi_vaccinati": variation
                     }
                     break
         else:
@@ -166,7 +166,7 @@ def main():
     if last_data is not None:
         # calculate variation
         variation = women - last_data["sesso"]["donne"]
-        data["sesso"]["variazione_donne"] = variation
+        data["sesso"]["nuovi_vaccinati_donne"] = variation
 
     # now load men
     logging.info("Requesting data about men")
@@ -179,7 +179,7 @@ def main():
     if last_data is not None:
         # calculate variation
         variation = men - last_data["sesso"]["uomini"]
-        data["sesso"]["variazione_uomini"] = variation
+        data["sesso"]["nuovi_vaccinati_uomini"] = variation
 
     # now load age ranges
     logging.info("Requesting data about categories")
@@ -194,12 +194,12 @@ def main():
         if last_data is not None:
             for age in last_data["fasce_eta"]:
                 if age["nome_categoria"] == category_name:
-                    variation = total_number - age["totale"]
+                    variation = total_number - age["totale_vaccinati"]
                     # init the dict with all the new data
                     new_data = {
                         "nome_categoria": category_name,
                         "totale_vaccinati": total_number,
-                        "variazione": variation
+                        "nuovi_vaccinati": variation
                     }
                     break
         else:
