@@ -154,7 +154,7 @@ let vaccini = {
             "percentuale_popolazione_vaccinata": 0.31667854833628994
         }
     ],
-    "script_timestamp": "2021-01-05T19:14:43.832975",
-    "last_updated": "2021-01-05 19:14",
+    "script_timestamp": "2021-01-05T19:15:52.175425",
+    "last_updated": "2021-01-05 19:15",
     "last_data_update": "2021-01-05T17:55:49.453Z"
 };
