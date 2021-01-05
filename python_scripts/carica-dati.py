@@ -4,6 +4,7 @@ from datetime import datetime
 import logging
 from git import Repo
 from pathlib import Path
+import os
 
 
 def main():
@@ -22,7 +23,7 @@ def main():
     data["last_updated"] = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     # current working directory
-    cwd = "/".join(__file__.replace("\\", "/").split("/")[:-1]) + "/"
+    cwd = os.getcwd() + "/"
 
     logging.info("Loading settings")
 
@@ -142,6 +143,7 @@ def main():
     repo.git.add([cwd + output_path + json_filename, cwd + output_path + js_filename, cwd + assets_path + js_filename])
     repo.index.commit("Updated data")
     origin = repo.remote(name='origin')
+    origin.pull()
     origin.push()
     logging.info("Pushed to GitHub")
 
