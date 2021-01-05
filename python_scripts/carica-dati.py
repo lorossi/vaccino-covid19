@@ -17,7 +17,15 @@ def main():
     # italian population to calculate percentage
     italian_population = 60317000
     # initialize dictionaries
-    data = {"territori": []}
+    data = {
+        "territori": [],
+        "categorie": [],
+        "sesso": {
+            "uomini": 0,
+            "donne": 0
+            },
+        "fasce_eta": []
+        }
     italia = {"nome_territorio": "Italia"}
     # load timestamp that will be put inside the output
     now = datetime.now()
@@ -40,15 +48,11 @@ def main():
     with open("settings/codici_regione.json", "r") as f:
         territories_codes = json.load(f)
 
-    logging.info("Requesting data")
-    response = requests.post(payload["url"], headers=headers, data=payload["totale_vaccini"]).text
-    json_response = json.loads(response)
-    logging.info("Data requested")
-
     logging.info("Loading old data")
+    last_data = None
     try:
         # try to load old data to make a comparision
-        with open(json_filename, "r") as f:
+        with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
             # sort old data so the newest one is the first
             old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=False)
@@ -56,8 +60,6 @@ def main():
             today = datetime.now().day
             # now start iterating until we find data from yesterday (if any)
             for x in range(len(old_data)):
-
-                print(old_data[x]["script_timestamp"])
                 if datetime.fromisoformat(old_data[x]["script_timestamp"]).day != today:
                     # found the old data
                     last_data = old_data[x]
@@ -65,11 +67,14 @@ def main():
 
     except Exception as e:
         # no old previuos file has been found
-        last_data = None
         logging.info("No previous record. Unable to calculate variation. "
                      f"Error: {e}")
 
-    logging.info("Scraping data")
+    logging.info("Requesting data about terriories")
+    response = requests.post(payload["url"], headers=headers, data=payload["totale_vaccini"]).text
+    json_response = json.loads(response)
+
+    logging.info("Scraping territories")
     # load data from the response
     data["last_data_update"] = json_response["results"][0]["result"]["data"]["timestamp"]
     # iterate over each territory
@@ -108,8 +113,7 @@ def main():
 
         # finally append data to the dict
         data["territori"].append(new_data)
-
-        # update totla number of doses and vaccinated people
+        # update total number of doses and vaccinated people
         if "totale_dosi_consegnate" not in italia:
             italia["totale_dosi_consegnate"] = territory["C"][3]
             italia["totale_vaccinati"] = territory["C"][1]
@@ -119,6 +123,94 @@ def main():
 
     # calculate the percentage of vaccinated people
     italia["percentuale_popolazione_vaccinata"] = italia["totale_vaccinati"] / italian_population * 100
+
+    # now load categories
+    logging.info("Requesting data about categories")
+    response = requests.post(payload["url"], headers=headers, data=payload["categorie"]).text
+    json_response = json.loads(response)
+
+    for category in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+        category_name = category["C"][0][4:]
+        total_number = category["C"][1]
+
+        # iterate over last data to find the variation
+        if last_data is not None:
+            for category in last_data["categorie"]:
+                if category["nome_categoria"] == category_name:
+                    variation = total_number - category["totale"]
+                    # init the dict with all the new data
+                    new_data = {
+                        "nome_categoria": category_name,
+                        "totale": total_number,
+                        "variazione": variation
+                    }
+                    break
+        else:
+            # no old data found, cannot compare
+            new_data = {
+                "nome_categoria": category_name,
+                "totale": total_number,
+            }
+
+        # finally append data to the dict
+        data["categorie"].append(new_data)
+
+    # now load women
+    logging.info("Requesting data about women")
+    response = requests.post(payload["url"], headers=headers, data=payload["donne"]).text
+    json_response = json.loads(response)
+
+    women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
+    data["sesso"]["donne"] = women
+
+    if last_data is not None:
+        # calculate variation
+        variation = women - last_data["sesso"]["donne"]
+        data["sesso"]["variazione_donne"] = variation
+
+    # now load men
+    logging.info("Requesting data about men")
+    response = requests.post(payload["url"], headers=headers, data=payload["uomini"]).text
+    json_response = json.loads(response)
+
+    men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
+    data["sesso"]["uomini"] = men
+
+    if last_data is not None:
+        # calculate variation
+        variation = men - last_data["sesso"]["uomini"]
+        data["sesso"]["variazione_uomini"] = variation
+
+    # now load age ranges
+    logging.info("Requesting data about categories")
+    response = requests.post(payload["url"], headers=headers, data=payload["eta"]).text
+    json_response = json.loads(response)
+
+    for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+        category_name = age_range["C"][0]
+        total_number = age_range["C"][1]
+
+        # iterate over last data to find the variation
+        if last_data is not None:
+            for age in last_data["fasce_eta"]:
+                if age["nome_categoria"] == category_name:
+                    variation = total_number - age["totale"]
+                    # init the dict with all the new data
+                    new_data = {
+                        "nome_categoria": category_name,
+                        "totale": total_number,
+                        "variazione": variation
+                    }
+                    break
+        else:
+            # no old data found, cannot compare
+            new_data = {
+                "nome_categoria": category_name,
+                "totale": total_number,
+            }
+
+        # finally append data to the dict
+        data["fasce_eta"].append(new_data)
 
     # now look for old data about italy as whole
     last_italy = None
@@ -173,6 +265,7 @@ def main():
         f.write(js_string)
 
     # now push all to to github
+    """
     logging.info("Pushing to GitHub")
     subprocess.run("git pull".split(" "))
     subprocess.run(["git", "add", cwd + output_path + json_filename])
@@ -182,6 +275,7 @@ def main():
     subprocess.run(["git", "commit", "-m", "updated data"])
     subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
+    """
 
 
 if __name__ == "__main__":
