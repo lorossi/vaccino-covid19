@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 import logging
 from git import Repo
+from pathlib import Path
+
 
 def main():
     json_filename = "vaccini.json"
@@ -100,6 +102,10 @@ def main():
 
     data["territori"].append(italia)
     logging.info("Data scraped")
+
+    logging.info("Creating folders")
+    Path(output_path).mkdir(parents=True, exist_ok=True)
+    Path(assets_path).mkdir(parents=True, exist_ok=True)
 
     logging.info("Saving to file")
     try:
