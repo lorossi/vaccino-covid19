@@ -92,6 +92,15 @@ table.territori th {
   margin-left: calc(var(--text-size) / 3);
 }
 
+.credits {
+  font-size: var(--text-size);
+  margin-top: 10vh;
+  margin-bottom: var(--text-size);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 @media only screen and (min-width: 480px) {
   .title {
     margin-top: calc(1 *  var(--title-size));
