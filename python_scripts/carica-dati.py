@@ -13,8 +13,6 @@ def main():
     output_path = "output/"
     assets_path = "../docs/assets/"
 
-    git_path = "../.git"
-
     popolazione_italia = 60317000
     data = {"territori": []}
     italia = {"nome_territorio": "Italia"}
@@ -31,13 +29,15 @@ def main():
         headers = json.load(f)
 
     with open("settings/payloads.json", "r") as f:
-        payload = json.load(f)["totale_vaccini"]
+        payload = json.load(f)
 
     with open("settings/codici_regione.json", "r") as f:
         codici = json.load(f)
 
     logging.info("Requesting data")
-    response = requests.post('https://wabi-europe-north-b-api.analysis.windows.net/public/reports/querydata?synchronous=true', headers=headers, data=payload).text
+    response = requests.post(payload["url"], headers=headers,
+                             data=payload["totale_vaccini"]).text
+
     json_response = json.loads(response)
     logging.info("Data requested")
 
@@ -46,8 +46,13 @@ def main():
         print(json_filename)
         with open(json_filename, "r") as f:
             old_data = json.load(f)
-            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
-            last_data = old_data[-1]
+            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=False)
+            today = datetime.now().day
+            for x in range(len(old_data)):
+                old_timestamp = datetime.fromisoformat(old_data[x]['script_timestamp'])
+                if today != old_timestamp.day:
+                    last_data = old_data[x]
+
     except Exception as e:
         last_data = None
         logging.info(f"No previous record. Unable to calculate variation. Error: {e}")
@@ -139,12 +144,6 @@ def main():
         f.write(js_string)
 
     logging.info("Pushing to GitHub")
-    """repo = Repo(git_path)
-    repo.git.add([cwd + output_path + json_filename, cwd + output_path + js_filename, cwd + assets_path + js_filename])
-    repo.index.commit("Updated data")
-    origin = repo.remote(name='origin')
-    origin.pull()
-    origin.push()"""
     subprocess.run("git pull".split(" "))
     subprocess.run(["git", "add", cwd + output_path + json_filename])
     subprocess.run(["git", "add", cwd + output_path + js_filename])
@@ -153,6 +152,7 @@ def main():
     subprocess.run(["git", "commit", "-m", "\"updated data\""])
     subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
+
 
 if __name__ == "__main__":
     logfile = "logging.log"
