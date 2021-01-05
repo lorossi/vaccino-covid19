@@ -7,7 +7,7 @@ import logging
 def main():
     json_filename = "output/vaccini.json"
     js_filename = "output/vaccini.js"
-    js_path = "../public_html/assets/vaccini.js"
+    js_path = "../docs/assets/vaccini.js"
 
     popolazione_italia = 60317000
     data = {"territori": []}
