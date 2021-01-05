@@ -42,16 +42,7 @@ const load_table = (order, reverse) => {
   $(".territori tbody").html("");
 
   vaccini.territori.forEach((t, i) => {
-    let nome_territorio;
     if (t.nome_territorio != "Italia") {
-      if (t.codice_territorio == 06) {
-        nome_territorio = "E. R.";
-      } else if (t.codice_territorio == 07) {
-        nome_territorio = "F. V. G.";
-      } else {
-        nome_territorio = t.nome_territorio;
-      }
-
       let nuovi_vaccinati;
       if (t.nuovi_vaccinati == undefined) {
         nuovi_vaccinati = 0;
@@ -66,7 +57,7 @@ const load_table = (order, reverse) => {
       }
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td>${nome_territorio}</td>`;
+      new_tr += `<td>${t.nome_territorio}</td>`;
       new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}  (+${nuove_dosi})</td>`;
       new_tr += "</tr>";
