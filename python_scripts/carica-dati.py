@@ -5,9 +5,11 @@ import logging
 from git import Repo
 
 def main():
-    json_filename = "output/vaccini.json"
-    js_filename = "output/vaccini.js"
-    js_path = "../docs/assets/vaccini.js"
+    json_filename = "vaccini.json"
+    js_filename = "vaccini.js"
+    output_path = "output/"
+    assets_path = "../docs/assets/"
+
     git_path = "../.git"
 
     popolazione_italia = 60317000
@@ -18,7 +20,7 @@ def main():
     data["last_updated"] = datetime.now().strftime("%Y-%m-%d %H:%M")
 
     # current working directory
-    cwd = "/".join(__file__.replace("\\", "/").split("/")[:-1])
+    cwd = "/".join(__file__.replace("\\", "/").split("/")[:-1]) + "/"
 
     logging.info("Loading settings")
 
@@ -44,6 +46,7 @@ def main():
             old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
             last_data = old_data[-1]
     except Exception as e:
+        last_data = None
         logging.info(f"No previous record. Unable to calculate variation. Error: {e}")
 
     logging.info("Scraping data")
@@ -65,12 +68,13 @@ def main():
             "percentuale_popolazione_vaccinata": territorio["C"][2]
         }
 
-        for old_territorio in last_data["territori"]:
-            if old_territorio["nome_territorio"] == new_data["nome_territorio"]:
-                last_territorio = territorio["C"]
+        last_territorio = None
+        if last_data is not None:
+            for old_territorio in last_data["territori"]:
+                if old_territorio["nome_territorio"] == new_data["nome_territorio"]:
+                    last_territorio = territorio["C"]
 
-
-        if last_territorio:
+        if last_territorio is not None:
             new_data["nuove_dosi_consegnate"] = new_data["totale_dosi_consegnate"] - last_territorio[3]
             new_data["nuovi_vaccinati"] = new_data["totale_vaccinati"] - last_territorio[1]
         data["territori"].append(new_data)
@@ -84,11 +88,13 @@ def main():
 
     italia["percentuale_popolazione_vaccinata"] = italia["totale_vaccinati"] / popolazione_italia * 100
 
-    for territorio in last_data["territori"]:
-        if territorio["nome_territorio"] == "Italia":
-            last_italia = territorio
+    last_italia = None
+    if last_data is not None:
+        for territorio in last_data["territori"]:
+            if territorio["nome_territorio"] == "Italia":
+                last_italia = territorio
 
-    if last_italia:
+    if last_italia is not None:
         italia["nuove_dosi_consegnate"] = italia["totale_dosi_consegnate"] - last_italia["totale_dosi_consegnate"]
         italia["nuovi_vaccinati"] = italia["totale_vaccinati"] - last_italia["totale_vaccinati"]
 
@@ -97,7 +103,7 @@ def main():
 
     logging.info("Saving to file")
     try:
-        with open(json_filename, "r") as f:
+        with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
             old_data.append(data)
             old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
@@ -106,19 +112,19 @@ def main():
         logging.error("Creating new file.")
         old_data = [data]
 
-    with open(json_filename, "w") as f:
+    with open(output_path + json_filename, "w") as f:
         json.dump(old_data, f, indent=3)
-    logging.info(f"Json file saved. Path: {cwd}/{json_filename}")
+    logging.info(f"Json file saved. Path: {cwd}{json_filename}")
 
-    with open(js_filename, "w") as f:
+    with open(output_path + js_filename, "w") as f:
         js_string = "let vaccini = "
         # convert dict to json (will be read by js)
         js_string += json.dumps(data, indent=4)
         js_string += ";"
         f.write(js_string)
-    logging.info(f"JS file saved. Path: {cwd}/{js_filename}")
+    logging.info(f"JS file saved. Path: {cwd}{js_filename}")
 
-    with open(js_path, "w") as f:
+    with open(assets_path + js_filename, "w") as f:
         js_string = "let vaccini = "
         # convert dict to json (will be read by js)
         js_string += json.dumps(data, indent=4)
@@ -127,8 +133,8 @@ def main():
 
     logging.info("Pushing to GitHub")
     repo = Repo(git_path)
-    repo.git.add(js_path)
-    repo.index.commit("Updated vaccini.js")
+    repo.git.add([cwd + output_path + json_filename, cwd + output_path + js_filename, cwd + assets_path + js_filename])
+    repo.index.commit("Updated data")
     origin = repo.remote(name='origin')
     origin.push()
     logging.info("Pushed to GitHub")
