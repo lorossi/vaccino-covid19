@@ -2,12 +2,13 @@ import requests
 import json
 from datetime import datetime
 import logging
-
+from git import Repo
 
 def main():
     json_filename = "output/vaccini.json"
     js_filename = "output/vaccini.js"
     js_path = "../docs/assets/vaccini.js"
+    git_path = "../.git"
 
     popolazione_italia = 60317000
     data = {"territori": []}
@@ -124,6 +125,13 @@ def main():
         js_string += ";"
         f.write(js_string)
 
+    logging.info("Pushing to GitHub")
+    repo = Repo(git_path)
+    repo.git.add(js_path)
+    repo.index.commit("Updated vaccini.js")
+    origin = repo.remote(name='origin')
+    origin.push()
+    logging.info("Pushed to GitHub")
 
 if __name__ == "__main__":
     logfile = "logging.log"
