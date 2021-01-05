@@ -2,9 +2,9 @@ import requests
 import json
 from datetime import datetime
 import logging
-from git import Repo
 from pathlib import Path
 import os
+import subprocess
 
 
 def main():
@@ -139,12 +139,19 @@ def main():
         f.write(js_string)
 
     logging.info("Pushing to GitHub")
-    repo = Repo(git_path)
+    """repo = Repo(git_path)
     repo.git.add([cwd + output_path + json_filename, cwd + output_path + js_filename, cwd + assets_path + js_filename])
     repo.index.commit("Updated data")
     origin = repo.remote(name='origin')
     origin.pull()
-    origin.push()
+    origin.push()"""
+    subprocess.run("git pull".split(" "))
+    subprocess.run(["git", "add", cwd + output_path + json_filename])
+    subprocess.run(["git", "add", cwd + output_path + js_filename])
+    subprocess.run(["git", "add", cwd + assets_path + js_filename])
+    subprocess.run(["git", "pull"])
+    subprocess.run(["git", "commit", "-m", "\"updated data\""])
+    subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
 
 if __name__ == "__main__":
