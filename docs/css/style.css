@@ -36,6 +36,10 @@ body {
   display: inline;
 }
 
+.info {
+  font-style: italic;
+}
+
 .subtitle {
   margin-top: calc(1.5 * var(--big-text-size));
   font-size: var(--big-text-size);
