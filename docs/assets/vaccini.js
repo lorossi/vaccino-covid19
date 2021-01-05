@@ -154,7 +154,72 @@ let vaccini = {
             "percentuale_popolazione_vaccinata": 0.31667854833628994
         }
     ],
-    "script_timestamp": "2021-01-05T23:20:52.637959",
-    "last_updated": "2021-01-05 23:20",
-    "last_data_update": "2021-01-05T21:55:10.813Z"
+    "categorie": [
+        {
+            "id_categoria": 1,
+            "nome_categoria": "Operatori Sanitari e Sociosanitari",
+            "totale_vaccinati": 222636
+        },
+        {
+            "id_categoria": 2,
+            "nome_categoria": "Personale non Sanitario",
+            "totale_vaccinati": 22271
+        },
+        {
+            "id_categoria": 3,
+            "nome_categoria": "Ospiti Strutture Residenziali",
+            "totale_vaccinati": 14130
+        }
+    ],
+    "sesso": [
+        {
+            "nome_categoria": "donne",
+            "totale_vaccinati": 115622
+        },
+        {
+            "nome_categoria": "uomini",
+            "totale_vaccinati": 101571
+        }
+    ],
+    "fasce_eta": [
+        {
+            "nome_categoria": "16-19",
+            "totale_vaccinati": 279
+        },
+        {
+            "nome_categoria": "20-29",
+            "totale_vaccinati": 25806
+        },
+        {
+            "nome_categoria": "30-39",
+            "totale_vaccinati": 45232
+        },
+        {
+            "nome_categoria": "40-49",
+            "totale_vaccinati": 58332
+        },
+        {
+            "nome_categoria": "50-59",
+            "totale_vaccinati": 74674
+        },
+        {
+            "nome_categoria": "60-69",
+            "totale_vaccinati": 40294
+        },
+        {
+            "nome_categoria": "70-79",
+            "totale_vaccinati": 4125
+        },
+        {
+            "nome_categoria": "80-89",
+            "totale_vaccinati": 5774
+        },
+        {
+            "nome_categoria": "90+",
+            "totale_vaccinati": 4521
+        }
+    ],
+    "script_timestamp": "2021-01-05T22:00:00.803547",
+    "last_updated": "2021-01-05 ore 22:00",
+    "last_data_update": "2021-01-21:01:01.034Z"
 };

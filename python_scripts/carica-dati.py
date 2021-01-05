@@ -20,10 +20,7 @@ def main():
     data = {
         "territori": [],
         "categorie": [],
-        "sesso": {
-            "uomini": 0,
-            "donne": 0
-            },
+        "sesso": [],
         "fasce_eta": []
         }
     italia = {"nome_territorio": "Italia"}
@@ -130,6 +127,7 @@ def main():
     json_response = json.loads(response)
 
     for category in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+        category_id = int(category["C"][0][0])
         category_name = category["C"][0][4:]
         total_number = category["C"][1]
 
@@ -140,6 +138,7 @@ def main():
                     variation = total_number - category["totale_vaccinati"]
                     # init the dict with all the new data
                     new_data = {
+                        "id_categoria": category_id,
                         "nome_categoria": category_name,
                         "totale_vaccinati": total_number,
                         "nuovi_vaccinati": variation
@@ -148,6 +147,7 @@ def main():
         else:
             # no old data found, cannot compare
             new_data = {
+                "id_categoria": category_id,
                 "nome_categoria": category_name,
                 "totale_vaccinati": total_number,
             }
@@ -161,12 +161,21 @@ def main():
     json_response = json.loads(response)
 
     women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
-    data["sesso"]["donne"] = women
+
+    new_dict = {
+        "nome_categoria": "donne",
+        "totale_vaccinati": women
+    }
 
     if last_data is not None:
-        # calculate variation
-        variation = women - last_data["sesso"]["donne"]
-        data["sesso"]["nuovi_vaccinati_donne"] = variation
+        for gender in last_data["sesso"]:
+            if gender["nome_categoria"] == "donne":
+                # calculate variation
+                variation = women - gender["totale_vaccinati"]
+                new_dict["nuovi_vaccinati"] = variation
+
+    # finally append to data
+    data["sesso"].append(new_dict)
 
     # now load men
     logging.info("Requesting data about men")
@@ -174,12 +183,20 @@ def main():
     json_response = json.loads(response)
 
     men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
-    data["sesso"]["uomini"] = men
+    new_dict = {
+        "nome_categoria": "uomini",
+        "totale_vaccinati": men
+    }
 
     if last_data is not None:
-        # calculate variation
-        variation = men - last_data["sesso"]["uomini"]
-        data["sesso"]["nuovi_vaccinati_uomini"] = variation
+        for gender in last_data["sesso"]:
+            if gender["nome_categoria"] == "uomini":
+                # calculate variation
+                variation = men - gender["totale_vaccinati"]
+                new_dict["nuovi_vaccinati"] = variation
+
+    # finally append to data
+    data["sesso"].append(new_dict)
 
     # now load age ranges
     logging.info("Requesting data about categories")
