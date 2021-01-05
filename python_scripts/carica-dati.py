@@ -141,7 +141,7 @@ def main():
                     # init the dict with all the new data
                     new_data = {
                         "nome_categoria": category_name,
-                        "totale": total_number,
+                        "totale_vaccinati": total_number,
                         "variazione": variation
                     }
                     break
@@ -149,7 +149,7 @@ def main():
             # no old data found, cannot compare
             new_data = {
                 "nome_categoria": category_name,
-                "totale": total_number,
+                "totale_vaccinati": total_number,
             }
 
         # finally append data to the dict
@@ -198,7 +198,7 @@ def main():
                     # init the dict with all the new data
                     new_data = {
                         "nome_categoria": category_name,
-                        "totale": total_number,
+                        "totale_vaccinati": total_number,
                         "variazione": variation
                     }
                     break
@@ -206,7 +206,7 @@ def main():
             # no old data found, cannot compare
             new_data = {
                 "nome_categoria": category_name,
-                "totale": total_number,
+                "totale_vaccinati": total_number,
             }
 
         # finally append data to the dict
@@ -265,7 +265,6 @@ def main():
         f.write(js_string)
 
     # now push all to to github
-    """
     logging.info("Pushing to GitHub")
     subprocess.run("git pull".split(" "))
     subprocess.run(["git", "add", cwd + output_path + json_filename])
@@ -275,7 +274,6 @@ def main():
     subprocess.run(["git", "commit", "-m", "updated data"])
     subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
-    """
 
 
 if __name__ == "__main__":
