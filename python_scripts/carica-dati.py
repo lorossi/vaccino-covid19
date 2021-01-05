@@ -143,7 +143,6 @@ def main():
         js_string += ";"
         f.write(js_string)
 
-    return
     logging.info("Pushing to GitHub")
     subprocess.run("git pull".split(" "))
     subprocess.run(["git", "add", cwd + output_path + json_filename])
