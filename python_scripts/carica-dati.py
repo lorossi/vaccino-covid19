@@ -14,7 +14,7 @@ def main():
     js_filename = "vaccini.js"
     # file paths
     output_path = "output/"
-    assets_path = "../docs/assets/"
+    assets_path = "../assets/"
     # italian population to calculate percentage
     italian_population = 60317000
     # initialize dictionaries
