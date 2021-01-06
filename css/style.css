@@ -198,6 +198,8 @@ table, .chartcontainer {
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 75vw;
+    max-width: 1150px;
   }
 
   table {
@@ -230,9 +232,7 @@ table, .chartcontainer {
   .italia .stats {
     width: 40%;
   }
-}
 
-@media only screen and (min-width: 480px)  and (max-width: 1350px) {
   .datacontainer {
     display: flex;
     flex-direction: column;

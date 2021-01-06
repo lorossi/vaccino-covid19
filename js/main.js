@@ -393,11 +393,6 @@ const load_genders_chart = () => {
           align: "end"
         },
         tooltips: {
-        },
-        title: {
-          display: true,
-          text: label,
-          fontSize: 24
         }
       }
   });
