@@ -277,7 +277,7 @@ let vaccini = {
             "nuovi_vaccinati": 64
         }
     ],
-    "script_timestamp": "2021-01-06T17:00:05.027673",
-    "last_updated": "2021-01-06 ore 17:00",
-    "last_data_update": "2021-01-06T15:27:21.738Z"
+    "script_timestamp": "2021-01-06T18:00:04.341835",
+    "last_updated": "2021-01-06 ore 18:00",
+    "last_data_update": "2021-01-06T16:27:11.944Z"
 };
