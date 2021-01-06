@@ -1,3 +1,3 @@
 # TODO LIST
 
-- Add charts
+- ~Add charts~ **DONE**
