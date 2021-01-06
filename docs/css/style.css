@@ -4,6 +4,7 @@ body, body * {
 }
 
 body {
+  overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
   background-color: #f8f9fa;
   color: #212529;
@@ -27,7 +28,7 @@ body {
 
 .title {
   font-size: var(--title-size);
-  width: 100%;
+  width: 100vw;
   text-align: center;
   margin-top: calc(0.25 *  var(--title-size));
   margin-bottom: calc(var(--title-size) / 4);
@@ -42,6 +43,10 @@ body {
 
 .update .stats {
   display: inline;
+}
+
+.stats p {
+  padding-top: var(--text-size);
 }
 
 .info {
