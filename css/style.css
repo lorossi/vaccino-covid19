@@ -73,7 +73,7 @@ body {
 
 .italia .stats {
   width: 40%;
-  min-height: 10vh;
+  min-height: 15vh;
   padding: calc(var(--big-text-size) / 2);
   margin-left: calc(var(--text-size) / 4);
   margin-right: calc(var(--text-size) / 4);
