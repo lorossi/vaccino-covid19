@@ -151,7 +151,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
         hoverBackgroundColor: hover_background_colors,
         hoverBorderColor: hover_background_colors
       }],
-    }
+    };
     old_chart.update();
   } else {
     // draw the new chart
@@ -172,7 +172,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
         },
         options: {
           responsive: true,
-          aspectRatio: 1,
+          aspectRatio: 1.1,
           legend: {
             align: "end"
           },
@@ -186,7 +186,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
             }],
             yAxes: [{
               ticks: {
-                fontSize: font_size * 1.5
+                fontSize: font_size
               }
             }]
           }
@@ -199,7 +199,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
 // load data about each category
 const load_categories = (order, reverse) => {
   if (order === 0) {
-    vaccini.categorie.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+    vaccini.categorie.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
   } else if (order === 1) {
     vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
   }
@@ -224,6 +224,90 @@ const load_categories = (order, reverse) => {
     new_tr += "</tr>";
     $("table#categorie tbody").append(new_tr);
   });
+};
+
+const load_categories_chart = (order, old_chart) => {
+  // chart variables
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+
+  // sort data and fill variables
+  if (order === 0) {
+    vaccini.categorie.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
+  } else if (order === 1) {
+    vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+  }
+
+  data = vaccini.categorie.map(x => x.totale_vaccinati);
+  background_colors = data.map(x => "#1e88e5");
+  border_colors = data.map(x => "#005cb2");
+  hover_background_colors = data.map(x => "#6ab7ff");
+  labels = vaccini.categorie.map(x => x.nome_categoria.split(" "));
+  label = "Totale vaccinati";
+
+  font_size = $(window).width() > 480 ? 14 : 10;
+  if (old_chart) {
+    // update the old chart
+    old_chart.data = {
+      labels: labels,
+      datasets: [{
+        data: data,
+        label: label,
+        backgroundColor: background_colors,
+        borderColor: border_colors,
+        borderWidth: 2,
+        hoverBackgroundColor: hover_background_colors,
+        hoverBorderColor: hover_background_colors
+      }],
+    };
+    old_chart.update();
+  } else {
+    // draw the new chart
+    let ctx = $("canvas#categorie")[0].getContext('2d');
+    chart = new Chart(ctx, {
+        type: "horizontalBar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
+          }],
+        },
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: font_size
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                fontSize: font_size
+              }
+            }]
+          }
+        }
+    });
+  }
+  return chart;
 };
 
 
@@ -258,6 +342,70 @@ const load_genders = (order, reverse) => {
 };
 
 
+const load_genders_chart = () => {
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+
+  data = vaccini.sesso.map(x => x.totale_vaccinati);
+  background_colors = vaccini.sesso.map(x => {
+    if (x.nome_categoria === "donne") return "#d81b60";
+    else return "#29b6f6";
+  });
+  border_colors = vaccini.sesso.map(x => {
+    if (x.nome_categoria === "donne") return "#b4004e";
+    else return "#0086c3";
+  });
+  hover_background_colors = vaccini.sesso.map(x => {
+    if (x.nome_categoria === "donne") return "#ff77a9";
+    else return "#80d6ff";
+  });
+  labels = vaccini.sesso.map(x => x.nome_categoria);
+  label = "Totale vaccinati";
+
+  font_size = $(window).width() > 480 ? 14 : 10;
+
+  // draw the new chart
+  let ctx = $("canvas#sesso")[0].getContext('2d');
+  chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
+        }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1,
+        legend: {
+          align: "end"
+        },
+        tooltips: {
+        },
+        title: {
+          display: true,
+          text: label,
+          fontSize: 24
+        }
+      }
+  });
+
+  return chart;
+
+};
+
+
 // load data about age ranges
 const load_age_ranges = (order, reverse) => {
   if (order === 0) {
@@ -289,6 +437,91 @@ const load_age_ranges = (order, reverse) => {
 };
 
 
+const load_age_ranges_chart = (order, old_chart) => {
+  // chart variables
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+
+  // sort data and fill variables
+  if (order === 0) {
+    vaccini.fasce_eta.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+  } else if (order === 1) {
+    vaccini.fasce_eta.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+  }
+
+  data = vaccini.fasce_eta.map(x => x.totale_vaccinati);
+  background_colors = data.map(x => "#1e88e5");
+  border_colors = data.map(x => "#005cb2");
+  hover_background_colors = data.map(x => "#6ab7ff");
+  labels = vaccini.fasce_eta.map(x => x.nome_categoria);
+  label = "Totale vaccinati";
+
+  font_size = $(window).width() > 480 ? 14 : 10;
+  if (old_chart) {
+    // update the old chart
+    old_chart.data = {
+      labels: labels,
+      datasets: [{
+        data: data,
+        label: label,
+        backgroundColor: background_colors,
+        borderColor: border_colors,
+        borderWidth: 2,
+        hoverBackgroundColor: hover_background_colors,
+        hoverBorderColor: hover_background_colors
+      }],
+    };
+    old_chart.update();
+  } else {
+    // draw the new chart
+    let ctx = $("canvas#fasce_eta")[0].getContext('2d');
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
+          }],
+        },
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: font_size
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                fontSize: font_size
+              }
+            }]
+          }
+        }
+    });
+  }
+  return chart;
+};
+
+
 // main function
 $(document).ready(() => {
   set_last_update();
@@ -299,6 +532,9 @@ $(document).ready(() => {
   load_age_ranges(0, false);
 
   let territories_chart = load_territories_chart(0, false);
+  let categories_chart = load_categories_chart(0);
+  let genders_chart = load_genders_chart(0);
+  let ages_ranges_chart = load_age_ranges_chart(0);
 
   // this function won't work with lambda
   $("table th").click(function() {
@@ -316,7 +552,7 @@ $(document).ready(() => {
     }
 
     // this is the id of the table we clicked on
-    let table_id = $(this).parents().find("table").attr("id");
+    let table_id = $(this).parent().parent().parent().attr("id");
     // once we know the class, we can update its data
     if (table_id === "territori") {
       load_territories(column, reverse);
@@ -330,24 +566,36 @@ $(document).ready(() => {
   });
 
   $(".chartcontainer input").click(function() {
-    let chart_id = $(this).parents().find("canvas").attr("id");
+    // id of the corresponding chart
+    let chart_id = $(this).parent().parent().parent().attr("id");
+
 
     if (chart_id === "territori") {
       let value, sort_by_name;
 
+      // all radios
       let radios = $(this).parents().find(".chartcontainer").find("input[type=\"radio\"]").toArray();
 
       radios.forEach((r, i) => {
         if ($(r).prop("checked")) {
+          // all checked radios
           if (i < 3) {
+            // if it's one of the first 3, then it's the value
             value = i;
           } else {
+            // otherwise it's the sorting order
             sort_by_name = i == 3 ? false : true;
           }
         }
       });
 
-      load_territories_chart(value, sort_by_name, territories_chart);
+      territories_chart = load_territories_chart(value, sort_by_name, territories_chart);
+    } else if (chart_id === "categorie") {
+      let value = parseInt($(this).val());
+      categories_chart = load_categories_chart(value, categories_chart);
+    } else if (chart_id === "fasce_eta") {
+      let value = parseInt($(this).val());
+      ages_ranges_chart = load_age_ranges_chart(value, ages_ranges_chart);
     }
   });
 });
