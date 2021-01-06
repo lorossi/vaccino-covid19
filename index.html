@@ -3,13 +3,10 @@
    <head>
       <meta name="description" content="Webpage description goes here"/>
       <meta charset="utf-8">
-
       <title>Vaccino Covid-19</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
       <meta name="author" content="Lorenzo Rossi">
-
       <link rel="apple-touch-icon" sizes="120x120" href="assets/favicon/apple-touch-icon.png">
       <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
       <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
@@ -19,16 +16,12 @@
       <meta name="msapplication-TileColor" content="#da532c">
       <meta name="msapplication-config" content="assets/favicon/browserconfig.xml">
       <meta name="theme-color" content="#ffffff">
-
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/vars.css">
-
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-
       <script src="assets/vaccini.js"></script>
       <script src="js/main.js"></script>
    </head>
@@ -36,18 +29,15 @@
       <div class="title">
          Vaccino Covid19 - Italia
       </div>
-
       <div class="update">
          Aggiornato al
          <div class="stats"></div>
          <div class="info">variazioni rispetto al giorno precedente</div>
       </div>
-
       <div class="content">
-
          <div class="italia">
             <div class="stats">
-              <p class="label">Vaccinati in Italia</p>
+               <p class="label">Vaccinati in Italia</p>
                <p id="vaccinati"></p>
             </div>
             <div class="stats">
@@ -67,10 +57,8 @@
                <p id="deltadosi"></p>
             </div>
          </div>
-
          <div class="datacontainer">
-
-            <table class="territori">
+            <table id="territori">
                <caption class="subtitle">Dettaglio per territori</caption>
                <thead>
                   <tr>
@@ -83,9 +71,38 @@
                <tbody>
                </tbody>
             </table>
-
-
-            <table class="categorie">
+            <div class="chartcontainer" id="territori">
+               <div class="form" id="territori">
+                  <form>
+                     <p>
+                        <input type="radio" id="vaccinati" name="sort" value="0" checked>
+                        <label for="vaccinati">Mostra vaccinati</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="percentuale" name="sort" value="1">
+                        <label for="percentuale">Mostra percentuale vaccinati</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="dosi" name="sort" value="2">
+                        <label for="dosi">Mostra dosi vaccino consegnate</label>
+                     </p>
+                  </form>
+               </div>
+               <div class="form" id="territori">
+                  <form>
+                     <p>
+                        <input type="radio" id="valore" name="sort" value="3" checked>
+                        <label for="valore">Ordina per valore</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="nome" name="sort" value="4">
+                        <label for="nome">Ordina per nome</label>
+                     </p>
+                  </form>
+               </div>
+               <canvas id="territori"></canvas>
+            </div>
+            <table id="categorie">
                <caption class="subtitle">Dettaglio per categorie</caption>
                <thead>
                   <tr>
@@ -96,8 +113,22 @@
                <tbody>
                </tbody>
             </table>
-
-            <table class="sesso">
+            <div class="chartcontainer" id="categorie">
+               <div class="form" id="categorie">
+                  <form>
+                     <p>
+                        <input type="radio" id="valore" name="sort" value="0" checked>
+                        <label for="valore">Ordina per valore</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="nome" name="sort" value="1">
+                        <label for="nome">Ordina per categoria</label>
+                     </p>
+                  </form>
+               </div>
+               <canvas id="categorie"></canvas>
+            </div>
+            <table id="sesso">
                <caption class="subtitle">Dettaglio per sesso</caption>
                <thead>
                   <tr>
@@ -108,8 +139,10 @@
                <tbody>
                </tbody>
             </table>
-
-            <table class="fasce_eta">
+            <div class="chartcontainer" id="sesso">
+               <canvas id="sesso"></canvas>
+            </div>
+            <table id="fasce_eta">
                <caption class="subtitle">Dettaglio per età</caption>
                <thead>
                   <tr>
@@ -120,10 +153,23 @@
                <tbody>
                </tbody>
             </table>
-
+            <div class="chartcontainer" id="fasce_eta">
+               <div class="form" id="fasce_eta">
+                  <form>
+                     <p>
+                        <input type="radio" id="valore" name="sort" value="0" checked>
+                        <label for="valore">Ordina per valore</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="nome" name="sort" value="1">
+                        <label for="nome">Ordina per categoria</label>
+                     </p>
+                  </form>
+               </div>
+               <canvas id="fasce_eta"></canvas>
+            </div>
          </div>
       </div>
-
       <div class="credits">Fatto da <a href="https://www.lorenzoros.si">Lorenzo Rossi</a> - <a href="https://github.com/lorossi/vaccino-covid19">Repo GitHub</a></div>
    </body>
 </html>

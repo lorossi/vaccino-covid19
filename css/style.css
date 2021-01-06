@@ -12,7 +12,8 @@ body {
 
 .content {
   width: 90vw;
-  margin-left: 5vw;
+  margin-left: auto;
+  margin-right: auto;
   margin-top: 2.5vh;
   margin-bottom: 5vh;
   text-align: center;
@@ -56,7 +57,7 @@ body {
 
 .italia {
   font-size: var(--big-text-size);
-  margin-top: calc(var(--title-size) / 2);
+  margin-top: calc(1.5 * var(--title-size));
   margin-bottom: calc(1.5 * var(--title-size));
   margin-left: auto;
   margin-right: auto;
@@ -88,10 +89,7 @@ table {
   font-size: var(--text-size);
   border-collapse: collapse;
   vertical-align: middle;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: var(--title-size);
-  min-width: 70%;
+  min-width: 40%;
 }
 
 table td {
@@ -139,11 +137,46 @@ table tr {
   text-align: center;
 }
 
-table, .italia .stats {
+table, .italia .stats, .chartcontainer {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.24);
 }
 
+.chartcontainer {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  padding: var(--text-size);
+}
+
+table, .chartcontainer {
+  margin-bottom: var(--title-size);
+}
+
+.form {
+  font-size: var(--text-size);
+}
+
+.chartcontainer .form {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.chartcontainer canvas {
+  flex-grow: 0;
+}
+
+.chartcontainer .form {
+  margin-bottom: var(--text-size);
+}
+
 @media only screen and (min-width: 480px) {
+  .content {
+    width: 80vw;
+  }
+
   .title {
     margin-top: calc(0.5 *  var(--title-size));
   }
@@ -163,6 +196,10 @@ table, .italia .stats {
   }
 
   .datacontainer {
+    justify-content: space-between;
+    align-content: flex-start;
+    align-items: center;
+    flex-direction: row;
     flex-wrap: wrap;
   }
 
@@ -180,6 +217,15 @@ table, .italia .stats {
 
   table, .italia .stats {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  }
+
+  .chartcontainer {
+    width: 40%;
+    padding: calc(3 * var(--text-size));
+  }
+
+  .chartcontainer .form {
+    text-align: right;
   }
 }
 
