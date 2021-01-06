@@ -89,6 +89,8 @@ table tbody tr:nth-of-type(2n+1) {
 
 table th {
   padding-bottom: calc(var(--text-size) / 2);
+  cursor: pointer;
+  user-select: none;
 }
 
 table tr {
@@ -99,11 +101,13 @@ table tr {
 .darr:after {
   content: "\2193";
   margin-left: calc(var(--text-size) / 3);
+  margin-right: calc(var(--text-size) / 3);
 }
 
 .uarr:after {
   content: "\2191";
   margin-left: calc(var(--text-size) / 3);
+  margin-right: calc(var(--text-size) / 3);
 }
 
 .credits {
