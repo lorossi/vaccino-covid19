@@ -552,7 +552,7 @@ $(document).ready(() => {
     }
 
     // this is the id of the table we clicked on
-    let table_id = $(this).parent().parent().parent().attr("id");
+    let table_id = $(this).parentsUntil("table").parent().attr("id");
     // once we know the class, we can update its data
     if (table_id === "territori") {
       load_territories(column, reverse);
@@ -567,14 +567,13 @@ $(document).ready(() => {
 
   $(".chartcontainer input").click(function() {
     // id of the corresponding chart
-    let chart_id = $(this).parent().parent().parent().attr("id");
-
+    let chart_id = $(this).parentsUntil(".form").parent().attr("id");
 
     if (chart_id === "territori") {
       let value, sort_by_name;
 
       // all radios
-      let radios = $(this).parents().find(".chartcontainer").find("input[type=\"radio\"]").toArray();
+      let radios = $(this).parents().find(".chartcontainer#territori").find("input[type=\"radio\"]").toArray();
 
       radios.forEach((r, i) => {
         if ($(r).prop("checked")) {

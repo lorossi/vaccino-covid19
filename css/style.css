@@ -84,10 +84,6 @@ body {
   justify-content: space-evenly;
 }
 
-.italia .stats:last-of-type {
-  flex-grow: 1;
-}
-
 table {
   text-align: center;
   font-size: var(--text-size);
@@ -196,14 +192,6 @@ table, .chartcontainer {
     flex-grow: 0;
   }
 
-  .italia .stats:last-of-type {
-    flex-grow: 0;
-  }
-
-  .italia .stats:nth-last-child(1), .italia .stats:nth-last-child(2) {
-    width: 40%;
-  }
-
   .datacontainer {
     justify-content: space-between;
     align-content: flex-start;
@@ -241,5 +229,16 @@ table, .chartcontainer {
 @media only screen and (min-width: 480px)  and (max-width: 1500px) {
   .italia .stats {
     width: 40%;
+  }
+}
+
+@media only screen and (min-width: 480px)  and (max-width: 1350px) {
+  .datacontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
