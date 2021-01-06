@@ -75,18 +75,12 @@ body {
   width: 40%;
   min-height: 15vh;
   padding: calc(var(--big-text-size) / 2);
-  margin-left: calc(var(--text-size) / 4);
-  margin-right: calc(var(--text-size) / 4);
   margin-top: calc(var(--text-size) * 1);
   margin-bottom: calc(var(--text-size) * 1);
 
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-}
-
-.italia .stats:last-of-type {
-  flex-grow: 1;
 }
 
 table {
@@ -155,22 +149,17 @@ table, .italia .stats {
   }
 
   .italia {
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
     max-width: 70vw;
     margin-top: calc(var(--title-size) / 2);
     margin-bottom: calc(var(--title-size) / 2);
   }
 
   .italia .stats {
-    width: 25%;
-    min-height: 10vh;
-    flex-grow: 0;
+    width: 28%;
   }
 
   .italia .stats:nth-last-child(1), .italia .stats:nth-last-child(2) {
-    flex-grow: 1;
+    width: 40%;
   }
 
   .datacontainer {
@@ -197,6 +186,5 @@ table, .italia .stats {
 @media only screen and (min-width: 480px)  and (max-width: 1500px) {
   .italia .stats {
     width: 40%;
-    flex-grow: 1;
   }
 }
