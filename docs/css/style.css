@@ -46,7 +46,7 @@ body {
 }
 
 .stats p {
-  padding-top: var(--text-size);
+  padding-top: calc(var(--text-size) / 4);
 }
 
 .info {
