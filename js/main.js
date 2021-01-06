@@ -42,6 +42,7 @@ const load_italy = () => {
 
 // load data about each territory
 const load_territories = (order, reverse) => {
+  // sort data
   if (order === 0) {
     vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
   } else if (order === 1) {
@@ -56,7 +57,8 @@ const load_territories = (order, reverse) => {
     vaccini.territori.reverse();
   }
 
-  $("table.territori tbody").html("");
+  // fill table
+  $("table#territori tbody").html("");
 
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
@@ -83,11 +85,116 @@ const load_territories = (order, reverse) => {
       new_tr += `<td>${percentuale}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}  (+${nuove_dosi})</td>`;
       new_tr += "</tr>";
-      $("table.territori tbody").append(new_tr);
+      $("table#territori tbody").append(new_tr);
     }
   });
 };
 
+const load_territories_chart = (order, sort_by_name, old_chart) => {
+  // chart variables
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+
+  // sort data and fill variables
+  if (order === 0) {
+    vaccini.territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    if (sort_by_name == true) {
+      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    }
+    data = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => x.totale_vaccinati);
+    background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
+    border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
+    hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
+    labels = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+    label = "Totale vaccinati";
+  } else if (order === 1) {
+    vaccini.territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
+    if (sort_by_name == true) {
+      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    }
+    data = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => parseFloat(x.percentuale_popolazione_vaccinata).toFixed(2));
+    labels = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+    background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.5)`);
+    border_colors = data.map(x => `hsl(${x / 100 * 120}, 100%, 50%)`);
+    hover_background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.25)`);
+    label = "Percentuale popolazione vaccinata";
+  } else if (order === 2) {
+    vaccini.territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+    if (sort_by_name == true) {
+      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    }
+    data = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => x.totale_dosi_consegnate);
+    background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
+    border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
+    hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
+    labels = vaccini.territori.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+    label = "Totale dosi di vaccino consegnate";
+  }
+
+  font_size = $(window).width() > 480 ? 12 : 8;
+  if (old_chart) {
+    // update the old chart
+    old_chart.data = {
+      labels: labels,
+      datasets: [{
+        data: data,
+        label: label,
+        backgroundColor: background_colors,
+        borderColor: border_colors,
+        borderWidth: 2,
+        hoverBackgroundColor: hover_background_colors,
+        hoverBorderColor: hover_background_colors
+      }],
+    }
+    old_chart.update();
+  } else {
+    // draw the new chart
+    let ctx = $("canvas#territori")[0].getContext('2d');
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
+          }],
+        },
+        options: {
+          responsive: true,
+          aspectRatio: 1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {
+          },
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: font_size
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                fontSize: font_size * 1.5
+              }
+            }]
+          }
+        }
+    });
+  }
+  return chart;
+};
 
 // load data about each category
 const load_categories = (order, reverse) => {
@@ -101,7 +208,7 @@ const load_categories = (order, reverse) => {
     vaccini.categorie.reverse();
   }
 
-  $("table.categorie tbody").html("");
+  $("table#categorie tbody").html("");
 
   vaccini.categorie.forEach((t, i) => {
     let nuovi_vaccinati;
@@ -115,7 +222,7 @@ const load_categories = (order, reverse) => {
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
     new_tr += "</tr>";
-    $("table.categorie tbody").append(new_tr);
+    $("table#categorie tbody").append(new_tr);
   });
 };
 
@@ -132,7 +239,7 @@ const load_genders = (order, reverse) => {
     vaccini.sesso.reverse();
   }
 
-  $("table.sesso tbody").html("");
+  $("table#sesso tbody").html("");
 
   vaccini.sesso.forEach((t, i) => {
     let nuovi_vaccinati;
@@ -146,7 +253,7 @@ const load_genders = (order, reverse) => {
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
     new_tr += "</tr>";
-    $("table.sesso tbody").append(new_tr);
+    $("table#sesso tbody").append(new_tr);
   });
 };
 
@@ -163,7 +270,7 @@ const load_age_ranges = (order, reverse) => {
     vaccini.fasce_eta.reverse();
   }
 
-  $("table.fasce_eta tbody").html("");
+  $("table#fasce_eta tbody").html("");
 
   vaccini.fasce_eta.forEach((t, i) => {
     let nuovi_vaccinati;
@@ -177,7 +284,7 @@ const load_age_ranges = (order, reverse) => {
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
     new_tr += "</tr>";
-    $("table.fasce_eta tbody").append(new_tr);
+    $("table#fasce_eta tbody").append(new_tr);
   });
 };
 
@@ -190,6 +297,8 @@ $(document).ready(() => {
   load_categories(0, false);
   load_genders(0, false);
   load_age_ranges(0, false);
+
+  let territories_chart = load_territories_chart(0, false);
 
   // this function won't work with lambda
   $("table th").click(function() {
@@ -206,18 +315,39 @@ $(document).ready(() => {
       $(this).addClass("darr");
     }
 
-    // this is the class of the table we clicked on
-    let table_class = $(this).parent().parent().parent().attr("class");
+    // this is the id of the table we clicked on
+    let table_id = $(this).parents().find("table").attr("id");
     // once we know the class, we can update its data
-    if (table_class === "territori") {
+    if (table_id === "territori") {
       load_territories(column, reverse);
-    } else if (table_class === "categorie") {
+    } else if (table_id === "categorie") {
       load_categories(column, reverse);
-    } else if (table_class === "sesso") {
+    } else if (table_id === "sesso") {
       load_genders(column, reverse);
-    } else if (table_class === "fasce_eta") {
+    } else if (table_id === "fasce_eta") {
       load_age_ranges(column, reverse);
     }
+  });
 
+  $(".chartcontainer input").click(function() {
+    let chart_id = $(this).parents().find("canvas").attr("id");
+
+    if (chart_id === "territori") {
+      let value, sort_by_name;
+
+      let radios = $(this).parents().find(".chartcontainer").find("input[type=\"radio\"]").toArray();
+
+      radios.forEach((r, i) => {
+        if ($(r).prop("checked")) {
+          if (i < 3) {
+            value = i;
+          } else {
+            sort_by_name = i == 3 ? false : true;
+          }
+        }
+      });
+
+      load_territories_chart(value, sort_by_name, territories_chart);
+    }
   });
 });

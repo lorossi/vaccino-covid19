@@ -70,7 +70,7 @@
 
          <div class="datacontainer">
 
-            <table class="territori">
+            <table id="territori">
                <caption class="subtitle">Dettaglio per territori</caption>
                <thead>
                   <tr>
@@ -84,8 +84,41 @@
                </tbody>
             </table>
 
+            <div class="chartcontainer">
+              <div class="form">
+                <form>
+                  <p>
+                    <input type="radio" id="vaccinati" name="sort" value="0" checked>
+                    <label for="vaccinati">Mostra vaccinati</label>
+                  </p>
+                  <p>
+                    <input type="radio" id="percentuale" name="sort" value="1">
+                    <label for="percentuale">Mostra percentuale vaccinati</label>
+                  </p>
+                  <p>
+                    <input type="radio" id="dosi" name="sort" value="2">
+                    <label for="dosi">Mostra dosi vaccino consegnate</label>
+                  </p>
+                </form>
+              </div>
 
-            <table class="categorie">
+              <div class="form">
+                <form>
+                  <p>
+                    <input type="radio" id="valore" name="sort" value="3" checked>
+                    <label for="valore">Ordina per valore</label>
+                  </p>
+                  <p>
+                    <input type="radio" id="nome" name="sort" value="4">
+                    <label for="nome">Ordina per nome</label>
+                  </p>
+                </form>
+              </div>
+
+              <canvas id="territori"></canvas>
+            </div>
+
+            <table id="categorie">
                <caption class="subtitle">Dettaglio per categorie</caption>
                <thead>
                   <tr>
@@ -97,7 +130,7 @@
                </tbody>
             </table>
 
-            <table class="sesso">
+            <table id="sesso">
                <caption class="subtitle">Dettaglio per sesso</caption>
                <thead>
                   <tr>
@@ -109,7 +142,7 @@
                </tbody>
             </table>
 
-            <table class="fasce_eta">
+            <table id="fasce_eta">
                <caption class="subtitle">Dettaglio per età</caption>
                <thead>
                   <tr>

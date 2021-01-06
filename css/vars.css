@@ -6,7 +6,7 @@
 
 @media only screen and (min-width: 480px) {
   :root{
-    --text-size: 1.5rem;
+    --text-size: 1rem;
     --big-text-size: 2rem;
     --title-size: 4rem;
   }
