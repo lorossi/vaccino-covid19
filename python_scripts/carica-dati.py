@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 def main():
-    push_to_github = False
+    push_to_github = True
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
@@ -132,26 +132,21 @@ def main():
         category_name = category["C"][0][4:]
         total_number = category["C"][1]
 
+        # init the dict with all the new data
+        new_data = {
+            "id_categoria": category_id,
+            "nome_categoria": category_name,
+            "totale_vaccinati": total_number,
+        }
+
         # iterate over last data to find the variation
         if last_data is not None:
             for category in last_data["categorie"]:
                 if category["nome_categoria"] == category_name:
+                    # add variation from yesterday
                     variation = total_number - category["totale_vaccinati"]
-                    # init the dict with all the new data
-                    new_data = {
-                        "id_categoria": category_id,
-                        "nome_categoria": category_name,
-                        "totale_vaccinati": total_number,
-                        "nuovi_vaccinati": variation
-                    }
+                    new_data["nuovi_vaccinati"] = variation
                     break
-        else:
-            # no old data found, cannot compare
-            new_data = {
-                "id_categoria": category_id,
-                "nome_categoria": category_name,
-                "totale_vaccinati": total_number,
-            }
 
         # finally append data to the dict
         data["categorie"].append(new_data)
