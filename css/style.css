@@ -38,7 +38,6 @@ body {
   font-size: var(--text-size);
   width: 100%;
   text-align: center;
-  margin-bottom: calc(1.75 * var(--title-size));
 }
 
 .update .stats {
@@ -54,21 +53,40 @@ body {
 }
 
 .subtitle {
-  margin-top: var(--title-size);
   margin-bottom: var(--text-size);
   font-size: var(--big-text-size);
 }
 
 .italia {
   font-size: var(--big-text-size);
-  display: inline-block;
+  margin-top: var(--title-size);
+  margin-bottom: calc(1.5 * var(--title-size));
+  margin-left: auto;
+  margin-right: auto;
   padding: calc(var(--big-text-size) / 2);
-  background-color: #e9ecef;
-  border-radius: 2px;
+  background-color: inherit;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  max-width: 90vw;
 }
 
 .italia .stats {
-  padding: calc(var(--big-text-size) / 2);
+  padding: calc(var(--big-text-size) / 4);
+  width: 33%;
+  min-height: 10vh;
+  padding: calc(var(--big-text-size));
+  margin-left: calc(var(--text-size) / 4);
+  margin-right: calc(var(--text-size) / 4);
+  margin-top: calc(var(--text-size));
+  margin-bottom: calc(var(--text-size));
+}
+
+.italia .stats:last-of-type {
+  flex-grow: 1;
 }
 
 table {
@@ -78,6 +96,7 @@ table {
   vertical-align: middle;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: var(--title-size);
   min-width: 70%;
 }
 
@@ -125,17 +144,32 @@ table tr {
   text-align: center;
 }
 
-table, .italia {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 5px 5px rgba(0,0,0,0.24);
+table, .italia .stats {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.24);
 }
 
 @media only screen and (min-width: 480px) {
   .title {
-    margin-top: calc(1 *  var(--title-size));
+    margin-top: calc(0.5 *  var(--title-size));
   }
 
   .italia {
-    padding: calc(var(--big-text-size));
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    max-width: 70vw;
+    margin-top: calc(var(--title-size) / 2);
+    margin-bottom: calc(var(--title-size) / 2);
+  }
+
+  .italia .stats {
+    width: 25%;
+    min-height: 10vh;
+    flex-grow: 0;
+  }
+
+  .italia .stats:nth-last-child(1), .italia .stats:nth-last-child(2) {
+    flex-grow: 1;
   }
 
   .datacontainer {
@@ -154,7 +188,14 @@ table, .italia {
     padding-bottom: calc(var(--text-size) / 2);
   }
 
-  table, .italia {
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  table, .italia .stats {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
+  }
+}
+
+@media only screen and (min-width: 480px)  and (max-width: 1500px) {
+  .italia .stats {
+    width: 40%;
+    flex-grow: 1;
   }
 }
