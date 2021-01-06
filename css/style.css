@@ -193,13 +193,17 @@ table, .chartcontainer {
   }
 
   .datacontainer {
-    justify-content: space-between;
+    justify-content: space-around;
     align-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: row;
     flex-wrap: wrap;
     width: 75vw;
     max-width: 1150px;
+  }
+
+  .chartcontainer {
+    margin-top: calc(1.4 * var(--text-size) + var(--big-text-size));
   }
 
   table {
@@ -220,11 +224,14 @@ table, .chartcontainer {
 
   .chartcontainer {
     width: 40%;
-    padding: calc(3 * var(--text-size));
   }
 
   .chartcontainer .form {
     text-align: right;
+  }
+
+  .table .chartcontainer {
+    margin-bottom: 0;
   }
 }
 
