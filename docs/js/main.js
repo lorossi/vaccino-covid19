@@ -8,18 +8,27 @@ const set_last_update = () => {
 
 const load_italy = () => {
   vaccini.territori.forEach((t, i) => {
-    if (t.nome_territorio == "Italia") {
-      $(".italia #vaccinati").text(t.totale_vaccinati);
-
+    if (t.nome_territorio === "Italia") {
       let nuovi_vaccinati;
-      if (t.nuovi_vaccinati == undefined) {
+      if (t.nuovi_vaccinati === undefined) {
         nuovi_vaccinati = 0;
       } else {
         nuovi_vaccinati = t.nuovi_vaccinati;
       }
 
+      let nuove_dosi;
+      if (t.nuove_dosi_consegnate === undefined) {
+        nuove_dosi = 0;
+      } else {
+        nuove_dosi = t.nuove_dosi_consegnate;
+      }
+
+      $(".italia #vaccinati").text(t.totale_vaccinati);
       $(".italia #deltavaccinati").text(nuovi_vaccinati);
       $(".italia #percentualevaccinati").text(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
+      $(".italia #dosi").text(t.totale_dosi_consegnate);
+      $(".italia #deltadosi").text(nuove_dosi);
+
       return;
     }
   });
@@ -46,13 +55,14 @@ const load_territories = (order, reverse) => {
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
       let nuovi_vaccinati;
-      if (t.nuovi_vaccinati == undefined) {
+      if (t.nuovi_vaccinati === undefined) {
         nuovi_vaccinati = 0;
       } else {
         nuovi_vaccinati = t.nuovi_vaccinati;
       }
+
       let nuove_dosi;
-      if (t.nuove_dosi == undefined) {
+      if (t.nuove_dosi === undefined) {
         nuove_dosi = 0;
       } else {
         nuove_dosi = t.nuove_dosi;
@@ -87,7 +97,7 @@ const load_categories = (order, reverse) => {
 
   vaccini.categorie.forEach((t, i) => {
     let nuovi_vaccinati;
-    if (t.nuovi_vaccinati == undefined) {
+    if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
@@ -116,7 +126,7 @@ const load_genders = (order, reverse) => {
 
   vaccini.sesso.forEach((t, i) => {
     let nuovi_vaccinati;
-    if (t.nuovi_vaccinati == undefined) {
+    if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
@@ -181,7 +191,7 @@ $(document).ready(() => {
       $(this).addClass("darr");
     }
 
-    let table_class = $(this).parent().parent().parent().attr("class")
+    let table_class = $(this).parent().parent().parent().attr("class");
 
     if (table_class === "territori") {
       load_territories(column, reverse);

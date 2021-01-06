@@ -17,7 +17,7 @@ body {
   text-align: center;
 }
 
-.tablecontainer {
+.datacontainer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -63,7 +63,7 @@ body {
 }
 
 .italia .stats {
-  padding-top: calc(var(--big-text-size) / 2);
+  padding: calc(var(--big-text-size) / 2);
 }
 
 table {
@@ -77,8 +77,8 @@ table {
 }
 
 table td {
-  padding-left: calc(var(--text-size) / 12);
-  padding-right: calc(var(--text-size) / 12);
+  padding-left: calc(var(--text-size) / 6);
+  padding-right: calc(var(--text-size) / 6);
   padding-top: calc(var(--text-size) / 3);
   padding-bottom: calc(var(--text-size) / 3);
 }
@@ -94,8 +94,8 @@ table th {
 }
 
 table tr {
-  padding-left: calc(var(--text-size) / 6);
-  padding-right: calc(var(--text-size) / 6);
+  padding-left: calc(var(--text-size));
+  padding-right: calc(var(--text-size));
 }
 
 .darr:after {
@@ -119,6 +119,10 @@ table tr {
   text-align: center;
 }
 
+table, .italia {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 5px 5px rgba(0,0,0,0.24);
+}
+
 @media only screen and (min-width: 480px) {
   .title {
     margin-top: calc(1 *  var(--title-size));
@@ -128,7 +132,7 @@ table tr {
     padding: calc(var(--big-text-size));
   }
 
-  .tablecontainer {
+  .datacontainer {
     flex-wrap: wrap;
   }
 
@@ -142,5 +146,9 @@ table tr {
     padding-right: var(--text-size);
     padding-top: calc(var(--text-size) / 2);
     padding-bottom: calc(var(--text-size) / 2);
+  }
+
+  table, .italia {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   }
 }

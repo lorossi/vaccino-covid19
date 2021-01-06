@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 def main():
-    push_to_github = True
+    push_to_github = False
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
@@ -99,15 +99,15 @@ def main():
         # find the data for yesterday
         last_territory = None
         if last_data is not None:
-            for old_territorio in last_data["territori"]:
-                if old_territorio["nome_territorio"] == new_data["nome_territorio"]:
-                    last_territory = territory["C"]
+            for old_territory in last_data["territori"]:
+                if old_territory["nome_territorio"] == new_data["nome_territorio"]:
+                    last_territory = old_territory
                     break
 
         # if found, compare
         if last_territory is not None:
-            new_data["nuove_dosi_consegnate"] = new_data["totale_dosi_consegnate"] - last_territory[3]
-            new_data["nuovi_vaccinati"] = new_data["totale_vaccinati"] - last_territory[1]
+            new_data["nuove_dosi_consegnate"] = new_data["totale_dosi_consegnate"] - old_territory["totale_dosi_consegnate"]
+            new_data["nuovi_vaccinati"] = new_data["totale_vaccinati"] - last_territory["totale_vaccinati"]
 
         # finally append data to the dict
         data["territori"].append(new_data)
