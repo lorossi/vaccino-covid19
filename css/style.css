@@ -84,6 +84,10 @@ body {
   justify-content: space-evenly;
 }
 
+.italia .stats:last-of-type {
+  flex-grow: 1;
+}
+
 table {
   text-align: center;
   font-size: var(--text-size);
@@ -189,6 +193,11 @@ table, .chartcontainer {
 
   .italia .stats {
     width: 28%;
+    flex-grow: 0;
+  }
+
+  .italia .stats:last-of-type {
+    flex-grow: 0;
   }
 
   .italia .stats:nth-last-child(1), .italia .stats:nth-last-child(2) {
