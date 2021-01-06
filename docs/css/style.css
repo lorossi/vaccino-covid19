@@ -77,8 +77,8 @@ table {
 }
 
 table td {
-  padding-left: var(--text-size);
-  padding-right: var(--text-size);
+  padding-left: calc(var(--text-size) / 12);
+  padding-right: calc(var(--text-size) / 12);
   padding-top: calc(var(--text-size) / 3);
   padding-bottom: calc(var(--text-size) / 3);
 }
@@ -89,6 +89,11 @@ table tbody tr:nth-of-type(2n+1) {
 
 table th {
   padding-bottom: calc(var(--text-size) / 2);
+}
+
+table tr {
+  padding-left: calc(var(--text-size) / 6);
+  padding-right: calc(var(--text-size) / 6);
 }
 
 .darr:after {

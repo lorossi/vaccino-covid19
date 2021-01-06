@@ -33,6 +33,8 @@ const load_territories = (order, reverse) => {
     vaccini.territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
   } else if (order === 2) {
     vaccini.territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+  } else if (order === 3) {
+    vaccini.territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
   }
 
   if (reverse) {
@@ -56,10 +58,14 @@ const load_territories = (order, reverse) => {
         nuove_dosi = t.nuove_dosi;
       }
 
+      let percentuale;
+      percentuale = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`
+
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td>${t.nome_territorio}</td>`;
       new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}  (+${nuove_dosi})</td>`;
+      new_tr += `<td>${percentuale}</td>`;
       new_tr += "</tr>";
       $(".territori tbody").append(new_tr);
     }

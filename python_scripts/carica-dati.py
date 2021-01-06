@@ -8,6 +8,7 @@ from datetime import datetime
 
 
 def main():
+    push_to_github = True
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
@@ -92,7 +93,7 @@ def main():
             "codice_territorio": territory_code,
             "totale_dosi_consegnate": territory["C"][3],
             "totale_vaccinati": territory["C"][1],
-            "percentuale_popolazione_vaccinata": territory["C"][2]
+            "percentuale_popolazione_vaccinata": float(territory["C"][2])
         }
 
         # find the data for yesterday
@@ -281,16 +282,17 @@ def main():
         js_string += ";"
         f.write(js_string)
 
-    # now push all to to github
-    logging.info("Pushing to GitHub")
-    subprocess.run("git pull".split(" "))
-    subprocess.run(["git", "add", cwd + output_path + json_filename])
-    subprocess.run(["git", "add", cwd + output_path + js_filename])
-    subprocess.run(["git", "add", cwd + assets_path + js_filename])
-    subprocess.run(["git", "pull"])
-    subprocess.run(["git", "commit", "-m", "updated data"])
-    subprocess.run(["git", "push"])
-    logging.info("Pushed to GitHub")
+    if push_to_github:
+        # now push all to to github
+        logging.info("Pushing to GitHub")
+        subprocess.run("git pull".split(" "))
+        subprocess.run(["git", "add", cwd + output_path + json_filename])
+        subprocess.run(["git", "add", cwd + output_path + js_filename])
+        subprocess.run(["git", "add", cwd + assets_path + js_filename])
+        subprocess.run(["git", "pull"])
+        subprocess.run(["git", "commit", "-m", "updated data"])
+        subprocess.run(["git", "push"])
+        logging.info("Pushed to GitHub")
 
 
 if __name__ == "__main__":
