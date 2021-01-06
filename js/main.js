@@ -28,11 +28,12 @@ const load_italy = () => {
         nuove_dosi = t.nuove_dosi_consegnate;
       }
 
-      $(".italia #vaccinati").text(t.totale_vaccinati);
-      $(".italia #deltavaccinati").text(nuovi_vaccinati);
+      $(".italia #vaccinati").text(`${t.totale_vaccinati}`);
+      $(".italia #deltavaccinati").text(`${nuovi_vaccinati}`);
+      $(".italia #dosi").text(`${t.totale_dosi_consegnate}`);
+      $(".italia #deltadosi").text(`${nuove_dosi}`);
       $(".italia #percentualevaccinati").text(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-      $(".italia #dosi").text(t.totale_dosi_consegnate);
-      $(".italia #deltadosi").text(nuove_dosi);
+      $(".italia #percentualenecessaria").text(`60-80%`);
 
       return;
     }
@@ -70,10 +71,10 @@ const load_territories = (order, reverse) => {
       }
 
       let nuove_dosi;
-      if (t.nuove_dosi === undefined) {
+      if (t.nuove_dosi_consegnate === undefined) {
         nuove_dosi = 0;
       } else {
-        nuove_dosi = t.nuove_dosi;
+        nuove_dosi = t.nuove_dosi_consegnate;
       }
 
       let percentuale;
