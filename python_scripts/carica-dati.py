@@ -335,6 +335,7 @@ def main():
         subprocess.run("git pull".split(" "))
         subprocess.run(["git", "add", cwd + output_path + json_filename])
         subprocess.run(["git", "add", cwd + assets_path + js_filename])
+        subprocess.run(["git", "add", cwd + assets_path + js_history_filename])
         subprocess.run(["git", "pull"])
         subprocess.run(["git", "commit", "-m", "updated data"])
         subprocess.run(["git", "push"])
