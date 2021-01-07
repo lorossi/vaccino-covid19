@@ -39,6 +39,14 @@ const all_time_get_options = () => {
     $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", false);
   }
 
+  if ($(".alltimechartcontainer input#percentuale_vaccinati").prop("checked")) {
+    $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", true);
+    $(".alltimechartcontainer input#totale_vaccini").prop("disabled", true);
+  } else {
+    $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", false);
+    $(".alltimechartcontainer input#totale_vaccini").prop("disabled", false);
+  }
+
   $(".alltimechartcontainer span#nome_territorio").text(territory);
 
   return {values: values, territory: territory};
@@ -158,7 +166,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
   }
 
   let font_size = $(window).width() > 1500 ? 16 : 8;
-  let aspect_ratio = $(window).width() > 1500 ? 1 : 0.8;
+  let aspect_ratio = $(window).width() > 1500 ? 2.25 : 0.8;
   if (old_chart) {
     old_chart.data = {
       labels: labels,
