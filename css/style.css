@@ -152,6 +152,7 @@ table, .italia .stats, .chartcontainer {
   padding: var(--text-size);
   margin-bottom: calc(2 * var(--title-size));
 }
+
 .chartcontainer .form {
   flex-grow: 1;
   text-align: left;
@@ -181,8 +182,8 @@ table, .italia .stats, .chartcontainer {
 
   .italia {
     max-width: 70vw;
-    margin-top: calc(var(--title-size) / 2);
-    margin-bottom: calc(var(--title-size) / 2);
+    margin-top: var(--title-size);
+    margin-bottom: var(--title-size);
   }
 
   .italia .stats {
@@ -193,7 +194,7 @@ table, .italia .stats, .chartcontainer {
   .datacontainer {
     justify-content: space-around;
     align-content: flex-start;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
     width: 75vw;
@@ -242,5 +243,15 @@ table, .italia .stats, .chartcontainer {
     align-content: center;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  table {
+    margin-bottom: calc(var(--title-size));
+  }
+
+  .chartcontainer {
+    width: 40%;
+    margin-bottom: calc(var(--title-size) * 2);
+    margin-top: 0;
   }
 }
