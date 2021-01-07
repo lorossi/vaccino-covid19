@@ -4,7 +4,7 @@ import logging
 import requests
 import subprocess
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def main():
@@ -12,6 +12,7 @@ def main():
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
+    js_history_filename = "storico_vaccini.js"
     # file paths
     output_path = "output/"
     assets_path = "../assets/"
@@ -24,7 +25,10 @@ def main():
         "sesso": [],
         "fasce_eta": []
         }
-    italia = {"nome_territorio": "Italia"}
+    italia = {
+        "nome_territorio": "Italia",
+        "codice_territorio": None
+    }
     # load timestamp that will be put inside the output
     now = datetime.now()
     data["script_timestamp"] = now.isoformat()
@@ -271,8 +275,11 @@ def main():
 
     # now finally save the json file
     with open(output_path + json_filename, "w") as f:
+        pass
         json.dump(old_data, f, indent=3)
+
     logging.info(f"Json file saved. Path: {cwd}{json_filename}")
+
 
     # save the js file for the website
     # luckily, js objects and json have the same structure
@@ -282,6 +289,45 @@ def main():
         js_string += json.dumps(data, indent=4)
         js_string += ";"
         f.write(js_string)
+    logging.info(f"JS file saved. Path: {cwd}{js_filename}")
+
+
+    # create a js file with all the data about vaccines
+    midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    history = []
+    for d in old_data:
+        new_data = {}
+        timestamp = d["script_timestamp"]
+        time_obj = datetime.fromisoformat(timestamp)
+        diff = time_obj - midnight
+        if diff <= timedelta(hours=8):
+            new_timestamp = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d")
+            new_data["script_timestamp"] = new_timestamp
+            new_data["territori"] = []
+
+            for territory in d["territori"]:
+                new_territory = {
+                    "nome_territorio": territory["nome_territorio"],
+                    "codice_territorio": territory.get("codice_territorio", None),
+                    "totale_vaccinati": territory["totale_vaccinati"],
+                    "totale_dosi_consegnate": territory["totale_dosi_consegnate"],
+                    "percentuale_popolazione_vaccinata": territory["percentuale_popolazione_vaccinata"]
+                }
+                new_data["territori"].append(new_territory)
+            history.append(new_data)
+            midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
+    # reverse so the oldest one ore always on top
+    history.reverse()
+
+    # save the js file for the website
+    # luckily, js objects and json have the same structure
+    with open(assets_path + js_history_filename, "w") as f:
+        js_string = "let storico_vaccini = "
+        # convert dict to json (will be read by js)
+        js_string += json.dumps(history, indent=4)
+        js_string += ";"
+        f.write(js_string)
+    logging.info(f"JS history file saved. Path: {cwd}{js_history_filename}")
 
     if push_to_github:
         # now push all to to github
