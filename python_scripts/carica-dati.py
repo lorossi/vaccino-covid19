@@ -111,6 +111,7 @@ def main():
 
         # finally append data to the dict
         data["territori"].append(new_data)
+
         # update total number of doses and vaccinated people
         if "totale_dosi_consegnate" not in italia:
             italia["totale_dosi_consegnate"] = territory["C"][3]
@@ -143,10 +144,11 @@ def main():
         if last_data is not None:
             for category in last_data["categorie"]:
                 if category["nome_categoria"] == category_name:
-                    # add variation from yesterday
-                    variation = total_number - category["totale_vaccinati"]
-                    new_data["nuovi_vaccinati"] = variation
-                    break
+                    if "totale_vaccinati" in category:
+                        # add variation from yesterday
+                        variation = total_number - category["totale_vaccinati"]
+                        new_data["nuovi_vaccinati"] = variation
+                        break
 
         # finally append data to the dict
         data["categorie"].append(new_data)
@@ -166,9 +168,10 @@ def main():
     if last_data is not None:
         for gender in last_data["sesso"]:
             if gender["nome_categoria"] == "donne":
-                # calculate variation
-                variation = women - gender["totale_vaccinati"]
-                new_dict["nuovi_vaccinati"] = variation
+                if "totale_vaccinati" in gender:
+                    # calculate variation
+                    variation = women - gender["totale_vaccinati"]
+                    new_dict["nuovi_vaccinati"] = variation
 
     # finally append to data
     data["sesso"].append(new_dict)
@@ -187,9 +190,10 @@ def main():
     if last_data is not None:
         for gender in last_data["sesso"]:
             if gender["nome_categoria"] == "uomini":
-                # calculate variation
-                variation = men - gender["totale_vaccinati"]
-                new_dict["nuovi_vaccinati"] = variation
+                if "totale_vaccinati" in gender:
+                    # calculate variation
+                    variation = men - gender["totale_vaccinati"]
+                    new_dict["nuovi_vaccinati"] = variation
 
     # finally append to data
     data["sesso"].append(new_dict)
@@ -203,24 +207,24 @@ def main():
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
 
+        new_data = {
+            "nome_categoria": category_name,
+            "totale_vaccinati": total_number,
+        }
+
         # iterate over last data to find the variation
         if last_data is not None:
             for age in last_data["fasce_eta"]:
                 if age["nome_categoria"] == category_name:
-                    variation = total_number - age["totale_vaccinati"]
-                    # init the dict with all the new data
-                    new_data = {
-                        "nome_categoria": category_name,
-                        "totale_vaccinati": total_number,
-                        "nuovi_vaccinati": variation
-                    }
-                    break
-        else:
-            # no old data found, cannot compare
-            new_data = {
-                "nome_categoria": category_name,
-                "totale_vaccinati": total_number,
-            }
+                    if "totale_vaccinati" in age:
+                        variation = total_number - age["totale_vaccinati"]
+                        # init the dict with all the new data
+                        new_data = {
+                            "nome_categoria": category_name,
+                            "totale_vaccinati": total_number,
+                            "nuovi_vaccinati": variation
+                        }
+                        break
 
         # finally append data to the dict
         data["fasce_eta"].append(new_data)
@@ -282,7 +286,6 @@ def main():
         logging.info("Pushing to GitHub")
         subprocess.run("git pull".split(" "))
         subprocess.run(["git", "add", cwd + output_path + json_filename])
-        subprocess.run(["git", "add", cwd + output_path + js_filename])
         subprocess.run(["git", "add", cwd + assets_path + js_filename])
         subprocess.run(["git", "pull"])
         subprocess.run(["git", "commit", "-m", "updated data"])
