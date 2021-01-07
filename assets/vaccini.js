@@ -244,20 +244,20 @@ let vaccini = {
         {
             "id_categoria": 1,
             "nome_categoria": "Operatori Sanitari e Sociosanitari",
-            "totale_vaccinati": 273184,
-            "nuovi_vaccinati": 50548
+            "totale_vaccinati": 274669,
+            "nuovi_vaccinati": 52033
         },
         {
             "id_categoria": 2,
             "nome_categoria": "Personale non Sanitario",
-            "totale_vaccinati": 30293,
-            "nuovi_vaccinati": 8022
+            "totale_vaccinati": 30488,
+            "nuovi_vaccinati": 8217
         },
         {
             "id_categoria": 3,
             "nome_categoria": "Ospiti Strutture Residenziali",
-            "totale_vaccinati": 17600,
-            "nuovi_vaccinati": 3470
+            "totale_vaccinati": 17786,
+            "nuovi_vaccinati": 3656
         }
     ],
     "sesso": [
@@ -268,8 +268,8 @@ let vaccini = {
         },
         {
             "nome_categoria": "uomini",
-            "totale_vaccinati": 125423,
-            "nuovi_vaccinati": 23852
+            "totale_vaccinati": 126282,
+            "nuovi_vaccinati": 24711
         }
     ],
     "fasce_eta": [
@@ -280,46 +280,46 @@ let vaccini = {
         },
         {
             "nome_categoria": "20-29",
-            "totale_vaccinati": 33084,
-            "nuovi_vaccinati": 7278
+            "totale_vaccinati": 33233,
+            "nuovi_vaccinati": 7427
         },
         {
             "nome_categoria": "30-39",
-            "totale_vaccinati": 55852,
-            "nuovi_vaccinati": 10620
+            "totale_vaccinati": 56095,
+            "nuovi_vaccinati": 10863
         },
         {
             "nome_categoria": "40-49",
-            "totale_vaccinati": 71104,
-            "nuovi_vaccinati": 12772
+            "totale_vaccinati": 71426,
+            "nuovi_vaccinati": 13094
         },
         {
             "nome_categoria": "50-59",
-            "totale_vaccinati": 91507,
-            "nuovi_vaccinati": 16833
+            "totale_vaccinati": 92000,
+            "nuovi_vaccinati": 17326
         },
         {
             "nome_categoria": "60-69",
-            "totale_vaccinati": 50642,
-            "nuovi_vaccinati": 10348
+            "totale_vaccinati": 51125,
+            "nuovi_vaccinati": 10831
         },
         {
             "nome_categoria": "70-79",
-            "totale_vaccinati": 5670,
-            "nuovi_vaccinati": 1545
+            "totale_vaccinati": 5739,
+            "nuovi_vaccinati": 1614
         },
         {
             "nome_categoria": "80-89",
-            "totale_vaccinati": 7208,
-            "nuovi_vaccinati": 1434
+            "totale_vaccinati": 7270,
+            "nuovi_vaccinati": 1496
         },
         {
             "nome_categoria": "90+",
-            "totale_vaccinati": 5642,
-            "nuovi_vaccinati": 1121
+            "totale_vaccinati": 5687,
+            "nuovi_vaccinati": 1166
         }
     ],
-    "script_timestamp": "2021-01-07T09:03:34.808130",
-    "last_updated": "2021-01-07 ore 09:03",
-    "last_data_update": "2021-01-07T07:24:49.705Z"
+    "script_timestamp": "2021-01-07T10:00:05.281760",
+    "last_updated": "2021-01-07 ore 10:00",
+    "last_data_update": "2021-01-07T08:24:39.841Z"
 };
