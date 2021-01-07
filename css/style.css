@@ -24,6 +24,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-content: center;
+  align-items: center;
   margin-left: auto;
   margin-right: auto;
 }
@@ -192,7 +193,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   }
 
   .alltimechartcontainer {
-    width: 75vw;  
+    width: 75vw;
     max-width: 1150px;
     margin-top: var(--title-size);
     margin-bottom: var(--title-size);
