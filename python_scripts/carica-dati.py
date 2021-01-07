@@ -280,6 +280,7 @@ def main():
 
     logging.info(f"Json file saved. Path: {cwd}{json_filename}")
 
+
     # save the js file for the website
     # luckily, js objects and json have the same structure
     with open(assets_path + js_filename, "w") as f:
@@ -290,6 +291,7 @@ def main():
         f.write(js_string)
     logging.info(f"JS file saved. Path: {cwd}{js_filename}")
 
+
     # create a js file with all the data about vaccines
     midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     history = []
@@ -299,19 +301,23 @@ def main():
         time_obj = datetime.fromisoformat(timestamp)
         diff = time_obj - midnight
         if diff <= timedelta(hours=8):
-            new_data["script_timestamp"] = timestamp
+            new_timestamp = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d")
+            new_data["script_timestamp"] = new_timestamp
             new_data["territori"] = []
 
             for territory in d["territori"]:
                 new_territory = {
                     "nome_territorio": territory["nome_territorio"],
+                    "codice_territorio": territory.get("codice_territorio", None),
                     "totale_vaccinati": territory["totale_vaccinati"],
                     "totale_dosi_consegnate": territory["totale_dosi_consegnate"],
-                    "codice_territorio": territory.get("codice_territorio", None)
+                    "percentuale_popolazione_vaccinata": territory["percentuale_popolazione_vaccinata"]
                 }
                 new_data["territori"].append(new_territory)
             history.append(new_data)
             midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
+    # reverse so the oldest one ore always on top
+    history.reverse()
 
     # save the js file for the website
     # luckily, js objects and json have the same structure
