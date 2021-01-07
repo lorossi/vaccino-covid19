@@ -26,23 +26,23 @@ let vaccini = {
             "nome_territorio": "Calabria",
             "codice_territorio": "04",
             "totale_dosi_consegnate": 25630,
-            "totale_vaccinati": 3925,
-            "percentuale_popolazione_vaccinata": 0.15314085056574328,
+            "totale_vaccinati": 4030,
+            "percentuale_popolazione_vaccinata": 0.15723761217323448,
             "nuove_dosi_consegnate": 12675,
             "percentuale_nuove_dosi_consegnate": 97.83867232728676,
-            "nuovi_vaccinati": 3154,
-            "percentuale_nuovi_vaccinati": 409.07911802853437
+            "nuovi_vaccinati": 3259,
+            "percentuale_nuovi_vaccinati": 422.6977950713359
         },
         {
             "nome_territorio": "Campania",
             "codice_territorio": "05",
             "totale_dosi_consegnate": 57270,
-            "totale_vaccinati": 29662,
-            "percentuale_popolazione_vaccinata": 0.5179325999650777,
+            "totale_vaccinati": 31273,
+            "percentuale_popolazione_vaccinata": 0.5460625109132181,
             "nuove_dosi_consegnate": 23400,
             "percentuale_nuove_dosi_consegnate": 69.08768821966342,
-            "nuovi_vaccinati": 13060,
-            "percentuale_nuovi_vaccinati": 78.66522105770389
+            "nuovi_vaccinati": 14671,
+            "percentuale_nuovi_vaccinati": 88.3688712203349
         },
         {
             "nome_territorio": "Emilia-Romagna",
@@ -92,12 +92,12 @@ let vaccini = {
             "nome_territorio": "Lombardia",
             "codice_territorio": "10",
             "totale_dosi_consegnate": 109845,
-            "totale_vaccinati": 23641,
-            "percentuale_popolazione_vaccinata": 0.21522144840457008,
+            "totale_vaccinati": 23749,
+            "percentuale_popolazione_vaccinata": 0.21620465200964997,
             "nuove_dosi_consegnate": 29250,
             "percentuale_nuove_dosi_consegnate": 36.29257398101619,
-            "nuovi_vaccinati": 12339,
-            "percentuale_nuovi_vaccinati": 109.17536719164748
+            "nuovi_vaccinati": 12447,
+            "percentuale_nuovi_vaccinati": 110.13095027428774
         },
         {
             "nome_territorio": "Marche",
@@ -136,12 +136,12 @@ let vaccini = {
             "nome_territorio": "P.A. Trento",
             "codice_territorio": "18",
             "totale_dosi_consegnate": 6925,
-            "totale_vaccinati": 4315,
-            "percentuale_popolazione_vaccinata": 0.6231046931407942,
+            "totale_vaccinati": 4357,
+            "percentuale_popolazione_vaccinata": 0.6291696750902527,
             "nuove_dosi_consegnate": 1950,
             "percentuale_nuove_dosi_consegnate": 39.19597989949749,
-            "nuovi_vaccinati": 948,
-            "percentuale_nuovi_vaccinati": 28.155628155628154
+            "nuovi_vaccinati": 990,
+            "percentuale_nuovi_vaccinati": 29.4030294030294
         },
         {
             "nome_territorio": "Piemonte",
@@ -234,10 +234,10 @@ let vaccini = {
         {
             "nome_territorio": "Italia",
             "totale_dosi_consegnate": 695175,
-            "totale_vaccinati": 321077,
-            "percentuale_popolazione_vaccinata": 0.5323159308321037,
+            "totale_vaccinati": 322943,
+            "percentuale_popolazione_vaccinata": 0.5354095860205249,
             "nuove_dosi_consegnate": 215475,
-            "nuovi_vaccinati": 130066
+            "nuovi_vaccinati": 131932
         }
     ],
     "categorie": [
@@ -263,8 +263,8 @@ let vaccini = {
     "sesso": [
         {
             "nome_categoria": "donne",
-            "totale_vaccinati": 195654,
-            "nuovi_vaccinati": 80032
+            "totale_vaccinati": 196661,
+            "nuovi_vaccinati": 81039
         },
         {
             "nome_categoria": "uomini",
@@ -319,7 +319,7 @@ let vaccini = {
             "nuovi_vaccinati": 1166
         }
     ],
-    "script_timestamp": "2021-01-07T10:00:05.281760",
-    "last_updated": "2021-01-07 ore 10:00",
-    "last_data_update": "2021-01-07T08:24:39.841Z"
+    "script_timestamp": "2021-01-07T11:00:04.564629",
+    "last_updated": "2021-01-07 ore 11:00",
+    "last_data_update": "2021-01-07T09:24:30.077Z"
 };
