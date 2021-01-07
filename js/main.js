@@ -158,7 +158,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
   }
 
   let font_size = $(window).width() > 1500 ? 16 : 8;
-  let aspect_ratio = $(window).width() > 1500 ? 1 : 1.1;
+  let aspect_ratio = $(window).width() > 1500 ? 1.2 : 0.8;
   if (old_chart) {
     old_chart.data = {
       labels: labels,
@@ -183,6 +183,14 @@ const load_italy_chart = (values, territory_name, old_chart) => {
                     autoSkip: false,
                     maxRotation: 90,
                     minRotation: 45,
+                  }
+              }],
+              yAxes: [{
+                  ticks: {
+                    fontSize: font_size,
+                    autoSkip: false,
+                    maxRotation: 45,
+                    minRotation: -45,
                   }
               }]
           }
@@ -337,9 +345,12 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
               }
             }],
             yAxes: [{
-              ticks: {
-                fontSize: font_size
-              }
+                ticks: {
+                  fontSize: font_size,
+                  autoSkip: false,
+                  maxRotation: 45,
+                  minRotation: -45,
+                }
             }]
           }
         }
@@ -514,9 +525,12 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
               }
             }],
             yAxes: [{
-              ticks: {
-                fontSize: font_size
-              }
+                ticks: {
+                  fontSize: font_size,
+                  autoSkip: false,
+                  maxRotation: 45,
+                  minRotation: -45,
+                }
             }]
           }
         }
@@ -632,9 +646,10 @@ const load_categories_chart = (order, old_chart) => {
               }
             }],
             yAxes: [{
-              ticks: {
-                fontSize: font_size
-              }
+                ticks: {
+                  fontSize: font_size,
+                  autoSkip: false,
+                }
             }]
           }
         }
@@ -841,9 +856,12 @@ const load_age_ranges_chart = (order, old_chart) => {
               }
             }],
             yAxes: [{
-              ticks: {
-                fontSize: font_size
-              }
+                ticks: {
+                  fontSize: font_size,
+                  autoSkip: false,
+                  maxRotation: 45,
+                  minRotation: -45,
+                }
             }]
           }
         }
