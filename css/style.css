@@ -83,6 +83,14 @@ body {
   justify-content: space-evenly;
 }
 
+.alltimechartcontainer {
+  max-width: 90vw;
+  margin-bottom: calc(var(--title-size) / 2);
+  margin-left: auto;
+  margin-right: auto;
+  padding: var(--text-size);
+}
+
 table {
   text-align: center;
   font-size: var(--text-size);
@@ -137,7 +145,7 @@ table tr {
   text-align: center;
 }
 
-table, .italia .stats, .chartcontainer {
+table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.24);
 }
 
@@ -152,20 +160,18 @@ table, .italia .stats, .chartcontainer {
   margin-bottom: calc(2 * var(--title-size));
 }
 
-.chartcontainer .form {
+.form {
   flex-grow: 1;
   text-align: left;
+  font-size: var(--text-size);
+  margin-bottom: var(--text-size);
 }
 
 .chartcontainer canvas {
   flex-grow: 0;
 }
 
-.chartcontainer .form {
-  margin-bottom: var(--text-size);
-}
-
-.form {
+.dropdown-content {
   font-size: var(--text-size);
 }
 
@@ -183,6 +189,19 @@ table, .italia .stats, .chartcontainer {
     max-width: 70vw;
     margin-top: var(--title-size);
     margin-bottom: var(--title-size);
+  }
+
+  .alltimechartcontainer {
+    width: 75vw;  
+    max-width: 1150px;
+    margin-top: var(--title-size);
+    margin-bottom: var(--title-size);
+    padding: calc(2 * var(--text-size));
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: flex-end;
   }
 
   .italia .stats {
@@ -217,12 +236,8 @@ table, .italia .stats, .chartcontainer {
     padding-bottom: calc(var(--text-size) / 2);
   }
 
-  table, .italia .stats {
+  table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
-  }
-
-  .chartcontainer .form {
-    text-align: right;
   }
 
   table, .chartcontainer {

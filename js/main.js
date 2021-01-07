@@ -10,6 +10,41 @@ const set_last_update = () => {
 };
 
 
+const load_selection = () => {
+  let new_element = "";
+  storico_vaccini[0].territori.forEach((t, i) => {
+    let new_option = `<option value="${t.nome_territorio}">${t.nome_territorio}</option>`;
+    if (t.codice_territorio) new_element += new_option;
+    else new_element = new_option + new_element;
+  });
+
+  $(".alltimechartcontainer select#territori").append(new_element);
+};
+
+
+const all_time_get_options = () => {
+  let values = [];
+  let territory;
+
+  $(".alltimechartcontainer input[type=\"checkbox\"]").toArray().forEach((c, i) => {
+    if ($(c).prop("checked")) {
+      values.push(i);
+    }
+  });
+  territory = $(".alltimechartcontainer select").val();
+
+  if ($(".alltimechartcontainer input#totale_vaccinati").prop("checked") || $(".alltimechartcontainer input#totale_vaccini").prop("checked")) {
+    $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", true);
+  } else {
+    $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", false);
+  }
+
+  $(".alltimechartcontainer span#nome_territorio").text(territory);
+
+  return {values: values, territory: territory};
+};
+
+
 // load the table data about Italy as a whole
 const load_italy = () => {
   [...vaccini.territori].filter(x => x.nome_territorio === "Italia").forEach((t, i) => {
@@ -122,14 +157,40 @@ const load_italy_chart = (values, territory_name, old_chart) => {
     });
   }
 
-  let ctx = $("canvas#italia")[0].getContext('2d');
-  chart = new Chart(ctx, {
-    type: "line",
-    data: {
+  let font_size = $(window).width() > 1500 ? 16 : 8;
+  let aspect_ratio = $(window).width() > 1500 ? 1 : 1.1;
+  if (old_chart) {
+    old_chart.data = {
       labels: labels,
       datasets: datasets
-    }
-  });
+    };
+    old_chart.update();
+  } else {
+
+  let ctx = $("canvas#italia")[0].getContext('2d');
+    chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: labels,
+        datasets: datasets
+      },
+      options: {
+        aspectRatio: aspect_ratio,
+          scales: {
+              xAxes: [{
+                  ticks: {
+                    fontSize: font_size,
+                    autoSkip: false,
+                    maxRotation: 90,
+                    minRotation: 45,
+                  }
+              }]
+          }
+      }
+    });
+  }
+
+  return chart;
 };
 
 
@@ -155,11 +216,20 @@ const load_territories = (order, reverse) => {
 
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
+      let nome_territorio;
+      if (t.codice_territorio === "06") {
+        nome_territorio = "E.R.";
+      } else if (t.codice_territorio === "07") {
+        nome_territorio = "F.V.G";
+      } else {
+        nome_territorio = t.nome_territorio;
+      }
+
       let percentuale;
       percentuale = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td>${t.nome_territorio}</td>`;
+      new_tr += `<td>${nome_territorio}</td>`;
       new_tr += `<td>${t.totale_vaccinati}`;
       new_tr += `<td>${percentuale}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}`;
@@ -216,7 +286,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
     label = "Totale dosi di vaccino consegnate";
   }
 
-  font_size = $(window).width() > 480 ? 12 : 8;
+  font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
     // update the old chart
     old_chart.data = {
@@ -260,6 +330,9 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
           scales: {
             xAxes: [{
               ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
                 fontSize: font_size
               }
             }],
@@ -274,6 +347,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
   }
   return chart;
 };
+
 
 
 const load_variations = (order, reverse) => {
@@ -299,6 +373,16 @@ const load_variations = (order, reverse) => {
 
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
+
+      let nome_territorio;
+      if (t.codice_territorio === "06") {
+        nome_territorio = "E.R.";
+      } else if (t.codice_territorio === "07") {
+        nome_territorio = "F.V.G";
+      } else {
+        nome_territorio = t.nome_territorio;
+      }
+
       let nuovi_vaccinati;
       let nuovi_vaccinati_percentuale;
       if (t.nuovi_vaccinati === undefined) {
@@ -320,7 +404,7 @@ const load_variations = (order, reverse) => {
       }
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td>${t.nome_territorio}</td>`;
+      new_tr += `<td>${nome_territorio}</td>`;
       new_tr += `<td>+${nuovi_vaccinati}`;
       new_tr += `<td>+${nuovi_vaccinati_percentuale.toFixed(2)}%</td>`;
       new_tr += `<td>+${nuove_dosi}`;
@@ -379,7 +463,7 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
   hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
   labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
 
-  font_size = $(window).width() > 480 ? 12 : 8;
+  font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
     // update the old chart
     old_chart.data = {
@@ -423,6 +507,9 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
           scales: {
             xAxes: [{
               ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
                 fontSize: font_size
               }
             }],
@@ -494,7 +581,7 @@ const load_categories_chart = (order, old_chart) => {
   labels = vaccini.categorie.map(x => x.nome_categoria.split(" "));
   label = "Totale vaccinati";
 
-  font_size = $(window).width() > 480 ? 14 : 10;
+  font_size = $(window).width() > 1500 ? 14 : 10;
   if (old_chart) {
     // update the old chart
     old_chart.data = {
@@ -538,6 +625,9 @@ const load_categories_chart = (order, old_chart) => {
           scales: {
             xAxes: [{
               ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
                 fontSize: font_size
               }
             }],
@@ -611,7 +701,7 @@ const load_genders_chart = () => {
   labels = vaccini.sesso.map(x => x.nome_categoria);
   label = "Totale vaccinati";
 
-  font_size = $(window).width() > 480 ? 14 : 10;
+  font_size = $(window).width() > 1500 ? 14 : 10;
 
   // draw the new chart
   let ctx = $("canvas#sesso")[0].getContext('2d');
@@ -700,7 +790,7 @@ const load_age_ranges_chart = (order, old_chart) => {
   labels = vaccini.fasce_eta.map(x => x.nome_categoria);
   label = "Totale vaccinati";
 
-  font_size = $(window).width() > 480 ? 14 : 10;
+  font_size = $(window).width() > 1500 ? 14 : 10;
   if (old_chart) {
     // update the old chart
     old_chart.data = {
@@ -744,6 +834,9 @@ const load_age_ranges_chart = (order, old_chart) => {
           scales: {
             xAxes: [{
               ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
                 fontSize: font_size
               }
             }],
@@ -763,6 +856,7 @@ const load_age_ranges_chart = (order, old_chart) => {
 // main function
 $(document).ready(() => {
   set_last_update();
+  load_selection();
   load_italy();
   load_territories(0, false);
   load_variations(0, false);
@@ -770,14 +864,26 @@ $(document).ready(() => {
   load_genders(0, false);
   load_age_ranges(0, false);
 
-  let italy_chart = load_italy_chart([0, 1, 2]);
+  //Chart.defaults.global.defaultFontFamily = "'Roboto', sans-serif;'";
+  let italy_chart = load_italy_chart([0, 1]);
   let territories_chart = load_territories_chart(0, false);
   let variations_chart = load_variations_chart(0, false);
   let categories_chart = load_categories_chart(0);
   let genders_chart = load_genders_chart(0);
   let ages_ranges_chart = load_age_ranges_chart(0);
 
-  // this function won't work with lambda
+  // this function won't work with arrow
+  $(".alltimechartcontainer input[type=\"checkbox\"]").click(function() {
+    let options = all_time_get_options();
+    italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
+  });
+
+  $(".alltimechartcontainer select").on("change   ", function() {
+    let options = all_time_get_options();
+    italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
+  });
+
+  // this function won't work with arrow
   $("table th").click(function() {
     let column = $(this).data("column");
     let reverse;
@@ -808,6 +914,7 @@ $(document).ready(() => {
     }
   });
 
+  // this function won't work with arrow
   $(".chartcontainer input").click(function() {
     // id of the corresponding chart
     let chart_id = $(this).parentsUntil(".form").parent().attr("id");
