@@ -233,6 +233,7 @@ let vaccini = {
         },
         {
             "nome_territorio": "Italia",
+            "codice_territorio": null,
             "totale_dosi_consegnate": 695175,
             "totale_vaccinati": 326649,
             "percentuale_popolazione_vaccinata": 0.5415537908052456,
@@ -319,7 +320,7 @@ let vaccini = {
             "nuovi_vaccinati": 1283
         }
     ],
-    "script_timestamp": "2021-01-07T15:00:05.498757",
-    "last_updated": "2021-01-07 ore 15:00",
+    "script_timestamp": "2021-01-07T15:05:21.108708",
+    "last_updated": "2021-01-07 ore 15:05",
     "last_data_update": "2021-01-07T13:23:50.912Z"
 };
