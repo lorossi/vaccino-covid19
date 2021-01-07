@@ -90,6 +90,7 @@ table {
   border-collapse: collapse;
   vertical-align: middle;
   min-width: 40%;
+  margin-bottom: var(--title-size);
 }
 
 table td {
@@ -149,16 +150,8 @@ table, .italia .stats, .chartcontainer {
   justify-content: space-between;
   align-content: center;
   padding: var(--text-size);
+  margin-bottom: calc(2 * var(--title-size));
 }
-
-table, .chartcontainer {
-  margin-bottom: var(--title-size);
-}
-
-.form {
-  font-size: var(--text-size);
-}
-
 .chartcontainer .form {
   flex-grow: 1;
   text-align: left;
@@ -171,6 +164,11 @@ table, .chartcontainer {
 .chartcontainer .form {
   margin-bottom: var(--text-size);
 }
+
+.form {
+  font-size: var(--text-size);
+}
+
 
 @media only screen and (min-width: 480px) {
   .content {
@@ -204,6 +202,7 @@ table, .chartcontainer {
 
   .chartcontainer {
     margin-top: calc(1.4 * var(--text-size) + var(--big-text-size));
+    width: 40%;
   }
 
   table {
@@ -222,16 +221,12 @@ table, .chartcontainer {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
   }
 
-  .chartcontainer {
-    width: 40%;
-  }
-
   .chartcontainer .form {
     text-align: right;
   }
 
-  .table .chartcontainer {
-    margin-bottom: 0;
+  table, .chartcontainer {
+    margin-bottom: var(--title-size);
   }
 }
 

@@ -82,9 +82,9 @@ const load_territories = (order, reverse) => {
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td>${t.nome_territorio}</td>`;
-      new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
+      new_tr += `<td>${t.totale_vaccinati}<br>(+${nuovi_vaccinati})</td>`;
       new_tr += `<td>${percentuale}</td>`;
-      new_tr += `<td>${t.totale_dosi_consegnate}  (+${nuove_dosi})</td>`;
+      new_tr += `<td>${t.totale_dosi_consegnate}<br>(+${nuove_dosi})</td>`;
       new_tr += "</tr>";
       $("table#territori tbody").append(new_tr);
     }
