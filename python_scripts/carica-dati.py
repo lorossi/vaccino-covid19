@@ -107,7 +107,9 @@ def main():
         # if found, compare
         if last_territory is not None:
             new_data["nuove_dosi_consegnate"] = new_data["totale_dosi_consegnate"] - old_territory["totale_dosi_consegnate"]
+            new_data["percentuale_nuove_dosi_consegnate"] = new_data["nuove_dosi_consegnate"] / old_territory["totale_dosi_consegnate"] * 100
             new_data["nuovi_vaccinati"] = new_data["totale_vaccinati"] - last_territory["totale_vaccinati"]
+            new_data["percentuale_nuovi_vaccinati"] = new_data["nuovi_vaccinati"] / last_territory["totale_vaccinati"] * 100
 
         # finally append data to the dict
         data["territori"].append(new_data)
