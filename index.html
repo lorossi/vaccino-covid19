@@ -106,6 +106,55 @@
                </div>
                <canvas id="territori"></canvas>
             </div>
+            <table id="variazioni">
+               <caption class="subtitle">Variazioni - dettaglio per territori</caption>
+               <thead>
+                  <tr>
+                     <th class="darr" data-column="0">Territorio</th>
+                     <th class="darr" data-column="1">Vaccinati</th>
+                     <th class="darr" data-column="2">%</th>
+                     <th class="darr" data-column="3">Dosi</th>
+                     <th class="darr" data-column="4">%</th>
+                  </tr>
+               </thead>
+               <tbody>
+               </tbody>
+            </table>
+            <div class="chartcontainer" id="variazioni">
+               <div class="form" id="variazioni">
+                  <form>
+                     <p>
+                        <input type="radio" id="assoluta_vaccinati" name="sort" value="0" checked>
+                        <label for="assoluta_vaccinati">Mostra variazione assoluta vaccinati</label>
+                     </p>
+                     <p>
+                       <input type="radio" id="relativa_vaccinati" name="sort" value="1">
+                       <label for="relativa_vaccinati">Mostra variazione relativa vaccinati</label>
+                     </p>
+                     <p>
+                       <input type="radio" id="assoluta_vaccini" name="sort" value="2">
+                       <label for="relativa_vaccinati">Mostra variazione assoluta vaccini</label>
+                     </p>
+                     <p>
+                       <input type="radio" id="relativa_vaccini" name="sort" value="3">
+                       <label for="relativa_vaccini">Mostra variazione relativa vaccini</label>
+                     </p>
+                  </form>
+               </div>
+               <div class="form" id="variazioni">
+                  <form>
+                     <p>
+                        <input type="radio" id="valore" name="sort" value="4" checked>
+                        <label for="valore">Ordina per valore</label>
+                     </p>
+                     <p>
+                        <input type="radio" id="nome" name="sort" value="5">
+                        <label for="nome">Ordina per nome</label>
+                     </p>
+                  </form>
+               </div>
+               <canvas id="variazioni"></canvas>
+            </div>
             <table id="categorie">
                <caption class="subtitle">Dettaglio per categorie</caption>
                <thead>
