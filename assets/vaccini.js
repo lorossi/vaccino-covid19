@@ -92,12 +92,12 @@ let vaccini = {
             "nome_territorio": "Lombardia",
             "codice_territorio": "10",
             "totale_dosi_consegnate": 153720,
-            "totale_vaccinati": 34417,
-            "percentuale_popolazione_vaccinata": 0.22389409315638825,
+            "totale_vaccinati": 34465,
+            "percentuale_popolazione_vaccinata": 0.22420634920634921,
             "nuove_dosi_consegnate": 73125,
             "percentuale_nuove_dosi_consegnate": 90.73143495254048,
-            "nuovi_vaccinati": 23115,
-            "percentuale_nuovi_vaccinati": 204.52132365952932
+            "nuovi_vaccinati": 23163,
+            "percentuale_nuovi_vaccinati": 204.94602725181386
         },
         {
             "nome_territorio": "Marche",
@@ -136,12 +136,12 @@ let vaccini = {
             "nome_territorio": "P.A. Trento",
             "codice_territorio": "18",
             "totale_dosi_consegnate": 16675,
-            "totale_vaccinati": 4357,
-            "percentuale_popolazione_vaccinata": 0.2612893553223388,
+            "totale_vaccinati": 4709,
+            "percentuale_popolazione_vaccinata": 0.28239880059970013,
             "nuove_dosi_consegnate": 11700,
             "percentuale_nuove_dosi_consegnate": 235.17587939698493,
-            "nuovi_vaccinati": 990,
-            "percentuale_nuovi_vaccinati": 29.4030294030294
+            "nuovi_vaccinati": 1342,
+            "percentuale_nuovi_vaccinati": 39.85743985743986
         },
         {
             "nome_territorio": "Piemonte",
@@ -158,12 +158,12 @@ let vaccini = {
             "nome_territorio": "Puglia",
             "codice_territorio": "14",
             "totale_dosi_consegnate": 48280,
-            "totale_vaccinati": 24734,
-            "percentuale_popolazione_vaccinata": 0.5123032311516156,
+            "totale_vaccinati": 24836,
+            "percentuale_popolazione_vaccinata": 0.5144159072079536,
             "nuove_dosi_consegnate": 22425,
             "percentuale_nuove_dosi_consegnate": 86.73370721330497,
-            "nuovi_vaccinati": 13581,
-            "percentuale_nuovi_vaccinati": 121.76992737380077
+            "nuovi_vaccinati": 13683,
+            "percentuale_nuovi_vaccinati": 122.68447951223887
         },
         {
             "nome_territorio": "Sardegna",
@@ -235,92 +235,92 @@ let vaccini = {
             "nome_territorio": "Italia",
             "codice_territorio": null,
             "totale_dosi_consegnate": 918450,
-            "totale_vaccinati": 412619,
-            "percentuale_popolazione_vaccinata": 0.684084089062785,
+            "totale_vaccinati": 413121,
+            "percentuale_popolazione_vaccinata": 0.6849163585722101,
             "nuove_dosi_consegnate": 438750,
-            "nuovi_vaccinati": 221608
+            "nuovi_vaccinati": 222110
         }
     ],
     "categorie": [
         {
             "id_categoria": 1,
             "nome_categoria": "Operatori Sanitari e Sociosanitari",
-            "totale_vaccinati": 345659,
-            "nuovi_vaccinati": 123023
+            "totale_vaccinati": 346092,
+            "nuovi_vaccinati": 123456
         },
         {
             "id_categoria": 2,
             "nome_categoria": "Personale non Sanitario",
-            "totale_vaccinati": 42657,
-            "nuovi_vaccinati": 20386
+            "totale_vaccinati": 42691,
+            "nuovi_vaccinati": 20420
         },
         {
             "id_categoria": 3,
             "nome_categoria": "Ospiti Strutture Residenziali",
-            "totale_vaccinati": 24303,
-            "nuovi_vaccinati": 10173
+            "totale_vaccinati": 24338,
+            "nuovi_vaccinati": 10208
         }
     ],
     "sesso": [
         {
             "nome_categoria": "donne",
-            "totale_vaccinati": 253576,
-            "nuovi_vaccinati": 137954
+            "totale_vaccinati": 253913,
+            "nuovi_vaccinati": 138291
         },
         {
             "nome_categoria": "uomini",
-            "totale_vaccinati": 159043,
-            "nuovi_vaccinati": 57472
+            "totale_vaccinati": 159208,
+            "nuovi_vaccinati": 57637
         }
     ],
     "fasce_eta": [
         {
             "nome_categoria": "16-19",
-            "totale_vaccinati": 487,
-            "nuovi_vaccinati": 208
+            "totale_vaccinati": 488,
+            "nuovi_vaccinati": 209
         },
         {
             "nome_categoria": "20-29",
-            "totale_vaccinati": 42191,
-            "nuovi_vaccinati": 16385
+            "totale_vaccinati": 42241,
+            "nuovi_vaccinati": 16435
         },
         {
             "nome_categoria": "30-39",
-            "totale_vaccinati": 71084,
-            "nuovi_vaccinati": 25852
+            "totale_vaccinati": 71170,
+            "nuovi_vaccinati": 25938
         },
         {
             "nome_categoria": "40-49",
-            "totale_vaccinati": 90714,
-            "nuovi_vaccinati": 32382
+            "totale_vaccinati": 90848,
+            "nuovi_vaccinati": 32516
         },
         {
             "nome_categoria": "50-59",
-            "totale_vaccinati": 117658,
-            "nuovi_vaccinati": 42984
+            "totale_vaccinati": 117798,
+            "nuovi_vaccinati": 43124
         },
         {
             "nome_categoria": "60-69",
-            "totale_vaccinati": 64825,
-            "nuovi_vaccinati": 24531
+            "totale_vaccinati": 64878,
+            "nuovi_vaccinati": 24584
         },
         {
             "nome_categoria": "70-79",
-            "totale_vaccinati": 7795,
-            "nuovi_vaccinati": 3670
+            "totale_vaccinati": 7801,
+            "nuovi_vaccinati": 3676
         },
         {
             "nome_categoria": "80-89",
-            "totale_vaccinati": 9997,
-            "nuovi_vaccinati": 4223
+            "totale_vaccinati": 10018,
+            "nuovi_vaccinati": 4244
         },
         {
             "nome_categoria": "90+",
-            "totale_vaccinati": 7868,
-            "nuovi_vaccinati": 3347
+            "totale_vaccinati": 7879,
+            "nuovi_vaccinati": 3358
         }
     ],
-    "script_timestamp": "2021-01-08T10:00:04.856692",
-    "last_updated": "2021-01-08 ore 10:00",
-    "last_data_update": "2021-01-08T08:21:03.365Z"
+    "script_timestamp": "2021-01-08T11:00:04.401289",
+    "last_updated": "2021-01-08 ore 11:00",
+    "last_data_update": "2021-01-08T09:20:53.616Z"
 };
