@@ -10,6 +10,10 @@ body {
   color: #212529;
 }
 
+.onlymobile {
+  display: inline-block;
+}
+
 .content {
   width: 90vw;
   margin-left: auto;
@@ -97,7 +101,8 @@ table {
   font-size: var(--text-size);
   border-collapse: collapse;
   vertical-align: middle;
-  min-width: 40%;
+  min-width: 60vw;
+  max-width: 90vw;
   margin-bottom: var(--title-size);
 }
 
@@ -178,6 +183,10 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
 
 
 @media only screen and (min-width: 480px) {
+  .onlymobile {
+    display: none;
+  }
+  
   .content {
     width: 80vw;
   }

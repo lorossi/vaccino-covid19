@@ -4,17 +4,21 @@
 /*jshint esversion: 8 */
 /*jshint strict: false */
 
-// update the data about the last update
+
+// update the data about the last vax update
 const set_last_update = () => {
   $(".update .stats").html(vaccini.last_updated);
 };
 
 
+// load selection form item for all time char
 const load_selection = () => {
   let new_element = "";
   storico_vaccini[0].territori.forEach((t, i) => {
     let new_option = `<option value="${t.nome_territorio}">${t.nome_territorio}</option>`;
+    // if we have a territory code, append it to the end (it's a territory)
     if (t.codice_territorio) new_element += new_option;
+    // otherwise, prepend it (it's italy as a whole)
     else new_element = new_option + new_element;
   });
 
@@ -22,47 +26,61 @@ const load_selection = () => {
 };
 
 
+// load options for all time chart
 const all_time_get_options = () => {
   let values = [];
   let territory;
 
+  // checj all the checkbox
   $(".alltimechartcontainer input[type=\"checkbox\"]").toArray().forEach((c, i) => {
     if ($(c).prop("checked")) {
-      values.push(i);
+      // keep track of the checked values
+      values.push(parseInt($(c).val()));
     }
   });
+
+  // now load the territory name
   territory = $(".alltimechartcontainer select").val();
 
   if ($(".alltimechartcontainer input#totale_vaccinati").prop("checked") || $(".alltimechartcontainer input#totale_vaccini").prop("checked")) {
+    // disable "percentuale vaccinati" if any of the other two checkbox are checked
     $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", true);
   } else {
+    // otherwise, enable it
     $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", false);
   }
 
   if ($(".alltimechartcontainer input#percentuale_vaccinati").prop("checked")) {
+    // disable "totale vaccinati" and "totale vaccini" checkboxes if "percentuale vaccinati" is enabled
     $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", true);
     $(".alltimechartcontainer input#totale_vaccini").prop("disabled", true);
   } else {
+    // otherwise, enable them
     $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", false);
     $(".alltimechartcontainer input#totale_vaccini").prop("disabled", false);
   }
 
+  // update the text over the chart
   $(".alltimechartcontainer span#nome_territorio").text(territory);
 
+  // pack the values into an object and return them
   return {values: values, territory: territory};
 };
 
 
 // load the table data about Italy as a whole
 const load_italy = () => {
+  // copy array, so whule filtering it we don't alter it
+  // sorting is ok tho
   [...vaccini.territori].filter(x => x.nome_territorio === "Italia").forEach((t, i) => {
+    // due to a change, new vaccined  might not always be present
     let nuovi_vaccinati;
     if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
     }
-
+    // same for new doses
     let nuove_dosi;
     if (t.nuove_dosi_consegnate === undefined) {
       nuove_dosi = 0;
@@ -70,6 +88,7 @@ const load_italy = () => {
       nuove_dosi = t.nuove_dosi_consegnate;
     }
 
+    // update the divs
     $(".italia #vaccinati").text(`${t.totale_vaccinati}`);
     $(".italia #deltavaccinati").text(`${nuovi_vaccinati}`);
     $(".italia #dosi").text(`${t.totale_dosi_consegnate}`);
@@ -82,11 +101,13 @@ const load_italy = () => {
 };
 
 
+// load chart about Italy
 const load_italy_chart = (values, territory_name, old_chart) => {
   let chart;
   let labels = []; // x axis
   let datasets = [];
 
+  // pack the values into array
   if (values === undefined) {
     values = [0];
   } else if (!Array.isArray(values)) {
@@ -97,8 +118,10 @@ const load_italy_chart = (values, territory_name, old_chart) => {
     territory_name = "Italia";
   }
 
+  // dates as labels
   labels = storico_vaccini.map(x => x.script_timestamp);
 
+  // multiple lines into datasets
   if (values.includes(0)) {
     let data = [];
     let label;
@@ -165,6 +188,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
     });
   }
 
+  // font size and aspect ratio must me different on small screens
   let font_size = $(window).width() > 1500 ? 16 : 8;
   let aspect_ratio = $(window).width() > 1500 ? 2.25 : 0.8;
   if (old_chart) {
@@ -196,9 +220,9 @@ const load_italy_chart = (values, territory_name, old_chart) => {
               yAxes: [{
                   ticks: {
                     fontSize: font_size,
-                    autoSkip: false,
-                    maxRotation: 45,
-                    minRotation: -45,
+                    autoSkip: true,
+                    maxRotation: 30,
+                    minRotation: -30,
                   }
               }]
           }
@@ -355,9 +379,9 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
             yAxes: [{
                 ticks: {
                   fontSize: font_size,
-                  autoSkip: false,
-                  maxRotation: 45,
-                  minRotation: -45,
+                  autoSkip: true,
+                  maxRotation: 30,
+                  minRotation: -30,
                 }
             }]
           }
@@ -535,9 +559,9 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
             yAxes: [{
                 ticks: {
                   fontSize: font_size,
-                  autoSkip: false,
-                  maxRotation: 45,
-                  minRotation: -45,
+                  autoSkip: true,
+                  maxRotation: 30,
+                  minRotation: -30,
                 }
             }]
           }
@@ -656,7 +680,7 @@ const load_categories_chart = (order, old_chart) => {
             yAxes: [{
                 ticks: {
                   fontSize: font_size,
-                  autoSkip: false,
+                  autoSkip: true,
                 }
             }]
           }
@@ -866,9 +890,9 @@ const load_age_ranges_chart = (order, old_chart) => {
             yAxes: [{
                 ticks: {
                   fontSize: font_size,
-                  autoSkip: false,
-                  maxRotation: 45,
-                  minRotation: -45,
+                  autoSkip: true,
+                  maxRotation: 30,
+                  minRotation: -30,
                 }
             }]
           }
@@ -881,16 +905,18 @@ const load_age_ranges_chart = (order, old_chart) => {
 
 // main function
 $(document).ready(() => {
+  // load basic infos
   set_last_update();
   load_selection();
   load_italy();
+  // load tables
   load_territories(0, false);
   load_variations(0, false);
   load_categories(0, false);
   load_genders(0, false);
   load_age_ranges(0, false);
 
-  //Chart.defaults.global.defaultFontFamily = "'Roboto', sans-serif;'";
+  // load charts and keep the variable
   let italy_chart = load_italy_chart([0, 1]);
   let territories_chart = load_territories_chart(0, false);
   let variations_chart = load_variations_chart(0, false);
@@ -898,34 +924,38 @@ $(document).ready(() => {
   let genders_chart = load_genders_chart(0);
   let ages_ranges_chart = load_age_ranges_chart(0);
 
-  // this function won't work with arrow
-  $(".alltimechartcontainer input[type=\"checkbox\"]").click(function() {
+  // form for all time chart
+  $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {
     let options = all_time_get_options();
     italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
   });
 
-  $(".alltimechartcontainer select").on("change   ", function() {
+  // dropdown for all time chart
+  $(".alltimechartcontainer select").on("change", () => {
     let options = all_time_get_options();
     italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
   });
 
-  // this function won't work with arrow
-  $("table th").click(function() {
-    let column = $(this).data("column");
+  // sorting for tables
+  $("table th").click((e) => {
+    // get column id
+    let column = $(e.target).data("column");
+    // should the data be reversed?
     let reverse;
 
-    if ($(this).hasClass("darr")) {
+    // up/down sorting management. It is handled with a class
+    if ($(e.target).hasClass("darr")) {
       reverse = true;
-      $(this).removeClass("darr");
-      $(this).addClass("uarr");
+      $(e.target).removeClass("darr");
+      $(e.target).addClass("uarr");
     } else {
       reverse = false;
-      $(this).removeClass("uarr");
-      $(this).addClass("darr");
+      $(e.target).removeClass("uarr");
+      $(e.target).addClass("darr");
     }
 
     // this is the id of the table we clicked on
-    let table_id = $(this).parentsUntil("table").parent().attr("id");
+    let table_id = $(e.target).parentsUntil("table").parent().attr("id");
     // once we know the class, we can update its data
     if (table_id === "territori") {
       load_territories(column, reverse);
@@ -941,15 +971,15 @@ $(document).ready(() => {
   });
 
   // this function won't work with arrow
-  $(".chartcontainer input").click(function() {
+  $(".chartcontainer input").click((e) => {
     // id of the corresponding chart
-    let chart_id = $(this).parentsUntil(".form").parent().attr("id");
+    let chart_id = $(e.target).parentsUntil(".form").parent().attr("id");
 
     if (chart_id === "territori") {
       let value, sort_by_name;
 
       // all radios
-      let radios = $(this).parents().find(".chartcontainer#territori").find("input[type=\"radio\"]").toArray();
+      let radios = $(e.target).parents().find(".chartcontainer#territori").find("input[type=\"radio\"]").toArray();
 
       radios.forEach((r, i) => {
         if ($(r).prop("checked")) {
@@ -969,7 +999,7 @@ $(document).ready(() => {
       let value, sort_by_name;
 
       // all radios
-      let radios = $(this).parents().find(".chartcontainer#variazioni").find("input[type=\"radio\"]").toArray();
+      let radios = $(e.target).parents().find(".chartcontainer#variazioni").find("input[type=\"radio\"]").toArray();
 
       radios.forEach((r, i) => {
         if ($(r).prop("checked")) {
@@ -987,10 +1017,10 @@ $(document).ready(() => {
       variations_chart = load_variations_chart(value, sort_by_name, variations_chart);
 
     } else if (chart_id === "categorie") {
-      let value = parseInt($(this).val());
+      let value = parseInt($(e.target).val());
       categories_chart = load_categories_chart(value, categories_chart);
     } else if (chart_id === "fasce_eta") {
-      let value = parseInt($(this).val());
+      let value = parseInt($(e.target).val());
       ages_ranges_chart = load_age_ranges_chart(value, ages_ranges_chart);
     }
   });

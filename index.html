@@ -33,7 +33,8 @@
       <div class="update">
          Aggiornato al
          <div class="stats"></div>
-         <div class="info">variazioni rispetto al giorno precedente</div>
+         <div class="info">variazioni rispetto al giorno precedente<br>a causa dei costanti ritardi, i dati potrebbero essere relativi a ieri
+         </div>
       </div>
       <div class="content">
          <div class="italia">
@@ -75,7 +76,7 @@
                <label for="totale_vaccinati">Mostra totale vaccinati</label><br>
                <input type="checkbox" id="totale_vaccini" name="totale_vaccini" value="1" checked>
                <label for="totale_vaccinati">Mostra totale dosi disponibili</label><br>
-               <input type="checkbox" id="percentuale_vaccinati" name="percentuale_vaccinati" value="3" disabled>
+               <input type="checkbox" id="percentuale_vaccinati" name="percentuale_vaccinati" value="2" disabled>
                <label for="percentuale_vaccinati">Mostra percentuale vaccinati</label><br>
              </form>
            </div>
@@ -229,13 +230,13 @@
             <div class="chartcontainer" id="fasce_eta">
                <div class="form" id="fasce_eta">
                   <form>
+                    <p>
+                       <input type="radio" id="nome" name="sort" value="0" checked>
+                       <label for="nome">Ordina per categoria</label>
+                    </p>
                      <p>
-                        <input type="radio" id="valore" name="sort" value="0" checked>
+                        <input type="radio" id="valore" name="sort" value="1">
                         <label for="valore">Ordina per valore</label>
-                     </p>
-                     <p>
-                        <input type="radio" id="nome" name="sort" value="1">
-                        <label for="nome">Ordina per categoria</label>
                      </p>
                   </form>
                </div>
