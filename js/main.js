@@ -190,7 +190,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
 
   // font size and aspect ratio must me different on small screens
   let font_size = $(window).width() > 1500 ? 16 : 8;
-  let aspect_ratio = $(window).width() > 1500 ? 2.25 : 0.8;
+  let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
   if (old_chart) {
     old_chart.data = {
       labels: labels,
