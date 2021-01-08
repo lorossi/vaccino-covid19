@@ -110,8 +110,11 @@ const load_italy_chart = (values, territory_name, old_chart) => {
   // pack the values into array
   if (values === undefined) {
     values = [0];
-  } else if (!Array.isArray(values)) {
-    values = [values];
+  } else if (values.length === 0) {
+    // no parameters sent
+    // destroy old chart
+    old_chart.destroy();
+    return;
   }
 
   if (territory_name === undefined) {
@@ -197,6 +200,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
       datasets: datasets
     };
     old_chart.update();
+    return old_chart;
   } else {
 
   let ctx = $("canvas#italia")[0].getContext('2d');
@@ -228,9 +232,8 @@ const load_italy_chart = (values, territory_name, old_chart) => {
           }
       }
     });
+    return chart;
   }
-
-  return chart;
 };
 
 
@@ -342,6 +345,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
       }],
     };
     old_chart.update();
+    return old_chart;
   } else {
     // draw the new chart
     let ctx = $("canvas#territori")[0].getContext('2d');
@@ -387,8 +391,8 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
           }
         }
     });
+    return chart;
   }
-  return chart;
 };
 
 
@@ -522,6 +526,7 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
       }],
     };
     old_chart.update();
+    return old_chart;
   } else {
     // draw the new chart
     let ctx = $("canvas#variazioni")[0].getContext('2d');
@@ -567,8 +572,8 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
           }
         }
     });
+    return chart;
   }
-  return chart;
 };
 
 
@@ -578,6 +583,8 @@ const load_categories = (order, reverse) => {
     vaccini.categorie.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
   } else if (order === 1) {
     vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+  } else if (order === 2) {
+    vaccini.categorie.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -596,7 +603,8 @@ const load_categories = (order, reverse) => {
 
     let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
+    new_tr += `<td>${t.totale_vaccinati}</td>`;
+    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
     new_tr += "</tr>";
     $("table#categorie tbody").append(new_tr);
   });
@@ -643,6 +651,7 @@ const load_categories_chart = (order, old_chart) => {
       }],
     };
     old_chart.update();
+    return old_chart;
   } else {
     // draw the new chart
     let ctx = $("canvas#categorie")[0].getContext('2d');
@@ -686,8 +695,8 @@ const load_categories_chart = (order, old_chart) => {
           }
         }
     });
+    return chart;
   }
-  return chart;
 };
 
 
@@ -697,6 +706,8 @@ const load_genders = (order, reverse) => {
     vaccini.sesso.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
   } else if (order === 1) {
     vaccini.sesso.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+  } else if (order === 2) {
+    vaccini.sesso.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -715,7 +726,8 @@ const load_genders = (order, reverse) => {
 
     let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
+    new_tr += `<td>${t.totale_vaccinati}</td>`;
+    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
     new_tr += "</tr>";
     $("table#sesso tbody").append(new_tr);
   });
@@ -775,9 +787,7 @@ const load_genders_chart = () => {
         }
       }
   });
-
   return chart;
-
 };
 
 
@@ -787,6 +797,8 @@ const load_age_ranges = (order, reverse) => {
     vaccini.fasce_eta.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
   } else if (order === 1) {
     vaccini.fasce_eta.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+  } else if (order === 2) {
+    vaccini.fasce_eta.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -805,7 +817,8 @@ const load_age_ranges = (order, reverse) => {
 
     let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati} (+${nuovi_vaccinati})</td>`;
+    new_tr += `<td>${t.totale_vaccinati}</td>`;
+    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
     new_tr += "</tr>";
     $("table#fasce_eta tbody").append(new_tr);
   });
@@ -853,6 +866,7 @@ const load_age_ranges_chart = (order, old_chart) => {
       }],
     };
     old_chart.update();
+    return old_chart;
   } else {
     // draw the new chart
     let ctx = $("canvas#fasce_eta")[0].getContext('2d');
@@ -898,8 +912,8 @@ const load_age_ranges_chart = (order, old_chart) => {
           }
         }
     });
+    return chart;
   }
-  return chart;
 };
 
 
@@ -942,7 +956,6 @@ $(document).ready(() => {
     let column = $(e.target).data("column");
     // should the data be reversed?
     let reverse;
-
     // up/down sorting management. It is handled with a class
     if ($(e.target).hasClass("darr")) {
       reverse = true;
@@ -956,6 +969,7 @@ $(document).ready(() => {
 
     // this is the id of the table we clicked on
     let table_id = $(e.target).parentsUntil("table").parent().attr("id");
+
     // once we know the class, we can update its data
     if (table_id === "territori") {
       load_territories(column, reverse);
@@ -973,11 +987,10 @@ $(document).ready(() => {
   // this function won't work with arrow
   $(".chartcontainer input").click((e) => {
     // id of the corresponding chart
-    let chart_id = $(e.target).parentsUntil(".form").parent().attr("id");
-
+    // ugly but works i guess
+    let chart_id = $(e.target).closest(".chartcontainer").attr("id");
     if (chart_id === "territori") {
       let value, sort_by_name;
-
       // all radios
       let radios = $(e.target).parents().find(".chartcontainer#territori").find("input[type=\"radio\"]").toArray();
 

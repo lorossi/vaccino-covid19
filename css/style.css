@@ -107,8 +107,8 @@ table {
 }
 
 table td {
-  padding-left: calc(var(--text-size) / 6);
-  padding-right: calc(var(--text-size) / 6);
+  padding-left: calc(var(--text-size));
+  padding-right: calc(var(--text-size));
   padding-top: calc(var(--text-size) / 3);
   padding-bottom: calc(var(--text-size) / 3);
 }
@@ -186,7 +186,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   .onlymobile {
     display: none;
   }
-  
+
   .content {
     width: 80vw;
   }
