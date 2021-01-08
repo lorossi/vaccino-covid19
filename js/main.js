@@ -110,8 +110,11 @@ const load_italy_chart = (values, territory_name, old_chart) => {
   // pack the values into array
   if (values === undefined) {
     values = [0];
-  } else if (!Array.isArray(values)) {
-    values = [values];
+  } else if (values.length === 0) {
+    // no parameters sent
+    // destroy old chart
+    old_chart.destroy();
+    return;
   }
 
   if (territory_name === undefined) {
