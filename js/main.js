@@ -236,6 +236,11 @@ const load_italy_chart = (values, territory_name, old_chart) => {
         legend: {
           align: "end",
           font_size: font_size
+        },
+        elements: {
+          line: {
+            cubicInterpolationMode: "monotone"
+          }
         }
       }
     });
