@@ -64,7 +64,10 @@ const all_time_get_options = () => {
   $(".alltimechartcontainer span#nome_territorio").text(territory);
 
   // pack the values into an object and return them
-  return {values: values, territory: territory};
+  return {
+    values: values,
+    territory: territory
+  };
 };
 
 
@@ -203,7 +206,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
     return old_chart;
   } else {
 
-  let ctx = $("canvas#italia")[0].getContext('2d');
+    let ctx = $("canvas#italia")[0].getContext('2d');
     chart = new Chart(ctx, {
       type: "line",
       data: {
@@ -212,24 +215,27 @@ const load_italy_chart = (values, territory_name, old_chart) => {
       },
       options: {
         aspectRatio: aspect_ratio,
-          scales: {
-              xAxes: [{
-                  ticks: {
-                    fontSize: font_size,
-                    autoSkip: false,
-                    maxRotation: 90,
-                    minRotation: 45,
-                  }
+        scales: {
+          xAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+            }
               }],
-              yAxes: [{
-                  ticks: {
-                    fontSize: font_size,
-                    autoSkip: true,
-                    maxRotation: 30,
-                    minRotation: -30,
-                  }
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+              maxRotation: 30,
+              minRotation: -30,
+            }
               }]
-          }
+        },
+        legend: {
+          align: "right"
+        }
       }
     });
     return chart;
@@ -350,46 +356,45 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
     // draw the new chart
     let ctx = $("canvas#territori")[0].getContext('2d');
     chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            label: label,
-            backgroundColor: background_colors,
-            borderColor: border_colors,
-            borderWidth: 2,
-            hoverBackgroundColor: hover_background_colors,
-            hoverBorderColor: hover_background_colors
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          label: label,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
           }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1.1,
+        legend: {
+          align: "end"
         },
-        options: {
-          responsive: true,
-          aspectRatio: 1.1,
-          legend: {
-            align: "end"
-          },
-          tooltips: {
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-                maxRotation: 90,
-                minRotation: 45,
-                fontSize: font_size
-              }
+        tooltips: {},
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+              fontSize: font_size
+            }
             }],
-            yAxes: [{
-                ticks: {
-                  fontSize: font_size,
-                  autoSkip: true,
-                  maxRotation: 30,
-                  minRotation: -30,
-                }
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+              maxRotation: 30,
+              minRotation: -30,
+            }
             }]
-          }
         }
+      }
     });
     return chart;
   }
@@ -531,46 +536,45 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
     // draw the new chart
     let ctx = $("canvas#variazioni")[0].getContext('2d');
     chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            label: label,
-            backgroundColor: background_colors,
-            borderColor: border_colors,
-            borderWidth: 2,
-            hoverBackgroundColor: hover_background_colors,
-            hoverBorderColor: hover_background_colors
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          label: label,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
           }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1.1,
+        legend: {
+          align: "end"
         },
-        options: {
-          responsive: true,
-          aspectRatio: 1.1,
-          legend: {
-            align: "end"
-          },
-          tooltips: {
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-                maxRotation: 90,
-                minRotation: 45,
-                fontSize: font_size
-              }
+        tooltips: {},
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+              fontSize: font_size
+            }
             }],
-            yAxes: [{
-                ticks: {
-                  fontSize: font_size,
-                  autoSkip: true,
-                  maxRotation: 30,
-                  minRotation: -30,
-                }
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+              maxRotation: 30,
+              minRotation: -30,
+            }
             }]
-          }
         }
+      }
     });
     return chart;
   }
@@ -609,8 +613,8 @@ const load_categories = (order, reverse) => {
     let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
-    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+    new_tr += `<td>+${nuovi_vaccinati}</td>`;
+    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#categorie tbody").append(new_tr);
   });
@@ -662,44 +666,43 @@ const load_categories_chart = (order, old_chart) => {
     // draw the new chart
     let ctx = $("canvas#categorie")[0].getContext('2d');
     chart = new Chart(ctx, {
-        type: "horizontalBar",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            label: label,
-            backgroundColor: background_colors,
-            borderColor: border_colors,
-            borderWidth: 2,
-            hoverBackgroundColor: hover_background_colors,
-            hoverBorderColor: hover_background_colors
+      type: "horizontalBar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          label: label,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
           }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1.1,
+        legend: {
+          align: "end"
         },
-        options: {
-          responsive: true,
-          aspectRatio: 1.1,
-          legend: {
-            align: "end"
-          },
-          tooltips: {
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-                maxRotation: 90,
-                minRotation: 45,
-                fontSize: font_size
-              }
+        tooltips: {},
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+              fontSize: font_size
+            }
             }],
-            yAxes: [{
-                ticks: {
-                  fontSize: font_size,
-                  autoSkip: true,
-                }
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+            }
             }]
-          }
         }
+      }
     });
     return chart;
   }
@@ -738,8 +741,8 @@ const load_genders = (order, reverse) => {
     let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
-    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+    new_tr += `<td>+${nuovi_vaccinati}</td>`;
+    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#sesso tbody").append(new_tr);
   });
@@ -777,27 +780,26 @@ const load_genders_chart = () => {
   // draw the new chart
   let ctx = $("canvas#sesso")[0].getContext('2d');
   chart = new Chart(ctx, {
-      type: "doughnut",
-      data: {
-        labels: labels,
-        datasets: [{
-          data: data,
-          backgroundColor: background_colors,
-          borderColor: border_colors,
-          borderWidth: 2,
-          hoverBackgroundColor: hover_background_colors,
-          hoverBorderColor: hover_background_colors
+    type: "doughnut",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: background_colors,
+        borderColor: border_colors,
+        borderWidth: 2,
+        hoverBackgroundColor: hover_background_colors,
+        hoverBorderColor: hover_background_colors
         }],
+    },
+    options: {
+      responsive: true,
+      aspectRatio: 1,
+      legend: {
+        align: "end"
       },
-      options: {
-        responsive: true,
-        aspectRatio: 1,
-        legend: {
-          align: "end"
-        },
-        tooltips: {
-        }
-      }
+      tooltips: {}
+    }
   });
   return chart;
 };
@@ -835,8 +837,8 @@ const load_age_ranges = (order, reverse) => {
     let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
-    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+    new_tr += `<td>+${nuovi_vaccinati}</td>`;
+    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#fasce_eta tbody").append(new_tr);
   });
@@ -889,46 +891,45 @@ const load_age_ranges_chart = (order, old_chart) => {
     // draw the new chart
     let ctx = $("canvas#fasce_eta")[0].getContext('2d');
     chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            label: label,
-            backgroundColor: background_colors,
-            borderColor: border_colors,
-            borderWidth: 2,
-            hoverBackgroundColor: hover_background_colors,
-            hoverBorderColor: hover_background_colors
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          label: label,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
           }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1.1,
+        legend: {
+          align: "end"
         },
-        options: {
-          responsive: true,
-          aspectRatio: 1.1,
-          legend: {
-            align: "end"
-          },
-          tooltips: {
-          },
-          scales: {
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-                maxRotation: 90,
-                minRotation: 45,
-                fontSize: font_size
-              }
+        tooltips: {},
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+              fontSize: font_size
+            }
             }],
-            yAxes: [{
-                ticks: {
-                  fontSize: font_size,
-                  autoSkip: true,
-                  maxRotation: 30,
-                  minRotation: -30,
-                }
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+              maxRotation: 30,
+              minRotation: -30,
+            }
             }]
-          }
         }
+      }
     });
     return chart;
   }
