@@ -431,13 +431,13 @@ const load_variations = (order, reverse) => {
       }
 
       let nuovi_vaccinati;
-      let nuovi_vaccinati_percentuale;
+      let percentuale_nuovi_vaccinati;
       if (t.nuovi_vaccinati === undefined) {
         nuovi_vaccinati = 0;
-        nuovi_vaccinati_percentuale = 0;
+        percentuale_nuovi_vaccinati = 0;
       } else {
         nuovi_vaccinati = t.nuovi_vaccinati;
-        nuovi_vaccinati_percentuale = t.percentuale_nuovi_vaccinati;
+        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
       }
 
       let nuove_dosi;
@@ -453,7 +453,7 @@ const load_variations = (order, reverse) => {
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td>${nome_territorio}</td>`;
       new_tr += `<td>+${nuovi_vaccinati}`;
-      new_tr += `<td>+${nuovi_vaccinati_percentuale.toFixed(2)}%</td>`;
+      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += `<td>+${nuove_dosi}`;
       new_tr += `<td>+${nuove_dosi_percentuale.toFixed(2)}%</td>`;
       new_tr += "</tr>";
@@ -585,6 +585,8 @@ const load_categories = (order, reverse) => {
     vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
   } else if (order === 2) {
     vaccini.categorie.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+  } else if (order === 3) {
+    vaccini.categorie.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -595,16 +597,20 @@ const load_categories = (order, reverse) => {
 
   vaccini.categorie.forEach((t, i) => {
     let nuovi_vaccinati;
+    let percentuale_nuovi_vaccinati;
     if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
+      percentuale_nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
+      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
     }
 
     let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
     new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
+    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#categorie tbody").append(new_tr);
   });
@@ -708,6 +714,8 @@ const load_genders = (order, reverse) => {
     vaccini.sesso.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
   } else if (order === 2) {
     vaccini.sesso.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+  } else if (order === 3) {
+    vaccini.sesso.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -718,16 +726,20 @@ const load_genders = (order, reverse) => {
 
   vaccini.sesso.forEach((t, i) => {
     let nuovi_vaccinati;
+    let percentuale_nuovi_vaccinati;
     if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
+      percentuale_nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
+      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
     }
 
     let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
     new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
+    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#sesso tbody").append(new_tr);
   });
@@ -799,6 +811,8 @@ const load_age_ranges = (order, reverse) => {
     vaccini.fasce_eta.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
   } else if (order === 2) {
     vaccini.fasce_eta.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+  } else if (order === 3) {
+    vaccini.fasce_eta.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
   }
 
   if (reverse) {
@@ -809,16 +823,20 @@ const load_age_ranges = (order, reverse) => {
 
   vaccini.fasce_eta.forEach((t, i) => {
     let nuovi_vaccinati;
+    let percentuale_nuovi_vaccinati;
     if (t.nuovi_vaccinati == undefined) {
       nuovi_vaccinati = 0;
+      percentuale_nuovi_vaccinati = 0;
     } else {
       nuovi_vaccinati = t.nuovi_vaccinati;
+      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
     }
 
     let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
     new_tr += `<td>${t.nome_categoria}</td>`;
     new_tr += `<td>${t.totale_vaccinati}</td>`;
     new_tr +=  `<td>+${nuovi_vaccinati}</td>`;
+    new_tr +=  `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
     new_tr += "</tr>";
     $("table#fasce_eta tbody").append(new_tr);
   });

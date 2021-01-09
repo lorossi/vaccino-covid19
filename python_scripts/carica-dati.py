@@ -57,13 +57,13 @@ def main():
         with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
             # sort old data so the newest one is the first
-            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=False)
-            # get today
-            today = datetime.now().day
+            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
+            # get last midnight
+            midnight = datetime.now().replace(hour=0, minute=0, second=0)
             # now start iterating until we find data from yesterday (if any)
             for x in range(len(old_data)):
-                if datetime.fromisoformat(old_data[x]["script_timestamp"]).day != today:
-                    # found the old data
+                if midnight > datetime.fromisoformat(old_data[x]["script_timestamp"]):
+                    # found the most recent data for the prior day
                     last_data = old_data[x]
                     break
 
@@ -154,6 +154,7 @@ def main():
                         # add variation from yesterday
                         variation = total_number - category["totale_vaccinati"]
                         new_data["nuovi_vaccinati"] = variation
+                        new_data["percentuale_nuovi_vaccinati"] = variation / total_number * 100
                         break
 
         # finally append data to the dict
@@ -178,6 +179,7 @@ def main():
                     # calculate variation
                     variation = women - gender["totale_vaccinati"]
                     new_dict["nuovi_vaccinati"] = variation
+                    new_dict["percentuale_nuovi_vaccinati"] = variation / women * 100
 
     # finally append to data
     data["sesso"].append(new_dict)
@@ -200,12 +202,13 @@ def main():
                     # calculate variation
                     variation = men - gender["totale_vaccinati"]
                     new_dict["nuovi_vaccinati"] = variation
+                    new_dict["percentuale_nuovi_vaccinati"] = variation / men * 100
 
     # finally append to data
     data["sesso"].append(new_dict)
 
     # now load age ranges
-    logging.info("Requesting data about categories")
+    logging.info("Requesting data about age rages")
     response = requests.post(payload["url"], headers=headers, data=payload["eta"]).text
     json_response = json.loads(response)
 
@@ -213,6 +216,7 @@ def main():
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
 
+        # init the dict with all the new data
         new_data = {
             "nome_categoria": category_name,
             "totale_vaccinati": total_number,
@@ -224,12 +228,8 @@ def main():
                 if age["nome_categoria"] == category_name:
                     if "totale_vaccinati" in age:
                         variation = total_number - age["totale_vaccinati"]
-                        # init the dict with all the new data
-                        new_data = {
-                            "nome_categoria": category_name,
-                            "totale_vaccinati": total_number,
-                            "nuovi_vaccinati": variation
-                        }
+                        new_data["nuovi_vaccinati"] = variation
+                        new_data["percentuale_nuovi_vaccinati"] = variation / total_number * 100
                         break
 
         # finally append data to the dict
