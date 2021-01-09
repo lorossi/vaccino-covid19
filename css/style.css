@@ -10,8 +10,12 @@ body {
   color: #212529;
 }
 
-.onlymobile {
+.mobile {
   display: inline-block;
+}
+
+.pc {
+  display: none;
 }
 
 .italic {
@@ -188,8 +192,12 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
 
 
 @media only screen and (min-width: 480px) {
-  .onlymobile {
+  .mobile {
     display: none;
+  }
+
+  .pc {
+    display: inline-block;
   }
 
   .content, .credits {

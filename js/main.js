@@ -234,7 +234,8 @@ const load_italy_chart = (values, territory_name, old_chart) => {
               }]
         },
         legend: {
-          align: "right"
+          align: "end",
+          font_size: font_size
         }
       }
     });
@@ -265,20 +266,24 @@ const load_territories = (order, reverse) => {
 
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
-      let nome_territorio;
+      let nome_territorio_corto;
       if (t.codice_territorio === "06") {
-        nome_territorio = "E.R.";
+        nome_territorio_corto = "E.R.";
       } else if (t.codice_territorio === "07") {
-        nome_territorio = "F.V.G";
-      } else {
-        nome_territorio = t.nome_territorio;
+        nome_territorio_corto = "F.V.G";
       }
 
       let percentuale;
       percentuale = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td>${nome_territorio}</td>`;
+
+      if (nome_territorio_corto) {
+        new_tr += `<td><span class="pc">${t.nome_territorio}</span><span class="mobile">${nome_territorio_corto}</span></td>`;
+      } else {
+        new_tr += `<td>${t.nome_territorio}</td>`;
+      }
+
       new_tr += `<td>${t.totale_vaccinati}`;
       new_tr += `<td>${percentuale}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}`;
@@ -426,13 +431,11 @@ const load_variations = (order, reverse) => {
   vaccini.territori.forEach((t, i) => {
     if (t.nome_territorio != "Italia") {
 
-      let nome_territorio;
+      let nome_territorio_corto;
       if (t.codice_territorio === "06") {
-        nome_territorio = "E.R.";
+        nome_territorio_corto = "E.R.";
       } else if (t.codice_territorio === "07") {
-        nome_territorio = "F.V.G";
-      } else {
-        nome_territorio = t.nome_territorio;
+        nome_territorio_corto = "F.V.G";
       }
 
       let nuovi_vaccinati;
@@ -456,7 +459,12 @@ const load_variations = (order, reverse) => {
       }
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td>${nome_territorio}</td>`;
+      if (nome_territorio_corto) {
+        new_tr += `<td><span class="pc">${t.nome_territorio}</span><span class="mobile">${nome_territorio_corto}</span></td>`;
+      } else {
+        new_tr += `<td>${t.nome_territorio}</td>`;
+      }
+
       new_tr += `<td>+${nuovi_vaccinati}`;
       new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += `<td>+${nuove_dosi}`;
