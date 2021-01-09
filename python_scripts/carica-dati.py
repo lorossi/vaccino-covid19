@@ -293,14 +293,17 @@ def main():
 
 
     # create a js file with all the data about vaccines
+    # midnight for the considered day
     midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    # last midnight from now
+    last_midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     history = []
     for d in old_data:
         new_data = {}
         timestamp = d["script_timestamp"]
         time_obj = datetime.fromisoformat(timestamp)
-        diff = time_obj - midnight
-        if diff <= timedelta(hours=8):
+        # the data we are looking for is older than last midnght and closest to midnight (rolling)
+        if (midnight - time_obj).total_seconds() >= 0 and (last_midnight - time_obj).total_seconds() >= 0:
             new_timestamp = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d")
             new_data["script_timestamp"] = new_timestamp
             new_data["territori"] = []
