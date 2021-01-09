@@ -14,6 +14,10 @@ body {
   display: inline-block;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .content {
   width: 90vw;
   margin-left: auto;
@@ -143,6 +147,7 @@ table tr {
 }
 
 .credits {
+  width: 90vw;
   font-size: var(--text-size);
   margin-top: 10vh;
   margin-bottom: var(--text-size);
@@ -187,7 +192,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     display: none;
   }
 
-  .content {
+  .content, .credits {
     width: 80vw;
   }
 

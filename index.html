@@ -64,22 +64,22 @@
             </div>
          </div>
          <div class="alltimechartcontainer">
-           <div class="subtitle">Grafico andamento <span id="nome_territorio">Italia</span></div>
-           <div class="form" id="territori">
-             <form>
-               <label for="territori">Seleziona territorio </label>
-               <select name="territori" id="territori">
-               </select>
-             </form>
-             <form>
-               <input type="checkbox" id="totale_vaccinati" name="totale_vaccinati" value="0" checked>
-               <label for="totale_vaccinati">Mostra totale vaccinati</label><br>
-               <input type="checkbox" id="totale_vaccini" name="totale_vaccini" value="1" checked>
-               <label for="totale_vaccinati">Mostra totale dosi disponibili</label><br>
-               <input type="checkbox" id="percentuale_vaccinati" name="percentuale_vaccinati" value="2" disabled>
-               <label for="percentuale_vaccinati">Mostra percentuale vaccinati</label><br>
-             </form>
-           </div>
+            <div class="subtitle">Grafico andamento <span id="nome_territorio">Italia</span></div>
+            <div class="form" id="territori">
+               <form>
+                  <label for="territori">Seleziona territorio </label>
+                  <select name="territori" id="territori">
+                  </select>
+               </form>
+               <form>
+                  <input type="checkbox" id="totale_vaccinati" name="totale_vaccinati" value="0" checked>
+                  <label for="totale_vaccinati">Mostra totale vaccinati</label><br>
+                  <input type="checkbox" id="totale_vaccini" name="totale_vaccini" value="1" checked>
+                  <label for="totale_vaccinati">Mostra totale dosi disponibili</label><br>
+                  <input type="checkbox" id="percentuale_vaccinati" name="percentuale_vaccinati" value="2" disabled>
+                  <label for="percentuale_vaccinati">Mostra percentuale vaccinati</label><br>
+               </form>
+            </div>
             <canvas id="italia"></canvas>
          </div>
          <div class="datacontainer">
@@ -149,16 +149,16 @@
                         <label for="assoluta_vaccinati">Mostra variazione assoluta vaccinati</label>
                      </p>
                      <p>
-                       <input type="radio" id="relativa_vaccinati" name="sort" value="1">
-                       <label for="relativa_vaccinati">Mostra variazione relativa vaccinati</label>
+                        <input type="radio" id="relativa_vaccinati" name="sort" value="1">
+                        <label for="relativa_vaccinati">Mostra variazione relativa vaccinati</label>
                      </p>
                      <p>
-                       <input type="radio" id="assoluta_vaccini" name="sort" value="2">
-                       <label for="relativa_vaccinati">Mostra variazione assoluta dosi</label>
+                        <input type="radio" id="assoluta_vaccini" name="sort" value="2">
+                        <label for="relativa_vaccinati">Mostra variazione assoluta dosi</label>
                      </p>
                      <p>
-                       <input type="radio" id="relativa_vaccini" name="sort" value="3">
-                       <label for="relativa_vaccini">Mostra variazione relativa dosi</label>
+                        <input type="radio" id="relativa_vaccini" name="sort" value="3">
+                        <label for="relativa_vaccini">Mostra variazione relativa dosi</label>
                      </p>
                   </form>
                </div>
@@ -236,10 +236,10 @@
             <div class="chartcontainer" id="fasce_eta">
                <div class="form" id="fasce_eta">
                   <form>
-                    <p>
-                       <input type="radio" id="nome_fasce_eta" name="sort" value="0" checked>
-                       <label for="nome_fasce_eta">Ordina per categoria</label>
-                    </p>
+                     <p>
+                        <input type="radio" id="nome_fasce_eta" name="sort" value="0" checked>
+                        <label for="nome_fasce_eta">Ordina per categoria</label>
+                     </p>
                      <p>
                         <input type="radio" id="valore_fasce_eta" name="sort" value="1">
                         <label for="valore_fasce_eta">Ordina per valore</label>
@@ -250,6 +250,10 @@
             </div>
          </div>
       </div>
-      <div class="credits">Questo sito non è stato finanziato da fondi pubblici. Neanche da quelli privati, in realtà.<br>Fatto da <a href="https://www.lorenzoros.si">Lorenzo Rossi</a> - <a href="https://github.com/lorossi/vaccino-covid19">Repo GitHub</a></div>
+      <div class="credits">
+         <p>Questo sito non è stato finanziato da fondi pubblici</p>
+         <p class="italic">Neanche da privati, in realtà.</p>
+         <p>Fatto da <a href="https://www.lorenzoros.si">Lorenzo Rossi</a> - <a href="https://github.com/lorossi/vaccino-covid19">Repo GitHub</a></p>
+      </div>
    </body>
 </html>
