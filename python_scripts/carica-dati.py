@@ -97,7 +97,8 @@ def main():
             "codice_territorio": territory_code,
             "totale_dosi_consegnate": territory["C"][3],
             "totale_vaccinati": territory["C"][1],
-            "percentuale_popolazione_vaccinata": float(territory["C"][2])
+            "percentuale_popolazione_vaccinata": float(territory["C"][2]),
+            "percentuale_dosi_utilizzate": territory["C"][1] / territory["C"][3] * 100
         }
 
         # find the data for yesterday
@@ -128,6 +129,7 @@ def main():
 
     # calculate the percentage of vaccinated people
     italia["percentuale_popolazione_vaccinata"] = italia["totale_vaccinati"] / italian_population * 100
+    italia["percentuale_dosi_utilizzate"] = italia["totale_vaccinati"] / italia["totale_dosi_consegnate"] * 100
 
     # now load categories
     logging.info("Requesting data about categories")
@@ -314,8 +316,20 @@ def main():
                     "codice_territorio": territory.get("codice_territorio", None),
                     "totale_vaccinati": territory["totale_vaccinati"],
                     "totale_dosi_consegnate": territory["totale_dosi_consegnate"],
-                    "percentuale_popolazione_vaccinata": territory["percentuale_popolazione_vaccinata"]
+                    "percentuale_popolazione_vaccinata": float(territory["percentuale_popolazione_vaccinata"])
                 }
+
+                # legacy update - old data has not these keys
+                if "percentuale_dosi_utilizzate" in territory:
+                    new_territory["percentuale_dosi_utilizzate"] = territory["percentuale_dosi_utilizzate"]
+                else:
+                    new_territory["percentuale_dosi_utilizzate"] = territory["totale_vaccinati"] / territory["totale_dosi_consegnate"] * 100
+
+                if "nuovi_vaccinati" in territory:
+                    new_territory["nuovi_vaccinati"] = territory["nuovi_vaccinati"]
+                else:
+                    new_territory["nuovi_vaccinati"] = 0
+
                 new_data["territori"].append(new_territory)
             history.append(new_data)
             midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
