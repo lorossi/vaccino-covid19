@@ -29,36 +29,31 @@ const load_selection = () => {
 // load options for all time chart
 const all_time_get_options = () => {
   let values = [];
+  let groups = [];
   let territory;
 
-  // checj all the checkbox
-  $(".alltimechartcontainer input[type=\"checkbox\"]").toArray().forEach((c, i) => {
+  // chech all the checkbox
+  let checkboxes = $(".alltimechartcontainer input[type=\"checkbox\"]").toArray();
+
+  checkboxes.forEach((c, i) => {
     if ($(c).prop("checked")) {
       // keep track of the checked values
       values.push(parseInt($(c).val()));
+      $(c).attr("disabled", false);
+    } else {
+      $(c).attr("disabled", true);
     }
   });
 
+  if (values.includes(0) || values.includes(1)) {
+    $(checkboxes[0]).attr("disabled", false);
+    $(checkboxes[1]).attr("disabled", false);
+  } else if (values.length === 0) {
+    $(checkboxes).attr("disabled", false);
+  }
+
   // now load the territory name
   territory = $(".alltimechartcontainer select").val();
-
-  if ($(".alltimechartcontainer input#totale_vaccinati").prop("checked") || $(".alltimechartcontainer input#totale_vaccini").prop("checked")) {
-    // disable "percentuale vaccinati" if any of the other two checkbox are checked
-    $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", true);
-  } else {
-    // otherwise, enable it
-    $(".alltimechartcontainer input#percentuale_vaccinati").prop("disabled", false);
-  }
-
-  if ($(".alltimechartcontainer input#percentuale_vaccinati").prop("checked")) {
-    // disable "totale vaccinati" and "totale vaccini" checkboxes if "percentuale vaccinati" is enabled
-    $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", true);
-    $(".alltimechartcontainer input#totale_vaccini").prop("disabled", true);
-  } else {
-    // otherwise, enable them
-    $(".alltimechartcontainer input#totale_vaccinati").prop("disabled", false);
-    $(".alltimechartcontainer input#totale_vaccini").prop("disabled", false);
-  }
 
   // update the text over the chart
   $(".alltimechartcontainer span#nome_territorio").text(territory);
@@ -97,7 +92,7 @@ const load_italy = () => {
     $(".italia #dosi").text(`${t.totale_dosi_consegnate}`);
     $(".italia #deltadosi").text(`${nuove_dosi}`);
     $(".italia #percentualevaccinati").text(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-    $(".italia #percentualenecessaria").text(`60-80%`);
+    $(".italia #percentualevacciniusati").text(`${t.percentuale_dosi_utilizzate.toFixed(2)}%`);
 
     return;
   });
@@ -109,6 +104,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
   let chart;
   let labels = []; // x axis
   let datasets = [];
+  let type;
 
   // pack the values into array
   if (values === undefined) {
@@ -148,6 +144,8 @@ const load_italy_chart = (values, territory_name, old_chart) => {
       borderColor: "#4caf50",
       hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
     });
+
+    type = "line";
   }
 
   if (values.includes(1)) {
@@ -170,9 +168,37 @@ const load_italy_chart = (values, territory_name, old_chart) => {
       borderColor: "#2196f3",
       hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
     });
+
+    type = "line";
   }
 
   if (values.includes(2)) {
+    let data = [];
+    let label;
+    [...storico_vaccini].forEach((s, i) => {
+      label = "Vaccinati oggi";
+      let y;
+      y = s.territori.filter(x => x.nome_territorio === territory_name)[0].nuovi_vaccinati;
+      data.push({
+        x: labels[i],
+        y: y
+      });
+    });
+
+    datasets.push({
+      data: data,
+      label: label,
+      backgroundColor: "#ffeb3b",
+      borderColor: "#c9bc1f",
+      borderWidth: 2,
+      hoverBackgroundColor: "#ffff72",
+      hoverBorderColor: "#ffff72"
+    });
+
+    type = "bar";
+  }
+
+  if (values.includes(3)) {
     let data = [];
     let label;
     [...storico_vaccini].forEach((s, i) => {
@@ -192,6 +218,8 @@ const load_italy_chart = (values, territory_name, old_chart) => {
       borderColor: "#ff5722",
       hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
     });
+
+    type = "line";
   }
 
   // font size and aspect ratio must me different on small screens
@@ -208,7 +236,7 @@ const load_italy_chart = (values, territory_name, old_chart) => {
 
     let ctx = $("canvas#italia")[0].getContext('2d');
     chart = new Chart(ctx, {
-      type: "line",
+      type: type,
       data: {
         labels: labels,
         datasets: datasets
@@ -260,6 +288,8 @@ const load_territories = (order, reverse) => {
     vaccini.territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
   } else if (order === 3) {
     vaccini.territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+  } else if (order === 4) {
+    vaccini.territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
   }
 
   if (reverse) {
@@ -276,22 +306,23 @@ const load_territories = (order, reverse) => {
         nome_territorio_corto = "E.R.";
       } else if (t.codice_territorio === "07") {
         nome_territorio_corto = "F.V.G";
+      } else if (t.codice_territorio === "20") {
+        nome_territorio_corto = "V. d'Aosta";
+      } else {
+        nome_territorio_corto = t.nome_territorio;
       }
 
-      let percentuale;
-      percentuale = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
+      let percentuale_vaccinati;
+      percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
+      let percentuale_dosi;
+      percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-
-      if (nome_territorio_corto) {
-        new_tr += `<td><span class="pc">${t.nome_territorio}</span><span class="mobile">${nome_territorio_corto}</span></td>`;
-      } else {
-        new_tr += `<td>${t.nome_territorio}</td>`;
-      }
-
+      new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
       new_tr += `<td>${t.totale_vaccinati}`;
-      new_tr += `<td>${percentuale}</td>`;
+      new_tr += `<td>${percentuale_vaccinati}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}`;
+      new_tr += `<td>${percentuale_dosi}`;
       new_tr += "</tr>";
       $("table#territori tbody").append(new_tr);
     }
