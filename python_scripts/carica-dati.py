@@ -282,7 +282,7 @@ def main():
         if  current_timestamp.date() == old_timestamp.date():
             # update dictionary
             found = True
-            d != data
+            d |= data
             # log info
             logging.info("Data for today already found with timestamp: "
                          f"{old_timestamp}")
@@ -292,9 +292,11 @@ def main():
         old_data.append(data)
         logging.info("No old data found for today. Appending.")
 
+    print(data["script_timestamp"])
+
     # now finally save the json file
     with open(output_path + json_filename, "w") as f:
-        json.dump(old_data, f, indent=3)
+        json.dump(old_data, f, indent=2)
 
     logging.info(f"Json file saved. Path: {cwd}{json_filename}")
 
@@ -304,7 +306,7 @@ def main():
     with open(assets_path + js_filename, "w") as f:
         js_string = "let vaccini = "
         # convert dict to json (will be read by js)
-        js_string += json.dumps(data, indent=4)
+        js_string += json.dumps(data, indent=2)
         js_string += ";"
         f.write(js_string)
     logging.info(f"JS file saved. Path: {cwd}{js_filename}")
@@ -357,7 +359,7 @@ def main():
     with open(assets_path + js_history_filename, "w") as f:
         js_string = "let storico_vaccini = "
         # convert dict to json (will be read by js)
-        js_string += json.dumps(history, indent=4)
+        js_string += json.dumps(history, indent=2)
         js_string += ";"
         f.write(js_string)
     logging.info(f"JS history file saved. Path: {cwd}{js_history_filename}")
