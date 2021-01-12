@@ -37,7 +37,7 @@ def main():
             t["percentuale_dosi_utilizzate"] = t["totale_vaccinati"] / t["totale_dosi_consegnate"] * 100
             for o in old_data[x-1]["territori"]:
                 if o["nome_territorio"] == t["nome_territorio"]:
-                    t["nuovi_vaccinati"] = t["totale_vaccinati"] - o["totale_vaccinati"]
+                    t["nuovi_vaccinati"] = o["totale_vaccinati"] - t["totale_vaccinati"]
 
     with open(output_path + json_output_filename, "w") as f:
         json.dump(cleaned_data, f, indent=4)
