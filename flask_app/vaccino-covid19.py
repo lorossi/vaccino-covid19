@@ -33,16 +33,16 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/get/italy", methods=["GET"])
-def get_italy():
-    for d in data:
-        for t in d["territori"]:
-            if t["nome_territorio"] == "Italia":
-                return jsonify(t)
+@app.route("/get/last_updated", methods=["GET"])
+def get_last_updated():
+    return_dict = {
+        "last_updated": data[0]["last_updated"]
+    }
+    return jsonify(return_dict)
 
 
-@app.route("/get/territori", methods=["GET"])
-def get_territori():
+@app.route("/get/lista_territori", methods=["GET"])
+def get_lista_territori():
     territori = []
     for t in data[0]["territori"]:
         # skip italia so we can add it on top
@@ -57,11 +57,18 @@ def get_territori():
     return jsonify(return_dict)
 
 
-@app.route("/get/last_updated", methods=["GET"])
-def get_last_updated():
-    return_dict = {
-        "last_updated": data[0]["last_updated"]
-    }
+@app.route("/get/italy", methods=["GET"])
+def get_italy():
+    for d in data:
+        for t in d["territori"]:
+            if t["nome_territorio"] == "Italia":
+                return jsonify(t)
+
+
+@app.route("/get/territori", methods=["GET"])
+def get_territori():
+    territori = data[0]["territori"]
+    return_dict = [t for t in territori if t["nome_territorio"] != "Italia"]
     return jsonify(return_dict)
 
 

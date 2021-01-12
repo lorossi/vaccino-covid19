@@ -15,21 +15,32 @@ def setup(verbose=True):
         print(f"Logging in {logfile}")
 
 
-def scrape_data(json_filename="vaccini.json", output_path="output/"):
+def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
     # italian population to calculate percentage
     italian_population = 60317000
 
     # initialize dictionaries
     data = {
-        "territori": [],
+        "assoluti": [],
+        "variazioni": [],
         "categorie": [],
         "sesso": [],
-        "fasce_eta": []
+        "fasce_eta": [],
+        "lista_territori": [
+                "Italia"
+            ]
         }
-    italia = {
+
+    italy_absolute = {
         "nome_territorio": "Italia",
         "codice_territorio": None
     }
+
+    italy_variation = {
+        "nome_territorio": "Italia",
+        "codice_territorio": None
+    }
+
     # load timestamp that will be put inside the output
     now = datetime.now()
     data["script_timestamp"] = now.isoformat()
@@ -64,16 +75,18 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
             for x in range(len(old_data)):
                 old_timestamp = datetime.fromisoformat(
                                 old_data[x]["script_timestamp"])
-
                 if midnight > old_timestamp:
                     # found the most recent data for the prior day
                     last_data = old_data[x]
+                    logging.info("Loaded data for previous day with timestamp"
+                                 f"{old_timestamp}")
                     break
 
     except Exception as e:
         # no old previuos file has been found
         logging.info("No previous record. Unable to calculate variation. "
                      f"Error: {e}")
+
 
     logging.info("Requesting data about terriories")
     response = requests.post(payload["url"], headers=headers,
@@ -85,8 +98,7 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
     last_update = json_response["results"][0]["result"]["data"]["timestamp"]
     data["last_data_update"] = last_update
     # iterate over each territory
-    territories = (json_response["results"][0]["result"]["data"]
-                   ["dsr"]["DS"][0]["PH"][1]["DM1"])
+    territories = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][1]["DM1"]
 
     for territory in territories:
         # format territory name to later match the code
@@ -100,56 +112,73 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
             if territories_codes[code] == territory_name:
                 territory_code = code
                 break
+        territory_name = territory["C"][0]
 
         # init the dict with all the new data
-        new_data = {
-            "nome_territorio": territory["C"][0],
+        new_absolute = {
+            "nome_territorio": territory_name,
             "codice_territorio": territory_code,
-            "totale_dosi_consegnate": territory["C"][3],
             "totale_vaccinati": territory["C"][1],
             "percentuale_popolazione_vaccinata": float(territory["C"][2]),
-            "percentuale_dosi_utilizzate": (territory["C"][1] /
-                                            territory["C"][3] * 100)
+            "totale_dosi_consegnate": territory["C"][3],
+            "percentuale_dosi_utilizzate": territory["C"][1] / territory["C"][3] * 100
         }
 
-        # find the data for yesterday
+        # find the absolute data for yesterday
         last_territory = None
         if last_data is not None:
-            for old_territory in last_data["territori"]:
-                if old_territory["nome_territorio"] == new_data["nome_territorio"]:
+            for old_territory in last_data["assoluti"]:
+                if old_territory["nome_territorio"] == new_absolute["nome_territorio"]:
                     last_territory = old_territory
                     break
 
         # if found, compare
         if last_territory is not None:
-            new_data["nuove_dosi_consegnate"] = (new_data["totale_dosi_consegnate"] -
-                                                 old_territory["totale_dosi_consegnate"])
-            new_data["percentuale_nuove_dosi_consegnate"] = (new_data["nuove_dosi_consegnate"] /
-                                                             old_territory["totale_dosi_consegnate"]
-                                                             * 100)
-            new_data["nuovi_vaccinati"] = (new_data["totale_vaccinati"] -
-                                           last_territory["totale_vaccinati"])
-            new_data["percentuale_nuovi_vaccinati"] = (new_data["nuovi_vaccinati"] /
-                                                       last_territory["totale_vaccinati"]
-                                                       * 100)
+            nuovi_vaccinati = new_absolute["totale_vaccinati"] - last_territory["totale_vaccinati"]
+            nuovi_vaccini = new_absolute["totale_dosi_consegnate"] - last_territory["totale_dosi_consegnate"]
+
+            new_variation = {
+                "nome_territorio": new_absolute["nome_territorio"],
+                "codice_territorio": new_absolute["codice_territorio"],
+                "nuovi_vaccinati": nuovi_vaccinati,
+                "percentuale_nuovi_vaccinati": nuovi_vaccinati / last_territory["totale_vaccinati"] * 100,
+                "nuove_dosi_consegnate": nuovi_vaccini,
+                "percentuale_nuove_dosi_consegnate": nuovi_vaccini / last_territory["totale_dosi_consegnate"] * 100
+            }
 
         # finally append data to the dict
-        data["territori"].append(new_data)
+        data["assoluti"].append(new_absolute)
+        data["variazioni"].append(new_variation)
+        if (territory_code):
+            data["lista_territori"].append(territory_name)
 
         # update total number of doses and vaccinated people
-        if "totale_dosi_consegnate" not in italia:
-            italia["totale_dosi_consegnate"] = territory["C"][3]
-            italia["totale_vaccinati"] = territory["C"][1]
+        if "totale_dosi_consegnate" not in italy_absolute:
+            italy_absolute["totale_dosi_consegnate"] = territory["C"][3]
+            italy_absolute["totale_vaccinati"] = territory["C"][1]
         else:
-            italia["totale_dosi_consegnate"] += territory["C"][3]
-            italia["totale_vaccinati"] += territory["C"][1]
+            italy_absolute["totale_dosi_consegnate"] += territory["C"][3]
+            italy_absolute["totale_vaccinati"] += territory["C"][1]
 
     # calculate the percentage of vaccinated people
-    italia["percentuale_popolazione_vaccinata"] = (italia["totale_vaccinati"] /
-                                                   italian_population * 100)
-    italia["percentuale_dosi_utilizzate"] = (italia["totale_vaccinati"] /
-                                             italia["totale_dosi_consegnate"] *
-                                             100)
+    italy_variation["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / italian_population * 100
+    italy_variation["percentuale_dosi_utilizzate"] = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
+
+    # now look for old data about italy as whole
+    last_italy = None
+    if last_data is not None:
+        for territory in last_data["assoluti"]:
+            if territory["nome_territorio"] == "Italia":
+                last_italy = territory
+
+    # if found, update the variation
+    if last_italy is not None:
+        italy_variation["nuove_dosi_consegnate"] = italy_absolute["totale_dosi_consegnate"] - last_italy["totale_dosi_consegnate"]
+        italy_variation["nuovi_vaccinati"] = italy_absolute["totale_vaccinati"] - last_italy["totale_vaccinati"]
+
+    # finally, append to dict the data about italy
+    data["assoluti"].append(italy_absolute)
+    data["variazioni"].append(italy_variation)
 
     # now load categories
     logging.info("Requesting data about categories")
@@ -157,8 +186,7 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
                              data=payload["categorie"]).text
     json_response = json.loads(response)
 
-    categories = json_response["results"][0]["result"]["data"]["dsr"]["DS"] \
-                              [0]["PH"][0]["DM0"]
+    categories = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]
     for category in categories:
         category_id = int(category["C"][0][0])
         category_name = category["C"][0][4:]
@@ -266,23 +294,6 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
         # finally append data to the dict
         data["fasce_eta"].append(new_data)
 
-    # now look for old data about italy as whole
-    last_italy = None
-    if last_data is not None:
-        for territory in last_data["territori"]:
-            if territory["nome_territorio"] == "Italia":
-                last_italy = territory
-
-    # if found, update the variation
-    if last_italy is not None:
-        italia["nuove_dosi_consegnate"] = (italia["totale_dosi_consegnate"] -
-                                           last_italy["totale_dosi_consegnate"])
-        italia["nuovi_vaccinati"] = (italia["totale_vaccinati"] -
-                                    last_italy["totale_vaccinati"])
-
-    # finally, append to dict the data about italy
-    data["territori"].append(italia)
-
     try:
         # load old data to update the file
         with open(output_path + json_filename, "r") as f:
@@ -318,7 +329,7 @@ def scrape_data(json_filename="vaccini.json", output_path="output/"):
         old_data.append(data)
         logging.info("No old data found for today. Appending.")
     logging.info("Data scraped")
-    return data
+    return old_data
 
 
 def scrape_history(data, output_path="src/output/", json_filename="vaccini.json", history_filename="storico-vaccini.json"):
@@ -332,7 +343,6 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
     history = []
 
     for d in data:
-        print(d)
         new_data = {}
         timestamp = d["script_timestamp"]
         time_obj = datetime.fromisoformat(timestamp)
@@ -344,31 +354,35 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
             new_timestamp = datetime.fromisoformat(timestamp) \
                                     .strftime("%Y-%m-%d")
             new_data["script_timestamp"] = new_timestamp
-            new_data["territori"] = []
+            new_data["assoluti"] = []
+            new_data["variazioni"] = []
 
-            for territory in d["territori"]:
-                new_territory = {
-                    "nome_territorio": territory["nome_territorio"],
-                    "codice_territorio": territory.get("codice_territorio", None),
-                    "totale_vaccinati": territory["totale_vaccinati"],
-                    "totale_dosi_consegnate": territory["totale_dosi_consegnate"],
-                    "percentuale_popolazione_vaccinata": float(territory["percentuale_popolazione_vaccinata"])
+            for absolute in d["assoluti"]:
+                new_absolute = {
+                    "nome_territorio": absolute["nome_territorio"],
+                    "codice_territorio": absolute.get("codice_territorio", None),
+                    "totale_vaccinati": absolute["totale_vaccinati"],
+                    "percentuale_popolazione_vaccinata": float(absolute["percentuale_popolazione_vaccinata"]),
+                    "totale_dosi_consegnate": absolute["totale_dosi_consegnate"],
+                    "percentuale_dosi_utilizzate": absolute["percentuale_dosi_utilizzate"]
                 }
 
-                # legacy update - old data has not these keys
-                if "percentuale_dosi_utilizzate" in territory:
-                    new_territory["percentuale_dosi_utilizzate"] = territory["percentuale_dosi_utilizzate"]
-                else:
-                    new_territory["percentuale_dosi_utilizzate"] = (territory["totale_vaccinati"] /
-                                                                    territory["totale_dosi_consegnate"] *
-                                                                    100)
+                new_data["assoluti"].append(new_absolute)
 
-                if "nuovi_vaccinati" in territory:
-                    new_territory["nuovi_vaccinati"] = territory["nuovi_vaccinati"]
-                else:
-                    new_territory["nuovi_vaccinati"] = 0
+            for variation in d["variazioni"]:
+                if not variation:
+                    continue
+                    
+                new_variation = {
+                    "nome_territorio": variation["nome_territorio"],
+                    "codice_territorio": variation.get("codice_territorio", None),
+                    "nuovi_vaccinati": variation["nuovi_vaccinati"],
+                    "percentuale_nuovi_vaccinati": variation["percentuale_nuovi_vaccinati"],
+                    "nuove_dosi_consegnate": variation["nuove_dosi_consegnate"],
+                    "percentuale_nuove_dosi_consegnate": variation["percentuale_nuove_dosi_consegnate"]
+                }
+                new_data["variazioni"].append(variation)
 
-                new_data["territori"].append(new_territory)
             history.append(new_data)
             midnight = time_obj.replace(hour=0, minute=0,
                                         second=0, microsecond=0)

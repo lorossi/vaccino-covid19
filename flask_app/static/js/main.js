@@ -4,10 +4,11 @@
 /*jshint esversion: 8 */
 /*jshint strict: false */
 
-const get_data_json = (url) => {
+const get_data_json = (url, data) => {
   return $.ajax({
     url: url,
     type: 'GET',
+    data: data,
     complete: (response) => response.responseJSON
   });
 };
@@ -27,7 +28,7 @@ const set_last_update = async () => {
 // load selection form item for all time char
 const load_selection = async () => {
   try {
-    const response = await get_data_json("/get/territori");
+    const response = await get_data_json("/get/lista_territori");
 
     let new_element = "";
     response.territori.forEach(t => {
@@ -83,53 +84,50 @@ const all_time_get_options = () => {
 
 
 // load the table data about Italy as a whole
-const load_italy = () => {
-  $.ajax({
-		type: 'GET',
-		url: '/get/italy',
-		complete: function(response) {
-			if (response.status == 200) {
-        let italy = response.responseJSON;
+const load_italy = async () => {
+  try {
+    const italy = await get_data_json("/get/italy");
 
-        let nuovi_vaccinati;
-        if (italy.nuovi_vaccinati === undefined) {
-          nuovi_vaccinati = 0;
-        } else {
-          nuovi_vaccinati = italy.nuovi_vaccinati;
-        }
-        // same for new doses
-        let nuove_dosi;
-        if (italy.nuove_dosi_consegnate === undefined) {
-          nuove_dosi = 0;
-        } else {
-          nuove_dosi = italy.nuove_dosi_consegnate;
-        }
+    let nuovi_vaccinati;
+    if (italy.nuovi_vaccinati === undefined) {
+      nuovi_vaccinati = 0;
+    } else {
+      nuovi_vaccinati = italy.nuovi_vaccinati;
+    }
+    // same for new doses
+    let nuove_dosi;
+    if (italy.nuove_dosi_consegnate === undefined) {
+      nuove_dosi = 0;
+    } else {
+      nuove_dosi = italy.nuove_dosi_consegnate;
+    }
 
-        let percentuale_dosi;
-        // same for percentage of used doses
-        if (italy.percentuale_dosi_utilizzate === undefined) {
-          percentuale_dosi = 0;
-        } else {
-          percentuale_dosi = italy.percentuale_dosi_utilizzate.toFixed(2);
-        }
+    let percentuale_dosi;
+    // same for percentage of used doses
+    if (italy.percentuale_dosi_utilizzate === undefined) {
+      percentuale_dosi = 0;
+    } else {
+      percentuale_dosi = italy.percentuale_dosi_utilizzate.toFixed(2);
+    }
 
-        // is the percentage over 100%?
-        let over = parseFloat(percentuale_dosi) > 100;
-        // update the divs
-        $(".italia #vaccinati").html(`${italy.totale_vaccinati}`);
-        $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
-        $(".italia #dosi").html(`${italy.totale_dosi_consegnate}`);
-        $(".italia #deltadosi").html(`${nuove_dosi}`);
-        $(".italia #percentualevaccinati").html(`${italy.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-        if (over) {
-          $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
-        } else {
-          $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
-        }
+    // is the percentage over 100%?
+    let over = parseFloat(percentuale_dosi) > 100;
+    // update the divs
+    $(".italia #vaccinati").html(`${italy.totale_vaccinati}`);
+    $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
+    $(".italia #dosi").html(`${italy.totale_dosi_consegnate}`);
+    $(".italia #deltadosi").html(`${nuove_dosi}`);
+    $(".italia #percentualevaccinati").html(`${italy.percentuale_popolazione_vaccinata.toFixed(2)}%`);
+    if (over) {
+      $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
+    } else {
+      $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
+    }
 
-			}
-		}
-	});
+  } catch (err) {
+    console.log(`Impossibile caricare dati sull'Italia. Errore ${err}`);
+    return;
+  }
 };
 
 
@@ -312,61 +310,65 @@ const load_italy_chart = (values, territory_name, old_chart) => {
 
 
 // load data about each territory
-const load_territories = (order, reverse) => {
-  // sort data
-  if (order === 0) {
-    vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  } else if (order === 2) {
-    vaccini.territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
-  } else if (order === 3) {
-    vaccini.territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
-  } else if (order === 4) {
-    vaccini.territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
-  }
-
-  if (reverse) {
-    vaccini.territori.reverse();
-  }
-
-  // fill table
-  $("table#territori tbody").html("");
-
-  vaccini.territori.forEach((t, i) => {
-    if (t.nome_territorio != "Italia") {
-      let nome_territorio_corto;
-      if (t.codice_territorio === "06") {
-        nome_territorio_corto = "E.R.";
-      } else if (t.codice_territorio === "07") {
-        nome_territorio_corto = "F.V.G";
-      } else if (t.codice_territorio === "20") {
-        nome_territorio_corto = "V. d'Aosta";
-      } else {
-        nome_territorio_corto = t.nome_territorio;
-      }
-
-      let percentuale_vaccinati;
-      percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
-      let percentuale_dosi;
-      percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
-      let over = t.percentuale_dosi_utilizzate > 100;
-
-      let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
-      new_tr += `<td>${t.totale_vaccinati}`;
-      new_tr += `<td>${percentuale_vaccinati}</td>`;
-      new_tr += `<td>${t.totale_dosi_consegnate}`;
-      if (over) {
-        new_tr += `<td><span class="warning">${percentuale_dosi}</span>`;
-      } else {
-        new_tr += `<td>${percentuale_dosi}`;
-      }
-
-      new_tr += "</tr>";
-      $("table#territori tbody").append(new_tr);
+const load_territories = async (order, reverse) => {
+  try {
+    territori = await get_data_json("/get/territori");
+    // sort data
+    if (order === 0) {
+      territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    } else if (order === 1) {
+      territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    } else if (order === 2) {
+      territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
+    } else if (order === 3) {
+      territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+    } else if (order === 4) {
+      territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
     }
-  });
+
+    if (reverse) {
+      territori.reverse();
+    }
+
+    // fill table
+    $("table#territori tbody").html("");
+
+    territori.forEach((t, i) => {
+        let nome_territorio_corto;
+        if (t.codice_territorio === "06") {
+          nome_territorio_corto = "E.R.";
+        } else if (t.codice_territorio === "07") {
+          nome_territorio_corto = "F.V.G";
+        } else if (t.codice_territorio === "20") {
+          nome_territorio_corto = "V. d'Aosta";
+        } else {
+          nome_territorio_corto = t.nome_territorio;
+        }
+
+        let percentuale_vaccinati;
+        percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
+        let percentuale_dosi;
+        percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
+        let over = t.percentuale_dosi_utilizzate > 100;
+
+        let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
+        new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
+        new_tr += `<td>${t.totale_vaccinati}`;
+        new_tr += `<td>${percentuale_vaccinati}</td>`;
+        new_tr += `<td>${t.totale_dosi_consegnate}`;
+        if (over) {
+          new_tr += `<td><span class="warning">${percentuale_dosi}</span>`;
+        } else {
+          new_tr += `<td>${percentuale_dosi}`;
+        }
+
+        new_tr += "</tr>";
+        $("table#territori tbody").append(new_tr);
+      });
+  } catch(err) {
+    console.log(`Impossibile caricare dati sui territori. Errore ${err}`);
+    return;
+  }
 };
 
 const load_territories_chart = (order, sort_by_name, old_chart) => {
