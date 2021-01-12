@@ -4,11 +4,12 @@ from datetime import datetime, timedelta
 
 
 def main():
+    cwd = os.getcwd() + "/"
     json_filename = "vaccini.json"
     json_output_filename = "vaccini-cleaned.json"
     output_path = "output/"
 
-    with open(output_path + json_filename, "r") as f:
+    with open(cwd + output_path + json_filename, "r") as f:
         old_data = json.load(f)
 
     old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
@@ -39,7 +40,7 @@ def main():
                 if o["nome_territorio"] == t["nome_territorio"]:
                     t["nuovi_vaccinati"] = o["totale_vaccinati"] - t["totale_vaccinati"]
 
-    with open(output_path + json_output_filename, "w") as f:
+    with open(cwd + output_path + json_output_filename, "w") as f:
         json.dump(cleaned_data, f, indent=4)
 
 
