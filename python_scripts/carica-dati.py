@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 
 def main():
-    push_to_github = True
+    push_to_github = False
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
@@ -264,7 +264,6 @@ def main():
         # load old data to update the file
         with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
-            old_data.append(data)
             # sort by time so new data is always on top
             old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
     except Exception as e:
@@ -275,9 +274,26 @@ def main():
         # a json file
         old_data = [data]
 
+    # loop trhought old data in order to update the dictionary
+    found = False
+    current_timestamp = datetime.fromisoformat(data["script_timestamp"])
+    for d in old_data:
+        old_timestamp = datetime.fromisoformat(d["script_timestamp"])
+        if  current_timestamp.date() == old_timestamp.date():
+            # update dictionary
+            found = True
+            d != data
+            # log info
+            logging.info("Data for today already found with timestamp: "
+                         f"{old_timestamp}")
+            break
+
+    if not found:
+        old_data.append(data)
+        logging.info("No old data found for today. Appending.")
+
     # now finally save the json file
     with open(output_path + json_filename, "w") as f:
-        pass
         json.dump(old_data, f, indent=3)
 
     logging.info(f"Json file saved. Path: {cwd}{json_filename}")

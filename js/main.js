@@ -374,7 +374,22 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
     hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
     labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
     label = "Totale dosi di vaccino consegnate";
+  } else if (order === 3) {
+    vaccini.territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
+    if (sort_by_name) {
+      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    }
+    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_dosi_utilizzate.toFixed(2));
+    background_colors = data.map(x => `hsla(${120 - x / 100 * 120}, 100%, 50%, 0.5)`);
+    border_colors = data.map(x => `hsl(${120 - x / Math.max(...data) * 120}, 100%, 50%)`);
+    hover_background_colors = data.map(x => `hsla(${120 - x /100 * 120}, 100%, 50%, 0.25)`);
+    labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+    label = "Percentuale vaccini utlizzati";
   }
+
+  // calculate average
+  let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
+  if (average > 100) average = parseInt(average);
 
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
@@ -389,6 +404,15 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
         borderWidth: 2,
         hoverBackgroundColor: hover_background_colors,
         hoverBorderColor: hover_background_colors
+      }, {
+        label: 'Media',
+        labels: new Array(data.length).fill("media"),
+        data: new Array(data.length).fill(average),
+        type: 'line',
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        borderColor: "hsl(0, 100%, 50%)",
+        pointRadius: 0,
+        borderWidth: 1
       }],
     };
     old_chart.update();
@@ -408,7 +432,16 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
           borderWidth: 2,
           hoverBackgroundColor: hover_background_colors,
           hoverBorderColor: hover_background_colors
-          }],
+        }, {
+          label: 'Media',
+          labels: new Array(data.length).fill("media"),
+          data: new Array(data.length).fill(parseInt(average)),
+          type: 'line',
+          backgroundColor: "rgba(0, 0, 0, 0)",
+          borderColor: "hsl(0, 100%, 50%)",
+          pointRadius: 0,
+          borderWidth: 1
+        }],
       },
       options: {
         responsive: true,
@@ -559,6 +592,10 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
   hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
   labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
 
+  // calculate average
+  let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
+  if (average > 100) average = parseInt(average);
+
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
     // update the old chart
@@ -572,6 +609,15 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
         borderWidth: 2,
         hoverBackgroundColor: hover_background_colors,
         hoverBorderColor: hover_background_colors
+      }, {
+        label: 'Media',
+        labels: new Array(data.length).fill("media"),
+        data: new Array(data.length).fill(average),
+        type: 'line',
+        backgroundColor: "hsla(0, 100%, 50%, 0.5)",
+        borderColor: "hsl(0, 100%, 50%)",
+        pointRadius: 0,
+        borderWidth: 1
       }],
     };
     old_chart.update();
@@ -591,6 +637,15 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
           borderWidth: 2,
           hoverBackgroundColor: hover_background_colors,
           hoverBorderColor: hover_background_colors
+          }, {
+            label: 'Media',
+            labels: new Array(data.length).fill("media"),
+            data: new Array(data.length).fill(average),
+            type: 'line',
+            backgroundColor: "hsla(0, 100%, 50%, 0.5)",
+            borderColor: "hsl(0, 100%, 50%)",
+            pointRadius: 0,
+            borderWidth: 1
           }],
       },
       options: {
@@ -1060,12 +1115,12 @@ $(document).ready(() => {
       radios.forEach((r, i) => {
         if ($(r).prop("checked")) {
           // all checked radios
-          if (i < 3) {
+          if (i < 4) {
             // if it's one of the first 3, then it's the value
             value = i;
           } else {
             // otherwise it's the sorting order
-            sort_by_name = i == 3 ? false : true;
+            sort_by_name = i == 4 ? false : true;
           }
         }
       });
