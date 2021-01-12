@@ -279,10 +279,12 @@ def main():
     current_timestamp = datetime.fromisoformat(data["script_timestamp"])
     for d in old_data:
         old_timestamp = datetime.fromisoformat(d["script_timestamp"])
-        if  current_timestamp.date() == old_timestamp.date():
+        if current_timestamp.date() == old_timestamp.date():
             # update dictionary
             found = True
-            d |= data
+            # this won't work, not running python 3.9 currently :(
+            # d |= data
+            d.update(data)
             # log info
             logging.info("Data for today already found with timestamp: "
                          f"{old_timestamp}")
