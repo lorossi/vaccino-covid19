@@ -43,33 +43,64 @@ def get_last_updated():
 
 @app.route("/get/lista_territori", methods=["GET"])
 def get_lista_territori():
-    territori = []
-    for t in data[0]["territori"]:
-        # skip italia so we can add it on top
-        if t["nome_territorio"] != "Italia":
-            territori.append(t["nome_territorio"])
-
-    territori.sort()
-    territori.insert(0, "Italia")
     return_dict = {
-        "territori": territori
+        "territori": data[0]["lista_territori"]
     }
     return jsonify(return_dict)
 
 
 @app.route("/get/italy", methods=["GET"])
 def get_italy():
-    for d in data:
-        for t in d["territori"]:
-            if t["nome_territorio"] == "Italia":
-                return jsonify(t)
+    return_dict = {}
+
+    for a in data[0]["assoluti"]:
+        if a["nome_territorio"] == "Italia":
+            return_dict.update(a)
+            break
+
+    for v in data[0]["variazioni"]:
+        if v["nome_territorio"] == "Italia":
+            return_dict.update(v)
+            break
+
+    return jsonify(return_dict)
 
 
 @app.route("/get/territori", methods=["GET"])
 def get_territori():
-    territori = data[0]["territori"]
-    return_dict = [t for t in territori if t["nome_territorio"] != "Italia"]
-    return jsonify(return_dict)
+    territori = data[0]["assoluti"]
+    return_list = [t for t in territori if t["nome_territorio"] != "Italia"]
+    return jsonify(return_list)
+
+
+@app.route("/get/variazioni", methods=["GET"])
+def get_variazioni():
+    variazioni = data[0]["variazioni"]
+    return_list = [v for v in variazioni if v["nome_territorio"] != "Italia"]
+    return jsonify(return_list)
+
+
+@app.route("/get/categorie", methods=["GET"])
+def get_categorie():
+    categorie = data[0]["categorie"]
+    return jsonify(categorie)
+
+
+@app.route("/get/sessi", methods=["GET"])
+def get_sessi():
+    sesso = data[0]["sesso"]
+    return jsonify(sesso)
+
+
+@app.route("/get/fasce_eta", methods=["GET"])
+def get_fasce_eta():
+    sesso = data[0]["fasce_eta"]
+    return jsonify(sesso)
+
+
+@app.route("/get/storico_vaccini", methods=["GET"])
+def get_storico_vaccini():
+    return jsonify(history[1:])
 
 
 if __name__ == "__main__":

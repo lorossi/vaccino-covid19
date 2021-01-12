@@ -39,7 +39,7 @@
     ],
     "fasce_eta": [
       {
-        "nome_categoria": "<=15",
+        "nome_categoria": "0-15",
         "totale_vaccinati": 1
       },
       {
@@ -97,8 +97,8 @@
         "percentuale_nuovi_vaccinati": 11.554476058292853
       }
     ],
-    "script_timestamp": "2021-01-12T21:30:51.736494",
-    "last_updated": "2021-01-12 ore 21:30",
+    "script_timestamp": "2021-01-12T22:14:47.133960",
+    "last_updated": "2021-01-12 ore 22:14",
     "last_data_update": "2021-01-12T20:30:46.825Z",
     "assoluti": [
       {
@@ -3407,30 +3407,6 @@
         "totale_dosi_consegnate": 479700,
         "percentuale_dosi_utilizzate": 39.81884511152804
       }
-    ],
-    "variazioni": [
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {},
-      {}
     ]
   }
 ]

@@ -270,14 +270,13 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
                              data=payload["eta"]).text
     json_response = json.loads(response)
 
-    for age_range in json_response["results"][0]["result"]["data"]["dsr"]\
-                                  ["DS"][0]["PH"][0]["DM0"]:
+    for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
 
         # init the dict with all the new data
         new_data = {
-            "nome_categoria": category_name,
+            "nome_categoria": category_name.replace("<=", "0-"),
             "totale_vaccinati": total_number,
         }
 
@@ -351,8 +350,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
         since_midnight = (midnight - time_obj).total_seconds()
         since_last_midnight = (last_midnight - time_obj).total_seconds()
         if since_midnight >= 0 and since_last_midnight >= 0:
-            new_timestamp = datetime.fromisoformat(timestamp) \
-                                    .strftime("%Y-%m-%d")
+            new_timestamp = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d")
             new_data["script_timestamp"] = new_timestamp
             new_data["assoluti"] = []
             new_data["variazioni"] = []
@@ -372,7 +370,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
             for variation in d["variazioni"]:
                 if not variation:
                     continue
-                    
+
                 new_variation = {
                     "nome_territorio": variation["nome_territorio"],
                     "codice_territorio": variation.get("codice_territorio", None),
@@ -384,8 +382,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
                 new_data["variazioni"].append(variation)
 
             history.append(new_data)
-            midnight = time_obj.replace(hour=0, minute=0,
-                                        second=0, microsecond=0)
+            midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
     # reverse so the oldest one ore always on top
     history.reverse()
     return history

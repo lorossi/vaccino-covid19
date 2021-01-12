@@ -3,7 +3,6 @@
 
 /*jshint esversion: 8 */
 /*jshint strict: false */
-
 const get_data_json = (url, data) => {
   return $.ajax({
     url: url,
@@ -13,13 +12,14 @@ const get_data_json = (url, data) => {
   });
 };
 
+
 // update the data about the last vax update
 const set_last_update = async () => {
   try {
     const response = await get_data_json("/get/last_updated");
     $(".update .stats").html(response.last_updated);
-  } catch(err) {
-    console.log(`Impossibile caricare l'ultimo aggiornamento. Errore ${err}`);
+  } catch (err) {
+    console.log(`Impossibile caricare l'ultimo aggiornamento. Errore ${err.message}`);
     return;
   }
 };
@@ -36,8 +36,8 @@ const load_selection = async () => {
     });
     $(".alltimechartcontainer select#territori").append(new_element);
 
-  } catch(err) {
-    console.log(`Impossibile caricare i territori. Errore ${err}`);
+  } catch (err) {
+    console.log(`Impossibile caricare i territori. Errore ${err.message}`);
     return;
   }
 };
@@ -82,296 +82,284 @@ const all_time_get_options = () => {
   };
 };
 
-
 // load the table data about Italy as a whole
 const load_italy = async () => {
   try {
     const italy = await get_data_json("/get/italy");
 
-    let nuovi_vaccinati;
-    if (italy.nuovi_vaccinati === undefined) {
-      nuovi_vaccinati = 0;
-    } else {
-      nuovi_vaccinati = italy.nuovi_vaccinati;
-    }
-    // same for new doses
-    let nuove_dosi;
-    if (italy.nuove_dosi_consegnate === undefined) {
-      nuove_dosi = 0;
-    } else {
-      nuove_dosi = italy.nuove_dosi_consegnate;
-    }
-
-    let percentuale_dosi;
-    // same for percentage of used doses
-    if (italy.percentuale_dosi_utilizzate === undefined) {
-      percentuale_dosi = 0;
-    } else {
-      percentuale_dosi = italy.percentuale_dosi_utilizzate.toFixed(2);
-    }
-
     // is the percentage over 100%?
-    let over = parseFloat(percentuale_dosi) > 100;
+    let over = parseFloat(italy.percentuale_dosi_utilizzate) > 95;
     // update the divs
     $(".italia #vaccinati").html(`${italy.totale_vaccinati}`);
-    $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
+    $(".italia #deltavaccinati").html(`${italy.nuovi_vaccinati}`);
     $(".italia #dosi").html(`${italy.totale_dosi_consegnate}`);
-    $(".italia #deltadosi").html(`${nuove_dosi}`);
+    $(".italia #deltadosi").html(`${italy.nuove_dosi_consegnate}`);
     $(".italia #percentualevaccinati").html(`${italy.percentuale_popolazione_vaccinata.toFixed(2)}%`);
     if (over) {
-      $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
+      $(".italia #percentualevacciniusati").html(`<span class="warning">${italy.percentuale_dosi_utilizzate.toFixed(2)}%</span>`);
     } else {
-      $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
+      $(".italia #percentualevacciniusati").html(`${italy.percentuale_dosi_utilizzate.toFixed(2)}%`);
     }
 
   } catch (err) {
-    console.log(`Impossibile caricare dati sull'Italia. Errore ${err}`);
+    console.log(`Impossibile caricare dati sull'Italia. Errore ${err.message}`);
     return;
   }
 };
 
 
 // load chart about Italy
-const load_italy_chart = (values, territory_name, old_chart) => {
+const load_italy_chart = async (values, territory_name, old_chart) => {
   let chart;
   let labels = []; // x axis
   let datasets = [];
   let type;
 
-  // pack the values into array
-  if (values === undefined) {
-    values = [0];
-  } else if (values.length === 0) {
-    // no parameters sent
-    // destroy old chart
-    old_chart.destroy();
-    return;
-  }
+  try {
+    // pack the values into array
+    if (values === undefined) {
+      values = [0];
+    } else if (values.length === 0) {
+      // no parameters sent
+      // destroy old chart
+      old_chart.destroy();
+      return;
+    }
 
-  if (territory_name === undefined) {
-    territory_name = "Italia";
-  }
+    if (territory_name === undefined) {
+      territory_name = "Italia";
+    }
 
-  // dates as labels
-  labels = storico_vaccini.map(x => x.script_timestamp);
+    // needed to let the chart load now that the function is async
+    old_chart = await old_chart;
+    history_data = await get_data_json("get/storico_vaccini");
 
-  // multiple lines into datasets
-  if (values.includes(0)) {
-    let data = [];
-    let label;
-    [...storico_vaccini].forEach((s, i) => {
-      label = "Totale vaccinati";
-      let y;
-      y = s.territori.filter(x => x.nome_territorio === territory_name)[0].totale_vaccinati;
-      data.push({
-        x: labels[i],
-        y: y
+    // dates as labels
+    labels = history_data.map(x => x.script_timestamp);
+    // multiple lines into datasets
+    if (values.includes(0)) {
+      let data = [];
+      let label;
+      history_data.forEach((a, i) => {
+        label = "Totale vaccinati";
+        let y;
+        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].totale_vaccinati;
+        data.push({
+          x: labels[i],
+          y: y
+        });
       });
-    });
 
-    datasets.push({
-      data: data,
-      label: label,
-      backgroundColor: `rgba(0, 0, 0, 0)`,
-      borderColor: "#4caf50",
-      hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-    });
-
-    type = "line";
-  }
-
-  if (values.includes(1)) {
-    let data = [];
-    let label;
-    [...storico_vaccini].forEach((s, i) => {
-      label = "Dosi Disponibili";
-      let y;
-      y = s.territori.filter(x => x.nome_territorio === territory_name)[0].totale_dosi_consegnate;
-      data.push({
-        x: labels[i],
-        y: y
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: `rgba(0, 0, 0, 0)`,
+        borderColor: "#4caf50",
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
       });
-    });
 
-    datasets.push({
-      data: data,
-      label: label,
-      backgroundColor: `rgba(0, 0, 0, 0)`,
-      borderColor: "#2196f3",
-      hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-    });
+      type = "line";
+    }
 
-    type = "line";
-  }
-
-  if (values.includes(2)) {
-    let data = [];
-    let label;
-    [...storico_vaccini].forEach((s, i) => {
-      label = "Vaccinati oggi";
-      let y;
-      y = s.territori.filter(x => x.nome_territorio === territory_name)[0].nuovi_vaccinati;
-      data.push({
-        x: labels[i],
-        y: y
+    if (values.includes(1)) {
+      let data = [];
+      let label;
+      history_data.forEach((a, i) => {
+        label = "Dosi Disponibili";
+        let y;
+        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].totale_dosi_consegnate;
+        data.push({
+          x: labels[i],
+          y: y
+        });
       });
-    });
 
-    datasets.push({
-      data: data,
-      label: label,
-      backgroundColor: "#ffeb3b",
-      borderColor: "#c9bc1f",
-      borderWidth: 2,
-      hoverBackgroundColor: "#ffff72",
-      hoverBorderColor: "#ffff72"
-    });
-
-    type = "bar";
-  }
-
-  if (values.includes(3)) {
-    let data = [];
-    let label;
-    [...storico_vaccini].forEach((s, i) => {
-      label = "Percentuale vaccinata";
-      let y;
-      y = s.territori.filter(x => x.nome_territorio === territory_name)[0].percentuale_popolazione_vaccinata;
-      data.push({
-        x: labels[i],
-        y: y
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: `rgba(0, 0, 0, 0)`,
+        borderColor: "#2196f3",
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
       });
-    });
 
-    datasets.push({
-      data: data,
-      label: label,
-      backgroundColor: `rgba(0, 0, 0, 0)`,
-      borderColor: "#ff5722",
-      hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-    });
+      type = "line";
+    }
 
-    type = "line";
-  }
+    if (values.includes(2)) {
+      let data = [];
+      let label;
+      history_data.forEach((v, i) => {
+        label = "Vaccinati oggi";
+        let y;
+        y = v.variazioni.filter(x => x.nome_territorio === territory_name)[0].nuovi_vaccinati;
+        data.push({
+          x: labels[i],
+          y: y
+        });
+      });
 
-  // font size and aspect ratio must me different on small screens
-  let font_size = $(window).width() > 1500 ? 16 : 8;
-  let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
-  if (old_chart) {
-    old_chart.data = {
-      labels: labels,
-      datasets: datasets
-    };
-    old_chart.update();
-    return old_chart;
-  } else {
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: "#ffeb3b",
+        borderColor: "#c9bc1f",
+        borderWidth: 2,
+        hoverBackgroundColor: "#ffff72",
+        hoverBorderColor: "#ffff72"
+      });
 
-    let ctx = $("canvas#italia")[0].getContext('2d');
-    chart = new Chart(ctx, {
-      type: type,
-      data: {
+      type = "bar";
+    }
+
+    if (values.includes(3)) {
+      let data = [];
+      let label;
+      history_data.forEach((a, i) => {
+        label = "Percentuale vaccinata";
+        let y;
+        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].percentuale_popolazione_vaccinata;
+        data.push({
+          x: labels[i],
+          y: y
+        });
+      });
+
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: `rgba(0, 0, 0, 0)`,
+        borderColor: "#ff5722",
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+      });
+
+      type = "line";
+    }
+
+    // font size and aspect ratio must me different on small screens
+    let font_size = $(window).width() > 1500 ? 16 : 8;
+    let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
+    if (old_chart) {
+      old_chart.data = {
         labels: labels,
         datasets: datasets
-      },
-      options: {
-        aspectRatio: aspect_ratio,
-        scales: {
-          xAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: false,
-              maxRotation: 90,
-              minRotation: 45,
-            }
-              }],
-          yAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: true,
-              maxRotation: 30,
-              minRotation: -30,
-            }
-              }]
+      };
+      old_chart.update();
+      return old_chart;
+    } else {
+      let ctx = $("canvas#italia")[0].getContext('2d');
+      chart = await new Chart(ctx, {
+        type: type,
+        data: {
+          labels: labels,
+          datasets: datasets
         },
-        legend: {
-          align: "end",
-          font_size: font_size
-        },
-        elements: {
-          line: {
-            cubicInterpolationMode: "monotone"
+        options: {
+          aspectRatio: aspect_ratio,
+          scales: {
+            xAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+                maxRotation: 30,
+                minRotation: -30,
+              }
+            }]
+          },
+          legend: {
+            align: "end",
+            font_size: font_size
+          },
+          elements: {
+            line: {
+              cubicInterpolationMode: "monotone"
+            }
           }
         }
-      }
-    });
-    return chart;
+      });
+      return old_chart;
+    }
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico storico. Errore ${err.message}`);
+    return;
   }
 };
 
 
 // load data about each territory
-const load_territories = async (order, reverse) => {
+const load_territories = async (order, reverse, territories) => {
+  territories = await territories;
   try {
-    territori = await get_data_json("/get/territori");
+    if (territories === undefined) territories = await get_data_json("/get/territori");
     // sort data
     if (order === 0) {
-      territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
     } else if (order === 1) {
-      territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+      territories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
     } else if (order === 2) {
-      territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
+      territories.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
     } else if (order === 3) {
-      territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+      territories.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
     } else if (order === 4) {
-      territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
+      territories.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
     }
 
     if (reverse) {
-      territori.reverse();
+      territories.reverse();
     }
 
     // fill table
     $("table#territori tbody").html("");
 
-    territori.forEach((t, i) => {
-        let nome_territorio_corto;
-        if (t.codice_territorio === "06") {
-          nome_territorio_corto = "E.R.";
-        } else if (t.codice_territorio === "07") {
-          nome_territorio_corto = "F.V.G";
-        } else if (t.codice_territorio === "20") {
-          nome_territorio_corto = "V. d'Aosta";
-        } else {
-          nome_territorio_corto = t.nome_territorio;
-        }
+    territories.forEach((t, i) => {
+      let nome_territorio_corto;
+      if (t.codice_territorio === "06") {
+        nome_territorio_corto = "E.R.";
+      } else if (t.codice_territorio === "07") {
+        nome_territorio_corto = "F.V.G";
+      } else if (t.codice_territorio === "20") {
+        nome_territorio_corto = "V. d'Aosta";
+      } else {
+        nome_territorio_corto = t.nome_territorio;
+      }
 
-        let percentuale_vaccinati;
-        percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
-        let percentuale_dosi;
-        percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
-        let over = t.percentuale_dosi_utilizzate > 100;
+      let percentuale_vaccinati;
+      percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
+      let percentuale_dosi;
+      percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
+      let over = t.percentuale_dosi_utilizzate > 100;
 
-        let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-        new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
-        new_tr += `<td>${t.totale_vaccinati}`;
-        new_tr += `<td>${percentuale_vaccinati}</td>`;
-        new_tr += `<td>${t.totale_dosi_consegnate}`;
-        if (over) {
-          new_tr += `<td><span class="warning">${percentuale_dosi}</span>`;
-        } else {
-          new_tr += `<td>${percentuale_dosi}`;
-        }
+      let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
+      new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
+      new_tr += `<td>${t.totale_vaccinati}`;
+      new_tr += `<td>${percentuale_vaccinati}</td>`;
+      new_tr += `<td>${t.totale_dosi_consegnate}`;
+      if (over) {
+        new_tr += `<td><span class="warning">${percentuale_dosi}</span>`;
+      } else {
+        new_tr += `<td>${percentuale_dosi}`;
+      }
 
-        new_tr += "</tr>";
-        $("table#territori tbody").append(new_tr);
-      });
-  } catch(err) {
-    console.log(`Impossibile caricare dati sui territori. Errore ${err}`);
+      new_tr += "</tr>";
+      $("table#territori tbody").append(new_tr);
+    });
+
+    return territories;
+  } catch (err) {
+    console.log(`Impossibile caricare dati sui territori. Errore ${err.message}`);
     return;
   }
 };
 
-const load_territories_chart = (order, sort_by_name, old_chart) => {
+
+const load_territories_chart = async (order, sort_by_name, old_chart) => {
   // chart variables
   let chart;
   let data;
@@ -382,93 +370,69 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
   let hover_background_colors;
   let font_size;
 
-  // sort data and fill variables
-  if (order === 0) {
-    vaccini.territori.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.totale_vaccinati);
-    background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
-    border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
-    hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
-    labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
-    label = "Totale vaccinati";
-  } else if (order === 1) {
-    vaccini.territori.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => parseFloat(x.percentuale_popolazione_vaccinata).toFixed(2));
-    labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
-    background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.5)`);
-    border_colors = data.map(x => `hsl(${x / 100 * 120}, 100%, 50%)`);
-    hover_background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.25)`);
-    label = "Percentuale popolazione vaccinata";
-  } else if (order === 2) {
-    vaccini.territori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.totale_dosi_consegnate);
-    background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
-    border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
-    hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
-    labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
-    label = "Totale dosi di vaccino consegnate";
-  } else if (order === 3) {
-    vaccini.territori.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_dosi_utilizzate.toFixed(2));
-    background_colors = data.map(x => `hsla(${120 - x / 100 * 120}, 100%, 50%, 0.5)`);
-    border_colors = data.map(x => `hsl(${120 - x / Math.max(...data) * 120}, 100%, 50%)`);
-    hover_background_colors = data.map(x => `hsla(${120 - x /100 * 120}, 100%, 50%, 0.25)`);
-    labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
-    label = "Percentuale vaccini utlizzati";
-  }
+  old_chart = await old_chart;
 
-  // calculate average
-  let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  if (average > 100) {
-    average = parseInt(average);
-  } else {
-    average = average.toFixed(2);
-  }
+  try {
+    let territories = await get_data_json("/get/territori");
+    // sort data and fill variables
+    if (order === 0) {
+      territories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+      if (sort_by_name) {
+        territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = territories.filter(x => x.nome_territorio != "Italia").map(x => x.totale_vaccinati);
+      background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
+      border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
+      hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
+      labels = territories.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+      label = "Totale vaccinati";
+    } else if (order === 1) {
+      territories.sort((a, b) => a.percentuale_popolazione_vaccinata > b.percentuale_popolazione_vaccinata ? 1 : -1);
+      if (sort_by_name) {
+        territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = territories.filter(x => x.nome_territorio != "Italia").map(x => parseFloat(x.percentuale_popolazione_vaccinata).toFixed(2));
+      labels = territories.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+      background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.5)`);
+      border_colors = data.map(x => `hsl(${x / 100 * 120}, 100%, 50%)`);
+      hover_background_colors = data.map(x => `hsla(${x / 100 * 120}, 100%, 50%, 0.25)`);
+      label = "Percentuale popolazione vaccinata";
+    } else if (order === 2) {
+      territories.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+      if (sort_by_name) {
+        territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = territories.filter(x => x.nome_territorio != "Italia").map(x => x.totale_dosi_consegnate);
+      background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
+      border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
+      hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
+      labels = territories.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+      label = "Totale dosi di vaccino consegnate";
+    } else if (order === 3) {
+      territories.sort((a, b) => a.percentuale_dosi_utilizzate > b.percentuale_dosi_utilizzate ? 1 : -1);
+      if (sort_by_name) {
+        territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = territories.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_dosi_utilizzate.toFixed(2));
+      background_colors = data.map(x => `hsla(${120 - x / 100 * 120}, 100%, 50%, 0.5)`);
+      border_colors = data.map(x => `hsl(${120 - x / Math.max(...data) * 120}, 100%, 50%)`);
+      hover_background_colors = data.map(x => `hsla(${120 - x /100 * 120}, 100%, 50%, 0.25)`);
+      labels = territories.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+      label = "Percentuale vaccini utlizzati";
+    }
 
-  font_size = $(window).width() > 1500 ? 12 : 8;
-  if (old_chart) {
-    // update the old chart
-    old_chart.data = {
-      labels: labels,
-      datasets: [{
-        data: data,
-        label: label,
-        backgroundColor: background_colors,
-        borderColor: border_colors,
-        borderWidth: 2,
-        hoverBackgroundColor: hover_background_colors,
-        hoverBorderColor: hover_background_colors
-      }, {
-        label: 'Media',
-        labels: new Array(data.length).fill("media"),
-        data: new Array(data.length).fill(average),
-        type: 'line',
-        backgroundColor: "hsla(0, 100%, 50%, 0.1)",
-        borderColor: "hsl(0, 100%, 50%)",
-        pointRadius: 0,
-        borderWidth: 1
-      }],
-    };
-    old_chart.update();
-    return old_chart;
-  } else {
-    // draw the new chart
-    let ctx = $("canvas#territori")[0].getContext('2d');
-    chart = new Chart(ctx, {
-      type: "bar",
-      data: {
+    // calculate average
+    let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
+    if (average > 100) {
+      average = parseInt(average);
+    } else {
+      average = average.toFixed(2);
+    }
+
+    font_size = $(window).width() > 1500 ? 12 : 8;
+    if (old_chart) {
+      // update the old chart
+      old_chart.data = {
         labels: labels,
         datasets: [{
           data: data,
@@ -481,96 +445,107 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
         }, {
           label: 'Media',
           labels: new Array(data.length).fill("media"),
-          data: new Array(data.length).fill(parseInt(average)),
+          data: new Array(data.length).fill(average),
           type: 'line',
           backgroundColor: "hsla(0, 100%, 50%, 0.1)",
           borderColor: "hsl(0, 100%, 50%)",
           pointRadius: 0,
           borderWidth: 1
         }],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 1.1,
-        legend: {
-          align: "end"
+      };
+      old_chart.update();
+      return old_chart;
+    } else {
+      // draw the new chart
+      let ctx = $("canvas#territori")[0].getContext('2d');
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
+          }, {
+            label: 'Media',
+            labels: new Array(data.length).fill("media"),
+            data: new Array(data.length).fill(parseInt(average)),
+            type: 'line',
+            backgroundColor: "hsla(0, 100%, 50%, 0.1)",
+            borderColor: "hsl(0, 100%, 50%)",
+            pointRadius: 0,
+            borderWidth: 1
+          }],
         },
-        tooltips: {},
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false,
-              maxRotation: 90,
-              minRotation: 45,
-              fontSize: font_size
-            }
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {},
+          scales: {
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+                fontSize: font_size
+              }
             }],
-          yAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: true,
-              maxRotation: 30,
-              minRotation: -30,
-            }
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+                maxRotation: 30,
+                minRotation: -30,
+              }
             }]
+          }
         }
-      }
-    });
-    return chart;
+      });
+      return chart;
+    }
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico dei territori. Errore ${err.message}`);
+    return;
   }
 };
 
 
+const load_variations = async (order, reverse) => {
+  try {
+    let variations = await get_data_json("/get/variazioni");
+    // sort data
+    if (order === 0) {
+      variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+    } else if (order === 1) {
+      variations.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+    } else if (order === 2) {
+      variations.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
+    } else if (order === 3) {
+      variations.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
+    } else if (order === 4) {
+      variations.sort((a, b) => a.percentuale_nuove_dosi_consegnate > b.percentuale_nuove_dosi_consegnate ? 1 : -1);
+    }
 
-const load_variations = (order, reverse) => {
-  // sort data
-  if (order === 0) {
-    vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.territori.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
-  } else if (order === 2) {
-    vaccini.territori.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
-  } else if (order === 3) {
-    vaccini.territori.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
-  } else if (order === 4) {
-    vaccini.territori.sort((a, b) => a.percentuale_nuove_dosi_consegnate > b.percentuale_nuove_dosi_consegnate ? 1 : -1);
-  }
+    if (reverse) {
+      variations.reverse();
+    }
 
-  if (reverse) {
-    vaccini.territori.reverse();
-  }
+    // fill table
+    $("table#variazioni tbody").html("");
 
-  // fill table
-  $("table#variazioni tbody").html("");
-
-  vaccini.territori.forEach((t, i) => {
-    if (t.nome_territorio != "Italia") {
-
+    variations.forEach((t, i) => {
       let nome_territorio_corto;
       if (t.codice_territorio === "06") {
         nome_territorio_corto = "E.R.";
       } else if (t.codice_territorio === "07") {
         nome_territorio_corto = "F.V.G";
-      }
-
-      let nuovi_vaccinati;
-      let percentuale_nuovi_vaccinati;
-      if (t.nuovi_vaccinati === undefined) {
-        nuovi_vaccinati = 0;
-        percentuale_nuovi_vaccinati = 0;
-      } else {
-        nuovi_vaccinati = t.nuovi_vaccinati;
-        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
-      }
-
-      let nuove_dosi;
-      let nuove_dosi_percentuale;
-      if (t.nuove_dosi_consegnate === undefined) {
-        nuove_dosi = 0;
-        nuove_dosi_percentuale = 0;
-      } else {
-        nuove_dosi = t.nuove_dosi_consegnate;
-        nuove_dosi_percentuale = t.percentuale_nuove_dosi_consegnate;
       }
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
@@ -580,18 +555,22 @@ const load_variations = (order, reverse) => {
         new_tr += `<td>${t.nome_territorio}</td>`;
       }
 
-      new_tr += `<td>+${nuovi_vaccinati}`;
-      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
-      new_tr += `<td>+${nuove_dosi}`;
-      new_tr += `<td>+${nuove_dosi_percentuale.toFixed(2)}%</td>`;
+      new_tr += `<td>+${t.nuovi_vaccinati}`;
+      new_tr += `<td>+${t.percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += `<td>+${t.nuove_dosi_consegnate}`;
+      new_tr += `<td>+${t.percentuale_nuove_dosi_consegnate.toFixed(2)}%</td>`;
       new_tr += "</tr>";
       $("table#variazioni tbody").append(new_tr);
-    }
-  });
+    });
+
+  } catch (err) {
+    console.log(`Impossibile caricare dati sulle variazioni. Errore ${err.message}`);
+    return;
+  }
 };
 
 
-const load_variations_chart = (order, sort_by_name, old_chart) => {
+const load_variations_chart = async (order, sort_by_name, old_chart) => {
   // chart variables
   let chart;
   let data;
@@ -602,83 +581,58 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
   let hover_background_colors;
   let font_size;
 
-  // sort data and fill variables
-  if (order === 0) {
-    vaccini.territori.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+  old_chart = await old_chart;
+  try {
+    let variations = await get_data_json("/get/variazioni");
+    // sort data and fill variables
+    if (order === 0) {
+      variations.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+      if (sort_by_name) {
+        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.nuovi_vaccinati);
+      label = "Nuovi vaccinati";
+    } else if (order === 1) {
+      variations.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
+      if (sort_by_name) {
+        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuovi_vaccinati.toFixed(2));
+      label = "Variazione nuovi vaccinati";
+    } else if (order === 2) {
+      variations.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
+      if (sort_by_name) {
+        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.nuove_dosi_consegnate);
+      label = "Nuovi vaccini";
+    } else if (order === 3) {
+      variations.sort((a, b) => a.percentuale_nuove_dosi_consegnate > b.percentuale_nuove_dosi_consegnate ? 1 : -1);
+      if (sort_by_name) {
+        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      }
+      data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuove_dosi_consegnate.toFixed(2));
+      label = "Variazione nuovi vaccini";
     }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nuovi_vaccinati);
-    label = "Nuovi vaccinati";
-  } else if (order === 1) {
-    vaccini.territori.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuovi_vaccinati.toFixed(2));
-    label = "Variazione nuovi vaccinati";
-  } else if (order === 2) {
-    vaccini.territori.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nuove_dosi_consegnate);
-    label = "Nuovi vaccini";
-  } else if (order === 3) {
-    vaccini.territori.sort((a, b) => a.percentuale_nuove_dosi_consegnate > b.percentuale_nuove_dosi_consegnate ? 1 : -1);
-    if (sort_by_name) {
-      vaccini.territori.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
-    }
-    data = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuove_dosi_consegnate.toFixed(2));
-    label = "Variazione nuovi vaccini";
-  }
 
-  background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
-  border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
-  hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
-  labels = [...vaccini.territori].filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
+    background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.5)`);
+    border_colors = data.map(x => `hsl(${x / Math.max(...data) * 120}, 100%, 50%)`);
+    hover_background_colors = data.map(x => `hsla(${x / Math.max(...data) * 120}, 100%, 50%, 0.25)`);
+    labels = variations.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
 
-  // calculate average
-  let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  // round average
-  if (average > 100) {
-    average = parseInt(average);
-  } else {
-    average = average.toFixed(2);
-  }
+    // calculate average
+    let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
+    // round average
+    if (average > 100) {
+      average = parseInt(average);
+    } else {
+      average = average.toFixed(2);
+    }
 
-  font_size = $(window).width() > 1500 ? 12 : 8;
-  if (old_chart) {
-    // update the old chart
-    old_chart.data = {
-      labels: labels,
-      datasets: [{
-        data: data,
-        label: label,
-        backgroundColor: background_colors,
-        borderColor: border_colors,
-        borderWidth: 2,
-        hoverBackgroundColor: hover_background_colors,
-        hoverBorderColor: hover_background_colors
-      }, {
-        label: 'Media',
-        labels: new Array(data.length).fill("media"),
-        data: new Array(data.length).fill(average),
-        type: 'line',
-        backgroundColor: "hsla(0, 100%, 50%, 0.1)",
-        borderColor: "hsl(0, 100%, 50%)",
-        pointRadius: 0,
-        borderWidth: 1
-      }],
-    };
-    old_chart.update();
-    return old_chart;
-  } else {
-    // draw the new chart
-    let ctx = $("canvas#variazioni")[0].getContext('2d');
-    chart = new Chart(ctx, {
-      type: "bar",
-      data: {
+    font_size = $(window).width() > 1500 ? 12 : 8;
+    if (old_chart) {
+      // update the old chart
+      old_chart.data = {
         labels: labels,
         datasets: [{
           data: data,
@@ -688,6 +642,34 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
           borderWidth: 2,
           hoverBackgroundColor: hover_background_colors,
           hoverBorderColor: hover_background_colors
+        }, {
+          label: 'Media',
+          labels: new Array(data.length).fill("media"),
+          data: new Array(data.length).fill(average),
+          type: 'line',
+          backgroundColor: "hsla(0, 100%, 50%, 0.1)",
+          borderColor: "hsl(0, 100%, 50%)",
+          pointRadius: 0,
+          borderWidth: 1
+        }],
+      };
+      old_chart.update();
+      return old_chart;
+    } else {
+      // draw the new chart
+      let ctx = $("canvas#variazioni")[0].getContext('2d');
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
           }, {
             label: 'Media',
             labels: new Array(data.length).fill("media"),
@@ -698,79 +680,89 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
             pointRadius: 0,
             borderWidth: 1
           }],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 1.1,
-        legend: {
-          align: "end"
         },
-        tooltips: {},
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false,
-              maxRotation: 90,
-              minRotation: 45,
-              fontSize: font_size
-            }
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {},
+          scales: {
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+                fontSize: font_size
+              }
             }],
-          yAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: true,
-              maxRotation: 30,
-              minRotation: -30,
-            }
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+                maxRotation: 30,
+                minRotation: -30,
+              }
             }]
+          }
         }
-      }
-    });
-    return chart;
+      });
+      return chart;
+    }
+  } catch (err) {
+
   }
 };
-
 
 // load data about each category
-const load_categories = (order, reverse) => {
-  if (order === 0) {
-    vaccini.categorie.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  } else if (order === 2) {
-    vaccini.categorie.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
-  } else if (order === 3) {
-    vaccini.categorie.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
-  }
-
-  if (reverse) {
-    vaccini.categorie.reverse();
-  }
-
-  $("table#categorie tbody").html("");
-
-  vaccini.categorie.forEach((t, i) => {
-    let nuovi_vaccinati;
-    let percentuale_nuovi_vaccinati;
-    if (t.nuovi_vaccinati === undefined) {
-      nuovi_vaccinati = 0;
-      percentuale_nuovi_vaccinati = 0;
-    } else {
-      nuovi_vaccinati = t.nuovi_vaccinati;
-      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+const load_categories = async (order, reverse) => {
+  try {
+    let categories = await get_data_json("/get/categorie");
+    // sort
+    if (order === 0) {
+      categories.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
+    } else if (order === 1) {
+      categories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    } else if (order === 2) {
+      categories.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+    } else if (order === 3) {
+      categories.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
     }
 
-    let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
-    new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr += `<td>+${nuovi_vaccinati}</td>`;
-    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
-    new_tr += "</tr>";
-    $("table#categorie tbody").append(new_tr);
-  });
+    if (reverse) {
+      categories.reverse();
+    }
+
+    $("table#categorie tbody").html("");
+
+    categories.forEach((t, i) => {
+      let nuovi_vaccinati;
+      let percentuale_nuovi_vaccinati;
+      if (t.nuovi_vaccinati === undefined) {
+        nuovi_vaccinati = 0;
+        percentuale_nuovi_vaccinati = 0;
+      } else {
+        nuovi_vaccinati = t.nuovi_vaccinati;
+        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+      }
+
+      let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
+      new_tr += `<td>${t.nome_categoria}</td>`;
+      new_tr += `<td>${t.totale_vaccinati}</td>`;
+      new_tr += `<td>+${nuovi_vaccinati}</td>`;
+      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += "</tr>";
+      $("table#categorie tbody").append(new_tr);
+    });
+  } catch (err) {
+    console.log(`Impossibile caricare le categorie. Errore ${err.message}`);
+    return;
+  }
 };
 
-const load_categories_chart = (order, old_chart) => {
+
+const load_categories_chart = async (order, old_chart) => {
   // chart variables
   let chart;
   let data;
@@ -781,43 +773,28 @@ const load_categories_chart = (order, old_chart) => {
   let hover_background_colors;
   let font_size;
 
-  // sort data and fill variables
-  if (order === 0) {
-    vaccini.categorie.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.categorie.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  }
+  old_chart = await old_chart;
 
-  data = vaccini.categorie.map(x => x.totale_vaccinati);
-  background_colors = data.map(x => "#1e88e5");
-  border_colors = data.map(x => "#005cb2");
-  hover_background_colors = data.map(x => "#6ab7ff");
-  labels = vaccini.categorie.map(x => x.nome_categoria.split(" "));
-  label = "Totale vaccinati";
+  try {
+    let categories = await get_data_json("/get/categorie");
+    // sort data and fill variables
+    if (order === 0) {
+      categories.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
+    } else if (order === 1) {
+      categories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    }
 
-  font_size = $(window).width() > 1500 ? 14 : 10;
-  if (old_chart) {
-    // update the old chart
-    old_chart.data = {
-      labels: labels,
-      datasets: [{
-        data: data,
-        label: label,
-        backgroundColor: background_colors,
-        borderColor: border_colors,
-        borderWidth: 2,
-        hoverBackgroundColor: hover_background_colors,
-        hoverBorderColor: hover_background_colors
-      }],
-    };
-    old_chart.update();
-    return old_chart;
-  } else {
-    // draw the new chart
-    let ctx = $("canvas#categorie")[0].getContext('2d');
-    chart = new Chart(ctx, {
-      type: "horizontalBar",
-      data: {
+    data = categories.map(x => x.totale_vaccinati);
+    background_colors = data.map(x => "#1e88e5");
+    border_colors = data.map(x => "#005cb2");
+    hover_background_colors = data.map(x => "#6ab7ff");
+    labels = categories.map(x => x.nome_categoria.split(" "));
+    label = "Totale vaccinati";
+
+    font_size = $(window).width() > 1500 ? 14 : 10;
+    if (old_chart) {
+      // update the old chart
+      old_chart.data = {
         labels: labels,
         datasets: [{
           data: data,
@@ -827,79 +804,98 @@ const load_categories_chart = (order, old_chart) => {
           borderWidth: 2,
           hoverBackgroundColor: hover_background_colors,
           hoverBorderColor: hover_background_colors
+        }],
+      };
+      old_chart.update();
+      return old_chart;
+    } else {
+      // draw the new chart
+      let ctx = $("canvas#categorie")[0].getContext('2d');
+      chart = new Chart(ctx, {
+        type: "horizontalBar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
           }],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 1.1,
-        legend: {
-          align: "end"
         },
-        tooltips: {},
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false,
-              maxRotation: 90,
-              minRotation: 45,
-              fontSize: font_size
-            }
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {},
+          scales: {
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+                fontSize: font_size
+              }
             }],
-          yAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: true,
-            }
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+              }
             }]
+          }
         }
-      }
-    });
-    return chart;
+      });
+      return chart;
+    }
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico delle categorie. Errore ${err.message}`);
+    return;
   }
 };
 
 
 // load data about each gender
-const load_genders = (order, reverse) => {
-  if (order === 0) {
-    vaccini.sesso.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.sesso.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  } else if (order === 2) {
-    vaccini.sesso.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
-  } else if (order === 3) {
-    vaccini.sesso.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
-  }
-
-  if (reverse) {
-    vaccini.sesso.reverse();
-  }
-
-  $("table#sesso tbody").html("");
-
-  vaccini.sesso.forEach((t, i) => {
-    let nuovi_vaccinati;
-    let percentuale_nuovi_vaccinati;
-    if (t.nuovi_vaccinati === undefined) {
-      nuovi_vaccinati = 0;
-      percentuale_nuovi_vaccinati = 0;
-    } else {
-      nuovi_vaccinati = t.nuovi_vaccinati;
-      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+const load_genders = async (order, reverse) => {
+  try {
+    let genders = await get_data_json("/get/sessi");
+    if (order === 0) {
+      genders.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+    } else if (order === 1) {
+      genders.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    } else if (order === 2) {
+      genders.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+    } else if (order === 3) {
+      genders.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
     }
 
-    let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
-    new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr += `<td>+${nuovi_vaccinati}</td>`;
-    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
-    new_tr += "</tr>";
-    $("table#sesso tbody").append(new_tr);
-  });
+    if (reverse) {
+      genders.reverse();
+    }
+
+    $("table#sesso tbody").html("");
+
+    genders.forEach((t, i) => {
+      let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
+      new_tr += `<td>${t.nome_categoria}</td>`;
+      new_tr += `<td>${t.totale_vaccinati}</td>`;
+      new_tr += `<td>+${t.nuovi_vaccinati}</td>`;
+      new_tr += `<td>+${t.percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += "</tr>";
+      $("table#sesso tbody").append(new_tr);
+    });
+  } catch (err) {
+    console.log(`Impossibile caricare i sessi. Errore ${err.message}`);
+    return;
+  }
 };
 
 
-const load_genders_chart = () => {
+const load_genders_chart = async () => {
   let chart;
   let data;
   let label;
@@ -909,93 +905,98 @@ const load_genders_chart = () => {
   let hover_background_colors;
   let font_size;
 
-  data = vaccini.sesso.map(x => x.totale_vaccinati);
-  background_colors = vaccini.sesso.map(x => {
-    if (x.nome_categoria === "donne") return "#d81b60";
-    else return "#29b6f6";
-  });
-  border_colors = vaccini.sesso.map(x => {
-    if (x.nome_categoria === "donne") return "#b4004e";
-    else return "#0086c3";
-  });
-  hover_background_colors = vaccini.sesso.map(x => {
-    if (x.nome_categoria === "donne") return "#ff77a9";
-    else return "#80d6ff";
-  });
-  labels = vaccini.sesso.map(x => x.nome_categoria);
-  label = "Totale vaccinati";
+  try {
+    let genders = await get_data_json("/get/sessi");
+    data = genders.map(x => x.totale_vaccinati);
+    background_colors = genders.map(x => {
+      if (x.nome_categoria === "donne") return "#d81b60";
+      else return "#29b6f6";
+    });
+    border_colors = genders.map(x => {
+      if (x.nome_categoria === "donne") return "#b4004e";
+      else return "#0086c3";
+    });
+    hover_background_colors = genders.map(x => {
+      if (x.nome_categoria === "donne") return "#ff77a9";
+      else return "#80d6ff";
+    });
+    labels = genders.map(x => x.nome_categoria);
+    label = "Totale vaccinati";
 
-  font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 1500 ? 14 : 10;
 
-  // draw the new chart
-  let ctx = $("canvas#sesso")[0].getContext('2d');
-  chart = new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: labels,
-      datasets: [{
-        data: data,
-        backgroundColor: background_colors,
-        borderColor: border_colors,
-        borderWidth: 2,
-        hoverBackgroundColor: hover_background_colors,
-        hoverBorderColor: hover_background_colors
+    // draw the new chart
+    let ctx = $("canvas#sesso")[0].getContext('2d');
+    chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
         }],
-    },
-    options: {
-      responsive: true,
-      aspectRatio: 1,
-      legend: {
-        align: "end"
       },
-      tooltips: {}
-    }
-  });
-  return chart;
+      options: {
+        responsive: true,
+        aspectRatio: 1,
+        legend: {
+          align: "end"
+        },
+        tooltips: {}
+      }
+    });
+    return chart;
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico dei sessi. Errore ${err.message}`);
+    return;
+  }
 };
-
 
 // load data about age ranges
-const load_age_ranges = (order, reverse) => {
-  if (order === 0) {
-    vaccini.fasce_eta.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.fasce_eta.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  } else if (order === 2) {
-    vaccini.fasce_eta.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
-  } else if (order === 3) {
-    vaccini.fasce_eta.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
-  }
+const load_age_ranges = async (order, reverse) => {
+  try {
+    let age_ranges = await get_data_json("/get/fasce_eta");
 
-  if (reverse) {
-    vaccini.fasce_eta.reverse();
-  }
-
-  $("table#fasce_eta tbody").html("");
-
-  vaccini.fasce_eta.forEach((t, i) => {
-    let nuovi_vaccinati;
-    let percentuale_nuovi_vaccinati;
-    if (t.nuovi_vaccinati == undefined) {
-      nuovi_vaccinati = 0;
-      percentuale_nuovi_vaccinati = 0;
-    } else {
-      nuovi_vaccinati = t.nuovi_vaccinati;
-      percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+    if (order === 0) {
+      age_ranges.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+    } else if (order === 1) {
+      age_ranges.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    } else if (order === 2) {
+      age_ranges.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
+    } else if (order === 3) {
+      age_ranges.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
     }
 
-    let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
-    new_tr += `<td>${t.nome_categoria}</td>`;
-    new_tr += `<td>${t.totale_vaccinati}</td>`;
-    new_tr += `<td>+${nuovi_vaccinati}</td>`;
-    new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
-    new_tr += "</tr>";
-    $("table#fasce_eta tbody").append(new_tr);
-  });
+    if (reverse) {
+      age_ranges.reverse();
+    }
+
+    $("table#fasce_eta tbody").html("");
+
+    age_ranges.forEach((t, i) => {
+      let nuovi_vaccinati = t.nuovi_vaccinati || t.totale_vaccinati;
+      let percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati || 100;
+
+      let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
+      new_tr += `<td>${t.nome_categoria}</td>`;
+      new_tr += `<td>${t.totale_vaccinati}</td>`;
+      new_tr += `<td>+${nuovi_vaccinati}</td>`;
+      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += "</tr>";
+      $("table#fasce_eta tbody").append(new_tr);
+    });
+  } catch (err) {
+    console.log(`Impossibile caricare le fasce di età. Errore ${err.message}`);
+    return;
+  }
 };
 
 
-const load_age_ranges_chart = (order, old_chart) => {
+const load_age_ranges_chart = async (order, old_chart) => {
   // chart variables
   let chart;
   let data;
@@ -1006,43 +1007,27 @@ const load_age_ranges_chart = (order, old_chart) => {
   let hover_background_colors;
   let font_size;
 
-  // sort data and fill variables
-  if (order === 0) {
-    vaccini.fasce_eta.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
-  } else if (order === 1) {
-    vaccini.fasce_eta.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
-  }
+  try {
+    let age_ranges = await get_data_json("/get/fasce_eta");
 
-  data = vaccini.fasce_eta.map(x => x.totale_vaccinati);
-  background_colors = data.map(x => "#1e88e5");
-  border_colors = data.map(x => "#005cb2");
-  hover_background_colors = data.map(x => "#6ab7ff");
-  labels = vaccini.fasce_eta.map(x => x.nome_categoria);
-  label = "Totale vaccinati";
+    // sort data and fill variables
+    if (order === 0) {
+      age_ranges.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+    } else if (order === 1) {
+      age_ranges.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    }
 
-  font_size = $(window).width() > 1500 ? 14 : 10;
-  if (old_chart) {
-    // update the old chart
-    old_chart.data = {
-      labels: labels,
-      datasets: [{
-        data: data,
-        label: label,
-        backgroundColor: background_colors,
-        borderColor: border_colors,
-        borderWidth: 2,
-        hoverBackgroundColor: hover_background_colors,
-        hoverBorderColor: hover_background_colors
-      }],
-    };
-    old_chart.update();
-    return old_chart;
-  } else {
-    // draw the new chart
-    let ctx = $("canvas#fasce_eta")[0].getContext('2d');
-    chart = new Chart(ctx, {
-      type: "bar",
-      data: {
+    data = age_ranges.map(x => x.totale_vaccinati);
+    background_colors = data.map(x => "#1e88e5");
+    border_colors = data.map(x => "#005cb2");
+    hover_background_colors = data.map(x => "#6ab7ff");
+    labels = age_ranges.map(x => x.nome_categoria);
+    label = "Totale vaccinati";
+
+    font_size = $(window).width() > 1500 ? 14 : 10;
+    if (old_chart) {
+      // update the old chart
+      old_chart.data = {
         labels: labels,
         datasets: [{
           data: data,
@@ -1052,39 +1037,61 @@ const load_age_ranges_chart = (order, old_chart) => {
           borderWidth: 2,
           hoverBackgroundColor: hover_background_colors,
           hoverBorderColor: hover_background_colors
+        }],
+      };
+      old_chart.update();
+      return old_chart;
+    } else {
+      // draw the new chart
+      let ctx = $("canvas#fasce_eta")[0].getContext('2d');
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
           }],
-      },
-      options: {
-        responsive: true,
-        aspectRatio: 1.1,
-        legend: {
-          align: "end"
         },
-        tooltips: {},
-        scales: {
-          xAxes: [{
-            ticks: {
-              autoSkip: false,
-              maxRotation: 90,
-              minRotation: 45,
-              fontSize: font_size
-            }
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {},
+          scales: {
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+                fontSize: font_size
+              }
             }],
-          yAxes: [{
-            ticks: {
-              fontSize: font_size,
-              autoSkip: true,
-              maxRotation: 30,
-              minRotation: -30,
-            }
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+                maxRotation: 30,
+                minRotation: -30,
+              }
             }]
+          }
         }
-      }
-    });
-    return chart;
+      });
+      return chart;
+    }
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico delle fasce di età. Errore ${err.message}`);
+    return;
   }
 };
-
 
 // main function
 $(document).ready(() => {
@@ -1093,7 +1100,7 @@ $(document).ready(() => {
   load_selection();
   load_italy();
   // load tables
-  load_territories(0, false);
+  let territories= load_territories(0, false);
   load_variations(0, false);
   load_categories(0, false);
   load_genders(0, false);
@@ -1143,7 +1150,7 @@ $(document).ready(() => {
 
     // once we know the class, we can update its data
     if (table_id === "territori") {
-      load_territories(column, reverse);
+      load_territories(column, reverse, territories);
     } else if (table_id === "variazioni") {
       load_variations(column, reverse);
     } else if (table_id === "categorie") {
@@ -1181,7 +1188,6 @@ $(document).ready(() => {
       territories_chart = load_territories_chart(value, sort_by_name, territories_chart);
     } else if (chart_id === "variazioni") {
       let value, sort_by_name;
-
       // all radios
       let radios = $(e.target).parents().find(".chartcontainer#variazioni").find("input[type=\"radio\"]").toArray();
 
