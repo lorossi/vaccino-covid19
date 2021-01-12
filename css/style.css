@@ -22,6 +22,11 @@ body {
   font-style: italic;
 }
 
+.warning {
+  font-size: bold;
+  color: #ff1744;
+}
+
 .content {
   width: 90vw;
   margin-left: auto;

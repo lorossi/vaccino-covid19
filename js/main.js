@@ -56,7 +56,7 @@ const all_time_get_options = () => {
   territory = $(".alltimechartcontainer select").val();
 
   // update the text over the chart
-  $(".alltimechartcontainer span#nome_territorio").text(territory);
+  $(".alltimechartcontainer span#nome_territorio").html(territory);
 
   // pack the values into an object and return them
   return {
@@ -71,7 +71,7 @@ const load_italy = () => {
   // copy array, so whule filtering it we don't alter it
   // sorting is ok tho
   [...vaccini.territori].filter(x => x.nome_territorio === "Italia").forEach((t, i) => {
-    // due to a change, new vaccined  might not always be present
+    // due to a change, new vaccined might not always be present
     let nuovi_vaccinati;
     if (t.nuovi_vaccinati === undefined) {
       nuovi_vaccinati = 0;
@@ -86,13 +86,29 @@ const load_italy = () => {
       nuove_dosi = t.nuove_dosi_consegnate;
     }
 
+    let percentuale_dosi;
+    // same for percentage of used doses
+    if (t.percentuale_dosi_utilizzate === undefined) {
+      percentuale_dosi = 0;
+    } else {
+      percentuale_dosi = t.percentuale_dosi_utilizzate.toFixed(2);
+    }
+
+    // is the percentage over 100%?
+    let over = parseFloat(percentuale_dosi) > 100;
+
     // update the divs
-    $(".italia #vaccinati").text(`${t.totale_vaccinati}`);
-    $(".italia #deltavaccinati").text(`${nuovi_vaccinati}`);
-    $(".italia #dosi").text(`${t.totale_dosi_consegnate}`);
-    $(".italia #deltadosi").text(`${nuove_dosi}`);
-    $(".italia #percentualevaccinati").text(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-    $(".italia #percentualevacciniusati").text(`${t.percentuale_dosi_utilizzate.toFixed(2)}%`);
+    $(".italia #vaccinati").html(`${t.totale_vaccinati}`);
+    $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
+    $(".italia #dosi").html(`${t.totale_dosi_consegnate}`);
+    $(".italia #deltadosi").html(`${nuove_dosi}`);
+    $(".italia #percentualevaccinati").html(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
+    if (over) {
+      $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
+    } else {
+      $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
+    }
+
 
     return;
   });
@@ -316,13 +332,19 @@ const load_territories = (order, reverse) => {
       percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
       let percentuale_dosi;
       percentuale_dosi = `${parseFloat(t.percentuale_dosi_utilizzate).toFixed(2)}%`;
+      let over = t.percentuale_dosi_utilizzate > 100;
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
       new_tr += `<td>${t.totale_vaccinati}`;
       new_tr += `<td>${percentuale_vaccinati}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}`;
-      new_tr += `<td>${percentuale_dosi}`;
+      if (over) {
+        new_tr += `<td><span class="warning">${percentuale_dosi}</span>`;
+      } else {
+        new_tr += `<td>${percentuale_dosi}`;
+      }
+
       new_tr += "</tr>";
       $("table#territori tbody").append(new_tr);
     }
@@ -389,7 +411,11 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
 
   // calculate average
   let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  if (average > 100) average = parseInt(average);
+  if (average > 100) {
+    average = parseInt(average);
+  } else {
+    average = average.toFixed(2);
+  }
 
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
@@ -594,7 +620,12 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
 
   // calculate average
   let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  if (average > 100) average = parseInt(average);
+  // round average
+  if (average > 100) {
+    average = parseInt(average);
+  } else {
+    average = average.toFixed(2);
+  }
 
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
@@ -1048,6 +1079,8 @@ $(document).ready(() => {
   load_genders(0, false);
   load_age_ranges(0, false);
 
+  // global charts variables
+  Chart.defaults.global.defaultFontFamily = 'Roboto';
   // load charts and keep the variable
   let italy_chart = load_italy_chart([0, 1]);
   let territories_chart = load_territories_chart(0, false);
