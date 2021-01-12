@@ -292,8 +292,6 @@ def main():
         old_data.append(data)
         logging.info("No old data found for today. Appending.")
 
-    print(data["script_timestamp"])
-
     # now finally save the json file
     with open(output_path + json_filename, "w") as f:
         json.dump(old_data, f, indent=2)
