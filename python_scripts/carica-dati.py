@@ -4,7 +4,7 @@ import logging
 import requests
 import subprocess
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 
 
 def main():
@@ -57,12 +57,17 @@ def main():
         with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
             # sort old data so the newest one is the first
-            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
+            old_data.sort(key=lambda x:
+                          datetime.fromisoformat(x['script_timestamp']),
+                          reverse=True)
             # get last midnight
             midnight = datetime.now().replace(hour=0, minute=0, second=0)
             # now start iterating until we find data from yesterday (if any)
             for x in range(len(old_data)):
-                if midnight > datetime.fromisoformat(old_data[x]["script_timestamp"]):
+                old_timestamp = datetime.fromisoformat(
+                                old_data[x]["script_timestamp"])
+
+                if midnight > old_timestamp:
                     # found the most recent data for the prior day
                     last_data = old_data[x]
                     break
@@ -73,16 +78,23 @@ def main():
                      f"Error: {e}")
 
     logging.info("Requesting data about terriories")
-    response = requests.post(payload["url"], headers=headers, data=payload["totale_vaccini"]).text
+    response = requests.post(payload["url"], headers=headers,
+                             data=payload["totale_vaccini"]).text
     json_response = json.loads(response)
 
     logging.info("Scraping territories")
     # load data from the response
-    data["last_data_update"] = json_response["results"][0]["result"]["data"]["timestamp"]
+    last_update = json_response["results"][0]["result"]["data"]["timestamp"]
+    data["last_data_update"] = last_update
     # iterate over each territory
-    for territory in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][1]["DM1"]:
+    territories = (json_response["results"][0]["result"]["data"]
+                   ["dsr"]["DS"][0]["PH"][1]["DM1"])
+
+    for territory in territories:
         # format territory name to later match the code
-        territory_name = territory["C"][0].replace("P.A.", "").replace("-", " ").strip().upper()
+        territory_name = territory["C"][0]
+        territory_name = territory_name.replace("P.A.", "").replace("-", " ")
+        territory_name = territory_name.strip().upper()
         territory_code = None
 
         # look for ISTAT territory code
@@ -98,7 +110,8 @@ def main():
             "totale_dosi_consegnate": territory["C"][3],
             "totale_vaccinati": territory["C"][1],
             "percentuale_popolazione_vaccinata": float(territory["C"][2]),
-            "percentuale_dosi_utilizzate": territory["C"][1] / territory["C"][3] * 100
+            "percentuale_dosi_utilizzate": (territory["C"][1] /
+                                            territory["C"][3] * 100)
         }
 
         # find the data for yesterday
@@ -111,10 +124,16 @@ def main():
 
         # if found, compare
         if last_territory is not None:
-            new_data["nuove_dosi_consegnate"] = new_data["totale_dosi_consegnate"] - old_territory["totale_dosi_consegnate"]
-            new_data["percentuale_nuove_dosi_consegnate"] = new_data["nuove_dosi_consegnate"] / old_territory["totale_dosi_consegnate"] * 100
-            new_data["nuovi_vaccinati"] = new_data["totale_vaccinati"] - last_territory["totale_vaccinati"]
-            new_data["percentuale_nuovi_vaccinati"] = new_data["nuovi_vaccinati"] / last_territory["totale_vaccinati"] * 100
+            new_data["nuove_dosi_consegnate"] = (new_data["totale_dosi_consegnate"] -
+                                                 old_territory["totale_dosi_consegnate"])
+            new_data["percentuale_nuove_dosi_consegnate"] = (new_data["nuove_dosi_consegnate"] /
+                                                             old_territory["totale_dosi_consegnate"]
+                                                             * 100)
+            new_data["nuovi_vaccinati"] = (new_data["totale_vaccinati"] -
+                                           last_territory["totale_vaccinati"])
+            new_data["percentuale_nuovi_vaccinati"] = (new_data["nuovi_vaccinati"] /
+                                                       last_territory["totale_vaccinati"]
+                                                       * 100)
 
         # finally append data to the dict
         data["territori"].append(new_data)
@@ -128,15 +147,21 @@ def main():
             italia["totale_vaccinati"] += territory["C"][1]
 
     # calculate the percentage of vaccinated people
-    italia["percentuale_popolazione_vaccinata"] = italia["totale_vaccinati"] / italian_population * 100
-    italia["percentuale_dosi_utilizzate"] = italia["totale_vaccinati"] / italia["totale_dosi_consegnate"] * 100
+    italia["percentuale_popolazione_vaccinata"] = (italia["totale_vaccinati"] /
+                                                   italian_population * 100)
+    italia["percentuale_dosi_utilizzate"] = (italia["totale_vaccinati"] /
+                                             italia["totale_dosi_consegnate"] *
+                                             100)
 
     # now load categories
     logging.info("Requesting data about categories")
-    response = requests.post(payload["url"], headers=headers, data=payload["categorie"]).text
+    response = requests.post(payload["url"], headers=headers,
+                             data=payload["categorie"]).text
     json_response = json.loads(response)
 
-    for category in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+    categories = json_response["results"][0]["result"]["data"]["dsr"]["DS"] \
+                              [0]["PH"][0]["DM0"]
+    for category in categories:
         category_id = int(category["C"][0][0])
         category_name = category["C"][0][4:]
         total_number = category["C"][1]
@@ -156,7 +181,9 @@ def main():
                         # add variation from yesterday
                         variation = total_number - category["totale_vaccinati"]
                         new_data["nuovi_vaccinati"] = variation
-                        new_data["percentuale_nuovi_vaccinati"] = variation / total_number * 100
+                        new_data["percentuale_nuovi_vaccinati"] = (variation /
+                                                                   total_number *
+                                                                   100)
                         break
 
         # finally append data to the dict
@@ -167,7 +194,8 @@ def main():
     response = requests.post(payload["url"], headers=headers, data=payload["donne"]).text
     json_response = json.loads(response)
 
-    women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
+    women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0] \
+                         ["PH"][0]["DM0"][0]["M0"]
 
     new_dict = {
         "nome_categoria": "donne",
@@ -191,7 +219,8 @@ def main():
     response = requests.post(payload["url"], headers=headers, data=payload["uomini"]).text
     json_response = json.loads(response)
 
-    men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
+    men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"] \
+                       [0]["DM0"][0]["M0"]
     new_dict = {
         "nome_categoria": "uomini",
         "totale_vaccinati": men
@@ -211,10 +240,12 @@ def main():
 
     # now load age ranges
     logging.info("Requesting data about age rages")
-    response = requests.post(payload["url"], headers=headers, data=payload["eta"]).text
+    response = requests.post(payload["url"], headers=headers,
+                             data=payload["eta"]).text
     json_response = json.loads(response)
 
-    for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+    for age_range in json_response["results"][0]["result"]["data"]["dsr"]\
+                                  ["DS"][0]["PH"][0]["DM0"]:
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
 
@@ -246,8 +277,10 @@ def main():
 
     # if found, update the variation
     if last_italy is not None:
-        italia["nuove_dosi_consegnate"] = italia["totale_dosi_consegnate"] - last_italy["totale_dosi_consegnate"]
-        italia["nuovi_vaccinati"] = italia["totale_vaccinati"] - last_italy["totale_vaccinati"]
+        italia["nuove_dosi_consegnate"] = (italia["totale_dosi_consegnate"] -
+                                           last_italy["totale_dosi_consegnate"])
+        italia["nuovi_vaccinati"] = (italia["totale_vaccinati"] -
+                                    last_italy["totale_vaccinati"])
 
     # finally, append to dict the data about italy
     data["territori"].append(italia)
@@ -265,7 +298,9 @@ def main():
         with open(output_path + json_filename, "r") as f:
             old_data = json.load(f)
             # sort by time so new data is always on top
-            old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
+            old_data.sort(key=lambda x:
+                          datetime.fromisoformat(x['script_timestamp']),
+                          reverse=True)
     except Exception as e:
         logging.error(f"Error while opening dest file. Error: {e}")
         logging.error("Creating new file.")
@@ -300,7 +335,6 @@ def main():
 
     logging.info(f"Json file saved. Path: {cwd}{json_filename}")
 
-
     # save the js file for the website
     # luckily, js objects and json have the same structure
     with open(assets_path + js_filename, "w") as f:
@@ -311,20 +345,25 @@ def main():
         f.write(js_string)
     logging.info(f"JS file saved. Path: {cwd}{js_filename}")
 
-
     # create a js file with all the data about vaccines
     # midnight for the considered day
-    midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    midnight = datetime.now().replace(hour=0, minute=0,
+                                      second=0, microsecond=0)
     # last midnight from now
-    last_midnight = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    last_midnight = datetime.now().replace(hour=0, minute=0,
+                                           second=0, microsecond=0)
     history = []
     for d in old_data:
         new_data = {}
         timestamp = d["script_timestamp"]
         time_obj = datetime.fromisoformat(timestamp)
-        # the data we are looking for is older than last midnght and closest to midnight (rolling)
-        if (midnight - time_obj).total_seconds() >= 0 and (last_midnight - time_obj).total_seconds() >= 0:
-            new_timestamp = datetime.fromisoformat(timestamp).strftime("%Y-%m-%d")
+        # the data we are looking for is older than last midnght and closest
+        # to midnight (rolling)
+        since_midnight = (midnight - time_obj).total_seconds()
+        since_last_midnight = (last_midnight - time_obj).total_seconds()
+        if since_midnight >= 0 and since_last_midnight >= 0:
+            new_timestamp = datetime.fromisoformat(timestamp) \
+                                    .strftime("%Y-%m-%d")
             new_data["script_timestamp"] = new_timestamp
             new_data["territori"] = []
 
@@ -341,7 +380,9 @@ def main():
                 if "percentuale_dosi_utilizzate" in territory:
                     new_territory["percentuale_dosi_utilizzate"] = territory["percentuale_dosi_utilizzate"]
                 else:
-                    new_territory["percentuale_dosi_utilizzate"] = territory["totale_vaccinati"] / territory["totale_dosi_consegnate"] * 100
+                    new_territory["percentuale_dosi_utilizzate"] = (territory["totale_vaccinati"] /
+                                                                    territory["totale_dosi_consegnate"] *
+                                                                    100)
 
                 if "nuovi_vaccinati" in territory:
                     new_territory["nuovi_vaccinati"] = territory["nuovi_vaccinati"]
@@ -350,7 +391,8 @@ def main():
 
                 new_data["territori"].append(new_territory)
             history.append(new_data)
-            midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
+            midnight = time_obj.replace(hour=0, minute=0,
+                                        second=0, microsecond=0)
     # reverse so the oldest one ore always on top
     history.reverse()
 
