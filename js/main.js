@@ -409,7 +409,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
         labels: new Array(data.length).fill("media"),
         data: new Array(data.length).fill(average),
         type: 'line',
-        backgroundColor: "rgba(0, 0, 0, 0)",
+        backgroundColor: "hsla(0, 100%, 50%, 0.1)",
         borderColor: "hsl(0, 100%, 50%)",
         pointRadius: 0,
         borderWidth: 1
@@ -437,7 +437,7 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
           labels: new Array(data.length).fill("media"),
           data: new Array(data.length).fill(parseInt(average)),
           type: 'line',
-          backgroundColor: "rgba(0, 0, 0, 0)",
+          backgroundColor: "hsla(0, 100%, 50%, 0.1)",
           borderColor: "hsl(0, 100%, 50%)",
           pointRadius: 0,
           borderWidth: 1
@@ -614,7 +614,7 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
         labels: new Array(data.length).fill("media"),
         data: new Array(data.length).fill(average),
         type: 'line',
-        backgroundColor: "hsla(0, 100%, 50%, 0.5)",
+        backgroundColor: "hsla(0, 100%, 50%, 0.1)",
         borderColor: "hsl(0, 100%, 50%)",
         pointRadius: 0,
         borderWidth: 1
@@ -642,7 +642,7 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
             labels: new Array(data.length).fill("media"),
             data: new Array(data.length).fill(average),
             type: 'line',
-            backgroundColor: "hsla(0, 100%, 50%, 0.5)",
+            backgroundColor: "hsla(0, 100%, 50%, 0.1)",
             borderColor: "hsl(0, 100%, 50%)",
             pointRadius: 0,
             borderWidth: 1
