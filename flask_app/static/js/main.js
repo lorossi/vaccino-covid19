@@ -4,25 +4,41 @@
 /*jshint esversion: 8 */
 /*jshint strict: false */
 
+const get_data_json = (url) => {
+  return $.ajax({
+    url: url,
+    type: 'GET',
+    complete: (response) => response.responseJSON
+  });
+};
 
 // update the data about the last vax update
-const set_last_update = () => {
-  $(".update .stats").html(vaccini.last_updated);
+const set_last_update = async () => {
+  try {
+    const response = await get_data_json("/get/last_updated");
+    $(".update .stats").html(response.last_updated);
+  } catch(err) {
+    console.log(`Impossibile caricare l'ultimo aggiornamento. Errore ${err}`);
+    return;
+  }
 };
 
 
 // load selection form item for all time char
-const load_selection = () => {
-  let new_element = "";
-  storico_vaccini[0].territori.forEach((t, i) => {
-    let new_option = `<option value="${t.nome_territorio}">${t.nome_territorio}</option>`;
-    // if we have a territory code, append it to the end (it's a territory)
-    if (t.codice_territorio) new_element += new_option;
-    // otherwise, prepend it (it's italy as a whole)
-    else new_element = new_option + new_element;
-  });
+const load_selection = async () => {
+  try {
+    const response = await get_data_json("/get/territori");
 
-  $(".alltimechartcontainer select#territori").append(new_element);
+    let new_element = "";
+    response.territori.forEach(t => {
+      new_element += `<option value="${t}">${t}</option>`;
+    });
+    $(".alltimechartcontainer select#territori").append(new_element);
+
+  } catch(err) {
+    console.log(`Impossibile caricare i territori. Errore ${err}`);
+    return;
+  }
 };
 
 
@@ -68,50 +84,52 @@ const all_time_get_options = () => {
 
 // load the table data about Italy as a whole
 const load_italy = () => {
-  // copy array, so whule filtering it we don't alter it
-  // sorting is ok tho
-  [...vaccini.territori].filter(x => x.nome_territorio === "Italia").forEach((t, i) => {
-    // due to a change, new vaccined might not always be present
-    let nuovi_vaccinati;
-    if (t.nuovi_vaccinati === undefined) {
-      nuovi_vaccinati = 0;
-    } else {
-      nuovi_vaccinati = t.nuovi_vaccinati;
-    }
-    // same for new doses
-    let nuove_dosi;
-    if (t.nuove_dosi_consegnate === undefined) {
-      nuove_dosi = 0;
-    } else {
-      nuove_dosi = t.nuove_dosi_consegnate;
-    }
+  $.ajax({
+		type: 'GET',
+		url: '/get/italy',
+		complete: function(response) {
+			if (response.status == 200) {
+        let italy = response.responseJSON;
 
-    let percentuale_dosi;
-    // same for percentage of used doses
-    if (t.percentuale_dosi_utilizzate === undefined) {
-      percentuale_dosi = 0;
-    } else {
-      percentuale_dosi = t.percentuale_dosi_utilizzate.toFixed(2);
-    }
+        let nuovi_vaccinati;
+        if (italy.nuovi_vaccinati === undefined) {
+          nuovi_vaccinati = 0;
+        } else {
+          nuovi_vaccinati = italy.nuovi_vaccinati;
+        }
+        // same for new doses
+        let nuove_dosi;
+        if (italy.nuove_dosi_consegnate === undefined) {
+          nuove_dosi = 0;
+        } else {
+          nuove_dosi = italy.nuove_dosi_consegnate;
+        }
 
-    // is the percentage over 100%?
-    let over = parseFloat(percentuale_dosi) > 100;
+        let percentuale_dosi;
+        // same for percentage of used doses
+        if (italy.percentuale_dosi_utilizzate === undefined) {
+          percentuale_dosi = 0;
+        } else {
+          percentuale_dosi = italy.percentuale_dosi_utilizzate.toFixed(2);
+        }
 
-    // update the divs
-    $(".italia #vaccinati").html(`${t.totale_vaccinati}`);
-    $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
-    $(".italia #dosi").html(`${t.totale_dosi_consegnate}`);
-    $(".italia #deltadosi").html(`${nuove_dosi}`);
-    $(".italia #percentualevaccinati").html(`${t.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-    if (over) {
-      $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
-    } else {
-      $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
-    }
+        // is the percentage over 100%?
+        let over = parseFloat(percentuale_dosi) > 100;
+        // update the divs
+        $(".italia #vaccinati").html(`${italy.totale_vaccinati}`);
+        $(".italia #deltavaccinati").html(`${nuovi_vaccinati}`);
+        $(".italia #dosi").html(`${italy.totale_dosi_consegnate}`);
+        $(".italia #deltadosi").html(`${nuove_dosi}`);
+        $(".italia #percentualevaccinati").html(`${italy.percentuale_popolazione_vaccinata.toFixed(2)}%`);
+        if (over) {
+          $(".italia #percentualevacciniusati").html(`<span class="warning">${percentuale_dosi}%</span>`);
+        } else {
+          $(".italia #percentualevacciniusati").html(`${percentuale_dosi}%`);
+        }
 
-
-    return;
-  });
+			}
+		}
+	});
 };
 
 
