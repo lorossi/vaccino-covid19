@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 
 
 def main():
-    push_to_github = False
+    push_to_github = True
     # filenames
     json_filename = "vaccini.json"
     js_filename = "vaccini.js"
