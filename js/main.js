@@ -411,7 +411,11 @@ const load_territories_chart = (order, sort_by_name, old_chart) => {
 
   // calculate average
   let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  if (average > 100) average = parseInt(average);
+  if (average > 100) {
+    average = parseInt(average);
+  } else {
+    average = average.toFixed(2);
+  }
 
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
@@ -616,7 +620,12 @@ const load_variations_chart = (order, sort_by_name, old_chart) => {
 
   // calculate average
   let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
-  if (average > 100) average = parseInt(average);
+  // round average
+  if (average > 100) {
+    average = parseInt(average);
+  } else {
+    average = average.toFixed(2);
+  }
 
   font_size = $(window).width() > 1500 ? 12 : 8;
   if (old_chart) {
@@ -1070,6 +1079,8 @@ $(document).ready(() => {
   load_genders(0, false);
   load_age_ranges(0, false);
 
+  // global charts variables
+  Chart.defaults.global.defaultFontFamily = 'Roboto';
   // load charts and keep the variable
   let italy_chart = load_italy_chart([0, 1]);
   let territories_chart = load_territories_chart(0, false);
