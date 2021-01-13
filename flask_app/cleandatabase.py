@@ -1,6 +1,16 @@
-import json
+# this script is useful to "clean" the "database" and to allow the migration
+# to the new flask based website.
+
 import os
-from datetime import datetime, timedelta
+import json
+import requests
+from datetime import datetime
+
+
+def download(output_path="src/output/", output_filename="vaccini.json", url="https://raw.githubusercontent.com/lorossi/vaccino-covid19/master/python_scripts/output/vaccini.json"):
+    r = requests.get(url, allow_redirects=True)
+    with open(output_path + output_filename, "w") as f:
+        f.write(r.text)
 
 
 def clean():
