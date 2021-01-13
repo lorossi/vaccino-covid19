@@ -10,13 +10,17 @@ from pathlib import Path
 from datetime import datetime
 
 
-def setup(verbose=True):
-    logfile = "logging.log"
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
-                        level=logging.INFO, filename=logfile,
-                        filemode="a")
+def setup(log=True, verbose=True):
+    if (log):
+        logfile = "logging.log"
+        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
+                            level=logging.INFO, filename=logfile,
+                            filemode="a")
     if verbose:
-        print(f"Logging in {logfile}")
+        if log:
+            print(f"Logging in {logfile}")
+        else:
+            print("No logging in file.")
 
 
 def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
@@ -83,7 +87,7 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
                 if midnight > old_timestamp:
                     # found the most recent data for the prior day
                     last_data = old_data[x]
-                    logging.info("Loaded data for previous day with timestamp"
+                    logging.info("Loaded data for previous day with timestamp "
                                  f"{old_timestamp}")
                     break
 

@@ -16,7 +16,7 @@ def load_settings(path="src/settings/settings.json"):
 
 def scrape_data():
     global data, history
-    scraper.setup(verbose=False)
+    scraper.setup(log=True, verbose=False)
     data = scraper.scrape_data()
     history = scraper.scrape_history(data)
     scraper.save_data(data, history)

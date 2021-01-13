@@ -12,14 +12,13 @@ import json
 
 def main():
     cleandatabase.download()
-    quit()
     try:
         cleandatabase.clean()
-        print("databse cleaned")
+        print("database cleaned")
     except Exception as e:
         print("database already clean")
 
-    scraper.setup()
+    scraper.setup(log=False, verbose=False)
     data = scraper.scrape_data()
     history = scraper.scrape_history(data)
     scraper.save_data(data, history)
