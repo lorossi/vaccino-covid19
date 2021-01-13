@@ -166,7 +166,8 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
 
         # finally append data to the dict
         data["assoluti"].append(new_absolute)
-        data["variazioni"].append(new_variation)
+        if new_variation:
+            data["variazioni"].append(new_variation)
         if (territory_code):
             data["lista_territori"].append(territory_name)
 

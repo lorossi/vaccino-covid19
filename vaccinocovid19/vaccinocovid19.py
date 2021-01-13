@@ -4,9 +4,32 @@ import logging
 import scraper
 import json
 
+
 # GLOBAL VARIABLES
 data = []
 history = []
+app = Flask(__name__)
+
+# error 500 page
+@app.errorhandler(Exception)
+def error_500(e):
+    logging.error("error 500: %s", e)
+    return render_template("error.html", errorcode=500,
+                           errordescription="internal server error"), 500
+
+
+def main():
+    logfile = "logging.log"
+    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
+                        level=logging.INFO, filename=logfile,
+                        filemode="w")
+    # scheduler setup
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
+    scheduler.start()
+    load_data()
+    # run app
+    logging.info("App started!")
 
 
 def load_settings(path="src/settings/settings.json"):
@@ -27,14 +50,7 @@ def load_data():
     data, history = scraper.load_data()
 
 
-def push():
-    scraper.push_to_GitHub()
-
-
-app = Flask(__name__)
 # index
-
-
 @app.route("/")
 @app.route("/homepage")
 def index():
@@ -119,26 +135,10 @@ def error_400(e):
                            errordescription="page not found"), 404
 
 
-# error 500 page
-@app.errorhandler(Exception)
-def error_500(e):
-    logging.error("error 500: %s", e)
-    return render_template("error.html", errorcode=500,
-                           errordescription="internal server error"), 500
+@app.before_first_request
+def run_once():
+    main()
 
 
 if __name__ == "__main__":
-    logfile = "logging.log"
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
-                        level=logging.INFO, filename=logfile,
-                        filemode="a")
-
-    # scheduler setup
-    scheduler = BackgroundScheduler()
-    data_job = scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    push_job = scheduler.add_job(push, trigger="cron", minute="0", hour="1")
-    scheduler.start()
-    load_data()
-    # run app
-    app.run()
-    logging.info("App started!")
+    main()

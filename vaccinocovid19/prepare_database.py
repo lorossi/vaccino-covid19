@@ -12,6 +12,7 @@ import json
 # server for the first time
 def main():
     cleandatabase.download()
+    print("database downloaded")
     try:
         cleandatabase.clean()
         print("database cleaned")
