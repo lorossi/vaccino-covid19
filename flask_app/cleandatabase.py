@@ -3,10 +3,10 @@ import os
 from datetime import datetime, timedelta
 
 
-def main():
+def clean():
     cwd = os.getcwd() + "/"
     json_filename = "vaccini.json"
-    json_output_filename = "vaccini-cleaned.json"
+    json_output_filename = "vaccini.json"
     output_path = "src/output/"
     settings_path = "src/settings/"
 
@@ -88,4 +88,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    clean()
