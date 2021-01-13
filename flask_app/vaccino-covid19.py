@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, jsonify, session
 from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask, render_template, jsonify
 import logging
 import scraper
 import json
@@ -17,7 +17,7 @@ def load_settings(path="src/settings/settings.json"):
 def scrape_data():
     global data, history
     data = scraper.scrape_data()
-    history = scraper.load_history(data)
+    history = scraper.scrape_history(data)
     scraper.save_data(data, history)
 
 
@@ -28,6 +28,8 @@ def load_data():
 
 app = Flask(__name__)
 # index
+
+
 @app.route("/")
 @app.route("/homepage")
 def index():
@@ -102,6 +104,22 @@ def get_fasce_eta():
 @app.route("/get/storico_vaccini", methods=["GET"])
 def get_storico_vaccini():
     return jsonify(history[1:])
+
+
+# error 404 page
+@app.errorhandler(404)
+def error_400(e):
+    logging.error("error 404: %s", e)
+    return render_template("error.html", errorcode=404,
+                           errordescription="page not found"), 404
+
+
+# error 500 page
+@app.errorhandler(Exception)
+def error_500(e):
+    logging.error("error 500: %s", e)
+    return render_template("error.html", errorcode=500,
+                           errordescription="internal server error"), 500
 
 
 if __name__ == "__main__":
