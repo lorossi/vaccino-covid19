@@ -1,8 +1,14 @@
+# IMPORTANT
+# run this before starting the server
 # this script is useful to "clean" the "database" and to allow the migration
 # to the new flask based website.
+# the fields inside the json file have changed so we need to convert all the
+# old gathered data. This needs to be done only once, before starting the
+# server for the first time
 
 import os
 import json
+import scraper
 import requests
 from datetime import datetime
 
@@ -92,10 +98,22 @@ def clean():
         del cleaned_data[x]["territori"]
 
 
-
     with open(cwd + output_path + json_output_filename, "w") as f:
         json.dump(cleaned_data, f, indent=2)
 
 
 if __name__ == "__main__":
-    clean()
+    download()
+
+    try:
+        clean()
+        print("database cleaned")
+    except Exception as e:
+        print(f"database already clean. Error {e}")
+
+    scraper.setup(log=False, verbose=False)
+    data = scraper.scrape_data()
+    history = scraper.scrape_history(data)
+    scraper.save_data(data, history)
+    print("data scraped")
+    print("now start flask")
