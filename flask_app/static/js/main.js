@@ -3,6 +3,8 @@
 
 /*jshint esversion: 8 */
 /*jshint strict: false */
+
+// request page via get method and return json
 const get_data_json = (url, data) => {
   return $.ajax({
     url: url,
@@ -251,7 +253,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
     let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
 
     if (old_chart) {
-      old_chart.data ={
+      old_chart.data = {
         labels: labels,
         datasets: datasets
       };
@@ -623,8 +625,7 @@ const load_variations_chart = async (order, sort_by_name, old_obj) => {
     if (old_obj) {
       old_chart = old_obj.chart;
       variations = old_obj.data;
-    }
-    else {
+    } else {
       variations = await get_data_json("/get/variazioni");
     }
 
@@ -831,11 +832,11 @@ const load_categories_chart = async (order, old_obj) => {
 
   try {
     old_obj = await old_obj;
+
     if (old_obj) {
       old_chart = old_obj.chart;
       categories = old_obj.data;
-    }
-    else {
+    } else {
       categories = await get_data_json("/get/categorie");
     }
 
@@ -967,7 +968,7 @@ const load_genders = async (order, reverse, genders) => {
 };
 
 
-const load_genders_chart = async () => {
+const load_genders_chart = async (genders) => {
   let chart;
   let data;
   let label;
@@ -978,7 +979,8 @@ const load_genders_chart = async () => {
   let font_size;
 
   try {
-    let genders = await get_data_json("/get/sessi");
+    genders = await genders;
+    if (!genders) genders = await get_data_json("/get/sessi");
     data = genders.map(x => x.totale_vaccinati);
     background_colors = genders.map(x => {
       if (x.nome_categoria === "donne") return "#d81b60";
@@ -1184,14 +1186,14 @@ const load_age_ranges_chart = async (order, old_obj) => {
 };
 
 // main function
-$(document).ready(() => {
-  console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19")
+$(document).ready(async () => {
+  console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19");
   // load basic infos
   set_last_update();
   load_selection();
   load_italy();
   // load tables
-  let territories= load_territories(0, false);
+  let territories = load_territories(0, false);
   let variations = load_variations(0, false);
   let categories = load_categories(0, false);
   let genders = load_genders(0, false);
@@ -1200,12 +1202,20 @@ $(document).ready(() => {
   // global charts variables
   Chart.defaults.global.defaultFontFamily = 'Roboto';
   // load charts and keep the variable
-  let italy_chart = load_italy_chart([0, 1]);
-  let territories_chart = load_territories_chart(0, false);
-  let variations_chart = load_variations_chart(0, false);
-  let categories_chart = load_categories_chart(0);
-  let genders_chart = load_genders_chart(0);
-  let ages_ranges_chart = load_age_ranges_chart(0);
+  let italy_chart = load_italy_chart([0, 1], "Italia");
+  let territories_chart = load_territories_chart(0, false, {
+    data: await territories
+  });
+  let variations_chart = load_variations_chart(0, false, {
+    data: await variations
+  });
+  let categories_chart = load_categories_chart(0, {
+    data: await categories
+  });
+  let genders_chart = load_genders_chart(await genders);
+  let ages_ranges_chart = load_age_ranges_chart(0, {
+    data: await age_ranges
+  });
 
   // form for all time chart
   $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {
