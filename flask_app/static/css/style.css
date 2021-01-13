@@ -195,6 +195,32 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   font-size: var(--text-size);
 }
 
+.errorcontainer {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorcontainer * {
+  line-height: 150%;
+}
+
+#errorcode {
+  font-size: var(--title-size);
+}
+
+#errordescription, #goback {
+  font-size: var(--big-text-size);
+}
+
+#goback, #goback:visited {
+  color: inherit;
+}
+
 
 @media only screen and (min-width: 480px) {
   .mobile {
