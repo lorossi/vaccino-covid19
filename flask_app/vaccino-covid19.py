@@ -18,6 +18,7 @@ def scrape_data():
     global data, history
     data = scraper.scrape_data()
     history = scraper.load_history(data)
+    scraper.save_data(data, history)
 
 
 def load_data():
@@ -111,7 +112,7 @@ if __name__ == "__main__":
 
     # scheduler setup
     scheduler = BackgroundScheduler()
-    # data_job = scheduler.add_job(scrape_data, trigger="cron", minute="*/30")
+    data_job = scheduler.add_job(scrape_data, trigger="cron", minute="*/30")
     load_data()
     scheduler.start()
     # run app

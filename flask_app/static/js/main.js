@@ -109,13 +109,24 @@ const load_italy = async () => {
 
 
 // load chart about Italy
-const load_italy_chart = async (values, territory_name, old_chart) => {
+const load_italy_chart = async (values, territory_name, old_obj) => {
   let chart;
   let labels = []; // x axis
   let datasets = [];
   let type;
+  let old_chart;
+  let history_data;
 
   try {
+    old_obj = await old_obj;
+
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      history_data = old_obj.data;
+    } else {
+      history_data = await get_data_json("get/storico_vaccini");
+    }
+
     // pack the values into array
     if (values === undefined) {
       values = [0];
@@ -123,19 +134,19 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
       // no parameters sent
       // destroy old chart
       old_chart.destroy();
-      return;
+      return {
+        chart: null,
+        data: history_data
+      };
     }
 
     if (territory_name === undefined) {
       territory_name = "Italia";
     }
 
-    // needed to let the chart load now that the function is async
-    old_chart = await old_chart;
-    history_data = await get_data_json("get/storico_vaccini");
-
     // dates as labels
     labels = history_data.map(x => x.script_timestamp);
+
     // multiple lines into datasets
     if (values.includes(0)) {
       let data = [];
@@ -238,13 +249,17 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
     // font size and aspect ratio must me different on small screens
     let font_size = $(window).width() > 1500 ? 16 : 8;
     let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
+
     if (old_chart) {
-      old_chart.data = {
+      old_chart.data ={
         labels: labels,
         datasets: datasets
       };
-      old_chart.update();
-      return old_chart;
+      await old_chart.update();
+      return {
+        chart: old_chart,
+        data: history_data
+      };
     } else {
       let ctx = $("canvas#italia")[0].getContext('2d');
       chart = await new Chart(ctx, {
@@ -284,7 +299,10 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
           }
         }
       });
-      return old_chart;
+      return {
+        chart: chart,
+        data: history_data
+      };
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico storico. Errore ${err.message}`);
@@ -295,9 +313,9 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
 
 // load data about each territory
 const load_territories = async (order, reverse, territories) => {
-  territories = await territories;
   try {
-    if (territories === undefined) territories = await get_data_json("/get/territori");
+    territories = await territories;
+    if (!territories) territories = await get_data_json("/get/territori");
     // sort data
     if (order === 0) {
       territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
@@ -359,7 +377,7 @@ const load_territories = async (order, reverse, territories) => {
 };
 
 
-const load_territories_chart = async (order, sort_by_name, old_chart) => {
+const load_territories_chart = async (order, sort_by_name, old_obj) => {
   // chart variables
   let chart;
   let data;
@@ -369,11 +387,20 @@ const load_territories_chart = async (order, sort_by_name, old_chart) => {
   let border_colors;
   let hover_background_colors;
   let font_size;
+  let old_chart;
+  let territories;
 
-  old_chart = await old_chart;
 
   try {
-    let territories = await get_data_json("/get/territori");
+    old_obj = await old_obj;
+
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      territories = old_obj.data;
+    } else {
+      territories = await get_data_json("get/territori");
+    }
+
     // sort data and fill variables
     if (order === 0) {
       territories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
@@ -454,7 +481,10 @@ const load_territories_chart = async (order, sort_by_name, old_chart) => {
         }],
       };
       old_chart.update();
-      return old_chart;
+      return {
+        chart: old_chart,
+        data: territories
+      };
     } else {
       // draw the new chart
       let ctx = $("canvas#territori")[0].getContext('2d');
@@ -508,7 +538,10 @@ const load_territories_chart = async (order, sort_by_name, old_chart) => {
           }
         }
       });
-      return chart;
+      return {
+        chart: chart,
+        data: territories
+      };
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico dei territori. Errore ${err.message}`);
@@ -517,9 +550,11 @@ const load_territories_chart = async (order, sort_by_name, old_chart) => {
 };
 
 
-const load_variations = async (order, reverse) => {
+const load_variations = async (order, reverse, variations) => {
   try {
-    let variations = await get_data_json("/get/variazioni");
+    variations = await variations;
+    if (!variations) variations = await get_data_json("/get/variazioni");
+
     // sort data
     if (order === 0) {
       variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
@@ -562,7 +597,7 @@ const load_variations = async (order, reverse) => {
       new_tr += "</tr>";
       $("table#variazioni tbody").append(new_tr);
     });
-
+    return variations;
   } catch (err) {
     console.log(`Impossibile caricare dati sulle variazioni. Errore ${err.message}`);
     return;
@@ -570,7 +605,7 @@ const load_variations = async (order, reverse) => {
 };
 
 
-const load_variations_chart = async (order, sort_by_name, old_chart) => {
+const load_variations_chart = async (order, sort_by_name, old_obj) => {
   // chart variables
   let chart;
   let data;
@@ -580,10 +615,19 @@ const load_variations_chart = async (order, sort_by_name, old_chart) => {
   let border_colors;
   let hover_background_colors;
   let font_size;
+  let old_chart;
+  let variations;
 
-  old_chart = await old_chart;
   try {
-    let variations = await get_data_json("/get/variazioni");
+    old_obj = await old_obj;
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      variations = old_obj.data;
+    }
+    else {
+      variations = await get_data_json("/get/variazioni");
+    }
+
     // sort data and fill variables
     if (order === 0) {
       variations.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
@@ -622,6 +666,7 @@ const load_variations_chart = async (order, sort_by_name, old_chart) => {
 
     // calculate average
     let average = data.reduce((sum, d) => parseFloat(sum) + parseFloat(d)) / data.length;
+
     // round average
     if (average > 100) {
       average = parseInt(average);
@@ -654,7 +699,10 @@ const load_variations_chart = async (order, sort_by_name, old_chart) => {
         }],
       };
       old_chart.update();
-      return old_chart;
+      return {
+        chart: old_chart,
+        data: variations
+      };
     } else {
       // draw the new chart
       let ctx = $("canvas#variazioni")[0].getContext('2d');
@@ -708,17 +756,22 @@ const load_variations_chart = async (order, sort_by_name, old_chart) => {
           }
         }
       });
-      return chart;
+      return {
+        chart: chart,
+        data: variations
+      };
     }
   } catch (err) {
-
+    console.log(`Impossibile caricare il grafico delle variazioni. Errore ${err.message}`);
+    return;
   }
 };
 
 // load data about each category
-const load_categories = async (order, reverse) => {
+const load_categories = async (order, reverse, categories) => {
   try {
-    let categories = await get_data_json("/get/categorie");
+    categories = await categories;
+    if (!categories) categories = await get_data_json("/get/categorie");
     // sort
     if (order === 0) {
       categories.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
@@ -755,6 +808,7 @@ const load_categories = async (order, reverse) => {
       new_tr += "</tr>";
       $("table#categorie tbody").append(new_tr);
     });
+    return categories;
   } catch (err) {
     console.log(`Impossibile caricare le categorie. Errore ${err.message}`);
     return;
@@ -762,7 +816,7 @@ const load_categories = async (order, reverse) => {
 };
 
 
-const load_categories_chart = async (order, old_chart) => {
+const load_categories_chart = async (order, old_obj) => {
   // chart variables
   let chart;
   let data;
@@ -772,11 +826,19 @@ const load_categories_chart = async (order, old_chart) => {
   let border_colors;
   let hover_background_colors;
   let font_size;
-
-  old_chart = await old_chart;
+  let old_chart;
+  let categories;
 
   try {
-    let categories = await get_data_json("/get/categorie");
+    old_obj = await old_obj;
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      categories = old_obj.data;
+    }
+    else {
+      categories = await get_data_json("/get/categorie");
+    }
+
     // sort data and fill variables
     if (order === 0) {
       categories.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
@@ -807,7 +869,10 @@ const load_categories_chart = async (order, old_chart) => {
         }],
       };
       old_chart.update();
-      return old_chart;
+      return {
+        chart: old_chart,
+        data: categories
+      };
     } else {
       // draw the new chart
       let ctx = $("canvas#categorie")[0].getContext('2d');
@@ -850,7 +915,10 @@ const load_categories_chart = async (order, old_chart) => {
           }
         }
       });
-      return chart;
+      return {
+        chart: chart,
+        data: categories
+      };
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico delle categorie. Errore ${err.message}`);
@@ -860,9 +928,11 @@ const load_categories_chart = async (order, old_chart) => {
 
 
 // load data about each gender
-const load_genders = async (order, reverse) => {
+const load_genders = async (order, reverse, genders) => {
   try {
-    let genders = await get_data_json("/get/sessi");
+    genders = await genders;
+    if (!genders) genders = await get_data_json("/get/sessi");
+
     if (order === 0) {
       genders.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
     } else if (order === 1) {
@@ -888,6 +958,8 @@ const load_genders = async (order, reverse) => {
       new_tr += "</tr>";
       $("table#sesso tbody").append(new_tr);
     });
+
+    return genders;
   } catch (err) {
     console.log(`Impossibile caricare i sessi. Errore ${err.message}`);
     return;
@@ -957,9 +1029,10 @@ const load_genders_chart = async () => {
 };
 
 // load data about age ranges
-const load_age_ranges = async (order, reverse) => {
+const load_age_ranges = async (order, reverse, age_ranges) => {
   try {
-    let age_ranges = await get_data_json("/get/fasce_eta");
+    age_ranges = await age_ranges
+    if (!age_ranges) age_ranges = await get_data_json("/get/fasce_eta");
 
     if (order === 0) {
       age_ranges.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
@@ -989,6 +1062,8 @@ const load_age_ranges = async (order, reverse) => {
       new_tr += "</tr>";
       $("table#fasce_eta tbody").append(new_tr);
     });
+
+    return age_ranges;
   } catch (err) {
     console.log(`Impossibile caricare le fasce di età. Errore ${err.message}`);
     return;
@@ -996,7 +1071,7 @@ const load_age_ranges = async (order, reverse) => {
 };
 
 
-const load_age_ranges_chart = async (order, old_chart) => {
+const load_age_ranges_chart = async (order, old_obj) => {
   // chart variables
   let chart;
   let data;
@@ -1006,9 +1081,18 @@ const load_age_ranges_chart = async (order, old_chart) => {
   let border_colors;
   let hover_background_colors;
   let font_size;
+  let old_chart;
+  let ages_ranges;
 
   try {
-    let age_ranges = await get_data_json("/get/fasce_eta");
+    old_obj = await old_obj;
+
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      age_ranges = old_obj.data;
+    } else {
+      age_ranges = await get_data_json("/get/fasce_eta");
+    }
 
     // sort data and fill variables
     if (order === 0) {
@@ -1040,7 +1124,10 @@ const load_age_ranges_chart = async (order, old_chart) => {
         }],
       };
       old_chart.update();
-      return old_chart;
+      return {
+        chart: old_chart,
+        data: age_ranges
+      };
     } else {
       // draw the new chart
       let ctx = $("canvas#fasce_eta")[0].getContext('2d');
@@ -1085,7 +1172,10 @@ const load_age_ranges_chart = async (order, old_chart) => {
           }
         }
       });
-      return chart;
+      return {
+        chart: chart,
+        data: age_ranges
+      };
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico delle fasce di età. Errore ${err.message}`);
@@ -1101,10 +1191,10 @@ $(document).ready(() => {
   load_italy();
   // load tables
   let territories= load_territories(0, false);
-  load_variations(0, false);
-  load_categories(0, false);
-  load_genders(0, false);
-  load_age_ranges(0, false);
+  let variations = load_variations(0, false);
+  let categories = load_categories(0, false);
+  let genders = load_genders(0, false);
+  let age_ranges = load_age_ranges(0, false);
 
   // global charts variables
   Chart.defaults.global.defaultFontFamily = 'Roboto';
@@ -1152,13 +1242,13 @@ $(document).ready(() => {
     if (table_id === "territori") {
       load_territories(column, reverse, territories);
     } else if (table_id === "variazioni") {
-      load_variations(column, reverse);
+      load_variations(column, reverse, variations);
     } else if (table_id === "categorie") {
-      load_categories(column, reverse);
+      load_categories(column, reverse, categories);
     } else if (table_id === "sesso") {
-      load_genders(column, reverse);
+      load_genders(column, reverse, genders);
     } else if (table_id === "fasce_eta") {
-      load_age_ranges(column, reverse);
+      load_age_ranges(column, reverse, age_ranges);
     }
   });
 

@@ -16,9 +16,6 @@ def setup(verbose=True):
 
 
 def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
-    # italian population to calculate percentage
-    italian_population = 60317000
-
     # initialize dictionaries
     data = {
         "assoluti": [],
@@ -33,12 +30,12 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
 
     italy_absolute = {
         "nome_territorio": "Italia",
-        "codice_territorio": None
-    }
+        "codice_territorio": "00"
+        }
 
     italy_variation = {
         "nome_territorio": "Italia",
-        "codice_territorio": None
+        "codice_territorio": "00"
     }
 
     # load timestamp that will be put inside the output
@@ -58,6 +55,10 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
     # load territories ISTAT code
     with open("src/settings/codici_regione.json", "r") as f:
         territories_codes = json.load(f)
+
+    # load territories population
+    with open("src/settings/popolazione_regione.json", "r") as f:
+        territories_population = json.load(f)
 
     logging.info("Loading old data")
     last_data = None
@@ -112,16 +113,25 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
             if territories_codes[code] == territory_name:
                 territory_code = code
                 break
-        territory_name = territory["C"][0]
 
-        # init the dict with all the new data
+        # preloading
+        # data for percentage of vaccinated people is wrong.
+        # oh well, who could have guessed?
+        territory_name = territory["C"][0]
+        total_vaccinated = territory["C"][1]
+        total_population = territories_population[territory_code]
+        percent_vaccinated = total_vaccinated / total_population * 100
+        total_doses = territory["C"][3]
+        percent_used_doses = total_vaccinated / total_doses * 100
+
+        # populate the dict with all the new data
         new_absolute = {
             "nome_territorio": territory_name,
             "codice_territorio": territory_code,
-            "totale_vaccinati": territory["C"][1],
-            "percentuale_popolazione_vaccinata": float(territory["C"][2]),
-            "totale_dosi_consegnate": territory["C"][3],
-            "percentuale_dosi_utilizzate": territory["C"][1] / territory["C"][3] * 100
+            "totale_vaccinati": total_vaccinated,
+            "percentuale_popolazione_vaccinata": percent_vaccinated,
+            "totale_dosi_consegnate": total_doses,
+            "percentuale_dosi_utilizzate": percent_used_doses
         }
 
         # find the absolute data for yesterday
@@ -161,7 +171,7 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
             italy_absolute["totale_vaccinati"] += territory["C"][1]
 
     # calculate the percentage of vaccinated people
-    italy_variation["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / italian_population * 100
+    italy_variation["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / territories_population["00"] * 100
     italy_variation["percentuale_dosi_utilizzate"] = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
 
     # now look for old data about italy as whole
@@ -358,7 +368,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
             for absolute in d["assoluti"]:
                 new_absolute = {
                     "nome_territorio": absolute["nome_territorio"],
-                    "codice_territorio": absolute.get("codice_territorio", None),
+                    "codice_territorio": absolute.get("codice_territorio", "00"),
                     "totale_vaccinati": absolute["totale_vaccinati"],
                     "percentuale_popolazione_vaccinata": float(absolute["percentuale_popolazione_vaccinata"]),
                     "totale_dosi_consegnate": absolute["totale_dosi_consegnate"],
@@ -373,7 +383,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
 
                 new_variation = {
                     "nome_territorio": variation["nome_territorio"],
-                    "codice_territorio": variation.get("codice_territorio", None),
+                    "codice_territorio": variation.get("codice_territorio", "00"),
                     "nuovi_vaccinati": variation["nuovi_vaccinati"],
                     "percentuale_nuovi_vaccinati": variation["percentuale_nuovi_vaccinati"],
                     "nuove_dosi_consegnate": variation["nuove_dosi_consegnate"],
