@@ -1185,6 +1185,7 @@ const load_age_ranges_chart = async (order, old_obj) => {
 
 // main function
 $(document).ready(() => {
+  console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19")
   // load basic infos
   set_last_update();
   load_selection();
