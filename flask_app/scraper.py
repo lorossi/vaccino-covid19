@@ -1,3 +1,7 @@
+# Made by Lorenzo Rossi
+# https://www.lorenzoros.si - https://github.com/lorossi
+
+
 import json
 import logging
 import requests

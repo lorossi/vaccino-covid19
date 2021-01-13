@@ -27,6 +27,10 @@ def load_data():
     data, history = scraper.load_data()
 
 
+def push():
+    scraper.push_to_GitHub()
+
+
 app = Flask(__name__)
 # index
 
@@ -132,8 +136,9 @@ if __name__ == "__main__":
     # scheduler setup
     scheduler = BackgroundScheduler()
     data_job = scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    load_data()
+    push_job = scheduler.add_job(push, trigger="cron", minute="0", hour="1")
     scheduler.start()
+    load_data()
     # run app
     app.run()
     logging.info("App started!")
