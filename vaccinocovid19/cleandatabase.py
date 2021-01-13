@@ -104,7 +104,7 @@ def clean():
 
 if __name__ == "__main__":
     download()
-
+    
     try:
         clean()
         print("database cleaned")

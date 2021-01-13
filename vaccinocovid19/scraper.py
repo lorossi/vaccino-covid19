@@ -288,7 +288,11 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
                              data=payload["eta"]).text
     json_response = json.loads(response)
 
+    print(json.dumps(json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"], indent=2))
+
     for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
+        if len(age_range) < 2:
+            continue
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
 
