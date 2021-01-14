@@ -141,6 +141,8 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
             "percentuale_dosi_utilizzate": percent_used_doses
         }
 
+        new_variation = None
+
         # find the absolute data for yesterday
         last_territory = None
         if last_data is not None:
@@ -179,8 +181,8 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
             italy_absolute["totale_vaccinati"] += territory["C"][1]
 
     # calculate the percentage of vaccinated people
-    italy_variation["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / territories_population["00"] * 100
-    italy_variation["percentuale_dosi_utilizzate"] = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
+    italy_absolute["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / territories_population["00"] * 100
+    italy_absolute["percentuale_dosi_utilizzate"] = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
 
     # now look for old data about italy as whole
     last_italy = None
@@ -225,9 +227,7 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
                         # add variation from yesterday
                         variation = total_number - category["totale_vaccinati"]
                         new_data["nuovi_vaccinati"] = variation
-                        new_data["percentuale_nuovi_vaccinati"] = (variation /
-                                                                   total_number *
-                                                                   100)
+                        new_data["percentuale_nuovi_vaccinati"] = variation / total_number * 100
                         break
 
         # finally append data to the dict
@@ -288,10 +288,8 @@ def scrape_data(json_filename="vaccini.json", output_path="src/output/"):
                              data=payload["eta"]).text
     json_response = json.loads(response)
 
-    print(json.dumps(json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"], indent=2))
-
     for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
-        if len(age_range) < 2:
+        if len(age_range["C"]) < 2:
             continue
         category_name = age_range["C"][0]
         total_number = age_range["C"][1]
@@ -382,7 +380,7 @@ def scrape_history(data, output_path="src/output/", json_filename="vaccini.json"
                     "nome_territorio": absolute["nome_territorio"],
                     "codice_territorio": absolute.get("codice_territorio", "00"),
                     "totale_vaccinati": absolute["totale_vaccinati"],
-                    "percentuale_popolazione_vaccinata": float(absolute["percentuale_popolazione_vaccinata"]),
+                    "percentuale_popolazione_vaccinata": absolute["percentuale_popolazione_vaccinata"],
                     "totale_dosi_consegnate": absolute["totale_dosi_consegnate"],
                     "percentuale_dosi_utilizzate": absolute["percentuale_dosi_utilizzate"]
                 }
@@ -452,3 +450,10 @@ def push_to_GitHub():
     subprocess.run(["git", "commit", "-m", "updated data"])
     subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
+
+
+if __name__ == "__main__":
+    setup()
+    data = scrape_data()
+    history = scrape_history(data)
+    save_data(data, history)
