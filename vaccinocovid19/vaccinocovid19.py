@@ -2,7 +2,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, jsonify
 import logging
 import scraper
-import json
 
 
 # GLOBAL VARIABLES
@@ -26,15 +25,11 @@ def main():
     # scheduler setup
     scheduler = BackgroundScheduler()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
+    scheduler.add_job(push_to_github, trigger="cron", minute="5", hour="0")
     scheduler.start()
     load_data()
     # run app
     logging.info("App started!")
-
-
-def load_settings(path="src/settings/settings.json"):
-    with open(path, "r") as f:
-        return json.load(f)
 
 
 def scrape_data():
@@ -43,6 +38,10 @@ def scrape_data():
     data = scraper.scrape_data()
     history = scraper.scrape_history(data)
     scraper.save_data(data, history)
+
+
+def push_to_github():
+    scraper.push_to_GitHub()
 
 
 def load_data():

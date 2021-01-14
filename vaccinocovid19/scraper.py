@@ -444,9 +444,8 @@ def load_data(output_path="src/output/", json_filename="vaccini.json", history_f
 def push_to_GitHub():
     # now push all to to github
     logging.info("Pushing to GitHub")
-    subprocess.run("git pull".split(" "))
+    subprocess.run(["git",  "pull"])
     subprocess.run(["git", "add", "-A"])
-    subprocess.run(["git", "pull"])
     subprocess.run(["git", "commit", "-m", "updated data"])
     subprocess.run(["git", "push"])
     logging.info("Pushed to GitHub")
