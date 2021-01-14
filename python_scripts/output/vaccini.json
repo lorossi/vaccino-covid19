@@ -268,97 +268,97 @@
       {
         "id_categoria": 1,
         "nome_categoria": "Operatori Sanitari e Sociosanitari",
-        "totale_vaccinati": 688257,
-        "nuovi_vaccinati": 62396,
-        "percentuale_nuovi_vaccinati": 9.065799548715088
+        "totale_vaccinati": 695937,
+        "nuovi_vaccinati": 70076,
+        "percentuale_nuovi_vaccinati": 10.069302250059991
       },
       {
         "id_categoria": 2,
         "nome_categoria": "Personale non Sanitario",
-        "totale_vaccinati": 137514,
-        "nuovi_vaccinati": 21278,
-        "percentuale_nuovi_vaccinati": 15.473333624212806
+        "totale_vaccinati": 140342,
+        "nuovi_vaccinati": 24106,
+        "percentuale_nuovi_vaccinati": 17.17661142067236
       },
       {
         "id_categoria": 3,
         "nome_categoria": "Ospiti Strutture Residenziali",
-        "totale_vaccinati": 70727,
-        "nuovi_vaccinati": 12094,
-        "percentuale_nuovi_vaccinati": 17.099551797757577
+        "totale_vaccinati": 72710,
+        "nuovi_vaccinati": 14077,
+        "percentuale_nuovi_vaccinati": 19.360473112364186
       }
     ],
     "sesso": [
       {
         "nome_categoria": "donne",
-        "totale_vaccinati": 558267,
-        "nuovi_vaccinati": 27646,
-        "percentuale_nuovi_vaccinati": 4.952110728379073
+        "totale_vaccinati": 566779,
+        "nuovi_vaccinati": 36158,
+        "percentuale_nuovi_vaccinati": 6.3795588756817025
       },
       {
         "nome_categoria": "uomini",
-        "totale_vaccinati": 338231,
-        "nuovi_vaccinati": 35109,
-        "percentuale_nuovi_vaccinati": 10.380183957118064
+        "totale_vaccinati": 342210,
+        "nuovi_vaccinati": 39088,
+        "percentuale_nuovi_vaccinati": 11.42222611846527
       }
     ],
     "fasce_eta": [
       {
         "nome_categoria": "16-19",
-        "totale_vaccinati": 2177,
-        "nuovi_vaccinati": 485,
-        "percentuale_nuovi_vaccinati": 22.278364722094626
+        "totale_vaccinati": 2230,
+        "nuovi_vaccinati": 538,
+        "percentuale_nuovi_vaccinati": 24.12556053811659
       },
       {
         "nome_categoria": "20-29",
-        "totale_vaccinati": 98458,
-        "nuovi_vaccinati": 11762,
-        "percentuale_nuovi_vaccinati": 11.946210566942248
+        "totale_vaccinati": 100212,
+        "nuovi_vaccinati": 13516,
+        "percentuale_nuovi_vaccinati": 13.487406697800663
       },
       {
         "nome_categoria": "30-39",
-        "totale_vaccinati": 145354,
-        "nuovi_vaccinati": 14407,
-        "percentuale_nuovi_vaccinati": 9.911663937696932
+        "totale_vaccinati": 147171,
+        "nuovi_vaccinati": 16224,
+        "percentuale_nuovi_vaccinati": 11.023910960719164
       },
       {
         "nome_categoria": "40-49",
-        "totale_vaccinati": 187745,
-        "nuovi_vaccinati": 18922,
-        "percentuale_nuovi_vaccinati": 10.078564009693999
+        "totale_vaccinati": 190133,
+        "nuovi_vaccinati": 21310,
+        "percentuale_nuovi_vaccinati": 11.207943912945149
       },
       {
         "nome_categoria": "50-59",
-        "totale_vaccinati": 245387,
-        "nuovi_vaccinati": 23570,
-        "percentuale_nuovi_vaccinati": 9.605235811188042
+        "totale_vaccinati": 248430,
+        "nuovi_vaccinati": 26613,
+        "percentuale_nuovi_vaccinati": 10.712474338847965
       },
       {
         "nome_categoria": "60-69",
-        "totale_vaccinati": 139272,
-        "nuovi_vaccinati": 13040,
-        "percentuale_nuovi_vaccinati": 9.362973174794647
+        "totale_vaccinati": 140637,
+        "nuovi_vaccinati": 14405,
+        "percentuale_nuovi_vaccinati": 10.242681513399745
       },
       {
         "nome_categoria": "70-79",
-        "totale_vaccinati": 24473,
-        "nuovi_vaccinati": 3888,
-        "percentuale_nuovi_vaccinati": 15.886895762677236
+        "totale_vaccinati": 24980,
+        "nuovi_vaccinati": 4395,
+        "percentuale_nuovi_vaccinati": 17.594075260208168
       },
       {
         "nome_categoria": "80-89",
-        "totale_vaccinati": 30608,
-        "nuovi_vaccinati": 5556,
-        "percentuale_nuovi_vaccinati": 18.152117093570308
+        "totale_vaccinati": 31484,
+        "nuovi_vaccinati": 6432,
+        "percentuale_nuovi_vaccinati": 20.429424469571845
       },
       {
         "nome_categoria": "90+",
-        "totale_vaccinati": 23024,
-        "nuovi_vaccinati": 4138,
-        "percentuale_nuovi_vaccinati": 17.972550382209867
+        "totale_vaccinati": 23712,
+        "nuovi_vaccinati": 4826,
+        "percentuale_nuovi_vaccinati": 20.352564102564102
       }
     ],
-    "script_timestamp": "2021-01-14T19:00:15.417108",
-    "last_updated": "2021-01-14 ore 19:00",
+    "script_timestamp": "2021-01-14T19:30:13.921889",
+    "last_updated": "2021-01-14 ore 19:30",
     "last_data_update": "2021-01-14T18:00:00.394Z"
   },
   {
