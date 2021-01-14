@@ -267,23 +267,23 @@ let vaccini = {
     {
       "id_categoria": 1,
       "nome_categoria": "Operatori Sanitari e Sociosanitari",
-      "totale_vaccinati": 708101,
-      "nuovi_vaccinati": 82240,
-      "percentuale_nuovi_vaccinati": 11.614162386439222
+      "totale_vaccinati": 728038,
+      "nuovi_vaccinati": 102177,
+      "percentuale_nuovi_vaccinati": 14.034569624113027
     },
     {
       "id_categoria": 2,
       "nome_categoria": "Personale non Sanitario",
-      "totale_vaccinati": 145858,
-      "nuovi_vaccinati": 29622,
-      "percentuale_nuovi_vaccinati": 20.30879348407355
+      "totale_vaccinati": 152862,
+      "nuovi_vaccinati": 36626,
+      "percentuale_nuovi_vaccinati": 23.960173228140413
     },
     {
       "id_categoria": 3,
       "nome_categoria": "Ospiti Strutture Residenziali",
-      "totale_vaccinati": 76719,
-      "nuovi_vaccinati": 18086,
-      "percentuale_nuovi_vaccinati": 23.57434273126605
+      "totale_vaccinati": 79938,
+      "nuovi_vaccinati": 21305,
+      "percentuale_nuovi_vaccinati": 26.651905226550575
     }
   ],
   "sesso": [
@@ -295,68 +295,68 @@ let vaccini = {
     },
     {
       "nome_categoria": "uomini",
-      "totale_vaccinati": 349239,
-      "nuovi_vaccinati": 46117,
-      "percentuale_nuovi_vaccinati": 13.204997150948206
+      "totale_vaccinati": 359815,
+      "nuovi_vaccinati": 56693,
+      "percentuale_nuovi_vaccinati": 15.756152467240108
     }
   ],
   "fasce_eta": [
     {
       "nome_categoria": "16-19",
-      "totale_vaccinati": 2312,
-      "nuovi_vaccinati": 620,
-      "percentuale_nuovi_vaccinati": 26.81660899653979
+      "totale_vaccinati": 2461,
+      "nuovi_vaccinati": 769,
+      "percentuale_nuovi_vaccinati": 31.247460381958554
     },
     {
       "nome_categoria": "20-29",
-      "totale_vaccinati": 102640,
-      "nuovi_vaccinati": 15944,
-      "percentuale_nuovi_vaccinati": 15.533904910366328
+      "totale_vaccinati": 106811,
+      "nuovi_vaccinati": 20115,
+      "percentuale_nuovi_vaccinati": 18.83233000346406
     },
     {
       "nome_categoria": "30-39",
-      "totale_vaccinati": 150229,
-      "nuovi_vaccinati": 19282,
-      "percentuale_nuovi_vaccinati": 12.83507179039999
+      "totale_vaccinati": 154858,
+      "nuovi_vaccinati": 23911,
+      "percentuale_nuovi_vaccinati": 15.440597192266464
     },
     {
       "nome_categoria": "40-49",
-      "totale_vaccinati": 194138,
-      "nuovi_vaccinati": 25315,
-      "percentuale_nuovi_vaccinati": 13.039693413963263
+      "totale_vaccinati": 200200,
+      "nuovi_vaccinati": 31377,
+      "percentuale_nuovi_vaccinati": 15.672827172827173
     },
     {
       "nome_categoria": "50-59",
-      "totale_vaccinati": 253796,
-      "nuovi_vaccinati": 31979,
-      "percentuale_nuovi_vaccinati": 12.600277388138506
+      "totale_vaccinati": 261210,
+      "nuovi_vaccinati": 39393,
+      "percentuale_nuovi_vaccinati": 15.080969335017802
     },
     {
       "nome_categoria": "60-69",
-      "totale_vaccinati": 143401,
-      "nuovi_vaccinati": 17169,
-      "percentuale_nuovi_vaccinati": 11.972719855510073
+      "totale_vaccinati": 147484,
+      "nuovi_vaccinati": 21252,
+      "percentuale_nuovi_vaccinati": 14.409698679178758
     },
     {
       "nome_categoria": "70-79",
-      "totale_vaccinati": 25982,
-      "nuovi_vaccinati": 5397,
-      "percentuale_nuovi_vaccinati": 20.772072973597105
+      "totale_vaccinati": 27272,
+      "nuovi_vaccinati": 6687,
+      "percentuale_nuovi_vaccinati": 24.5196538574362
     },
     {
       "nome_categoria": "80-89",
-      "totale_vaccinati": 33213,
-      "nuovi_vaccinati": 8161,
-      "percentuale_nuovi_vaccinati": 24.571703850901756
+      "totale_vaccinati": 34647,
+      "nuovi_vaccinati": 9595,
+      "percentuale_nuovi_vaccinati": 27.693595405085574
     },
     {
       "nome_categoria": "90+",
-      "totale_vaccinati": 24967,
-      "nuovi_vaccinati": 6081,
-      "percentuale_nuovi_vaccinati": 24.356150118155966
+      "totale_vaccinati": 25895,
+      "nuovi_vaccinati": 7009,
+      "percentuale_nuovi_vaccinati": 27.06700135161228
     }
   ],
-  "script_timestamp": "2021-01-14T22:30:14.504581",
-  "last_updated": "2021-01-14 ore 22:30",
-  "last_data_update": "2021-01-14T21:00:00.536Z"
+  "script_timestamp": "2021-01-14T23:00:14.116437",
+  "last_updated": "2021-01-14 ore 23:00",
+  "last_data_update": "2021-01-14T21:36:00.182Z"
 };
