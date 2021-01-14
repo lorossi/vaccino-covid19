@@ -1,12 +1,11 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import Flask, render_template, jsonify
 import logging
-import scraper
+from scraper import Scraper
 
 
 # GLOBAL VARIABLES
-data = []
-history = []
+s = Scraper()
 app = Flask(__name__)
 
 # error 500 page
@@ -33,20 +32,19 @@ def main():
 
 
 def scrape_data():
-    global data, history
-    scraper.setup(log=True, verbose=False)
-    data = scraper.scrape_data()
-    history = scraper.scrape_history(data)
-    scraper.save_data(data, history)
+    s.scrape_data()
+    s.scrape_history()
+    s.save_data()
 
 
 def push_to_github():
-    scraper.push_to_GitHub()
+    # THIS HAS TO BE CHANGED WHEN DEPLOYED
+    return
+    s.push_to_GitHub()
 
 
 def load_data():
-    global data, history
-    data, history = scraper.load_data()
+    s.load_data()
 
 
 # index
@@ -59,7 +57,7 @@ def index():
 @app.route("/get/last_updated", methods=["GET"])
 def get_last_updated():
     return_dict = {
-        "last_updated": data[0]["last_updated"]
+        "last_updated": s.last_updated
     }
     return jsonify(return_dict)
 
@@ -67,7 +65,7 @@ def get_last_updated():
 @app.route("/get/lista_territori", methods=["GET"])
 def get_lista_territori():
     return_dict = {
-        "territori": data[0]["lista_territori"]
+        "territori": s.territories_list
     }
     return jsonify(return_dict)
 
@@ -76,12 +74,12 @@ def get_lista_territori():
 def get_italy():
     return_dict = {}
 
-    for a in data[0]["assoluti"]:
+    for a in s.absolute_territories:
         if a["nome_territorio"] == "Italia":
             return_dict.update(a)
             break
 
-    for v in data[0]["variazioni"]:
+    for v in s.variation_territories:
         if v["nome_territorio"] == "Italia":
             return_dict.update(v)
             break
@@ -91,39 +89,39 @@ def get_italy():
 
 @app.route("/get/territori", methods=["GET"])
 def get_territori():
-    territori = data[0]["assoluti"]
+    territori = s.absolute_territories
     return_list = [t for t in territori if t["nome_territorio"] != "Italia"]
     return jsonify(return_list)
 
 
 @app.route("/get/variazioni", methods=["GET"])
 def get_variazioni():
-    variazioni = data[0]["variazioni"]
+    variazioni = s.variation_territories
     return_list = [v for v in variazioni if v["nome_territorio"] != "Italia"]
     return jsonify(return_list)
 
 
 @app.route("/get/categorie", methods=["GET"])
 def get_categorie():
-    categorie = data[0]["categorie"]
+    categorie = s.categories
     return jsonify(categorie)
 
 
 @app.route("/get/sessi", methods=["GET"])
 def get_sessi():
-    sesso = data[0]["sesso"]
+    sesso = s.genders
     return jsonify(sesso)
 
 
 @app.route("/get/fasce_eta", methods=["GET"])
 def get_fasce_eta():
-    sesso = data[0]["fasce_eta"]
-    return jsonify(sesso)
+    fasce_eta = s.age_ranges
+    return jsonify(fasce_eta)
 
 
 @app.route("/get/storico_vaccini", methods=["GET"])
 def get_storico_vaccini():
-    return jsonify(history[1:])
+    return jsonify(s.history)
 
 
 # error 404 page
@@ -141,3 +139,4 @@ def run_once():
 
 if __name__ == "__main__":
     main()
+    app.run()

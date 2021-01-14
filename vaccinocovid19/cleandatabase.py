@@ -8,7 +8,7 @@
 
 import os
 import json
-import scraper
+from scraper import Scraper
 import requests
 from datetime import datetime
 
@@ -104,16 +104,16 @@ def clean():
 
 if __name__ == "__main__":
     download()
-    
+    s = Scraper()
+
     try:
         clean()
         print("database cleaned")
     except Exception as e:
         print(f"database already clean. Error {e}")
 
-    scraper.setup(log=False, verbose=False)
-    data = scraper.scrape_data()
-    history = scraper.scrape_history(data)
-    scraper.save_data(data, history)
+    s.scrape_data()
+    s.scrape_history()
+    s.save_data()
     print("data scraped")
     print("now start flask")
