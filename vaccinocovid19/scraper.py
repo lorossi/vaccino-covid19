@@ -1,6 +1,7 @@
 # Made by Lorenzo Rossi
 # https://www.lorenzoros.si - https://github.com/lorossi
 
+import copy
 import json
 import logging
 import requests
@@ -23,15 +24,14 @@ class Scraper:
             logfile = "logging.log"
             logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
                                 level=logging.INFO, filename=logfile,
-                                filemode="a")
+                                filemode="w")
         if self.verbose:
             if self.log:
-                print(f"Logging in {logfile}")
+                (f"Logging in {logfile}")
             else:
-                print("No logging in file.")
+                ("No logging in file.")
 
     def scrape_data(self):
-        print("SCRAPING")
         # initialize dictionaries
         self._data = {
             "assoluti": [],
@@ -92,6 +92,7 @@ class Scraper:
                 for x in range(len(old_data)):
                     old_timestamp = datetime.fromisoformat(
                                     old_data[x]["script_timestamp"])
+
                     if midnight > old_timestamp:
                         # found the most recent data for the prior day
                         last_data = old_data[x]
@@ -103,7 +104,6 @@ class Scraper:
             # no old previuos file has been found
             logging.info("No previous record. Unable to calculate variation. "
                          f"Error: {e}")
-
 
         logging.info("Requesting data about terriories")
         response = requests.post(payload["url"], headers=headers,
@@ -292,7 +292,7 @@ class Scraper:
         self._data["sesso"].append(new_dict)
 
         # now load age ranges
-        logging.info("Requesting data about age rages")
+        logging.info("Requesting data about age ranges")
         response = requests.post(payload["url"], headers=headers,
                                  data=payload["eta"]).text
         json_response = json.loads(response)
@@ -335,7 +335,7 @@ class Scraper:
             # no old data has been found.
             # the new data must be encapsulated in a list before dumping it into
             # a json file
-            old_data = [self._data]
+            old_data = [old_data]
 
         # loop trhought old data in order to update the dictionary
         found = False
@@ -360,6 +360,7 @@ class Scraper:
 
         self._data = old_data
 
+
     def scrape_history(self):
         # create a js file with all the data about vaccines
         # midnight for the considered day
@@ -371,7 +372,6 @@ class Scraper:
         self._history = []
 
         for d in self._data:
-            print(json.dumps(d, indent=2))
             new_data = {}
             timestamp = d["script_timestamp"]
             time_obj = datetime.fromisoformat(timestamp)
@@ -490,7 +490,6 @@ class Scraper:
 
 if __name__ == "__main__":
     s = Scraper()
-    s.setup()
     s.scrape_data()
     s.scrape_history()
     s.save_data()
