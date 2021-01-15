@@ -22,6 +22,8 @@ class Scraper:
         self._new_data = []
         self._history = []
         self._new_history = []
+        self._italy = {}
+        self._territories = []
 
         if self.log:
             logfile = "logging.log"
@@ -147,6 +149,10 @@ class Scraper:
                 short_name = "F.V.G"
             elif territory_code == "20":
                 short_name = "V. d'Aosta"
+            elif territory_code == "03":
+                short_name = "Bolzano"
+            elif territory_code == "18":
+                short_name = "Trento"
             elif territory_code is None:
                 short_name = "Italy"
             else:
@@ -377,7 +383,9 @@ class Scraper:
         logging.info("Data scraped")
 
         self._new_data = old_data
+        # save data, territories and italy in separated private lists
         self._data = self._new_data.copy()
+        self.filter_data()
 
     def scrape_history(self):
         # create a js file with all the data about vaccines
@@ -476,6 +484,14 @@ class Scraper:
 
         self._data = self._new_data.copy()
         self._history = self._new_history.copy()
+        self.filter_data()
+
+    def filter_data(self):
+        self._absolute_territories = [t for t in self._data[0]["assoluti"] if t["nome_territorio"] != "Italia"]
+        self._variation_territories = [v for v in self._data[0]["variazioni"] if v["nome_territorio"] != "Italia"]
+        self._italy = {}
+        self._italy.update(next(t for t in self._data[0]["assoluti"] if t["nome_territorio"] == "Italia"))
+        self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
 
     def push_to_GitHub(self):
         # now push all to to github
@@ -491,16 +507,20 @@ class Scraper:
         return self._data[0]["last_updated"]
 
     @property
+    def italy(self):
+        return self._italy
+
+    @property
     def territories_list(self):
         return self._data[0]["lista_territori"]
 
     @property
     def absolute_territories(self):
-        return self._data[0]["assoluti"]
+        return self._absolute_territories
 
     @property
     def variation_territories(self):
-        return self._data[0]["variazioni"]
+        return self._variation_territories
 
     @property
     def categories(self):

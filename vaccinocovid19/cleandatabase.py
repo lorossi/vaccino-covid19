@@ -72,6 +72,10 @@ def clean():
                 short_name = "F.V.G"
             elif territory_code == "20":
                 short_name = "V. d'Aosta"
+            elif territory_code == "03":
+                short_name = "Bolzano"
+            elif territory_code == "18":
+                short_name = "Trento"
             elif territory_code is None:
                 short_name = "Italy"
             else:

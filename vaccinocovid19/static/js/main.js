@@ -88,7 +88,6 @@ const all_time_get_options = () => {
 const load_italy = async () => {
   try {
     const italy = await get_data_json("/get/italy");
-
     // is the percentage over 100%?
     let over = parseFloat(italy.percentuale_dosi_utilizzate) > 95;
     // update the divs
@@ -320,7 +319,7 @@ const load_territories = async (order, reverse, territories) => {
     if (!territories) territories = await get_data_json("/get/territori");
     // sort data
     if (order === 0) {
-      territories.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      territories.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
     } else if (order === 1) {
       territories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
     } else if (order === 2) {
@@ -548,7 +547,7 @@ const load_variations = async (order, reverse, variations) => {
 
     // sort data
     if (order === 0) {
-      variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+      variations.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
     } else if (order === 1) {
       variations.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
     } else if (order === 2) {
@@ -610,28 +609,28 @@ const load_variations_chart = async (order, sort_by_name, old_obj) => {
     if (order === 0) {
       variations.sort((a, b) => a.nuovi_vaccinati > b.nuovi_vaccinati ? 1 : -1);
       if (sort_by_name) {
-        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+        variations.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
       }
       data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.nuovi_vaccinati);
       label = "Nuovi vaccinati";
     } else if (order === 1) {
       variations.sort((a, b) => a.percentuale_nuovi_vaccinati > b.percentuale_nuovi_vaccinati ? 1 : -1);
       if (sort_by_name) {
-        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+        variations.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
       }
       data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuovi_vaccinati.toFixed(2));
       label = "Variazione nuovi vaccinati";
     } else if (order === 2) {
       variations.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
       if (sort_by_name) {
-        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+        variations.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
       }
       data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.nuove_dosi_consegnate);
       label = "Nuovi vaccini";
     } else if (order === 3) {
       variations.sort((a, b) => a.percentuale_nuove_dosi_consegnate > b.percentuale_nuove_dosi_consegnate ? 1 : -1);
       if (sort_by_name) {
-        variations.sort((a, b) => a.nome_territorio > b.nome_territorio ? 1 : -1);
+        variations.sort((a, b) => a.nome_territorio_corto > b.nome_territorio_corto ? 1 : -1);
       }
       data = variations.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_nuove_dosi_consegnate.toFixed(2));
       label = "Variazione nuovi vaccini";

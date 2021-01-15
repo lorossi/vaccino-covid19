@@ -4,17 +4,7 @@ import logging
 from scraper import Scraper
 
 
-# Objects
-s = Scraper()
 app = Flask(__name__)
-
-
-# error 500 page
-@app.errorhandler(Exception)
-def error_500(e):
-    logging.error("error 500: %s", e)
-    return render_template("error.html", errorcode=500,
-                           errordescription="internal server error"), 500
 
 
 def main():
@@ -49,6 +39,14 @@ def push_to_github():
     s.push_to_GitHub()
 
 
+# error 500 page
+@app.errorhandler(Exception)
+def error_500(e):
+    logging.error("error 500: %s", e)
+    return render_template("error.html", errorcode=500,
+                           errordescription="internal server error"), 500
+
+
 # index
 @app.route("/")
 @app.route("/homepage")
@@ -74,33 +72,20 @@ def get_lista_territori():
 
 @app.route("/get/italy", methods=["GET"])
 def get_italy():
-    return_dict = {}
-
-    for a in s.absolute_territories:
-        if a["nome_territorio"] == "Italia":
-            return_dict.update(a)
-            break
-
-    for v in s.variation_territories:
-        if v["nome_territorio"] == "Italia":
-            return_dict.update(v)
-            break
-
-    return jsonify(return_dict)
+    italy = s.italy
+    return jsonify(italy)
 
 
 @app.route("/get/territori", methods=["GET"])
 def get_territori():
     territori = s.absolute_territories
-    return_list = [t for t in territori if t["nome_territorio"] != "Italia"]
-    return jsonify(return_list)
+    return jsonify(territori)
 
 
 @app.route("/get/variazioni", methods=["GET"])
 def get_variazioni():
     variazioni = s.variation_territories
-    return_list = [v for v in variazioni if v["nome_territorio"] != "Italia"]
-    return jsonify(return_list)
+    return jsonify(variazioni)
 
 
 @app.route("/get/categorie", methods=["GET"])
@@ -134,9 +119,9 @@ def error_400(e):
                            errordescription="page not found"), 404
 
 
-@app.before_first_request
-def run_once():
-    main()
+# Objects
+s = Scraper()
+main()
 
 
 if __name__ == "__main__":
