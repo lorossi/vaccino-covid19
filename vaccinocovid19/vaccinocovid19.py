@@ -24,15 +24,20 @@ def main():
     # scheduler setup
     scheduler = BackgroundScheduler()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(push_to_github, trigger="cron", minute="5", hour="0")
+    scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
+    scheduler.add_job(push_to_github, trigger="cron", minute="10", hour="0")
     scheduler.start()
-    load_data()
+    s.load_data()
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
     s.scrape_data()
+    s.save_data()
+
+
+def scrape_history():
     s.scrape_history()
     s.save_data()
 
@@ -41,10 +46,6 @@ def push_to_github():
     # THIS HAS TO BE CHANGED WHEN DEPLOYED
     return
     s.push_to_GitHub()
-
-
-def load_data():
-    s.load_data()
 
 
 # index

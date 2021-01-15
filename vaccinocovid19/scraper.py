@@ -16,9 +16,11 @@ class Scraper:
         self.verbose = verbose
         self.json_filename = json_filename
         self.output_path = output_path
-        self._history_filename = history_filename
+        self.history_filename = history_filename
         self._data = []
+        self._new_data = []
         self._history = []
+        self._new_history = []
 
         if self.log:
             logfile = "logging.log"
@@ -33,7 +35,7 @@ class Scraper:
 
     def scrape_data(self):
         # initialize dictionaries
-        self._data = {
+        self._new_data = {
             "assoluti": [],
             "variazioni": [],
             "categorie": [],
@@ -56,8 +58,8 @@ class Scraper:
 
         # load timestamp that will be put inside the output
         now = datetime.now()
-        self._data["script_timestamp"] = now.isoformat()
-        self._data["last_updated"] = now.strftime("%Y-%m-%d ore %H:%M")
+        self._new_data["script_timestamp"] = now.isoformat()
+        self._new_data["last_updated"] = now.strftime("%Y-%m-%d ore %H:%M")
 
         logging.info("Loading settings")
         # load headers
@@ -113,7 +115,7 @@ class Scraper:
         logging.info("Scraping territories")
         # load data from the response
         last_update = json_response["results"][0]["result"]["data"]["timestamp"]
-        self._data["last_data_update"] = last_update
+        self._new_data["last_data_update"] = last_update
         # iterate over each territory
         territories = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][1]["DM1"]
 
@@ -175,11 +177,11 @@ class Scraper:
                 }
 
             # finally append data to the dict
-            self._data["assoluti"].append(new_absolute)
+            self._new_data["assoluti"].append(new_absolute)
             if new_variation:
-                self._data["variazioni"].append(new_variation)
+                self._new_data["variazioni"].append(new_variation)
             if territory_code:
-                self._data["lista_territori"].append(territory_name)
+                self._new_data["lista_territori"].append(territory_name)
 
             # update total number of doses and vaccinated people
             if "totale_dosi_consegnate" not in italy_absolute:
@@ -206,8 +208,12 @@ class Scraper:
             italy_variation["nuovi_vaccinati"] = italy_absolute["totale_vaccinati"] - last_italy["totale_vaccinati"]
 
         # finally, append to dict the data about italy
-        self._data["assoluti"].append(italy_absolute)
-        self._data["variazioni"].append(italy_variation)
+        self._new_data["assoluti"].append(italy_absolute)
+        # only if anything else has been found, update the variation
+        if len(self._new_data["variazioni"]) > 0:
+            self._new_data["variazioni"].append(italy_variation)
+        else:
+            del self._new_data["variazioni"]
 
         # now load categories
         logging.info("Requesting data about categories")
@@ -240,7 +246,7 @@ class Scraper:
                             break
 
             # finally append data to the dict
-            self._data["categorie"].append(new_data)
+            self._new_data["categorie"].append(new_data)
 
         # now load women
         logging.info("Requesting data about women")
@@ -265,7 +271,7 @@ class Scraper:
                         new_dict["percentuale_nuovi_vaccinati"] = variation / women * 100
 
         # finally append to data
-        self._data["sesso"].append(new_dict)
+        self._new_data["sesso"].append(new_dict)
 
         # now load men
         logging.info("Requesting data about men")
@@ -289,7 +295,7 @@ class Scraper:
                         new_dict["percentuale_nuovi_vaccinati"] = variation / men * 100
 
         # finally append to data
-        self._data["sesso"].append(new_dict)
+        self._new_data["sesso"].append(new_dict)
 
         # now load age ranges
         logging.info("Requesting data about age ranges")
@@ -320,7 +326,7 @@ class Scraper:
                             break
 
             # finally append data to the dict
-            self._data["fasce_eta"].append(new_data)
+            self._new_data["fasce_eta"].append(new_data)
 
         try:
             # load old data to update the file
@@ -335,11 +341,11 @@ class Scraper:
             # no old data has been found.
             # the new data must be encapsulated in a list before dumping it into
             # a json file
-            old_data = [old_data]
+            old_data = [self._new_data.copy()]
 
         # loop trhought old data in order to update the dictionary
         found = False
-        current_timestamp = datetime.fromisoformat(self._data["script_timestamp"])
+        current_timestamp = datetime.fromisoformat(self._new_data["script_timestamp"])
         for d in old_data:
             old_timestamp = datetime.fromisoformat(d["script_timestamp"])
             if current_timestamp.date() == old_timestamp.date():
@@ -347,18 +353,19 @@ class Scraper:
                 found = True
                 # this won't work, not running python 3.9 currently :(
                 # d |= data
-                d.update(self._data)
+                d.update(self._new_data)
                 # log info
                 logging.info("Data for today already found with timestamp: "
                              f"{old_timestamp}")
                 break
 
         if not found:
-            old_data.append(self._data)
+            old_data.append(self._new_data)
             logging.info("No old data found for today. Appending.")
         logging.info("Data scraped")
 
-        self._data = old_data
+        self._new_data = old_data
+        self._data = self._new_data.copy()
 
 
     def scrape_history(self):
@@ -369,9 +376,9 @@ class Scraper:
         # last midnight from now
         last_midnight = datetime.now().replace(hour=0, minute=0,
                                                second=0, microsecond=0)
-        self._history = []
+        self._new_history = []
 
-        for d in self._data:
+        for d in self._new_data:
             new_data = {}
             timestamp = d["script_timestamp"]
             time_obj = datetime.fromisoformat(timestamp)
@@ -397,54 +404,68 @@ class Scraper:
 
                     new_data["assoluti"].append(new_absolute)
 
-                for variation in d["variazioni"]:
-                    if not variation:
+                if "variazioni" in d:
+                    for variation in d["variazioni"]:
                         continue
 
+                    # some data, including old variation, might not be yet available
                     new_variation = {
                         "nome_territorio": variation["nome_territorio"],
                         "codice_territorio": variation.get("codice_territorio", "00"),
                         "nuovi_vaccinati": variation["nuovi_vaccinati"],
-                        "percentuale_nuovi_vaccinati": variation["percentuale_nuovi_vaccinati"],
-                        "nuove_dosi_consegnate": variation["nuove_dosi_consegnate"],
-                        "percentuale_nuove_dosi_consegnate": variation["percentuale_nuove_dosi_consegnate"]
+                        "percentuale_nuovi_vaccinati": variation.get("percentuale_nuovi_vaccinati", 0),
+                        "nuove_dosi_consegnate": variation.get("nuove_dosi_consegnate", 0),
+                        "percentuale_nuove_dosi_consegnate": variation.get("percentuale_nuove_dosi_consegnate", 0)
                     }
+
                     new_data["variazioni"].append(variation)
 
-                self._history.append(new_data)
+                self._new_history.append(new_data)
                 midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
         # reverse so the oldest one ore always on top
-        self._history.reverse()
+        self._new_history.reverse()
+
+        if len(self._new_history) > 0:
+            self._history = self._new_history.copy()
+        else:
+            self._history = []
+
 
     def save_data(self):
         # create output folders
         logging.info("Creating folders")
         Path(self.output_path).mkdir(parents=True, exist_ok=True)
 
-        logging.info("Saving to file")
-        # now finally save the json file
-        with open(self.output_path + self.json_filename, "w") as f:
-            json.dump(self._data, f, indent=2)
-        logging.info(f"JSON file saved. Path: {self.json_filename}")
+        if self._data:
+            logging.info("Saving to file")
+            # now finally save the json file
+            with open(self.output_path + self.json_filename, "w") as f:
+                json.dump(self._data, f, indent=2)
+            logging.info(f"JSON file saved. Path: {self.json_filename}")
 
-        with open(self.output_path + self._history_filename, "w") as f:
-            # convert dict to json (will be read by js)
-            f.write(json.dumps(self._history, indent=2))
-        logging.info(f"JSON history file saved. Path: {self._history_filename}")
-
+        if self._history:
+            with open(self.output_path + self.history_filename, "w") as f:
+                # convert dict to json (will be read by js)
+                f.write(json.dumps(self._history, indent=2))
+            logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
     def load_data(self):
         try:
             with open(self.output_path + self.json_filename, "r") as f:
-                self._data = json.load(f)
-        except:
-            self._data = []
+                self._new_data = json.load(f)
+        except Exception as e:
+            logging.error(f"Cannot read data file. error {e}")
+            self._new_data = []
 
         try:
-            with open(self.output_path + self._history_filename, "r") as f:
-                self._history = json.load(f)
-        except:
-            self._history = []
+            with open(self.output_path + self.history_filename, "r") as f:
+                self._new_history = json.load(f)
+        except Exception as e:
+            logging.error(f"Cannot read history file. error {e}")
+            self._new_history = []
+
+        self._data = self._new_data.copy()
+        self._history = self._new_history.copy()
 
     def push_to_GitHub(self):
         # now push all to to github
@@ -485,7 +506,7 @@ class Scraper:
 
     @property
     def history(self):
-        return self._history[1:]
+        return self._history
 
 
 if __name__ == "__main__":
