@@ -221,6 +221,10 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   color: inherit;
 }
 
+.credits form {
+  margin-top: var(--text-size);
+  margin-bottom: var(--text-size);
+}
 
 @media only screen and (min-width: 480px) {
   .mobile {
