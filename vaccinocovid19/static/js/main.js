@@ -339,17 +339,6 @@ const load_territories = async (order, reverse, territories) => {
     $("table#territori tbody").html("");
 
     territories.forEach((t, i) => {
-      let nome_territorio_corto;
-      if (t.codice_territorio === "06") {
-        nome_territorio_corto = "E.R.";
-      } else if (t.codice_territorio === "07") {
-        nome_territorio_corto = "F.V.G";
-      } else if (t.codice_territorio === "20") {
-        nome_territorio_corto = "V. d'Aosta";
-      } else {
-        nome_territorio_corto = t.nome_territorio;
-      }
-
       let percentuale_vaccinati;
       percentuale_vaccinati = `${parseFloat(t.percentuale_popolazione_vaccinata).toFixed(2)}%`;
       let percentuale_dosi;
@@ -357,7 +346,7 @@ const load_territories = async (order, reverse, territories) => {
       let over = t.percentuale_dosi_utilizzate > 100;
 
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      new_tr += `<td><span class="mobile">${nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
+      new_tr += `<td><span class="mobile">${t.nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
       new_tr += `<td>${t.totale_vaccinati}`;
       new_tr += `<td>${percentuale_vaccinati}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate}`;
@@ -578,20 +567,8 @@ const load_variations = async (order, reverse, variations) => {
     $("table#variazioni tbody").html("");
 
     variations.forEach((t, i) => {
-      let nome_territorio_corto;
-      if (t.codice_territorio === "06") {
-        nome_territorio_corto = "E.R.";
-      } else if (t.codice_territorio === "07") {
-        nome_territorio_corto = "F.V.G";
-      }
-
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
-      if (nome_territorio_corto) {
-        new_tr += `<td><span class="pc">${t.nome_territorio}</span><span class="mobile">${nome_territorio_corto}</span></td>`;
-      } else {
-        new_tr += `<td>${t.nome_territorio}</td>`;
-      }
-
+      new_tr += `<td><span class="mobile">${t.nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
       new_tr += `<td>+${t.nuovi_vaccinati}`;
       new_tr += `<td>+${t.percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += `<td>+${t.nuove_dosi_consegnate}`;
