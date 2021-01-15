@@ -4,9 +4,10 @@ import logging
 from scraper import Scraper
 
 
-# GLOBAL VARIABLES
+# Objects
 s = Scraper()
 app = Flask(__name__)
+
 
 # error 500 page
 @app.errorhandler(Exception)

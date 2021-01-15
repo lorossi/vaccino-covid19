@@ -60,13 +60,26 @@ def clean():
         }
 
         for y in range(len(cleaned_data[x]["territori"])):
+            territory_name = cleaned_data[x]["territori"][y]["nome_territorio"]
             territory_code = cleaned_data[x]["territori"][y].get("codice_territorio")
             if not territory_code:
                 territory_code = "00"
             population = territories_population[territory_code]
 
+            if territory_code == "06":
+                short_name = "E.R."
+            elif territory_code == "07":
+                short_name = "F.V.G"
+            elif territory_code == "20":
+                short_name = "V. d'Aosta"
+            elif territory_code is None:
+                short_name = "Italy"
+            else:
+                short_name = territory_name
+
             new_absolute = {
-                "nome_territorio": cleaned_data[x]["territori"][y]["nome_territorio"],
+                "nome_territorio": territory_name,
+                "nome_territorio_corto": short_name,
                 "codice_territorio": territory_code,
                 "totale_vaccinati": cleaned_data[x]["territori"][y]["totale_vaccinati"],
                 "percentuale_popolazione_vaccinata": cleaned_data[x]["territori"][y]["totale_vaccinati"] / population * 100,
@@ -76,7 +89,8 @@ def clean():
 
             if x < len(old_data) - 1:
                 new_variations = {
-                    "nome_territorio": cleaned_data[x]["territori"][y]["nome_territorio"],
+                    "nome_territorio": territory_name,
+                    "nome_territorio_corto": short_name,
                     "codice_territorio": territory_code,
                     "nuovi_vaccinati": cleaned_data[x]["territori"][y]["nuovi_vaccinati"],
                     "percentuale_nuovi_vaccinati": cleaned_data[x]["territori"][y]["nuovi_vaccinati"] / cleaned_data[x+1]["territori"][y]["totale_vaccinati"] * 100,
@@ -99,7 +113,7 @@ def clean():
 
 
     with open(cwd + output_path + json_output_filename, "w") as f:
-        json.dump(cleaned_data, f, indent=2)
+        json.dump(cleaned_data, f, indent=2, sort_keys=True)
 
 
 if __name__ == "__main__":

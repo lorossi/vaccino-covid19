@@ -11,7 +11,8 @@ from datetime import datetime
 
 
 class Scraper:
-    def __init__(self, log=True, verbose=True, json_filename="vaccini.json", output_path="src/output/", history_filename="storico-vaccini.json"):
+    def __init__(self, log=True, verbose=True, json_filename="vaccini.json",
+                 output_path="src/output/", history_filename="storico-vaccini.json"):
         self.log = log
         self.verbose = verbose
         self.json_filename = json_filename
@@ -48,13 +49,11 @@ class Scraper:
 
         italy_absolute = {
             "nome_territorio": "Italia",
+            "nome_territorio_corto": "Italia",
             "codice_territorio": "00"
             }
 
-        italy_variation = {
-            "nome_territorio": "Italia",
-            "codice_territorio": "00"
-        }
+        italy_variation = italy_absolute.copy()
 
         # load timestamp that will be put inside the output
         now = datetime.now()
@@ -107,7 +106,7 @@ class Scraper:
             logging.info("No previous record. Unable to calculate variation. "
                          f"Error: {e}")
 
-        logging.info("Requesting data about terriories")
+        logging.info("Requesting data about territories")
         response = requests.post(payload["url"], headers=headers,
                                  data=payload["totale_vaccini"]).text
         json_response = json.loads(response)
@@ -142,9 +141,21 @@ class Scraper:
             total_doses = territory["C"][3]
             percent_used_doses = total_vaccinated / total_doses * 100
 
+            if territory_code == "06":
+                short_name = "E.R."
+            elif territory_code == "07":
+                short_name = "F.V.G"
+            elif territory_code == "20":
+                short_name = "V. d'Aosta"
+            elif territory_code is None:
+                short_name = "Italy"
+            else:
+                short_name = territory_name
+
             # populate the dict with all the new data
             new_absolute = {
                 "nome_territorio": territory_name,
+                "nome_territorio_corto": short_name,
                 "codice_territorio": territory_code,
                 "totale_vaccinati": total_vaccinated,
                 "percentuale_popolazione_vaccinata": percent_vaccinated,
@@ -169,6 +180,7 @@ class Scraper:
 
                 new_variation = {
                     "nome_territorio": new_absolute["nome_territorio"],
+                    "nome_territorio_corto": short_name,
                     "codice_territorio": new_absolute["codice_territorio"],
                     "nuovi_vaccinati": nuovi_vaccinati,
                     "percentuale_nuovi_vaccinati": nuovi_vaccinati / last_territory["totale_vaccinati"] * 100,
@@ -367,7 +379,6 @@ class Scraper:
         self._new_data = old_data
         self._data = self._new_data.copy()
 
-
     def scrape_history(self):
         # create a js file with all the data about vaccines
         # midnight for the considered day
@@ -430,7 +441,6 @@ class Scraper:
         else:
             self._history = []
 
-
     def save_data(self):
         # create output folders
         logging.info("Creating folders")
@@ -440,13 +450,13 @@ class Scraper:
             logging.info("Saving to file")
             # now finally save the json file
             with open(self.output_path + self.json_filename, "w") as f:
-                json.dump(self._data, f, indent=2)
+                json.dump(self._data, f, indent=2, sort_keys=True)
             logging.info(f"JSON file saved. Path: {self.json_filename}")
 
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
                 # convert dict to json (will be read by js)
-                f.write(json.dumps(self._history, indent=2))
+                f.write(json.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
     def load_data(self):
