@@ -491,6 +491,11 @@ class Scraper:
         self._history = copy.deepcopy(self._new_history)
         self.filterData()
 
+    def loadTimestamp(self):
+        with open(self.output_path + self.json_filename, "r") as f:
+            self._last_updated = ujson.load(f)[0]["last_updated"]
+            return self._last_updated
+
     def filterData(self):
         self._today = self._data[0]
         self._last_updated = self._data[0]["last_updated"]
@@ -511,8 +516,10 @@ class Scraper:
 
     @property
     def last_updated(self):
+        # i swear i can't find a better way to check the last update
+        # everything else crashes
         return {
-            "last_updated": self._last_updated
+            "last_updated": self.loadTimestamp()
         }
 
     @property

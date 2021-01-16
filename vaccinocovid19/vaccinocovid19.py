@@ -4,6 +4,8 @@ import logging
 from scraper import Scraper
 
 
+# Objects
+s = Scraper()
 app = Flask(__name__)
 
 
@@ -12,6 +14,7 @@ def main():
     logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
                         level=logging.INFO, filename=logfile,
                         filemode="w")
+
     # scheduler setup
     scheduler = BackgroundScheduler()
     scheduler.start()
@@ -94,10 +97,7 @@ def error_400(e):
                            errordescription="page not found"), 404
 
 
-# Objects
-s = Scraper()
 main()
-
 
 if __name__ == "__main__":
     app.run()
