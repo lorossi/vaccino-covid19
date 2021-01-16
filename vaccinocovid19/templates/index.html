@@ -9,7 +9,7 @@
 </div>
 <div class="update">
    Aggiornato al
-   <div class="stats"></div>
+   <div class="stats">{{ last_updated.last_updated }}</div>
    <div class="info">variazioni rispetto al giorno precedente<br>a causa dei costanti ritardi, i dati potrebbero essere relativi a ieri
    </div>
 </div>
@@ -17,27 +17,27 @@
    <div class="italia">
       <div class="stats">
          <p class="label">Vaccinati in Italia</p>
-         <p id="vaccinati"></p>
+         <p id="vaccinati">{{ italy.totale_vaccinati }}</p>
       </div>
       <div class="stats">
          <p class="label">Vaccinati oggi</p>
-         <p id="deltavaccinati"></p>
+         <p id="deltavaccinati">{{ italy.nuovi_vaccinati }}</p>
       </div>
       <div class="stats">
          <p class="label">Dosi disponibili</p>
-         <p id="dosi"></p>
+         <p id="dosi">{{ italy.totale_dosi_consegnate }}</p>
       </div>
       <div class="stats">
          <p class="label">Dosi consegnate oggi</p>
-         <p id="deltadosi"></p>
+         <p id="deltadosi">{{ italy.nuove_dosi_consegnate }}</p>
       </div>
       <div class="stats">
          <p class="label">Percentuale popolazione</p>
-         <p id="percentualevaccinati"></p>
+         <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattata }}%</p>
       </div>
       <div class="stats">
          <p class="label">Percentuale dosi usate</p>
-         <p id="percentualevacciniusati"></p>
+         <p id="percentualevacciniusati" class="">{{ italy.percentuale_dosi_utilizzate_formattata }}%</p>
       </div>
    </div>
    <div class="alltimechartcontainer">
@@ -46,6 +46,9 @@
          <form>
             <label for="territori">Seleziona territorio </label>
             <select name="territori" id="territori">
+              {% for t in territories_list.territori %}
+                <option value="{{ t }}">{{ t }}</option>`
+              {% endfor %}
             </select>
          </form>
          <form>

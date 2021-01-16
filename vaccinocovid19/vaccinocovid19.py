@@ -52,22 +52,8 @@ def error_500(e):
 @app.route("/")
 @app.route("/homepage")
 def index():
-    return render_template("index.html")
-
-
-@app.route("/get/ultimo_aggiornamento", methods=["GET"])
-def get_last_updated():
-    return jsonify(s.last_updated)
-
-
-@app.route("/get/lista_territori", methods=["GET"])
-def get_lista_territori():
-    return jsonify(s.territories_list)
-
-
-@app.route("/get/italia", methods=["GET"])
-def get_italy():
-    return jsonify(s.italy)
+    return render_template("index.html", last_updated=s.last_updated,
+                           territories_list=s.territories_list, italy=s.italy)
 
 
 @app.route("/get/territori", methods=["GET"])

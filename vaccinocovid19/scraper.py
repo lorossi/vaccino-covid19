@@ -25,6 +25,7 @@ class Scraper:
         self._italy = {}
         self._territories = []
         self._today = []
+        self._last_updated = None
 
         if self.log:
             logfile = "logging.log"
@@ -210,8 +211,12 @@ class Scraper:
                 italy_absolute["totale_vaccinati"] += territory["C"][1]
 
         # calculate the percentage of vaccinated people
-        italy_absolute["percentuale_popolazione_vaccinata"] = italy_absolute["totale_vaccinati"] / territories_population["00"] * 100
-        italy_absolute["percentuale_dosi_utilizzate"] = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
+        population_percentage = italy_absolute["totale_vaccinati"] / territories_population["00"] * 100
+        italy_absolute["percentuale_popolazione_vaccinata"] = population_percentage
+        italy_absolute["percentuale_popolazione_vaccinata_formattata"] = format(population_percentage, ".2f")
+        used_percentage = italy_absolute["totale_vaccinati"] / italy_absolute["totale_dosi_consegnate"] * 100
+        italy_absolute["percentuale_dosi_utilizzate"] = used_percentage
+        italy_absolute["percentuale_dosi_utilizzate_formattata"] = format(used_percentage, ".2f")
 
         # now look for old data about italy as whole
         last_italy = None
@@ -359,7 +364,7 @@ class Scraper:
             # no old data has been found.
             # the new data must be encapsulated in a list before dumping it into
             # a json file
-            old_data = [copy.deepcopy(self._new_data)]
+            old_data = [self._new_data]
 
         # loop trhought old data in order to update the dictionary
         found = False
@@ -487,12 +492,13 @@ class Scraper:
         self.filterData()
 
     def filterData(self):
+        self._today = self._data[0]
+        self._last_updated = self._data[0]["last_updated"]
         self._absolute_territories = [t for t in self._data[0]["assoluti"] if t["nome_territorio"] != "Italia"]
         self._variation_territories = [v for v in self._data[0]["variazioni"] if v["nome_territorio"] != "Italia"]
         self._italy = {}
         self._italy.update(next(t for t in self._data[0]["assoluti"] if t["nome_territorio"] == "Italia"))
         self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
-        self._today = copy.deepcopy(self._data[0])
 
     def pushToGitHub(self):
         # now push all to to github
@@ -506,7 +512,7 @@ class Scraper:
     @property
     def last_updated(self):
         return {
-            "last_updated": self._today["last_updated"]
+            "last_updated": self._last_updated
         }
 
     @property

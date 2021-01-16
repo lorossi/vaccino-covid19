@@ -95,6 +95,10 @@ def clean():
                 "percentuale_dosi_utilizzate": cleaned_data[x]["territori"][y]["totale_vaccinati"] / cleaned_data[x]["territori"][y]["totale_dosi_consegnate"] * 100
             }
 
+            if territory_name == "Italia":
+                new_absolute["percentuale_popolazione_vaccinata_formattata"] = format(cleaned_data[x]["territori"][y]["totale_vaccinati"] / population * 100, ".2f")
+                new_absolute["percentuale_dosi_utilizzate_formattata"] = format(cleaned_data[x]["territori"][y]["totale_vaccinati"] / cleaned_data[x]["territori"][y]["totale_dosi_consegnate"] * 100, ".2f")
+
             if x < len(old_data) - 1:
                 new_variations = {
                     "nome_territorio": territory_name,
@@ -135,6 +139,8 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"database already clean. Error {e}")
 
-    s.save_data()
+    s.scrapeData()
+    s.scrapeHistory()
+    s.saveData()
     print("data scraped")
     print("now start flask")

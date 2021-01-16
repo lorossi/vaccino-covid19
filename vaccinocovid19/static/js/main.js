@@ -15,36 +15,6 @@ const get_data_json = (url, data) => {
 };
 
 
-// update the data about the last vax update
-const set_last_update = async () => {
-  try {
-    const response = await get_data_json("/get/ultimo_aggiornamento");
-    $(".update .stats").html(response.last_updated);
-  } catch (err) {
-    console.log(`Impossibile caricare l'ultimo aggiornamento. Errore ${err.message}`);
-    return;
-  }
-};
-
-
-// load selection form item for all time char
-const load_selection = async () => {
-  try {
-    const response = await get_data_json("/get/lista_territori");
-
-    let new_element = "";
-    response.territori.forEach(t => {
-      new_element += `<option value="${t}">${t}</option>`;
-    });
-    $(".alltimechartcontainer select#territori").append(new_element);
-
-  } catch (err) {
-    console.log(`Impossibile caricare i territori. Errore ${err.message}`);
-    return;
-  }
-};
-
-
 // load options for all time chart
 const all_time_get_options = () => {
   let values = [];
@@ -82,30 +52,6 @@ const all_time_get_options = () => {
     values: values,
     territory: territory
   };
-};
-
-// load the table data about Italy as a whole
-const load_italy = async () => {
-  try {
-    const italy = await get_data_json("/get/italia");
-    // is the percentage over 100%?
-    let over = parseFloat(italy.percentuale_dosi_utilizzate) > 95;
-    // update the divs
-    $(".italia #vaccinati").html(`${italy.totale_vaccinati}`);
-    $(".italia #deltavaccinati").html(`${italy.nuovi_vaccinati}`);
-    $(".italia #dosi").html(`${italy.totale_dosi_consegnate}`);
-    $(".italia #deltadosi").html(`${italy.nuove_dosi_consegnate}`);
-    $(".italia #percentualevaccinati").html(`${italy.percentuale_popolazione_vaccinata.toFixed(2)}%`);
-    if (over) {
-      $(".italia #percentualevacciniusati").html(`<span class="warning">${italy.percentuale_dosi_utilizzate.toFixed(2)}%</span>`);
-    } else {
-      $(".italia #percentualevacciniusati").html(`${italy.percentuale_dosi_utilizzate.toFixed(2)}%`);
-    }
-
-  } catch (err) {
-    console.log(`Impossibile caricare dati sull'Italia. Errore ${err.message}`);
-    return;
-  }
 };
 
 
@@ -1210,10 +1156,6 @@ const load_age_ranges_chart = async (order, old_obj) => {
 // main function
 $(document).ready(async () => {
   console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19");
-  // load basic infos
-  set_last_update();
-  load_selection();
-  load_italy();
   // load tables
   let territories = load_territories(0, false);
   let variations = load_variations(0, false);
