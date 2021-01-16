@@ -290,9 +290,9 @@
     "sesso": [
       {
         "nome_categoria": "donne",
-        "totale_vaccinati": 697778,
-        "nuovi_vaccinati": 46089,
-        "percentuale_nuovi_vaccinati": 6.60510936143014
+        "totale_vaccinati": 701067,
+        "nuovi_vaccinati": 49378,
+        "percentuale_nuovi_vaccinati": 7.043264053221732
       },
       {
         "nome_categoria": "uomini",
@@ -357,8 +357,8 @@
         "percentuale_nuovi_vaccinati": 8.123797106847954
       }
     ],
-    "script_timestamp": "2021-01-16T23:00:14.334202",
-    "last_updated": "2021-01-16 ore 23:00",
+    "script_timestamp": "2021-01-16T23:30:13.601496",
+    "last_updated": "2021-01-16 ore 23:30",
     "last_data_update": "2021-01-16T21:44:52.991Z"
   },
   {
