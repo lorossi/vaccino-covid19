@@ -18,25 +18,25 @@ def main():
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(push_to_github, trigger="cron", minute="10", hour="0")
-    s.load_data()
+    s.loadData()
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
-    s.scrape_data()
-    s.save_data()
+    s.scrapeData()
+    s.saveData()
 
 
 def scrape_history():
-    s.scrape_history()
-    s.save_data()
+    s.scrapeHistory()
+    s.saveData()
 
 
 def push_to_github():
     # THIS HAS TO BE CHANGED WHEN DEPLOYED
     return
-    s.push_to_GitHub()
+    s.pushToGitHub()
     logging.info("pushed to GitHub")
 
 
@@ -55,56 +55,44 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/get/last_updated", methods=["GET"])
+@app.route("/get/ultimo_aggiornamento", methods=["GET"])
 def get_last_updated():
-    return_dict = {
-        "last_updated": s.last_updated
-    }
-    return jsonify(return_dict)
+    return jsonify(s.last_updated)
 
 
 @app.route("/get/lista_territori", methods=["GET"])
 def get_lista_territori():
-    return_dict = {
-        "territori": s.territories_list
-    }
-    return jsonify(return_dict)
+    return jsonify(s.territories_list)
 
 
-@app.route("/get/italy", methods=["GET"])
+@app.route("/get/italia", methods=["GET"])
 def get_italy():
-    italy = s.italy
-    return jsonify(italy)
+    return jsonify(s.italy)
 
 
 @app.route("/get/territori", methods=["GET"])
 def get_territori():
-    territori = s.absolute_territories
-    return jsonify(territori)
+    return jsonify(s.absolute_territories)
 
 
 @app.route("/get/variazioni", methods=["GET"])
 def get_variazioni():
-    variazioni = s.variation_territories
-    return jsonify(variazioni)
+    return jsonify(s.variation_territories)
 
 
 @app.route("/get/categorie", methods=["GET"])
 def get_categorie():
-    categorie = s.categories
-    return jsonify(categorie)
+    return jsonify(s.categories)
 
 
 @app.route("/get/sessi", methods=["GET"])
 def get_sessi():
-    sesso = s.genders
-    return jsonify(sesso)
+    return jsonify(s.genders)
 
 
 @app.route("/get/fasce_eta", methods=["GET"])
 def get_fasce_eta():
-    fasce_eta = s.age_ranges
-    return jsonify(fasce_eta)
+    return jsonify(s.age_ranges)
 
 
 @app.route("/get/storico_vaccini", methods=["GET"])
@@ -126,5 +114,4 @@ main()
 
 
 if __name__ == "__main__":
-    main()
     app.run()

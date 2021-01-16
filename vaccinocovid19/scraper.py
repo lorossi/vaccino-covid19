@@ -24,6 +24,7 @@ class Scraper:
         self._new_history = []
         self._italy = {}
         self._territories = []
+        self._today = []
 
         if self.log:
             logfile = "logging.log"
@@ -36,7 +37,7 @@ class Scraper:
             else:
                 ("No logging in file.")
 
-    def scrape_data(self):
+    def scrapeData(self):
         # initialize dictionaries
         self._new_data = {
             "assoluti": [],
@@ -384,9 +385,9 @@ class Scraper:
         self._new_data = old_data
         # save data, territories and italy in separated private lists
         self._data = copy.deepcopy(self._new_data)
-        self.filter_data()
+        self.filterData()
 
-    def scrape_history(self):
+    def scrapeHistory(self):
         # create a js file with all the data about vaccines
         # midnight for the considered day
         midnight = datetime.now().replace(hour=0, minute=0,
@@ -444,11 +445,11 @@ class Scraper:
         self._new_history.reverse()
 
         if len(self._new_history) > 0:
-            self._history = self._new_history.deepcopy()
+            self._history = copy.deepcopy(self._new_history)
         else:
             self._history = []
 
-    def save_data(self):
+    def saveData(self):
         # create output folders
         logging.info("Creating folders")
         Path(self.output_path).mkdir(parents=True, exist_ok=True)
@@ -466,7 +467,7 @@ class Scraper:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
-    def load_data(self):
+    def loadData(self):
         try:
             with open(self.output_path + self.json_filename, "r") as f:
                 self._new_data = ujson.load(f)
@@ -483,16 +484,17 @@ class Scraper:
 
         self._data = copy.deepcopy(self._new_data)
         self._history = copy.deepcopy(self._new_history)
-        self.filter_data()
+        self.filterData()
 
-    def filter_data(self):
+    def filterData(self):
         self._absolute_territories = [t for t in self._data[0]["assoluti"] if t["nome_territorio"] != "Italia"]
         self._variation_territories = [v for v in self._data[0]["variazioni"] if v["nome_territorio"] != "Italia"]
         self._italy = {}
         self._italy.update(next(t for t in self._data[0]["assoluti"] if t["nome_territorio"] == "Italia"))
         self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
+        self._today = copy.deepcopy(self._data[0])
 
-    def push_to_GitHub(self):
+    def pushToGitHub(self):
         # now push all to to github
         logging.info("Pushing to GitHub")
         subprocess.run(["git",  "pull"])
@@ -503,7 +505,9 @@ class Scraper:
 
     @property
     def last_updated(self):
-        return self._data[0]["last_updated"]
+        return {
+            "last_updated": self._today["last_updated"]
+        }
 
     @property
     def italy(self):
@@ -511,7 +515,9 @@ class Scraper:
 
     @property
     def territories_list(self):
-        return self._data[0]["lista_territori"]
+        return {
+                "territori": self._today["lista_territori"]
+            }
 
     @property
     def absolute_territories(self):
@@ -523,11 +529,11 @@ class Scraper:
 
     @property
     def categories(self):
-        return self._data[0]["categorie"]
+        return self._today["categorie"]
 
     @property
     def genders(self):
-        return self._data[0]["sesso"]
+        return self._today["sesso"]
 
     @property
     def age_ranges(self):
@@ -540,6 +546,6 @@ class Scraper:
 
 if __name__ == "__main__":
     s = Scraper()
-    s.scrape_data()
-    s.scrape_history()
-    s.save_data()
+    s.scrapeData()
+    s.scrapeHistory()
+    s.saveData()

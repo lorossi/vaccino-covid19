@@ -18,7 +18,7 @@ const get_data_json = (url, data) => {
 // update the data about the last vax update
 const set_last_update = async () => {
   try {
-    const response = await get_data_json("/get/last_updated");
+    const response = await get_data_json("/get/ultimo_aggiornamento");
     $(".update .stats").html(response.last_updated);
   } catch (err) {
     console.log(`Impossibile caricare l'ultimo aggiornamento. Errore ${err.message}`);
@@ -87,7 +87,7 @@ const all_time_get_options = () => {
 // load the table data about Italy as a whole
 const load_italy = async () => {
   try {
-    const italy = await get_data_json("/get/italy");
+    const italy = await get_data_json("/get/italia");
     // is the percentage over 100%?
     let over = parseFloat(italy.percentuale_dosi_utilizzate) > 95;
     // update the divs
