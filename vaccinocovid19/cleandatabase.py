@@ -7,7 +7,7 @@
 # server for the first time
 
 import os
-import json
+import ujson
 from scraper import Scraper
 import requests
 from datetime import datetime
@@ -27,10 +27,10 @@ def clean():
     settings_path = "src/settings/"
 
     with open(cwd + output_path + json_filename, "r") as f:
-        old_data = json.load(f)
+        old_data = ujson.load(f)
 
     with open(cwd + settings_path + "popolazione_regione.json") as f:
-        territories_population = json.load(f)
+        territories_population = ujson.load(f)
 
     old_data.sort(key=lambda x: datetime.fromisoformat(x['script_timestamp']), reverse=True)
 
@@ -58,6 +58,7 @@ def clean():
             "assoluti": [],
             "variazioni": []
         }
+        territories_list = ["Italia"]
 
         for y in range(len(cleaned_data[x]["territori"])):
             territory_name = cleaned_data[x]["territori"][y]["nome_territorio"]
@@ -80,6 +81,9 @@ def clean():
                 short_name = "Italy"
             else:
                 short_name = territory_name
+
+            if territory_name != "Italia":
+                territories_list.append(territory_name)
 
             new_absolute = {
                 "nome_territorio": territory_name,
@@ -111,13 +115,14 @@ def clean():
             cleaned_data[x]["fasce_eta"][y]["nome_categoria"] = cleaned_data[x]["fasce_eta"][y]["nome_categoria"].replace("<=", "0-")
 
         cleaned_data[x].update(new_territories)
+        cleaned_data[x]["lista_territori"] = territories_list
 
     for x in range(len(cleaned_data)):
         del cleaned_data[x]["territori"]
 
 
     with open(cwd + output_path + json_output_filename, "w") as f:
-        json.dump(cleaned_data, f, indent=2, sort_keys=True)
+        ujson.dump(cleaned_data, f, indent=2, sort_keys=True)
 
 
 if __name__ == "__main__":
@@ -130,8 +135,6 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"database already clean. Error {e}")
 
-    s.scrape_data()
-    s.scrape_history()
     s.save_data()
     print("data scraped")
     print("now start flask")

@@ -2,7 +2,7 @@
 # https://www.lorenzoros.si - https://github.com/lorossi
 
 import copy
-import json
+import ujson
 import logging
 import requests
 import subprocess
@@ -55,7 +55,7 @@ class Scraper:
             "codice_territorio": "00"
             }
 
-        italy_variation = italy_absolute.copy()
+        italy_variation = copy.deepcopy(italy_absolute)
 
         # load timestamp that will be put inside the output
         now = datetime.now()
@@ -65,26 +65,26 @@ class Scraper:
         logging.info("Loading settings")
         # load headers
         with open("src/settings/headers.json") as f:
-            headers = json.load(f)
+            headers = ujson.load(f)
 
         # load payload and url
         with open("src/settings/payloads.json", "r") as f:
-            payload = json.load(f)
+            payload = ujson.load(f)
 
         # load territories ISTAT code
         with open("src/settings/codici_regione.json", "r") as f:
-            territories_codes = json.load(f)
+            territories_codes = ujson.load(f)
 
         # load territories population
         with open("src/settings/popolazione_regione.json", "r") as f:
-            territories_population = json.load(f)
+            territories_population = ujson.load(f)
 
         logging.info("Loading old data")
         last_data = None
         try:
             # try to load old data to make a comparision
             with open(self.output_path + self.json_filename, "r") as f:
-                old_data = json.load(f)
+                old_data = ujson.load(f)
                 # sort old data so the newest one is the first
                 old_data.sort(key=lambda x:
                               datetime.fromisoformat(x['script_timestamp']),
@@ -111,9 +111,8 @@ class Scraper:
         logging.info("Requesting data about territories")
         response = requests.post(payload["url"], headers=headers,
                                  data=payload["totale_vaccini"]).text
-        json_response = json.loads(response)
+        json_response = ujson.loads(response)
 
-        logging.info("Scraping territories")
         # load data from the response
         last_update = json_response["results"][0]["result"]["data"]["timestamp"]
         self._new_data["last_data_update"] = last_update
@@ -237,7 +236,7 @@ class Scraper:
         logging.info("Requesting data about categories")
         response = requests.post(payload["url"], headers=headers,
                                  data=payload["categorie"]).text
-        json_response = json.loads(response)
+        json_response = ujson.loads(response)
 
         categories = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]
         for category in categories:
@@ -269,7 +268,7 @@ class Scraper:
         # now load women
         logging.info("Requesting data about women")
         response = requests.post(payload["url"], headers=headers, data=payload["donne"]).text
-        json_response = json.loads(response)
+        json_response = ujson.loads(response)
 
         women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0] \
                              ["PH"][0]["DM0"][0]["M0"]
@@ -294,7 +293,7 @@ class Scraper:
         # now load men
         logging.info("Requesting data about men")
         response = requests.post(payload["url"], headers=headers, data=payload["uomini"]).text
-        json_response = json.loads(response)
+        json_response = ujson.loads(response)
 
         men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"] \
                            [0]["DM0"][0]["M0"]
@@ -319,7 +318,7 @@ class Scraper:
         logging.info("Requesting data about age ranges")
         response = requests.post(payload["url"], headers=headers,
                                  data=payload["eta"]).text
-        json_response = json.loads(response)
+        json_response = ujson.loads(response)
 
         for age_range in json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"]:
             if len(age_range["C"]) < 2:
@@ -349,7 +348,7 @@ class Scraper:
         try:
             # load old data to update the file
             with open(self.output_path + self.json_filename, "r") as f:
-                old_data = json.load(f)
+                old_data = ujson.load(f)
                 # sort by time so new data is always on top
                 old_data.sort(key=lambda x:
                               datetime.fromisoformat(x['script_timestamp']),
@@ -359,7 +358,7 @@ class Scraper:
             # no old data has been found.
             # the new data must be encapsulated in a list before dumping it into
             # a json file
-            old_data = [self._new_data.copy()]
+            old_data = [copy.deepcopy(self._new_data)]
 
         # loop trhought old data in order to update the dictionary
         found = False
@@ -384,7 +383,7 @@ class Scraper:
 
         self._new_data = old_data
         # save data, territories and italy in separated private lists
-        self._data = self._new_data.copy()
+        self._data = copy.deepcopy(self._new_data)
         self.filter_data()
 
     def scrape_history(self):
@@ -445,7 +444,7 @@ class Scraper:
         self._new_history.reverse()
 
         if len(self._new_history) > 0:
-            self._history = self._new_history.copy()
+            self._history = self._new_history.deepcopy()
         else:
             self._history = []
 
@@ -458,32 +457,32 @@ class Scraper:
             logging.info("Saving to file")
             # now finally save the json file
             with open(self.output_path + self.json_filename, "w") as f:
-                json.dump(self._data, f, indent=2, sort_keys=True)
+                ujson.dump(self._data, f, indent=2, sort_keys=True)
             logging.info(f"JSON file saved. Path: {self.json_filename}")
 
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
                 # convert dict to json (will be read by js)
-                f.write(json.dumps(self._history, indent=2, sort_keys=True))
+                f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
     def load_data(self):
         try:
             with open(self.output_path + self.json_filename, "r") as f:
-                self._new_data = json.load(f)
+                self._new_data = ujson.load(f)
         except Exception as e:
             logging.error(f"Cannot read data file. error {e}")
             self._new_data = []
 
         try:
             with open(self.output_path + self.history_filename, "r") as f:
-                self._new_history = json.load(f)
+                self._new_history = ujson.load(f)
         except Exception as e:
             logging.error(f"Cannot read history file. error {e}")
             self._new_history = []
 
-        self._data = self._new_data.copy()
-        self._history = self._new_history.copy()
+        self._data = copy.deepcopy(self._new_data)
+        self._history = copy.deepcopy(self._new_history)
         self.filter_data()
 
     def filter_data(self):

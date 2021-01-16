@@ -11,7 +11,7 @@ body {
 }
 
 .mobile {
-  display: inline-block;
+  display: block;
 }
 
 .pc {
@@ -23,7 +23,6 @@ body {
 }
 
 .warning {
-  font-size: bold;
   color: #ff1744;
 }
 
@@ -232,7 +231,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   }
 
   .pc {
-    display: inline-block;
+    display: block;
   }
 
   .content, .credits {

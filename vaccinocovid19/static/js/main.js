@@ -566,10 +566,25 @@ const load_variations = async (order, reverse, variations) => {
     $("table#variazioni tbody").html("");
 
     variations.forEach((t, i) => {
+      let nuovi_vaccinati;
+      let percentuale_nuovi_vaccinati;
+      let sign, td_class;
+
+      if (t.nuovi_vaccinati === undefined) {
+        nuovi_vaccinati = 0;
+        percentuale_nuovi_vaccinati = 0;
+      } else {
+        nuovi_vaccinati = t.nuovi_vaccinati;
+        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+      }
+
+      sign = nuovi_vaccinati >= 0 ? "+" : "";
+      td_class = nuovi_vaccinati >= 0 ? "" : "warning";
+
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td><span class="mobile">${t.nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
-      new_tr += `<td>+${t.nuovi_vaccinati}`;
-      new_tr += `<td>+${t.percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += `<td class="${td_class}">${sign}${nuovi_vaccinati}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += `<td>+${t.nuove_dosi_consegnate}`;
       new_tr += `<td>+${t.percentuale_nuove_dosi_consegnate.toFixed(2)}%</td>`;
       new_tr += "</tr>";
@@ -769,6 +784,8 @@ const load_categories = async (order, reverse, categories) => {
     categories.forEach((t, i) => {
       let nuovi_vaccinati;
       let percentuale_nuovi_vaccinati;
+      let sign, td_class;
+
       if (t.nuovi_vaccinati === undefined) {
         nuovi_vaccinati = 0;
         percentuale_nuovi_vaccinati = 0;
@@ -777,11 +794,14 @@ const load_categories = async (order, reverse, categories) => {
         percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
       }
 
+      sign = nuovi_vaccinati >= 0 ? "+" : "";
+      td_class = nuovi_vaccinati >= 0 ? "" : "warning";
+
       let new_tr = `<tr id="${t.id_categoria}" class="categorie">`;
       new_tr += `<td>${t.nome_categoria}</td>`;
       new_tr += `<td>${t.totale_vaccinati}</td>`;
-      new_tr += `<td>+${nuovi_vaccinati}</td>`;
-      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += `<td class="${td_class}">${sign}${nuovi_vaccinati}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += "</tr>";
       $("table#categorie tbody").append(new_tr);
     });
@@ -927,11 +947,25 @@ const load_genders = async (order, reverse, genders) => {
     $("table#sesso tbody").html("");
 
     genders.forEach((t, i) => {
+      let nuovi_vaccinati;
+      let percentuale_nuovi_vaccinati;
+      let sign, td_class;
+
+      if (t.nuovi_vaccinati === undefined) {
+        nuovi_vaccinati = 0;
+        percentuale_nuovi_vaccinati = 0;
+      } else {
+        nuovi_vaccinati = t.nuovi_vaccinati;
+        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+      }
+      sign = nuovi_vaccinati >= 0 ? "+" : "";
+      td_class = nuovi_vaccinati >= 0 ? "" : "warning";
+
       let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
       new_tr += `<td>${t.nome_categoria}</td>`;
       new_tr += `<td>${t.totale_vaccinati}</td>`;
-      new_tr += `<td>+${t.nuovi_vaccinati}</td>`;
-      new_tr += `<td>+${t.percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += `<td class="${td_class}">${sign}${nuovi_vaccinati}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += "</tr>";
       $("table#sesso tbody").append(new_tr);
     });
@@ -1009,7 +1043,7 @@ const load_genders_chart = async (genders) => {
 // load data about age ranges
 const load_age_ranges = async (order, reverse, age_ranges) => {
   try {
-    age_ranges = await age_ranges
+    age_ranges = await age_ranges;
     if (!age_ranges) age_ranges = await get_data_json("/get/fasce_eta");
 
     if (order === 0) {
@@ -1029,14 +1063,26 @@ const load_age_ranges = async (order, reverse, age_ranges) => {
     $("table#fasce_eta tbody").html("");
 
     age_ranges.forEach((t, i) => {
-      let nuovi_vaccinati = t.nuovi_vaccinati || t.totale_vaccinati;
-      let percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati || 100;
+      let nuovi_vaccinati;
+      let percentuale_nuovi_vaccinati;
+      let sign, td_class;
+
+      if (t.nuovi_vaccinati == undefined) {
+        nuovi_vaccinati = 0;
+        percentuale_nuovi_vaccinati = 100;
+      } else {
+        nuovi_vaccinati = t.nuovi_vaccinati;
+        percentuale_nuovi_vaccinati = t.percentuale_nuovi_vaccinati;
+      }
+
+      sign = nuovi_vaccinati >= 0 ? "+" : "";
+      td_class = nuovi_vaccinati >= 0 ? "" : "warning";
 
       let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
       new_tr += `<td>${t.nome_categoria}</td>`;
       new_tr += `<td>${t.totale_vaccinati}</td>`;
-      new_tr += `<td>+${nuovi_vaccinati}</td>`;
-      new_tr += `<td>+${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
+      new_tr += `<td class="${td_class}">${sign}${nuovi_vaccinati}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${percentuale_nuovi_vaccinati.toFixed(2)}%</td>`;
       new_tr += "</tr>";
       $("table#fasce_eta tbody").append(new_tr);
     });
