@@ -11,13 +11,17 @@ from datetime import datetime
 
 
 class Scraper:
-    def __init__(self, log=True, verbose=True, json_filename="vaccini.json",
-                 output_path="src/output/", history_filename="storico-vaccini.json"):
+    def __init__(self, log=True, verbose=True, output_path="src/output/",
+                 json_filename="vaccini.json", history_filename="storico-vaccini.json",
+                 today_filename="today.json", italy_filename="italy.json"):
+
         self.log = log
         self.verbose = verbose
         self.json_filename = json_filename
         self.output_path = output_path
         self.history_filename = history_filename
+        self.today_filename = today_filename
+        self.italy_filename = italy_filename
         self._data = []
         self._new_data = []
         self._history = []
@@ -466,6 +470,14 @@ class Scraper:
                 ujson.dump(self._data, f, indent=2, sort_keys=True)
             logging.info(f"JSON file saved. Path: {self.json_filename}")
 
+            with open(self.output_path + self.today_filename, "w") as f:
+                ujson.dump(self._today, f, indent=2, sort_keys=True)
+            logging.info(f"Today file saved. Path: {self.json_filename}")
+
+            with open(self.output_path + self.italy_filename, "w") as f:
+                ujson.dump(self._italy, f, indent=2, sort_keys=True)
+            logging.info(f"Italy file saved. Path: {self.json_filename}")
+
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
                 # convert dict to json (will be read by js)
@@ -491,10 +503,6 @@ class Scraper:
         self._history = copy.deepcopy(self._new_history)
         self.filterData()
 
-    def loadTimestamp(self):
-        with open(self.output_path + self.json_filename, "r") as f:
-            self._last_updated = ujson.load(f)[0]["last_updated"]
-            return self._last_updated
 
     def filterData(self):
         self._today = self._data[0]
@@ -516,45 +524,61 @@ class Scraper:
 
     @property
     def last_updated(self):
-        # i swear i can't find a better way to check the last update
-        # everything else crashes
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._last_updated = ujson.load(f)["last_updated"]
         return {
-            "last_updated": self.loadTimestamp()
-        }
+            "last_updated": self._last_updated
+            }
 
     @property
     def italy(self):
-        return self._italy
+        with open(self.output_path + self.italy_filename, "r") as f:
+            self._italy = ujson.load(f)
+            return self._italy
 
     @property
     def territories_list(self):
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._today = ujson.load(f)
         return {
                 "territori": self._today["lista_territori"]
             }
 
     @property
     def absolute_territories(self):
-        return self._absolute_territories
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._absolute_territories = ujson.load(f)["assoluti"]
+            return self._absolute_territories
 
     @property
     def variation_territories(self):
-        return self._variation_territories
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._absolute_territories = ujson.load(f)["variazioni"]
+            return self._absolute_territories
 
     @property
     def categories(self):
-        return self._today["categorie"]
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._absolute_territories = ujson.load(f)["categorie"]
+            return self._absolute_territories
 
     @property
     def genders(self):
-        return self._today["sesso"]
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._absolute_territories = ujson.load(f)["sesso"]
+            return self._absolute_territories
 
     @property
     def age_ranges(self):
-        return self._data[0]["fasce_eta"]
+        with open(self.output_path + self.today_filename, "r") as f:
+            self._absolute_territories = ujson.load(f)["fasce_eta"]
+            return self._absolute_territories
 
     @property
     def history(self):
-        return self._history
+        with open(self.output_path + self.history_filename, "r") as f:
+            self._history = ujson.load(f)
+            return self._history
 
 
 if __name__ == "__main__":
