@@ -289,9 +289,9 @@ let vaccini = {
   "sesso": [
     {
       "nome_categoria": "donne",
-      "totale_vaccinati": 680504,
-      "nuovi_vaccinati": 28815,
-      "percentuale_nuovi_vaccinati": 4.234361590820921
+      "totale_vaccinati": 697778,
+      "nuovi_vaccinati": 46089,
+      "percentuale_nuovi_vaccinati": 6.60510936143014
     },
     {
       "nome_categoria": "uomini",
@@ -356,7 +356,7 @@ let vaccini = {
       "percentuale_nuovi_vaccinati": 5.238049498927416
     }
   ],
-  "script_timestamp": "2021-01-16T22:00:14.524249",
-  "last_updated": "2021-01-16 ore 22:00",
+  "script_timestamp": "2021-01-16T22:30:14.383793",
+  "last_updated": "2021-01-16 ore 22:30",
   "last_data_update": "2021-01-16T20:44:53.007Z"
 };
