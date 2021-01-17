@@ -13,7 +13,7 @@ from datetime import datetime
 class Scraper:
     def __init__(self, log=True, verbose=True, output_path="src/output/",
                  json_filename="vaccini.json", history_filename="storico-vaccini.json",
-                 today_filename="today.json", italy_filename="italy.json"):
+                 today_filename="vaccini-oggi.json", italy_filename="italia.json"):
 
         self.log = log
         self.verbose = verbose
@@ -434,19 +434,17 @@ class Scraper:
 
                 if "variazioni" in d:
                     for variation in d["variazioni"]:
-                        continue
+                        # some data, including old variation, might not be yet available
+                        new_variation = {
+                            "nome_territorio": variation["nome_territorio"],
+                            "codice_territorio": variation.get("codice_territorio", "00"),
+                            "nuovi_vaccinati": variation["nuovi_vaccinati"],
+                            "percentuale_nuovi_vaccinati": variation.get("percentuale_nuovi_vaccinati", 0),
+                            "nuove_dosi_consegnate": variation.get("nuove_dosi_consegnate", 0),
+                            "percentuale_nuove_dosi_consegnate": variation.get("percentuale_nuove_dosi_consegnate", 0)
+                        }
 
-                    # some data, including old variation, might not be yet available
-                    new_variation = {
-                        "nome_territorio": variation["nome_territorio"],
-                        "codice_territorio": variation.get("codice_territorio", "00"),
-                        "nuovi_vaccinati": variation["nuovi_vaccinati"],
-                        "percentuale_nuovi_vaccinati": variation.get("percentuale_nuovi_vaccinati", 0),
-                        "nuove_dosi_consegnate": variation.get("nuove_dosi_consegnate", 0),
-                        "percentuale_nuove_dosi_consegnate": variation.get("percentuale_nuove_dosi_consegnate", 0)
-                    }
-
-                    new_data["variazioni"].append(variation)
+                    new_data["variazioni"].append(new_variation)
 
                 self._new_history.append(new_data)
                 midnight = time_obj.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -512,6 +510,7 @@ class Scraper:
         self._italy = {}
         self._italy.update(next(t for t in self._data[0]["assoluti"] if t["nome_territorio"] == "Italia"))
         self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
+        self._italy["last_updated"] = self._last_updated
 
     def pushToGitHub(self):
         # now push all to to github
@@ -547,14 +546,14 @@ class Scraper:
     @property
     def absolute_territories(self):
         with open(self.output_path + self.today_filename, "r") as f:
-            self._absolute_territories = ujson.load(f)["assoluti"]
+            self._absolute_territories = [t for t in ujson.load(f)["assoluti"] if t["nome_territorio"] != "Italia"]
             return self._absolute_territories
 
     @property
     def variation_territories(self):
         with open(self.output_path + self.today_filename, "r") as f:
-            self._absolute_territories = ujson.load(f)["variazioni"]
-            return self._absolute_territories
+            self._variation_territories = [t for t in ujson.load(f)["variazioni"] if t["nome_territorio"] != "Italia"]
+            return self._variation_territories
 
     @property
     def categories(self):

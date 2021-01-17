@@ -20,7 +20,7 @@ def main():
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
-    scheduler.add_job(push_to_github, trigger="cron", minute="10", hour="0")
+    scheduler.add_job(push_to_github, trigger="cron", minute="55", hour="23")
     s.loadData()
     # run app
     logging.info("App started!")
@@ -37,7 +37,7 @@ def scrape_history():
 
 
 def push_to_github():
-    # THIS HAS TO BE CHANGED WHEN DEPLOYED
+    # remove this before deploying
     return
     s.pushToGitHub()
     logging.info("pushed to GitHub")

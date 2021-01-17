@@ -512,8 +512,7 @@ const load_variations = async (order, reverse, variations) => {
     $("table#variazioni tbody").html("");
 
     variations.forEach((t, i) => {
-      let nuovi_vaccinati;
-      let percentuale_nuovi_vaccinati;
+      let nuovi_vaccinati, percentuale_nuovi_vaccinati;
       let sign, td_class;
 
       if (t.nuovi_vaccinati === undefined) {
@@ -526,7 +525,6 @@ const load_variations = async (order, reverse, variations) => {
 
       sign = nuovi_vaccinati >= 0 ? "+" : "";
       td_class = nuovi_vaccinati >= 0 ? "" : "warning";
-
       let new_tr = `<tr id="${t.codice_territorio}" class="territorio">`;
       new_tr += `<td><span class="mobile">${t.nome_territorio_corto}</span><span class="pc">${t.nome_territorio}</span></td>`;
       new_tr += `<td class="${td_class}">${sign}${nuovi_vaccinati}</td>`;
