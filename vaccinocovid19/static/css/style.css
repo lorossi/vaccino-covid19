@@ -76,7 +76,7 @@ body {
   font-size: var(--big-text-size);
 }
 
-.italia, {
+.italia {
   max-width: 70vw;
   margin-top: var(--title-size);
   margin-bottom: var(--title-size);
