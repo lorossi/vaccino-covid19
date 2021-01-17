@@ -11,9 +11,11 @@ import ujson
 from scraper import Scraper
 import requests
 from datetime import datetime
+from pathlib import Path
 
 
 def download(output_path="src/output/", output_filename="vaccini.json", url="https://raw.githubusercontent.com/lorossi/vaccino-covid19/master/python_scripts/output/vaccini.json"):
+    Path(output_path).mkdir(parents=True, exist_ok=True)
     r = requests.get(url, allow_redirects=True)
     with open(output_path + output_filename, "w") as f:
         f.write(r.text)
