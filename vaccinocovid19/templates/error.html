@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+  <div class="errorcontainer">
+    <div id="errorcode">
+      {{ errorcode }}
+    </div>
+    <div id="errordescription">
+      {{ errordescription }}
+    </div>
+    <div id="goback">
+      <a href="{{ url_for('index') }}">riportami alla home</a>
+    </div>
+  </div>
+{% endblock %}
