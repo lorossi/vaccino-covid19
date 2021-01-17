@@ -37,8 +37,6 @@ def scrape_history():
 
 
 def push_to_github():
-    # remove this before deploying
-    return
     s.pushToGitHub()
     logging.info("pushed to GitHub")
 

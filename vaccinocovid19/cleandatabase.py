@@ -131,7 +131,6 @@ def clean():
 
 if __name__ == "__main__":
     download()
-    s = Scraper()
 
     try:
         clean()
@@ -139,6 +138,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"database already clean. Error {e}")
 
+    s = Scraper()
     s.scrapeData()
     s.scrapeHistory()
     s.saveData()
