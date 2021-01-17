@@ -356,7 +356,7 @@ let vaccini = {
       "percentuale_nuovi_vaccinati": 1.5314076111875286
     }
   ],
-  "script_timestamp": "2021-01-17T14:30:14.717945",
-  "last_updated": "2021-01-17 ore 14:30",
-  "last_data_update": "2021-01-17T12:44:58.605Z"
+  "script_timestamp": "2021-01-17T15:00:14.261549",
+  "last_updated": "2021-01-17 ore 15:00",
+  "last_data_update": "2021-01-17T13:45:00.471Z"
 };
