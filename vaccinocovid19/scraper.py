@@ -454,15 +454,36 @@ class Scraper:
             self._history = []
 
     def scrapeTerritoriesColor(self):
-        colors = ["rossa", "arancione", "gialla"]
+        colors = [
+            {
+                "color_name": "rossa",
+                "color_code": 0
+            },
+            {
+                "color_name": "arancione",
+                "color_code": 1
+            },
+            {
+                "color_name": "gialla",
+                "color_code": 2
+            },
+            {
+                "color_name": "bianca",
+                "color_code": 3
+            }
+        ]
+
         to_remove = [":", ";", "."]
-        self._territory_colors = {"territori": {}}
+        self._territory_colors = {"territori": []}
         html = requests.get(self.colors_url).text
         soup = BeautifulSoup(html, 'html.parser')
 
         for c in colors:
             # get regions list
-            regions_text = soup.body.find(text=f"area {c}").next
+            div = soup.body.find(text=f"area {c['color_name']}")
+            if not div:
+                continue
+            regions_text = div.next
             # start editing names
             for r in to_remove:
                 regions_text = regions_text.replace(r, "")
@@ -476,16 +497,15 @@ class Scraper:
             regions_list = regions_text.strip().split(", ")
             regions_list.sort()
 
-            # initialize dict
-            self._territory_colors["territori"][c.title()] = []
-
             for r in regions_list:
                 territory_code = self.findTerritoryCode(r)
                 new_dict = {
                     "nome_territorio": r,
-                    "codice_territorio": territory_code
+                    "codice_territorio": int(territory_code),
+                    "colore": c["color_name"],
+                    "codice_colore": c["color_code"]
                 }
-                self._territory_colors["territori"][c.title()].append(new_dict)
+                self._territory_colors["territori"].append(new_dict)
 
         self._territory_colors["script_timestamp"] = datetime.now().isoformat()
 
