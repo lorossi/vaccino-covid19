@@ -36,9 +36,11 @@ def scrape_history():
     s.scrapeHistory()
     s.saveData()
 
+
 def scrape_colors():
     s.scrapeTerritoriesColor()
     s.saveData()
+
 
 def push_to_github():
     s.pushToGitHub()
@@ -60,6 +62,11 @@ def index():
     return render_template("index.html", last_updated=s.last_updated,
                            territories_list=s.territories_list, italy=s.italy,
                            territory_colors=s.territory_colors)
+
+
+@app.route("/get/italia", methods=["GET"])
+def get_italia():
+    return jsonify(s.italy)
 
 
 @app.route("/get/territori", methods=["GET"])

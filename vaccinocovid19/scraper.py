@@ -456,7 +456,7 @@ class Scraper:
     def scrapeTerritoriesColor(self):
         colors = ["rossa", "arancione", "gialla"]
         to_remove = [":", ";", "."]
-        self._territory_colors = {}
+        self._territory_colors = {"territori": {}}
         html = requests.get(self.colors_url).text
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -477,7 +477,7 @@ class Scraper:
             regions_list.sort()
 
             # initialize dict
-            self._territory_colors[c.title()] = []
+            self._territory_colors["territori"][c.title()] = []
 
             for r in regions_list:
                 territory_code = self.findTerritoryCode(r)
@@ -485,7 +485,7 @@ class Scraper:
                     "nome_territorio": r,
                     "codice_territorio": territory_code
                 }
-                self._territory_colors[c.title()].append(new_dict)
+                self._territory_colors["territori"][c.title()].append(new_dict)
 
         self._territory_colors["script_timestamp"] = datetime.now().isoformat()
 

@@ -26,6 +26,10 @@ body {
   color: #ff1744;
 }
 
+.label {
+  font-size: var(--big-text-size);
+}
+
 .content {
   width: 90vw;
   margin-left: auto;
@@ -72,7 +76,11 @@ body {
   font-size: var(--big-text-size);
 }
 
-.italia {
+.italia, {
+  max-width: 70vw;
+  margin-top: var(--title-size);
+  margin-bottom: var(--title-size);
+
   font-size: var(--big-text-size);
   margin-top: calc(var(--title-size) / 2);
   margin-bottom: calc(var(--title-size) / 2);
@@ -91,9 +99,9 @@ body {
 .italia .stats {
   width: 40%;
   min-height: 15vh;
-  padding: calc(var(--big-text-size) / 2);
-  margin-top: calc(var(--text-size) * 1);
-  margin-bottom: calc(var(--text-size) * 1);
+  padding: var(--big-text-size);
+  margin-top: var(--text-size);
+  margin-bottom: var(--text-size);
 
   display: flex;
   flex-direction: column;
@@ -242,12 +250,6 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     margin-top: calc(0.5 *  var(--title-size));
   }
 
-  .italia {
-    max-width: 70vw;
-    margin-top: var(--title-size);
-    margin-bottom: var(--title-size);
-  }
-
   .alltimechartcontainer {
     width: 75vw;
     max-width: 1150px;
@@ -265,7 +267,6 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     width: 28%;
     flex-grow: 0;
   }
-
   .datacontainer {
     justify-content: space-between;
     align-content: flex-start;
