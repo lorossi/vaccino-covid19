@@ -19,8 +19,9 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(push_to_github, trigger="cron", minute="55", hour="23")
+    scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
+    scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     s.loadData()
     # run app
     logging.info("App started!")
@@ -35,6 +36,9 @@ def scrape_history():
     s.scrapeHistory()
     s.saveData()
 
+def scrape_colors():
+    s.scrapeTerritoriesColor()
+    s.saveData()
 
 def push_to_github():
     s.pushToGitHub()
@@ -54,7 +58,8 @@ def error_500(e):
 @app.route("/homepage")
 def index():
     return render_template("index.html", last_updated=s.last_updated,
-                           territories_list=s.territories_list, italy=s.italy)
+                           territories_list=s.territories_list, italy=s.italy,
+                           territory_colors=s.territory_colors)
 
 
 @app.route("/get/territori", methods=["GET"])
@@ -85,6 +90,11 @@ def get_fasce_eta():
 @app.route("/get/storico_vaccini", methods=["GET"])
 def get_storico_vaccini():
     return jsonify(s.history)
+
+
+@app.route("/get/colore_territori", methods=["GET"])
+def get_colore_territori():
+    return jsonify(s.territory_colors)
 
 
 # error 404 page

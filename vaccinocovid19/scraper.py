@@ -6,22 +6,16 @@ import ujson
 import logging
 import requests
 import subprocess
+from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
 
 
 class Scraper:
-    def __init__(self, log=True, verbose=True, output_path="src/output/",
-                 json_filename="vaccini.json", history_filename="storico-vaccini.json",
-                 today_filename="vaccini-oggi.json", italy_filename="italia.json"):
+    def __init__(self, log=True, verbose=True):
 
         self.log = log
         self.verbose = verbose
-        self.json_filename = json_filename
-        self.output_path = output_path
-        self.history_filename = history_filename
-        self.today_filename = today_filename
-        self.italy_filename = italy_filename
         self._data = []
         self._new_data = []
         self._history = []
@@ -29,7 +23,9 @@ class Scraper:
         self._italy = {}
         self._territories = []
         self._today = []
+        self._territory_colors = {}
         self._last_updated = None
+        self._territories_codes = None
 
         if self.log:
             logfile = "logging.log"
@@ -41,6 +37,20 @@ class Scraper:
                 (f"Logging in {logfile}")
             else:
                 ("No logging in file.")
+
+        self.loadSettings()
+
+    def loadSettings(self):
+        with open("src/settings/settings.json") as f:
+            settings = ujson.loads(f.read())
+
+        self.json_filename = settings["json_filename"]
+        self.output_path = settings["output_path"]
+        self.history_filename = settings["history_filename"]
+        self.today_filename = settings["today_filename"]
+        self.italy_filename = settings["italy_filename"]
+        self.colors_filename = settings["colors_filename"]
+        self.colors_url = settings["colors_url"]
 
     def scrapeData(self):
         # initialize dictionaries
@@ -76,10 +86,6 @@ class Scraper:
         # load payload and url
         with open("src/settings/payloads.json", "r") as f:
             payload = ujson.load(f)
-
-        # load territories ISTAT code
-        with open("src/settings/codici_regione.json", "r") as f:
-            territories_codes = ujson.load(f)
 
         # load territories population
         with open("src/settings/popolazione_regione.json", "r") as f:
@@ -128,20 +134,11 @@ class Scraper:
         for territory in territories:
             # format territory name to later match the code
             territory_name = territory["C"][0]
-            territory_name = territory_name.replace("P.A.", "").replace("-", " ")
-            territory_name = territory_name.strip().upper()
-            territory_code = None
-
-            # look for ISTAT territory code
-            for code in territories_codes:
-                if territories_codes[code] == territory_name:
-                    territory_code = code
-                    break
+            territory_code = self.findTerritoryCode(territory_name)
 
             # preloading
             # data for percentage of vaccinated people is wrong.
             # oh well, who could have guessed?
-            territory_name = territory["C"][0]
             total_vaccinated = territory["C"][1]
             total_population = territories_population[territory_code]
             percent_vaccinated = total_vaccinated / total_population * 100
@@ -456,6 +453,42 @@ class Scraper:
         else:
             self._history = []
 
+    def scrapeTerritoriesColor(self):
+        colors = ["rossa", "arancione", "gialla"]
+        to_remove = [":", ";", "."]
+        self._territory_colors = {}
+        html = requests.get(self.colors_url).text
+        soup = BeautifulSoup(html, 'html.parser')
+
+        for c in colors:
+            # get regions list
+            regions_text = soup.body.find(text=f"area {c}").next
+            # start editing names
+            for r in to_remove:
+                regions_text = regions_text.replace(r, "")
+            regions_text = regions_text.replace(u'\xa0', " ")  # spazio
+            regions_text = regions_text.replace('\u2019', "'")  # apostrofo
+            # dumb changes
+            regions_text = regions_text.replace("Emilia Romagna", "Emilia-Romagna")
+            regions_text = regions_text.replace("Friuli Venezia Giulia", "Friuli-Venezia Giulia")
+            # non fanno differenza tra maiuscola e minuscola
+            regions_text = regions_text.lower().replace("provincia autonoma di", "P.A.").title()
+            regions_list = regions_text.strip().split(", ")
+            regions_list.sort()
+
+            # initialize dict
+            self._territory_colors[c.title()] = []
+
+            for r in regions_list:
+                territory_code = self.findTerritoryCode(r)
+                new_dict = {
+                    "nome_territorio": r,
+                    "codice_territorio": territory_code
+                }
+                self._territory_colors[c.title()].append(new_dict)
+
+        self._territory_colors["script_timestamp"] = datetime.now().isoformat()
+
     def saveData(self):
         # create output folders
         logging.info("Creating folders")
@@ -482,6 +515,13 @@ class Scraper:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
+
+        if self._territory_colors:
+            with open(self.output_path + self.colors_filename, "w") as f:
+                # convert dict to json (will be read by js)
+                f.write(ujson.dumps(self._territory_colors, indent=2, sort_keys=True))
+            logging.info(f"JSON history file saved. Path: {self.colors_filename}")
+
     def loadData(self):
         try:
             with open(self.output_path + self.json_filename, "r") as f:
@@ -497,20 +537,46 @@ class Scraper:
             logging.error(f"Cannot read history file. error {e}")
             self._new_history = []
 
+        try:
+            with open(self.output_path + self.colors_filename, "r") as f:
+                self._new_territory_colors = ujson.load(f)
+        except Exception as e:
+            logging.error(f"Cannot read colors file. error {e}")
+            self._new_territory_colors = []
+
         self._data = copy.deepcopy(self._new_data)
         self._history = copy.deepcopy(self._new_history)
-        self.filterData()
+        self._territory_colors = copy.deepcopy(self._new_territory_colors)
 
+        self.filterData()
 
     def filterData(self):
         self._today = self._data[0]
         self._last_updated = self._data[0]["last_updated"]
+
         self._absolute_territories = [t for t in self._data[0]["assoluti"] if t["nome_territorio"] != "Italia"]
-        self._variation_territories = [v for v in self._data[0]["variazioni"] if v["nome_territorio"] != "Italia"]
+        if "assoluti" in self._data[0]:
+            self._variation_territories = [v for v in self._data[0]["variazioni"] if v["nome_territorio"] != "Italia"]
+
         self._italy = {}
         self._italy.update(next(t for t in self._data[0]["assoluti"] if t["nome_territorio"] == "Italia"))
-        self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
+        if "assoluti" in self._data[0]:
+            self._italy.update(next(v for v in self._data[0]["variazioni"] if v["nome_territorio"] == "Italia"))
+
         self._italy["last_updated"] = self._last_updated
+
+    def findTerritoryCode(self, territory_name):
+        current_name = territory_name.replace("P.A.", "").replace("-", " ")
+        current_name = current_name.strip().upper()
+        # load territories ISTAT code
+        if not self._territories_codes:
+            with open("src/settings/codici_regione.json", "r") as f:
+                self._territories_codes = ujson.load(f)
+
+        for code in self._territories_codes:
+            if self._territories_codes[code] == current_name:
+                return code
+        return None
 
     def pushToGitHub(self):
         # now push all to to github
@@ -579,9 +645,16 @@ class Scraper:
             self._history = ujson.load(f)
             return self._history
 
+    @property
+    def territory_colors(self):
+        with open(self.output_path + self.colors_filename, "r") as f:
+            self._territory_colors = ujson.load(f)
+            return self._territory_colors
+
 
 if __name__ == "__main__":
     s = Scraper()
     s.scrapeData()
     s.scrapeHistory()
+    s.scrapeTerritoriesColor()
     s.saveData()
