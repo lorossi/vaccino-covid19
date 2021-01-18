@@ -24,7 +24,8 @@ Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il 
 
 *Contenuto:*
 
-`[Unit]
+```
+[Unit]
 Description=Gunicorn instance to serve vaccino-covid19
 After=network.target
 
@@ -36,4 +37,5 @@ Environment="PATH=/user/vaccino-covid19/vaccinocovid19/venv/bin"
 ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git --preload
 
 [Install]
-WantedBy=multi-user.target`
+WantedBy=multi-user.target
+```
