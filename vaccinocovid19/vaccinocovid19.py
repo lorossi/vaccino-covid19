@@ -1,6 +1,5 @@
 import os
 import logging
-import subprocess
 from scraper import Scraper
 from gitbackup import Backup
 from flask import Flask, render_template, jsonify
@@ -10,7 +9,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # Objects
 s = Scraper()
 app = Flask(__name__)
-os.environ["GIT_PYTHON_REFRESH"] = "quiet"
+
 
 def main():
     logfile = "logging.log"
