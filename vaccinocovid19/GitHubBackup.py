@@ -13,3 +13,8 @@ class Backup:
         # pull and push
         repo.git.pull()
         repo.git.push()
+
+
+if __name__ == "__main__":
+    b = Backup()
+    b.backup
