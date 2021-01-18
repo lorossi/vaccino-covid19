@@ -34,8 +34,7 @@ User=root
 Group=root
 WorkingDirectory=/root/vaccino-covid19/vaccinocovid19
 Environment="PATH=/root/vaccino-covid19/vaccinocovid19/venv/bin"
-ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git -e GIT_SSH=/usr/bin/ssh -e GIT_SSH_COMMAND="ssh -i ~/.ssh" --preload
-
+ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin --preload
 [Install]
 WantedBy=multi-user.target
 ```
