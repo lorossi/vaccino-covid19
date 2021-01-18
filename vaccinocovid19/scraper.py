@@ -1,11 +1,10 @@
 # Made by Lorenzo Rossi
 # https://www.lorenzoros.si - https://github.com/lorossi
-
 import copy
 import ujson
 import logging
 import requests
-import subprocess
+from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
@@ -277,8 +276,7 @@ class Scraper:
         response = requests.post(payload["url"], headers=headers, data=payload["donne"]).text
         json_response = ujson.loads(response)
 
-        women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0] \
-                             ["PH"][0]["DM0"][0]["M0"]
+        women = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
 
         new_dict = {
             "nome_categoria": "donne",
@@ -302,8 +300,7 @@ class Scraper:
         response = requests.post(payload["url"], headers=headers, data=payload["uomini"]).text
         json_response = ujson.loads(response)
 
-        men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"] \
-                           [0]["DM0"][0]["M0"]
+        men = json_response["results"][0]["result"]["data"]["dsr"]["DS"][0]["PH"][0]["DM0"][0]["M0"]
         new_dict = {
             "nome_categoria": "uomini",
             "totale_vaccinati": men
@@ -535,7 +532,6 @@ class Scraper:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
-
         if self._territory_colors:
             with open(self.output_path + self.colors_filename, "w") as f:
                 # convert dict to json (will be read by js)
@@ -601,7 +597,14 @@ class Scraper:
     def pushToGitHub(self):
         # now push all to to github
         logging.info("Pushing to GitHub")
-
+        # repo folder is parent
+        repo = Repo("..")
+        # add all modified files
+        repo.git.add("-A")
+        repo.index.commit("updated data")
+        # pull and push
+        repo.git.pull()
+        repo.git.push()
         logging.info("Pushed to GitHub")
 
     @property
