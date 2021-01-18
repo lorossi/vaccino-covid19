@@ -22,7 +22,7 @@ class Scraper:
         self._italy = {}
         self._territories = []
         self._today = []
-        self._territory_colors = {}
+        self._territories_color = {}
         self._last_updated = None
         self._territories_codes = None
 
@@ -471,7 +471,7 @@ class Scraper:
         ]
 
         to_remove = [":", ";", "."]
-        self._territory_colors = {"territori": []}
+        self._territories_color = {"territori": []}
         html = requests.get(self.colors_url).text
         soup = BeautifulSoup(html, 'html.parser')
 
@@ -502,9 +502,9 @@ class Scraper:
                     "colore": c["color_name"],
                     "codice_colore": c["color_code"]
                 }
-                self._territory_colors["territori"].append(new_dict)
+                self._territories_color["territori"].append(new_dict)
 
-        self._territory_colors["script_timestamp"] = datetime.now().isoformat()
+        self._territories_color["script_timestamp"] = datetime.now().isoformat()
 
     def saveData(self):
         # create output folders
@@ -532,10 +532,10 @@ class Scraper:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
-        if self._territory_colors:
+        if self._territories_color:
             with open(self.output_path + self.colors_filename, "w") as f:
                 # convert dict to json (will be read by js)
-                f.write(ujson.dumps(self._territory_colors, indent=2, sort_keys=True))
+                f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.colors_filename}")
 
     def loadData(self):
@@ -555,14 +555,14 @@ class Scraper:
 
         try:
             with open(self.output_path + self.colors_filename, "r") as f:
-                self._new_territory_colors = ujson.load(f)
+                self._new_territories_color = ujson.load(f)
         except Exception as e:
             logging.error(f"Cannot read colors file. error {e}")
-            self._new_territory_colors = []
+            self._new_territories_color = []
 
         self._data = copy.deepcopy(self._new_data)
         self._history = copy.deepcopy(self._new_history)
-        self._territory_colors = copy.deepcopy(self._new_territory_colors)
+        self._territories_color = copy.deepcopy(self._new_territories_color)
 
         self.filterData()
 
@@ -669,10 +669,10 @@ class Scraper:
             return self._history
 
     @property
-    def territory_colors(self):
+    def territories_color(self):
         with open(self.output_path + self.colors_filename, "r") as f:
-            self._territory_colors = ujson.load(f)
-            return self._territory_colors
+            self._territories_color = ujson.load(f)
+            return self._territories_color
 
 
 if __name__ == "__main__":

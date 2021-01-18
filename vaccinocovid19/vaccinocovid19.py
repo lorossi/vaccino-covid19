@@ -59,8 +59,7 @@ def error_500(e):
 @app.route("/homepage")
 def index():
     return render_template("index.html", last_updated=s.last_updated,
-                           territories_list=s.territories_list, italy=s.italy,
-                           territory_colors=s.territory_colors)
+                           territories_list=s.territories_list, italy=s.italy)
 
 
 @app.route("/get/italia", methods=["GET"])
@@ -100,7 +99,7 @@ def get_storico_vaccini():
 
 @app.route("/get/colore_territori", methods=["GET"])
 def get_colore_territori():
-    return jsonify(s.territory_colors)
+    return jsonify(s.territories_color)
 
 
 # error 404 page
