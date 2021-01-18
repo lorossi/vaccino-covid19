@@ -1,4 +1,3 @@
-import os
 import logging
 from scraper import Scraper
 from gitbackup import Backup
@@ -20,8 +19,8 @@ def main():
     # scheduler setup
     scheduler = BackgroundScheduler()
     scheduler.start()
-    scheduler.add_job(scrape_data, trigger="cron", minute="*/1")
-    scheduler.add_job(push_to_github, trigger="cron", minute="1/1")
+    scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
+    scheduler.add_job(push_to_github, trigger="cron", minute="50", hour="23")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     s.loadData()
@@ -45,8 +44,7 @@ def scrape_colors():
 
 
 def push_to_github():
-    b = Backup()
-    b.backup()
+    s.backup()
 
 
 # error 500 page

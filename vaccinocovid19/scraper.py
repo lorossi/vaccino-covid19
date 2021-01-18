@@ -4,6 +4,7 @@ import copy
 import ujson
 import logging
 import requests
+from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
@@ -592,6 +593,22 @@ class Scraper:
             if self._territories_codes[code] == current_name:
                 return code
         return None
+
+    def backup(self):
+        logging.info("Started backup process")
+        # now push all to to github
+        # repo folder is parent
+        repo = Repo(".", search_parent_directories=True)
+        repo.git.pull()
+        logging.info("Repo pulled")
+        # add all modified files
+        repo.git.add("-A")
+        logging.info("Added files")
+        repo.index.commit("updated data")
+        logging.info("Commit created")
+        # push
+        repo.git.push()
+        logging.info("Repo pushed")
 
     @property
     def last_updated(self):
