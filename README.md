@@ -34,7 +34,7 @@ User=root
 Group=root
 WorkingDirectory=/user/vaccino-covid19/vaccinocovid19
 Environment="PATH=/user/vaccino-covid19/vaccinocovid19/venv/bin"
-ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git --preload
+ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git -e GIT_SSH=/usr/bin/ssh --preload
 
 [Install]
 WantedBy=multi-user.target
