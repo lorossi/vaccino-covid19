@@ -1,13 +1,14 @@
-from apscheduler.schedulers.background import BackgroundScheduler
-from flask import Flask, render_template, jsonify
+import os
 import logging
 from scraper import Scraper
+from flask import Flask, render_template, jsonify
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 # Objects
 s = Scraper()
 app = Flask(__name__)
-
+os.environ["GIT_PYTHON_REFRESH"] = "quiet"
 
 def main():
     logfile = "logging.log"
@@ -19,7 +20,7 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(push_to_github, trigger="cron", minute="35", hour="13")
+    scheduler.add_job(push_to_github, trigger="cron", minute="40", hour="13")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     s.loadData()
