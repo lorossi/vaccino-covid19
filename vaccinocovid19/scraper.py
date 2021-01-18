@@ -678,4 +678,4 @@ if __name__ == "__main__":
     s.scrapeHistory()
     s.scrapeTerritoriesColor()
     s.saveData()
-    s.pushToGitHub()
+    # s.pushToGitHub()
