@@ -678,8 +678,8 @@ class Scraper:
 
 if __name__ == "__main__":
     s = Scraper()
-    """s.scrapeData()
+    s.scrapeData()
     s.scrapeHistory()
     s.scrapeTerritoriesColor()
-    s.saveData()"""
-    s.pushToGitHub()
+    s.saveData()
+    # s.pushToGitHub()
