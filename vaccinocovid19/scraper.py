@@ -4,7 +4,7 @@ import copy
 import ujson
 import logging
 import requests
-#from git import Repo
+from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
@@ -598,7 +598,7 @@ class Scraper:
         # now push all to to github
         logging.info("Pushing to GitHub")
         # repo folder is parent
-        """repo = Repo("..")
+        """repo = Repo(".", search_parent_directories=True)
         # add all modified files
         repo.git.add("-A")
         repo.index.commit("updated data")
