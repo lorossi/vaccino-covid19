@@ -24,7 +24,8 @@ class Backup:
         repo.git.push()
         logging.info("Repo pulled")
         repo.git.pull()
-
+        repo.git.push()
+        
 
 if __name__ == "__main__":
     b = Backup()
