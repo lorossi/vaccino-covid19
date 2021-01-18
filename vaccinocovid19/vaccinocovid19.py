@@ -44,7 +44,6 @@ def scrape_colors():
 
 def push_to_github():
     s.pushToGitHub()
-    logging.info("pushed to GitHub")
 
 
 # error 500 page
