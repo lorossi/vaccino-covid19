@@ -38,3 +38,11 @@ ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e PATH=/usr/local
 [Install]
 WantedBy=multi-user.target
 ```
+
+*Avvio, pausa e riavvio:*
+```
+sudo systemctl start vaccino-covid19
+sudo systemctl enable vaccino-covid19
+sudo systemctl stop vaccino-covid19
+sudo systemctl restart vaccino-covid19
+```
