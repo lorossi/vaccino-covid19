@@ -601,10 +601,10 @@ class Scraper:
     def pushToGitHub(self):
         # now push all to to github
         logging.info("Pushing to GitHub")
-        subprocess.run(["git", "pull"], check=True)
-        subprocess.run(["git", "add", "-A"], check=True)
-        subprocess.run(["git", "commit", "-m", '"updated data"'], check=True)
-        subprocess.run(["git", "push"], check=True)
+        subprocess.run(["git", "pull"], check=True, shell=True)
+        subprocess.run(["git", "add", "-A"], check=True, shell=True)
+        subprocess.run(["git", "commit", "-m", '"updated data"'], check=True, shell=True)
+        subprocess.run(["git", "push"], check=True, shell=True)
         logging.info("Pushed to GitHub")
 
     @property
