@@ -4,7 +4,7 @@ import copy
 import ujson
 import logging
 import requests
-#from git import Repo
+from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
