@@ -16,3 +16,24 @@ Infine, i dati vengono spesso aggiornati ben oltre la **mezzanotte**. Per quanto
 
 ## Dettagli tecnici
 Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling,
+
+### Service setup file
+*Posizione:*
+
+`/etc/systemd/system/vaccino-covid19.service`
+
+*Contenuto:*
+
+`[Unit]
+Description=Gunicorn instance to serve vaccino-covid19
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/user/vaccino-covid19/vaccinocovid19
+Environment="PATH=/user/vaccino-covid19/vaccinocovid19/venv/bin"
+ExecStart=gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app -e GIT_PYTHON_GIT_EXECUTABLE=/usr/bin/git --preload
+
+[Install]
+WantedBy=multi-user.target`
