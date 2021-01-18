@@ -1,0 +1,131 @@
+{
+  "script_timestamp": "2021-01-18T00:10:00.318201",
+  "territori": [
+    {
+      "codice_colore": 0,
+      "codice_territorio": 10,
+      "colore": "rossa",
+      "nome_territorio": "Lombardia"
+    },
+    {
+      "codice_colore": 0,
+      "codice_territorio": 3,
+      "colore": "rossa",
+      "nome_territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 0,
+      "codice_territorio": 16,
+      "colore": "rossa",
+      "nome_territorio": "Sicilia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 1,
+      "colore": "arancione",
+      "nome_territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 4,
+      "colore": "arancione",
+      "nome_territorio": "Calabria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 6,
+      "colore": "arancione",
+      "nome_territorio": "Emilia-Romagna"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 7,
+      "colore": "arancione",
+      "nome_territorio": "Friuli-Venezia Giulia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 8,
+      "colore": "arancione",
+      "nome_territorio": "Lazio"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 9,
+      "colore": "arancione",
+      "nome_territorio": "Liguria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 11,
+      "colore": "arancione",
+      "nome_territorio": "Marche"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 13,
+      "colore": "arancione",
+      "nome_territorio": "Piemonte"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 14,
+      "colore": "arancione",
+      "nome_territorio": "Puglia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 19,
+      "colore": "arancione",
+      "nome_territorio": "Umbria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 20,
+      "colore": "arancione",
+      "nome_territorio": "Valle D'Aosta"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": 21,
+      "colore": "arancione",
+      "nome_territorio": "Veneto"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 2,
+      "colore": "gialla",
+      "nome_territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 5,
+      "colore": "gialla",
+      "nome_territorio": "Campania"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 12,
+      "colore": "gialla",
+      "nome_territorio": "Molise"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 18,
+      "colore": "gialla",
+      "nome_territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 15,
+      "colore": "gialla",
+      "nome_territorio": "Sardegna"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": 17,
+      "colore": "gialla",
+      "nome_territorio": "Toscana"
+    }
+  ]
+}
