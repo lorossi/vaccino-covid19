@@ -19,7 +19,7 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(push_to_github, trigger="cron", minute="55", hour="23")
+    scheduler.add_job(push_to_github, trigger="cron", minute="25", hour="9")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     s.loadData()
