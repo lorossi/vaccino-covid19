@@ -14,18 +14,17 @@ class Backup:
         # now push all to to github
         # repo folder is parent
         repo = Repo(".", search_parent_directories=True)
+        repo.git.pull()
+        logging.info("Repo pulled")
         # add all modified files
         repo.git.add("-A")
         logging.info("Added files")
         repo.index.commit("updated data")
         logging.info("Commit created")
-        # pull and push
+        # push
+        repo.git.push()
         logging.info("Repo pushed")
-        repo.git.push()
-        logging.info("Repo pulled")
-        repo.git.pull()
-        repo.git.push()
-        
+
 
 if __name__ == "__main__":
     b = Backup()
