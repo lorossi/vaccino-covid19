@@ -5,8 +5,6 @@ import copy
 import ujson
 import logging
 import requests
-import subprocess
-from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
@@ -602,13 +600,7 @@ class Scraper:
     def pushToGitHub(self):
         # now push all to to github
         logging.info("Pushing to GitHub")
-        # .git folder is in parent folder
-        repo = Repo("..")
-        origin = repo.remotes.origin
-        origin.pull()
-        repo.git.add(update=True)
-        repo.git.commit("-m", "data updated")
-        origin.push()
+
         logging.info("Pushed to GitHub")
 
     @property
