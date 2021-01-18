@@ -1,13 +1,6 @@
 import logging
 
 class Backup:
-    def __init__(self):
-        logfile = "backup.log"
-        logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
-                            level=logging.INFO, filename=logfile,
-                            filemode="a")
-        return
-
     def backup(self):
         from git import Repo
         logging.info("Started backup process")
@@ -27,6 +20,10 @@ class Backup:
 
 
 if __name__ == "__main__":
+    logfile = "backup.log"
+    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
+                        level=logging.INFO, filename=logfile,
+                        filemode="a")
     b = Backup()
     logging.info("Item created")
     b.backup()
