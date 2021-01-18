@@ -1,6 +1,5 @@
 import logging
 from scraper import Scraper
-from gitbackup import Backup
 from flask import Flask, render_template, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 
