@@ -4,7 +4,6 @@ import copy
 import ujson
 import logging
 import requests
-from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
 from datetime import datetime
@@ -594,19 +593,6 @@ class Scraper:
                 return code
         return None
 
-    def pushToGitHub(self):
-        # now push all to to github
-        logging.info("Pushing to GitHub")
-        # repo folder is parent
-        """repo = Repo(".", search_parent_directories=True)
-        # add all modified files
-        repo.git.add("-A")
-        repo.index.commit("updated data")
-        # pull and push
-        repo.git.pull()
-        repo.git.push()"""
-        logging.info("Pushed to GitHub")
-
     @property
     def last_updated(self):
         with open(self.output_path + self.today_filename, "r") as f:
@@ -678,4 +664,3 @@ if __name__ == "__main__":
     s.scrapeHistory()
     s.scrapeTerritoriesColor()
     s.saveData()
-    # s.pushToGitHub()

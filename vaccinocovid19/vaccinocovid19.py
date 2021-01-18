@@ -1,6 +1,7 @@
 import os
 import logging
 from scraper import Scraper
+from GitHubBackup import Backup
 from flask import Flask, render_template, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -20,7 +21,7 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(push_to_github, trigger="cron", minute="40", hour="13")
+    scheduler.add_job(push_to_github, trigger="cron", minute="10", hour="14")
     scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     s.loadData()
@@ -44,7 +45,8 @@ def scrape_colors():
 
 
 def push_to_github():
-    s.pushToGitHub()
+    b = Backup()
+    b.backup()
 
 
 # error 500 page
