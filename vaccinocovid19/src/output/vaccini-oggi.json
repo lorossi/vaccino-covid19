@@ -280,8 +280,8 @@
       "totale_vaccinati": 33684
     }
   ],
-  "last_data_update": "2021-01-18T12:45:00.779Z",
-  "last_updated": "2021-01-18 ore 14:30",
+  "last_data_update": "2021-01-18T13:45:01.109Z",
+  "last_updated": "2021-01-18 ore 14:45",
   "lista_territori": [
     "Italia",
     "Abruzzo",
@@ -306,7 +306,7 @@
     "Valle d'Aosta",
     "Veneto"
   ],
-  "script_timestamp": "2021-01-18T14:30:00.014142",
+  "script_timestamp": "2021-01-18T14:45:00.016103",
   "sesso": [
     {
       "nome_categoria": "donne",
