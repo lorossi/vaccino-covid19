@@ -601,7 +601,7 @@ class Scraper:
         # repo folder is parent
         subprocess.run(["git", "pull"], check=True)
         logging.info("Repo pulled")
-        subprocess.run(["git", "commit", "-am", "updated data"], check=True)
+        subprocess.run(["git", "commit", "-am", '"updated data"'], check=True)
         logging.info("Commit created")
         subprocess.run(["git", "push"], check=True)
         logging.info("Repo pushed")
