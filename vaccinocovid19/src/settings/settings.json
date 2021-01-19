@@ -1,9 +1,7 @@
 {
   "output_path": "src/output/",
-  "json_filename": "vaccini.json",
   "history_filename": "storico-vaccini.json",
   "today_filename": "vaccini-oggi.json",
   "italy_filename": "italia.json",
-  "colors_filename": "colori.json",
-  "colors_url": "http://www.governo.it/it/articolo/domande-frequenti-sulle-misure-adottate-dal-governo/15638"
+  "colors_filename": "colori.json"
 }

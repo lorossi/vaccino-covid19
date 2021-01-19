@@ -1,0 +1,156 @@
+[
+  {
+    "nome": "Italia",
+    "codice": "00",
+    "area": "ITA",
+    "nome_corto": "Italia",
+    "popolazione": 59641488
+  },
+  {
+    "nome": "Abruzzo",
+    "codice": "01",
+    "area": "ABR",
+    "nome_corto": "Abruzzo",
+    "popolazione": 1293941
+  },
+  {
+    "nome": "Basilicata",
+    "codice": "02",
+    "area": "BAS",
+    "nome_corto": "Basilicata",
+    "popolazione": 553254
+  },
+  {
+    "nome": "Provincia autonoma di Bolzano",
+    "codice": "03",
+    "area": "PAB",
+    "nome_corto": "P.A. Bolzano",
+    "popolazione": 532250
+  },
+  {
+    "nome": "Calabria",
+    "codice": "04",
+    "area": "CAL",
+    "nome_corto": "Calabria",
+    "popolazione": 1894110
+  },
+  {
+    "nome": "Campania",
+    "codice": "05",
+    "area": "CAM",
+    "nome_corto": "Campania",
+    "popolazione": 5712143
+  },
+  {
+    "nome": "Emilia Romagna",
+    "codice": "06",
+    "area": "EMR",
+    "nome_corto": "E.R.",
+    "popolazione": 4464119
+  },
+  {
+    "nome": "Friuli Venezia Giulia",
+    "codice": "07",
+    "area": "FVG",
+    "nome_corto": "F.V.G.",
+    "popolazione": 1206216
+  },
+  {
+    "nome": "Lazio",
+    "codice": "08",
+    "area": "LAZ",
+    "nome_corto": "Lazio",
+    "popolazione": 5755700
+  },
+  {
+    "nome": "Liguria",
+    "codice": "09",
+    "area": "LIG",
+    "nome_corto": "Liguria",
+    "popolazione": 1524826
+  },
+  {
+    "nome": "Lombardia",
+    "codice": "10",
+    "area": "LOM",
+    "nome_corto": "Lombardia",
+    "popolazione": 10027602
+  },
+  {
+    "nome": "Marche",
+    "codice": "11",
+    "area": "MAR",
+    "nome_corto": "Marche",
+    "popolazione": 1512672
+  },
+  {
+    "nome": "Molise",
+    "codice": "12",
+    "area": "MOL",
+    "nome_corto": "Molise",
+    "popolazione": 300516
+  },
+  {
+    "nome": "Piemonte",
+    "codice": "13",
+    "area": "PIE",
+    "nome_corto": "Piemonte",
+    "popolazione": 4311217
+  },
+  {
+    "nome": "Puglia",
+    "codice": "14",
+    "area": "PUG",
+    "nome_corto": "Puglia",
+    "popolazione": 3953305
+  },
+  {
+    "nome": "Sardegna",
+    "codice": "15",
+    "area": "SAR",
+    "nome_corto": "Sardegna",
+    "popolazione": 1611621
+  },
+  {
+    "nome": "Sicilia",
+    "codice": "16",
+    "area": "SIC",
+    "nome_corto": "Sicilia",
+    "popolazione": 4875290
+  },
+  {
+    "nome": "Toscana",
+    "codice": "17",
+    "area": "TOS",
+    "nome_corto": "TOS",
+    "popolazione": 3692555
+  },
+  {
+    "nome": "Provincia autonoma di Trento",
+    "codice": "18",
+    "area": "PAT",
+    "nome_corto": "P.A. Trento",
+    "popolazione": 542214
+  },
+  {
+    "nome": "Umbria",
+    "codice": "19",
+    "area": "UMB",
+    "nome_corto": "Umbria",
+    "popolazione": 870165
+  },
+  {
+    "nome": "Val d'Aosta",
+    "codice": "20",
+    "area": "VDA",
+    "nome_corto": "V. d'Aosta",
+    "popolazione": 125034
+  },
+  {
+    "nome": "Veneto",
+    "codice": "21",
+    "area": "VEN",
+    "nome_corto": "Veneto",
+    "popolazione": 4879133
+  }
+]
