@@ -600,9 +600,7 @@ class Scraper:
         # repo folder is parent
         repo = Repo(".", search_parent_directories=True)
         # add all modified files
-        repo.git.add("-A")
-        logging.info("Added files")
-        repo.index.commit("updated data")
+        repo.index.commit("-am", "updated data")
         logging.info("Commit created")
         # push
         repo.git.push()
