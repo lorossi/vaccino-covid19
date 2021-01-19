@@ -599,8 +599,6 @@ class Scraper:
         # now push all to to github
         # repo folder is parent
         repo = Repo(".", search_parent_directories=True)
-        repo.git.pull()
-        logging.info("Repo pulled")
         # add all modified files
         repo.git.add("-A")
         logging.info("Added files")
@@ -609,6 +607,8 @@ class Scraper:
         # push
         repo.git.push()
         logging.info("Repo pushed")
+        repo.git.pull()
+        logging.info("Repo pulled")
 
     @property
     def last_updated(self):
