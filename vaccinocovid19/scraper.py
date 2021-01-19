@@ -4,6 +4,7 @@ import copy
 import ujson
 import logging
 import requests
+import subprocess
 from git import Repo
 from bs4 import BeautifulSoup
 from pathlib import Path
@@ -598,14 +599,11 @@ class Scraper:
         logging.info("Started backup process")
         # now push all to to github
         # repo folder is parent
-        repo = Repo(".", search_parent_directories=True)
-        repo.git.pull()
+        subprocess.run(["git", "pull"], check=True)
         logging.info("Repo pulled")
-        # add all modified files
-        repo.index.commit("-am", "updated data")
+        subprocess.run(["git", "commit", "-am", "updated data"], check=True)
         logging.info("Commit created")
-        # push
-        repo.git.push()
+        subprocess.run(["git", "push"], check=True)
         logging.info("Repo pushed")
 
     @property
