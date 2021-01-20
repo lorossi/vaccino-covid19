@@ -311,7 +311,7 @@ class Scraper:
 
                     new_absolute["totale_vaccinati"] = total.get("prima_dose", 0) + total.get("seconda_dose", 0)
                     new_absolute["percentuale_vaccinati"] = new_absolute["totale_vaccinati"] / territory_data["popolazione"] * 100
-                    new_absolute["percentuale_vaccinati_formattato"] = f'{new_absolute["percentuale_vaccinati"]:.2f}%'
+                    new_absolute["percentuale_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_vaccinati"])}%'
 
                     new_absolute["prime_dosi"] = total.get("prima_dose", 0)
                     new_absolute["seconde_dosi"] = total.get("seconda_dose", 0)
@@ -408,8 +408,8 @@ class Scraper:
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
             new_absolute["totale_vaccinati_formattato"] = f'{territory["dosi_somministrate"]:n}'
-            new_absolute["percentuale_dosi_utilizzate_formattato"] = f'{new_absolute["percentuale_dosi_utilizzate"]:.2f}%'
-            new_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{new_absolute["percentuale_popolazione_vaccinata"]:.2f}%'
+            new_absolute["percentuale_dosi_utilizzate_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_dosi_utilizzate"])}%'
+            new_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_popolazione_vaccinata"])}%'
 
             # update italy
             new_italy_absolute["totale_dosi_consegnate"] = new_italy_absolute.get("totale_dosi_consegnate", 0) + new_absolute["totale_dosi_consegnate"]
@@ -428,7 +428,7 @@ class Scraper:
             new_variation["nuovi_vaccinati"] = new_absolute["totale_vaccinati"] - yesterday_absolute["totale_vaccinati"]
             new_variation["nuovi_vaccinati_formattato"] = f'{new_variation["nuovi_vaccinati"]:n}'
             new_variation["percentuale_nuovi_vaccinati"] = new_variation["nuovi_vaccinati"] / yesterday_absolute["totale_vaccinati"] * 100
-            new_variation["percentuale_nuovi_vaccinati_formattato"] = f'{new_variation["percentuale_nuovi_vaccinati"]:.2f}%'
+            new_variation["percentuale_nuovi_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuovi_vaccinati"])}%'
 
             # should be tied to self._deliveries, not self._history
             # BUT there isn't always data for yesterday deliveries
@@ -441,7 +441,7 @@ class Scraper:
             new_variation["nuove_dosi_consegnate"] = territory_delivery.get("nuove_dosi_consegnate", 0)
             new_variation["nuove_dosi_consegnate_formattato"] = f'{new_variation["nuove_dosi_consegnate"]:n}'
             new_variation["percentuale_nuove_dosi_consegnate"] = new_variation["nuove_dosi_consegnate"] / yesterday_absolute["totale_dosi_consegnate"] * 100
-            new_variation["percentuale_nuove_dosi_consegnate_formattato"] = f'{new_variation["percentuale_nuove_dosi_consegnate"]:.2f}%'
+            new_variation["percentuale_nuove_dosi_consegnate_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuove_dosi_consegnate"])}%'
 
             # update italy
             new_italy_variation["nuovi_vaccinati"] = new_italy_variation.get("nuovi_vaccinati", 0) + new_variation["nuovi_vaccinati"]
@@ -456,8 +456,8 @@ class Scraper:
         new_italy_absolute["totale_vaccinati_formattato"] = f'{new_italy_absolute["totale_vaccinati"]:n}'
         new_italy_absolute["percentuale_dosi_utilizzate"] = new_italy_absolute["totale_vaccinati"] / new_italy_absolute["totale_dosi_consegnate"] * 100
         new_italy_absolute["percentuale_popolazione_vaccinata"] = new_italy_absolute["totale_vaccinati"] / italy_data["popolazione"] * 100
-        new_italy_absolute["percentuale_dosi_utilizzate_formattato"] = f'{new_italy_absolute["percentuale_dosi_utilizzate"]:.2f}%'
-        new_italy_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{new_italy_absolute["percentuale_popolazione_vaccinata"]:.2f}%'
+        new_italy_absolute["percentuale_dosi_utilizzate_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_dosi_utilizzate"])}%'
+        new_italy_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_popolazione_vaccinata"])}%'
         new_italy_variation["nuovi_vaccinati_formattato"] = f'{new_italy_variation["nuovi_vaccinati"]:n}'
         new_italy_variation["nuove_dosi_consegnate_formattato"] =  f'{new_italy_variation["nuove_dosi_consegnate"]:n}'
 
@@ -529,7 +529,7 @@ class Scraper:
             category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
             category["nuovi_vaccinati_formattato"] = f'{category["nuovi_vaccinati"]:n}'
             category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / yesterday_absolute["categoria"][category["nome_categoria_pulito"]] * 100
-            category["nuovi_vaccinati_percentuale_formattato"] = f'{category["nuovi_vaccinati_percentuale"]:.2f}%'
+            category["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", category["nuovi_vaccinati_percentuale"])}%'
             new_data["categorie"].append(category)
 
         for gender in genders:
@@ -537,7 +537,7 @@ class Scraper:
             gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
             gender["nuovi_vaccinati_formattato"] = f'{gender["nuovi_vaccinati"]:n}'
             gender["nuovi_vaccinati_percentuale"] = gender["nuovi_vaccinati"] / yesterday_absolute["sesso"][gender["nome_categoria"]] * 100
-            gender["nuovi_vaccinati_percentuale_formattato"] = f'{gender["nuovi_vaccinati_percentuale"]:.2f}%'
+            gender["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", gender["nuovi_vaccinati_percentuale"])}%'
             new_data["sesso"].append(gender)
 
         for subministration in subministrations:
