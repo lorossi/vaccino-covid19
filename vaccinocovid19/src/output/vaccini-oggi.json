@@ -282,6 +282,8 @@
       "nome_categoria_pulito": "operatori_sanitari_sociosanitari",
       "nuovi_vaccinati": 4012,
       "nuovi_vaccinati_formattato": "4.012",
+      "nuovi_vaccinati_percentuale": 0.5494957020999173,
+      "nuovi_vaccinati_percentuale_formattato": "0.55%",
       "totale_vaccinati": 734136,
       "totale_vaccinati_formattato": "734.136"
     },
@@ -292,6 +294,8 @@
       "nome_categoria_pulito": "personale_non_sanitario",
       "nuovi_vaccinati": 2250,
       "nuovi_vaccinati_formattato": "2.250",
+      "nuovi_vaccinati_percentuale": 0.5678806693420156,
+      "nuovi_vaccinati_percentuale_formattato": "0.57%",
       "totale_vaccinati": 398460,
       "totale_vaccinati_formattato": "398.460"
     },
@@ -302,6 +306,8 @@
       "nome_categoria_pulito": "ospiti_rsa",
       "nuovi_vaccinati": 1183,
       "nuovi_vaccinati_formattato": "1.183",
+      "nuovi_vaccinati_percentuale": 1.2241307947019866,
+      "nuovi_vaccinati_percentuale_formattato": "1.22%",
       "totale_vaccinati": 97823,
       "totale_vaccinati_formattato": "97.823"
     },
@@ -312,6 +318,8 @@
       "nome_categoria_pulito": "over_80",
       "nuovi_vaccinati": 134,
       "nuovi_vaccinati_formattato": "134",
+      "nuovi_vaccinati_percentuale": 1.977859778597786,
+      "nuovi_vaccinati_percentuale_formattato": "1.98%",
       "totale_vaccinati": 6909,
       "totale_vaccinati_formattato": "6.909"
     }
@@ -404,6 +412,8 @@
       "nome_categoria": "uomini",
       "nuovi_vaccinati": 2867,
       "nuovi_vaccinati_formattato": "2.867",
+      "nuovi_vaccinati_percentuale": 0.6277767680992181,
+      "nuovi_vaccinati_percentuale_formattato": "0.63%",
       "totale_vaccinati": 459558,
       "totale_vaccinati_formattato": "459.558"
     },
@@ -411,6 +421,8 @@
       "nome_categoria": "donne",
       "nuovi_vaccinati": 4712,
       "nuovi_vaccinati_formattato": "4.712",
+      "nuovi_vaccinati_percentuale": 0.6095273575850713,
+      "nuovi_vaccinati_percentuale_formattato": "0.61%",
       "totale_vaccinati": 777770,
       "totale_vaccinati_formattato": "777.770"
     }

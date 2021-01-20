@@ -531,12 +531,16 @@ class Scraper:
             category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
             category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
             category["nuovi_vaccinati_formattato"] = f'{category["nuovi_vaccinati"]:n}'
+            category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / yesterday_absolute["categoria"][category["nome_categoria_pulito"]] * 100
+            category["nuovi_vaccinati_percentuale_formattato"] = f'{category["nuovi_vaccinati_percentuale"]:.2f}%'
             new_data["categorie"].append(category)
 
         for gender in genders:
-            gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
             gender["totale_vaccinati_formattato"] = f'{gender["totale_vaccinati"]:n}'
+            gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
             gender["nuovi_vaccinati_formattato"] = f'{gender["nuovi_vaccinati"]:n}'
+            gender["nuovi_vaccinati_percentuale"] = gender["nuovi_vaccinati"] / yesterday_absolute["sesso"][gender["nome_categoria"]] * 100
+            gender["nuovi_vaccinati_percentuale_formattato"] = f'{gender["nuovi_vaccinati_percentuale"]:.2f}%'
             new_data["sesso"].append(gender)
 
         for subministration in subministrations:
