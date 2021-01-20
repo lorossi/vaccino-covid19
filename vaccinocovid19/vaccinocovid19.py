@@ -29,6 +29,7 @@ def scrape_data():
     s.scrapeAll()
     s.saveData()
 
+
 def scrape_colors():
     s.scrapeTerritoriesColor()
     s.saveData()
@@ -77,9 +78,9 @@ def get_storico_vaccini():
     return jsonify(s.history)
 
 
-@app.route("/get/storico_vaccini/<codice_territorio>", methods=["GET"])
-def get_storico_territorio(codice_territorio):
-    return jsonify(s.territoryHistory(codice_territorio))
+@app.route("/get/storico_vaccini/<nome_territorio>", methods=["GET"])
+def get_storico_territorio(nome_territorio):
+    return jsonify(s.territoryHistory(nome_territorio))
 
 
 @app.route("/get/colore_territori", methods=["GET"])

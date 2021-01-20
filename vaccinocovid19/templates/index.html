@@ -60,11 +60,19 @@
                    <label for="storico_totale_vaccini">Mostra totale dosi disponibili</label>
                 </p>
                 <p>
-                   <input type="checkbox" id="storico_nuovi_vaccinati" name="nuovi_vaccinati" value="2" disabled>
+                   <input type="checkbox" id="storico_prime_dosi" name="prime_dosi" value="2" disabled>
+                   <label for="storico_prime_dosi">Mostra prime dosi somministrate</label>
+                </p>
+                <p>
+                   <input type="checkbox" id="storico_seconde_dosi" name="seconde_dosi" value="3" disabled>
+                   <label for="storico_seconde_dosi">Mostra seconde dosi somministrate</label>
+                </p>
+                <p>
+                   <input type="checkbox" id="storico_nuovi_vaccinati" name="nuovi_vaccinati" value="4" disabled>
                    <label for="storico_nuovi_vaccinati">Mostra nuovi vaccinati</label>
                 </p>
                 <p>
-                   <input type="checkbox" id="storico_percentuale_vaccinati" name="percentuale_vaccinati" value="3" disabled>
+                   <input type="checkbox" id="storico_percentuale_vaccinati" name="percentuale_vaccinati" value="5" disabled>
                    <label for="storico_percentuale_vaccinati">Mostra percentuale vaccinati</label>
                 </p>
              </form>
@@ -239,6 +247,34 @@
                 </form>
              </div>
              <canvas id="fasce_eta"></canvas>
+          </div>
+          <table id="produttori_vaccini">
+             <caption class="subtitle">Dettaglio per Produttore</caption>
+             <thead>
+                <tr>
+                   <th class="darr" data-column="0">Produttore</th>
+                   <th class="darr" data-column="1">Dosi consegnate</th>
+                </tr>
+             </thead>
+             <tbody>
+             </tbody>
+          </table>
+          <div class="chartcontainer" id="produttori_vaccini">
+             <canvas id="produttori_vaccini"></canvas>
+          </div>
+          <table id="somministrazioni">
+             <caption class="subtitle">Dettaglio per Somministrazioni</caption>
+             <thead>
+                <tr>
+                   <th class="darr" data-column="0">Dose</th>
+                   <th class="darr" data-column="1">Vaccinati</th>
+                </tr>
+             </thead>
+             <tbody>
+             </tbody>
+          </table>
+          <div class="chartcontainer" id="somministrazioni">
+             <canvas id="somministrazioni"></canvas>
           </div>
        </div>
     </div>

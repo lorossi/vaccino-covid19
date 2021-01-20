@@ -145,7 +145,7 @@ class Scraper:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
-            if territory["nome"] == name:
+            if territory["nome"] == name or territory.get("nome_alternativo", None) == name:
                 return territory["codice"]
 
     def scrapeDeliveries(self):
@@ -177,6 +177,9 @@ class Scraper:
                 if producer["nome_produttore"] == delivery["fornitore"]:
                     producer["totale_dosi_consegnate"] += delivery["numero_dosi"]
                     break
+
+        for producer in new_vaccine_producers["produttori"]:
+            producer["totale_dosi_consegnate_formattato"] = f'{producer["totale_dosi_consegnate"]:n}'
 
         areas_list = sorted(list(set(x["area"] for x in json_response["data"])))
         timestamps_list = sorted(list(set(x["data_consegna"] for x in json_response["data"])))
@@ -306,6 +309,9 @@ class Scraper:
                         total.update(day)
 
                     new_absolute["totale_vaccinati"] = total.get("prima_dose", 0) + total.get("seconda_dose", 0)
+                    new_absolute["percentuale_vaccinati"] = new_absolute["totale_vaccinati"] / territory_data["popolazione"] * 100
+                    new_absolute["percentuale_vaccinati_formattato"] = f'{new_absolute["percentuale_vaccinati"]:.2f}%'
+
                     new_absolute["prime_dosi"] = total.get("prima_dose", 0)
                     new_absolute["seconde_dosi"] = total.get("seconda_dose", 0)
                     new_absolute["sesso"] = {
@@ -358,17 +364,6 @@ class Scraper:
         self._data["timestamp"] = datetime.now().isoformat()
         self._data["timestamp"] = datetime.now().strftime("%Y-%m-%d ore %H:%M")
         self._italy["ultimo_aggiornamento"] = datetime.now().strftime("%Y-%m-%d ore %H:%M")
-
-        # load last updated
-        for p in payloads:
-            if p["name"] == "last_update":
-                response = requests.get(p["url"]).text
-                last_updated = ujson.loads(response)["ultimo_aggiornamento"]
-                if last_updated == self._last_updated:
-                    return
-                else:
-                    self._last_updated = last_updated
-                    break
 
         new_data = {
             "assoluti": [],
@@ -522,6 +517,7 @@ class Scraper:
                     gender["totale_vaccinati"] += age["sesso_femminile"]
 
             for subministration in subministrations:
+                subministration["nome_categoria_formattato"] = subministration["nome_categoria"].replace("_", " ")
                 if subministration["nome_categoria"] == "prima_dose":
                     subministration["totale_vaccinati"] += age["prima_dose"]
                 elif subministration["nome_categoria"] == "seconda_dose":
@@ -587,7 +583,7 @@ class Scraper:
 
         self._territories_color = copy.deepcopy(new_territories_colors)
 
-    def territoryHistory(self, territory_code):
+    def territoryHistory(self, territory_name):
         self.loadData(history=True)
         territory_history = []
 
@@ -599,7 +595,7 @@ class Scraper:
 
             for key in new_dict:
                 for territory in day[key]:
-                    if territory["codice_territorio"] == territory_code:
+                    if territory["nome_territorio"] == territory_name:
                         new_dict[key] = territory
                         break
             new_dict["timestamp"] = day["timestamp"]

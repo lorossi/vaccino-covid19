@@ -21,10 +21,11 @@
     "popolazione": 553254
   },
   {
-    "nome": "Provincia autonoma di Bolzano",
+    "nome": "P.A. Bolzano",
     "codice": "03",
     "area": "PAB",
     "nome_corto": "P.A. Bolzano",
+    "nome_alternativo": "Provincia autonoma di Bolzano",
     "popolazione": 532250
   },
   {
@@ -122,14 +123,15 @@
     "nome": "Toscana",
     "codice": "17",
     "area": "TOS",
-    "nome_corto": "TOS",
+    "nome_corto": "Toscana",
     "popolazione": 3692555
   },
   {
-    "nome": "Provincia autonoma di Trento",
+    "nome": "P.A. di Trento",
     "codice": "18",
     "area": "PAT",
     "nome_corto": "P.A. Trento",
+    "nome_alternativo": "Provincia autonoma di Trento",
     "popolazione": 542214
   },
   {

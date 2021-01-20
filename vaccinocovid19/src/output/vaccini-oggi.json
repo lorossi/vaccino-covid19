@@ -145,7 +145,7 @@
     },
     {
       "codice_territorio": "03",
-      "nome_territorio": "Provincia autonoma di Bolzano",
+      "nome_territorio": "P.A. Bolzano",
       "nome_territorio_corto": "P.A. Bolzano",
       "percentuale_dosi_utilizzate": 93.69898510041028,
       "percentuale_dosi_utilizzate_formattato": "93.70%",
@@ -158,7 +158,7 @@
     },
     {
       "codice_territorio": "18",
-      "nome_territorio": "Provincia autonoma di Trento",
+      "nome_territorio": "P.A. di Trento",
       "nome_territorio_corto": "P.A. Trento",
       "percentuale_dosi_utilizzate": 70.30573248407643,
       "percentuale_dosi_utilizzate_formattato": "70.31%",
@@ -224,7 +224,7 @@
     {
       "codice_territorio": "17",
       "nome_territorio": "Toscana",
-      "nome_territorio_corto": "TOS",
+      "nome_territorio_corto": "Toscana",
       "percentuale_dosi_utilizzate": 79.27656367746798,
       "percentuale_dosi_utilizzate_formattato": "79.28%",
       "percentuale_popolazione_vaccinata": 1.9942830912471177,
@@ -430,11 +430,13 @@
   "somministrazioni": [
     {
       "nome_categoria": "prima_dose",
+      "nome_categoria_formattato": "prima dose",
       "totale_vaccinati": 1229733,
       "totale_vaccinati_formattato": "1.229.733"
     },
     {
       "nome_categoria": "seconda_dose",
+      "nome_categoria_formattato": "seconda dose",
       "totale_vaccinati": 7595,
       "totale_vaccinati_formattato": "7.595"
     }
@@ -585,7 +587,7 @@
     },
     {
       "codice_territorio": "03",
-      "nome_territorio": "Provincia autonoma di Bolzano",
+      "nome_territorio": "P.A. Bolzano",
       "nome_territorio_corto": "P.A. Bolzano",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
@@ -598,7 +600,7 @@
     },
     {
       "codice_territorio": "18",
-      "nome_territorio": "Provincia autonoma di Trento",
+      "nome_territorio": "P.A. di Trento",
       "nome_territorio_corto": "P.A. Trento",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
@@ -664,7 +666,7 @@
     {
       "codice_territorio": "17",
       "nome_territorio": "Toscana",
-      "nome_territorio_corto": "TOS",
+      "nome_territorio_corto": "Toscana",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
       "nuovi_vaccinati": 824,

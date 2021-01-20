@@ -35,8 +35,13 @@ const all_time_get_options = () => {
   });
 
   if (values.includes(0) || values.includes(1)) {
-    $(checkboxes[0]).attr("disabled", false);
-    $(checkboxes[1]).attr("disabled", false);
+    for (let i = 0; i < 2; i++) {
+      $(checkboxes[i]).attr("disabled", false);
+    }
+  } else if (values.includes(2) || values.includes(3)) {
+    for (let i = 0; i < 2; i++) {
+      $(checkboxes[i + 2]).attr("disabled", false);
+    }
   } else if (values.length === 0) {
     $(checkboxes).attr("disabled", false);
   }
@@ -56,23 +61,17 @@ const all_time_get_options = () => {
 
 
 // load chart about Italy
-const load_italy_chart = async (values, territory_name, old_obj) => {
+const load_italy_chart = async (values, territory_name, old_chart) => {
+
   let chart;
   let labels = []; // x axis
   let datasets = [];
   let type;
-  let old_chart;
   let history_data;
 
   try {
-    old_obj = await old_obj;
-
-    if (old_obj) {
-      old_chart = old_obj.chart;
-      history_data = old_obj.data;
-    } else {
-      history_data = await get_data_json("get/storico_vaccini");
-    }
+    old_chart = await old_chart;
+    history_data = await get_data_json(`get/storico_vaccini/${territory_name}`);
 
     // pack the values into array
     if (values === undefined) {
@@ -81,10 +80,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
       // no parameters sent
       // destroy old chart
       old_chart.destroy();
-      return {
-        chart: null,
-        data: history_data
-      };
+      return null;
     }
 
     if (territory_name === undefined) {
@@ -100,7 +96,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
       history_data.forEach((a, i) => {
         label = "Totale vaccinati";
         let y;
-        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].totale_vaccinati;
+        y = a.assoluti.totale_vaccinati;
         data.push({
           x: labels[i],
           y: y
@@ -124,7 +120,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
       history_data.forEach((a, i) => {
         label = "Dosi Disponibili";
         let y;
-        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].totale_dosi_consegnate;
+        y = a.assoluti.totale_dosi_consegnate;
         data.push({
           x: labels[i],
           y: y
@@ -145,10 +141,58 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
     if (values.includes(2)) {
       let data = [];
       let label;
+      history_data.forEach((a, i) => {
+        label = "Prime dosi somministrate";
+        let y;
+        y = a.assoluti.prime_dosi;
+        data.push({
+          x: labels[i],
+          y: y
+        });
+      });
+
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: `rgba(0, 0, 0, 0)`,
+        borderColor: "#4caf50",
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+      });
+
+      type = "line";
+    }
+
+    if (values.includes(3)) {
+      let data = [];
+      let label;
+      history_data.forEach((a, i) => {
+        label = "Seconde dosi somministrate";
+        let y;
+        y = a.assoluti.seconde_dosi;
+        data.push({
+          x: labels[i],
+          y: y
+        });
+      });
+
+      datasets.push({
+        data: data,
+        label: label,
+        backgroundColor: `rgba(0, 0, 0, 0)`,
+        borderColor: "#2196f3",
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+      });
+
+      type = "line";
+    }
+
+    if (values.includes(4)) {
+      let data = [];
+      let label;
       history_data.forEach((v, i) => {
         label = "Vaccinati oggi";
         let y;
-        y = v.variazioni.filter(x => x.nome_territorio === territory_name)[0].nuovi_vaccinati;
+        y = v.variazioni.nuovi_vaccinati;
         data.push({
           x: labels[i],
           y: y
@@ -168,13 +212,13 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
       type = "bar";
     }
 
-    if (values.includes(3)) {
+    if (values.includes(5)) {
       let data = [];
       let label;
       history_data.forEach((a, i) => {
         label = "Percentuale vaccinata";
         let y;
-        y = a.assoluti.filter(x => x.nome_territorio === territory_name)[0].percentuale_popolazione_vaccinata;
+        y = a.assoluti.percentuale_vaccinati;
         data.push({
           x: labels[i],
           y: y
@@ -202,10 +246,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
         datasets: datasets
       };
       await old_chart.update();
-      return {
-        chart: old_chart,
-        data: history_data
-      };
+      return  old_chart;
     } else {
       let ctx = $("canvas#italia")[0].getContext('2d');
       chart = await new Chart(ctx, {
@@ -245,10 +286,7 @@ const load_italy_chart = async (values, territory_name, old_obj) => {
           }
         }
       });
-      return {
-        chart: chart,
-        data: history_data
-      };
+      return chart;
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico storico. Errore ${err.message}`);
@@ -768,7 +806,7 @@ const load_categories_chart = async (order, old_obj) => {
     background_colors = data.map(x => "#1e88e5");
     border_colors = data.map(x => "#005cb2");
     hover_background_colors = data.map(x => "#6ab7ff");
-    labels = categories.map(x => x.nome_categoria.split(" "));
+    labels = categories.map(x => x.nome_categoria_formattato.split(" "));
     label = "Totale vaccinati";
 
     font_size = $(window).width() > 1500 ? 14 : 10;
@@ -875,7 +913,7 @@ const load_genders = async (order, reverse, genders) => {
 
       let new_tr = `<tr id="${t.nome_categoria}" class="sesso">`;
       new_tr += `<td>${t.nome_categoria}</td>`;
-      new_tr += `<td>${t.totale_vaccinati}</td>`;
+      new_tr += `<td>${t.totale_vaccinati_formattato}</td>`;
       new_tr += `<td class="${td_class}">${sign}${t.nuovi_vaccinati_formattato}</td>`;
       new_tr += `<td class="${td_class}">${sign}${t.nuovi_vaccinati_percentuale_formattato}</td>`;
       new_tr += "</tr>";
@@ -1107,6 +1145,212 @@ const load_age_ranges_chart = async (order, old_obj) => {
   }
 };
 
+
+const load_vaccine_producers = async (order, reverse, producers) => {
+  try {
+    producers = await producers;
+    if (!producers) producers = await get_data_json("/get/produttori_vaccini");
+
+    if (order === 0) {
+      producers.produttori.sort((a, b) => a.nome_produttore > b.nome_produttore ? 1 : -1);
+    } else if (order === 1) {
+      producers.produttori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+    }
+
+    if (reverse) {
+      producers.produttori.reverse();
+    }
+
+    $("table#produttori_vaccini tbody").html("");
+
+    producers.produttori.forEach((t, i) => {
+      let new_tr = `<tr id="${t.nome_produttore}" class="territorio">`;
+      new_tr += `<td>${t.nome_produttore}</td>`;
+      new_tr += `<td>${t.totale_dosi_consegnate_formattato}</td>`;
+      new_tr += "</tr>";
+      $("table#produttori_vaccini tbody").append(new_tr);
+    });
+
+    return producers;
+  } catch (err) {
+    console.log(`Impossibile caricare i produttori. Errore ${err.message}`);
+    return;
+  }
+};
+
+const load_vaccine_producers_chart = async (producers) => {
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+
+  try {
+    producers = await producers;
+    if (!producers) producers = await get_data_json("/get/produttori_vaccini");
+
+    data = producers.produttori.map(x => x.totale_dosi_consegnate);
+    labels = producers.produttori.map(x => x.nome_produttore);
+    label = "Totale vaccini consegnati";
+
+    background_colors = producers.produttori.map((x, i) => {
+      return `hsla(${i / producers.produttori.length * 360}, 60%, 60%, 1)`;
+    });
+
+    border_colors = producers.produttori.map((x, i) => {
+      return `hsla(${i / producers.produttori.length * 360}, 75%, 50%, 0.75)`;
+    });
+    hover_background_colors = producers.produttori.map((x, i) => {
+      return `hsla(${i / producers.produttori.length * 360}, 75%, 50%, 0.5)`;
+    });
+
+
+    font_size = $(window).width() > 1500 ? 14 : 10;
+
+    // draw the new chart
+    let ctx = $("canvas#produttori_vaccini")[0].getContext('2d');
+    chart = new Chart(ctx, {
+      type: "doughnut",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
+        }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1,
+        legend: {
+          align: "end"
+        },
+        tooltips: {}
+      }
+    });
+    return chart;
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico dei produttori. Errore ${err.message}`);
+    return;
+  }
+};
+
+const load_subministrations = async (order, reverse, subministrations) => {
+  try {
+    subministrations = await subministrations;
+    if (!subministrations) subministrations = await get_data_json("/get/somministrazioni");
+
+    if (order === 0) {
+      subministrations.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+    } else if (order === 1) {
+      subministrations.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
+    }
+
+    if (reverse) {
+      subministrations.reverse();
+    }
+
+    $("table#somministrazioni tbody").html("");
+
+    subministrations.forEach((t, i) => {
+      let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
+      new_tr += `<td>${t.nome_categoria_formattato}</td>`;
+      new_tr += `<td>${t.totale_vaccinati_formattato}</td>`;
+      new_tr += "</tr>";
+      $("table#somministrazioni tbody").append(new_tr);
+    });
+
+    return subministrations;
+  } catch (err) {
+    console.log(`Impossibile caricare le somministrazioni. Errore ${err.message}`);
+    return;
+  }
+};
+
+
+const load_subministrations_chart = async (subministrations) => {
+  // chart variables
+  let chart;
+  let data;
+  let label;
+  let labels;
+  let background_colors;
+  let border_colors;
+  let hover_background_colors;
+  let font_size;
+  let old_chart;
+  let ages_ranges;
+
+  try {
+    subministrations = await subministrations;
+    if (!subministrations) await get_data_json("/get/somministrazioni");
+    subministrations.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
+
+    data = subministrations.map(x => x.totale_vaccinati);
+    background_colors = data.map(x => "#1e88e5");
+    border_colors = data.map(x => "#005cb2");
+    hover_background_colors = data.map(x => "#6ab7ff");
+    labels = subministrations.map(x => x.nome_categoria_formattato);
+    label = "Dosi somministrate";
+
+    font_size = $(window).width() > 1500 ? 14 : 10;
+      // draw the new chart
+      let ctx = $("canvas#somministrazioni")[0].getContext('2d');
+      chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [{
+            data: data,
+            label: label,
+            backgroundColor: background_colors,
+            borderColor: border_colors,
+            borderWidth: 2,
+            hoverBackgroundColor: hover_background_colors,
+            hoverBorderColor: hover_background_colors
+          }],
+        },
+        options: {
+          responsive: true,
+          aspectRatio: 1.1,
+          legend: {
+            align: "end"
+          },
+          tooltips: {},
+          scales: {
+            xAxes: [{
+              ticks: {
+                autoSkip: false,
+                maxRotation: 90,
+                minRotation: 45,
+                fontSize: font_size
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                fontSize: font_size,
+                autoSkip: true,
+                maxRotation: 30,
+                minRotation: -30,
+              }
+            }]
+          }
+        }
+      });
+
+      return chart;
+  } catch (err) {
+    console.log(`Impossibile caricare il grafico delle fasce di età. Errore ${err.message}`);
+    return;
+  }
+};
+
 // main function
 $(document).ready(async () => {
   console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19");
@@ -1116,6 +1360,8 @@ $(document).ready(async () => {
   let categories = load_categories(0, false);
   let genders = load_genders(0, false);
   let age_ranges = load_age_ranges(0, false);
+  let vaccine_producers = load_vaccine_producers(0, false);
+  let subministrations = load_subministrations(0, false);
 
   // global charts variables
   Chart.defaults.global.defaultFontFamily = 'Roboto';
@@ -1134,6 +1380,8 @@ $(document).ready(async () => {
   let ages_ranges_chart = load_age_ranges_chart(0, {
     data: await age_ranges
   });
+  let vaccine_producers_chart = load_vaccine_producers_chart(await vaccine_producers);
+  let subministrations_chart = load_subministrations_chart(await subministrations);
 
   // form for all time chart
   $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {
@@ -1166,7 +1414,6 @@ $(document).ready(async () => {
 
     // this is the id of the table we clicked on
     let table_id = $(e.target).parentsUntil("table").parent().attr("id");
-
     // once we know the class, we can update its data
     if (table_id === "territori") {
       load_territories(column, reverse, territories);
@@ -1178,6 +1425,10 @@ $(document).ready(async () => {
       load_genders(column, reverse, genders);
     } else if (table_id === "fasce_eta") {
       load_age_ranges(column, reverse, age_ranges);
+    } else if (table_id === "produttori_vaccini") {
+      load_vaccine_producers(column, reverse, vaccine_producers);
+    } else if (table_id === "somministrazioni") {
+      load_subministrations(column, reverse, subministrations);
     }
   });
 
