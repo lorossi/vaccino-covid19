@@ -310,7 +310,7 @@ class Scraper:
 
                     old_deliveries = [x for x in self._deliveries if current_day_time > datetime.strptime(x["data_consegna"][:-5], "%Y-%m-%dT%H:%M:%S")]
                     old_deliveries = [x for sublist in old_deliveries for x in sublist["variazioni"]]
-                    old_territory_deliveries =  [x for x in old_deliveries if x["area"] == areas_list[a]]
+                    old_territory_deliveries = [x for x in old_deliveries if x["area"] == areas_list[a]]
 
                     total_delivered = 0
                     if len(old_territory_deliveries) > 0:
@@ -451,9 +451,8 @@ class Scraper:
         new_italy_absolute["percentuale_dosi_utilizzate_formattato"] = f'{new_italy_absolute["percentuale_dosi_utilizzate"]:.2f}%'
         new_italy_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{new_italy_absolute["percentuale_popolazione_vaccinata"]:.2f}%'
         new_italy_variation["nuovi_vaccinati_formattato"] = f'{new_italy_variation["nuovi_vaccinati"]:n}'
+        new_italy_variation["nuove_dosi_consegnate_formattato"] =  f'{new_italy_variation["nuove_dosi_consegnate"]:n}'
 
-        new_data["assoluti"].append(new_italy_absolute)
-        new_data["variazioni"].append(new_italy_variation)
         self._italy.update(new_italy_absolute)
         self._italy.update(new_italy_variation)
 
@@ -490,8 +489,9 @@ class Scraper:
             age_range["nome_categoria"] = age["fascia_anagrafica"]
             age_range["totale_vaccinati"] = age["totale"]
             age_range["totale_vaccinati_formattato"] = f'{age["totale"]:n}'
-            age_range["seconda_dose"] = age["seconda_dose"]
             age_range["seconda_dose_formattato"] = f'{age["seconda_dose"]:n}'
+            # add variation
+
             new_data["fasce_eta"].append(age_range)
 
             for category in categories:
@@ -514,17 +514,25 @@ class Scraper:
 
         for category in categories:
             category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
-            category["nuovi_vaccinati"] = yesterday_absolute["categoria"][category["nome_categoria_pulito"]] - category["totale_vaccinati"]
+            category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
+            category["nuovi_vaccinati_formattato"] = f'{category["nuovi_vaccinati"]:n}'
             new_data["categorie"].append(category)
 
         for gender in genders:
-            gender["nuovi_vaccinati"] = yesterday_absolute["sesso"][gender["nome_categoria"]] - gender["totale_vaccinati"]
+            gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
             gender["totale_vaccinati_formattato"] = f'{gender["totale_vaccinati"]:n}'
             new_data["sesso"].append(gender)
 
         for subministration in subministrations:
             subministration["totale_vaccinati_formattato"] = f'{subministration["totale_vaccinati"]:n}'
             new_data["somministrazioni"].append(subministration)
+
+        self._italy["somministrazioni"] = {
+            "prima_dose": subministrations[0]["totale_vaccinati"],
+            "prima_dose_formattato": subministrations[0]["totale_vaccinati_formattato"],
+            "seconda_dose": subministrations[1]["totale_vaccinati"],
+            "seconda_dose_formattato": subministrations[1]["totale_vaccinati_formattato"]
+        }
 
         self._data = copy.deepcopy(new_data)
 
@@ -563,6 +571,9 @@ class Scraper:
         self.scrapeHistory()
         self.scrapeData()
         self.scrapeColors()
+
+    def printJson(self, data, indent=2):
+        print(ujson.dumps(data, indent=indent))
 
     @property
     def italy(self):

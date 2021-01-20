@@ -16,27 +16,27 @@
        <div class="italia">
           <div class="stats">
              <p class="label">Vaccinati in Italia</p>
-             <p id="vaccinati">{{ italy.totale_vaccinati }}</p>
+             <p id="vaccinati">{{ italy.totale_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Vaccinati oggi</p>
-             <p id="deltavaccinati">{{ italy.nuovi_vaccinati }}</p>
+             <p id="deltavaccinati">{{ italy.nuovi_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Dosi disponibili</p>
-             <p id="dosi">{{ italy.totale_dosi_consegnate }}</p>
+             <p id="dosi">{{ italy.totale_dosi_consegnate_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Dosi consegnate oggi</p>
-             <p id="deltadosi">{{ italy.nuove_dosi_consegnate }}</p>
+             <p id="deltadosi">{{ italy.nuove_dosi_consegnate_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Percentuale popolazione</p>
-             <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattata }}%</p>
+             <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Percentuale dosi usate</p>
-             <p id="percentualevacciniusati" class="">{{ italy.percentuale_dosi_utilizzate_formattata }}%</p>
+             <p id="percentualevacciniusati" class="">{{ italy.percentuale_dosi_utilizzate_formattato }}</p>
           </div>
        </div>
        <div class="alltimechartcontainer">
@@ -246,7 +246,7 @@
     </div>
     <div class="credits">
        <p>
-          Dati forniti dal <a href="https://app.powerbi.com/view?r=eyJrIjoiMzg4YmI5NDQtZDM5ZC00ZTIyLTgxN2MtOTBkMWM4MTUyYTg0IiwidCI6ImFmZDBhNzVjLTg2NzEtNGNjZS05MDYxLTJjYTBkOTJlNDIyZiIsImMiOjh9">Ministero della Salute</a>
+          Dati forniti dal <a href="https://www.governo.it/it/cscovid19/report-vaccini/">Ministero della Salute</a>
        </p>
        <p>Questo sito non è stato finanziato da fondi pubblici</p>
        <p>aiutami a pagare i server!</p>

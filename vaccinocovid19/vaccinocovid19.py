@@ -38,6 +38,7 @@ def scrape_colors():
 @app.route("/")
 @app.route("/homepage")
 def index():
+    s.printJson(s.italy)
     return render_template("index.html", italy=s.italy, territories_list=s.territories_list)
 
 """
