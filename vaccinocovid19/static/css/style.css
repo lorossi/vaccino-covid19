@@ -288,7 +288,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   }
 
   table {
-    min-width: 30vw;
+    min-width: 20vw;
     max-width: 60vw;
   }
 

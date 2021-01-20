@@ -9,7 +9,7 @@
     </div>
     <div class="update">
        Aggiornato al
-       <div class="stats">{{ last_updated.last_updated }}</div>
+       <div class="stats">{{ italy.ultimo_aggiornamento }}</div>
        <div class="info">variazioni rispetto al giorno precedente</div>
        <div class="error">Attualmente il sito non va. Sto lavorando ad una nuova versione funzionante</div>
     </div>
@@ -17,27 +17,27 @@
        <div class="italia">
           <div class="stats">
              <p class="label">Vaccinati in Italia</p>
-             <p id="vaccinati">{{ italy.totale_vaccinati }}</p>
+             <p id="vaccinati">{{ italy.totale_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Vaccinati oggi</p>
-             <p id="deltavaccinati">{{ italy.nuovi_vaccinati }}</p>
+             <p id="deltavaccinati">{{ italy.nuovi_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Dosi disponibili</p>
-             <p id="dosi">{{ italy.totale_dosi_consegnate }}</p>
+             <p id="dosi">{{ italy.totale_dosi_consegnate_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Dosi consegnate oggi</p>
-             <p id="deltadosi">{{ italy.nuove_dosi_consegnate }}</p>
+             <p id="deltadosi">{{ italy.nuove_dosi_consegnate_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Percentuale popolazione</p>
-             <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattata }}%</p>
+             <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattato }}</p>
           </div>
           <div class="stats">
              <p class="label">Percentuale dosi usate</p>
-             <p id="percentualevacciniusati" class="">{{ italy.percentuale_dosi_utilizzate_formattata }}%</p>
+             <p id="percentualevacciniusati" class="">{{ italy.percentuale_dosi_utilizzate_formattato }}</p>
           </div>
        </div>
        <div class="alltimechartcontainer">
@@ -46,7 +46,7 @@
              <form>
                 <label for="territori">Seleziona territorio </label>
                 <select name="territori" id="territori">
-                  {% for t in territories_list.territori %}
+                  {% for t in territories_list %}
                     <option value="{{ t }}">{{ t }}</option>`
                   {% endfor %}
                 </select>
@@ -61,11 +61,19 @@
                    <label for="storico_totale_vaccini">Mostra totale dosi disponibili</label>
                 </p>
                 <p>
-                   <input type="checkbox" id="storico_nuovi_vaccinati" name="nuovi_vaccinati" value="2" disabled>
+                   <input type="checkbox" id="storico_prime_dosi" name="prime_dosi" value="2" disabled>
+                   <label for="storico_prime_dosi">Mostra prime dosi somministrate</label>
+                </p>
+                <p>
+                   <input type="checkbox" id="storico_seconde_dosi" name="seconde_dosi" value="3" disabled>
+                   <label for="storico_seconde_dosi">Mostra seconde dosi somministrate</label>
+                </p>
+                <p>
+                   <input type="checkbox" id="storico_nuovi_vaccinati" name="nuovi_vaccinati" value="4" disabled>
                    <label for="storico_nuovi_vaccinati">Mostra nuovi vaccinati</label>
                 </p>
                 <p>
-                   <input type="checkbox" id="storico_percentuale_vaccinati" name="percentuale_vaccinati" value="3" disabled>
+                   <input type="checkbox" id="storico_percentuale_vaccinati" name="percentuale_vaccinati" value="5" disabled>
                    <label for="storico_percentuale_vaccinati">Mostra percentuale vaccinati</label>
                 </p>
              </form>
@@ -221,8 +229,6 @@
                 <tr>
                    <th class="darr" data-column="0">Età</th>
                    <th class="darr" data-column="1">Vaccinati</th>
-                   <th class="darr" data-column="2">Variazione</th>
-                   <th class="darr" data-column="3">%</th>
                 </tr>
              </thead>
              <tbody>
@@ -243,11 +249,39 @@
              </div>
              <canvas id="fasce_eta"></canvas>
           </div>
+          <table id="produttori_vaccini">
+             <caption class="subtitle">Dettaglio per Produttore</caption>
+             <thead>
+                <tr>
+                   <th class="darr" data-column="0">Produttore</th>
+                   <th class="darr" data-column="1">Dosi consegnate</th>
+                </tr>
+             </thead>
+             <tbody>
+             </tbody>
+          </table>
+          <div class="chartcontainer" id="produttori_vaccini">
+             <canvas id="produttori_vaccini"></canvas>
+          </div>
+          <table id="somministrazioni">
+             <caption class="subtitle">Dettaglio per Somministrazioni</caption>
+             <thead>
+                <tr>
+                   <th class="darr" data-column="0">Dose</th>
+                   <th class="darr" data-column="1">Vaccinati</th>
+                </tr>
+             </thead>
+             <tbody>
+             </tbody>
+          </table>
+          <div class="chartcontainer" id="somministrazioni">
+             <canvas id="somministrazioni"></canvas>
+          </div>
        </div>
     </div>
     <div class="credits">
        <p>
-          Dati forniti dal <a href="https://app.powerbi.com/view?r=eyJrIjoiMzg4YmI5NDQtZDM5ZC00ZTIyLTgxN2MtOTBkMWM4MTUyYTg0IiwidCI6ImFmZDBhNzVjLTg2NzEtNGNjZS05MDYxLTJjYTBkOTJlNDIyZiIsImMiOjh9">Ministero della Salute</a>
+          Dati forniti dal <a href="https://www.governo.it/it/cscovid19/report-vaccini/">Ministero della Salute</a>
        </p>
        <p>Questo sito non è stato finanziato da fondi pubblici</p>
        <p>aiutami a pagare i server!</p>

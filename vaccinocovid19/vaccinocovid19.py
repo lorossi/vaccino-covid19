@@ -19,20 +19,14 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
-    s.loadData()
+    s.scrapeAll()
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
-    s.scrapeData()
-    s.saveData()
-
-
-def scrape_history():
-    s.scrapeHistory()
+    s.scrapeAll()
     s.saveData()
 
 
@@ -41,20 +35,12 @@ def scrape_colors():
     s.saveData()
 
 
-# error 500 page
-@app.errorhandler(Exception)
-def error_500(e):
-    logging.error("error 500: %s", e)
-    return render_template("error.html", errorcode=500,
-                           errordescription="internal server error"), 500
-
-
 # index
 @app.route("/")
 @app.route("/homepage")
 def index():
-    return render_template("index.html", last_updated=s.last_updated,
-                           territories_list=s.territories_list, italy=s.italy)
+    return render_template("index.html", italy=s.italy,
+                           territories_list=s.territories_list)
 
 
 @app.route("/get/italia", methods=["GET"])
@@ -77,7 +63,7 @@ def get_categorie():
     return jsonify(s.categories)
 
 
-@app.route("/get/sessi", methods=["GET"])
+@app.route("/get/sesso", methods=["GET"])
 def get_sessi():
     return jsonify(s.genders)
 
@@ -92,9 +78,24 @@ def get_storico_vaccini():
     return jsonify(s.history)
 
 
+@app.route("/get/storico_vaccini/<nome_territorio>", methods=["GET"])
+def get_storico_territorio(nome_territorio):
+    return jsonify(s.territoryHistory(nome_territorio))
+
+
 @app.route("/get/colore_territori", methods=["GET"])
 def get_colore_territori():
     return jsonify(s.territories_color)
+
+
+@app.route("/get/produttori_vaccini", methods=["GET"])
+def get_produttori_vaccini():
+    return jsonify(s.vaccine_producers)
+
+
+@app.route("/get/somministrazioni", methods=["GET"])
+def get_somministrazioni():
+    return jsonify(s.subministrations)
 
 
 # error 404 page
@@ -103,6 +104,14 @@ def error_400(e):
     logging.error("error 404: %s", e)
     return render_template("error.html", errorcode=404,
                            errordescription="page not found"), 404
+
+
+# error 500 page
+@app.errorhandler(Exception)
+def error_500(e):
+    logging.error("error 500: %s", e)
+    return render_template("error.html", errorcode=500,
+                           errordescription="internal server error"), 500
 
 
 main()
