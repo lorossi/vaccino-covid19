@@ -1346,7 +1346,7 @@ const load_subministrations_chart = async (subministrations) => {
 
       return chart;
   } catch (err) {
-    console.log(`Impossibile caricare il grafico delle fasce di età. Errore ${err.message}`);
+    console.log(`Impossibile caricare il grafico delle somministrazioni. Errore ${err.message}`);
     return;
   }
 };
