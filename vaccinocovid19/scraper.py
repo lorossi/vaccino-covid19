@@ -89,34 +89,45 @@ class Scraper:
                 f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.colors_filename}")
 
-    def loadData(self):
-        try:
-            with open(self.output_path + self.today_filename, "r") as f:
-                self._data = ujson.load(f)
-        except Exception as e:
-            logging.error(f"Cannot read data file. error {e}")
-            self._data = []
+    def loadData(self, all=False, producers=False, today=False, history=False, italy=False, colors=False):
+        if producers or all:
+            try:
+                with open(self.output_path + self.producers_filename, "r") as f:
+                    self._vaccine_producers = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read data file. error {e}")
+                self._vaccine_producers = {}
 
-        try:
-            with open(self.output_path + self.history_filename, "r") as f:
-                self._history = ujson.load(f)
-        except Exception as e:
-            logging.error(f"Cannot read history file. error {e}")
-            self._history = []
+        if today or all:
+            try:
+                with open(self.output_path + self.today_filename, "r") as f:
+                    self._data = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read data file. error {e}")
+                self._data = {}
 
-        try:
-            with open(self.output_path + self.italy_filename, "r") as f:
-                self._italy = ujson.load(f)
-        except Exception as e:
-            logging.error(f"Cannot read italy file. error {e}")
-            self._italy = []
+        if history or all:
+            try:
+                with open(self.output_path + self.history_filename, "r") as f:
+                    self._history = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read history file. error {e}")
+                self._history = {}
+        if italy or all:
+            try:
+                with open(self.output_path + self.italy_filename, "r") as f:
+                    self._italy = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read italy file. error {e}")
+                self._italy = {}
 
-        try:
-            with open(self.output_path + self.colors_filename, "r") as f:
-                self._territories_color = ujson.load(f)
-        except Exception as e:
-            logging.error(f"Cannot read colors file. error {e}")
-            self._territories_color = []
+        if colors or all:
+            try:
+                with open(self.output_path + self.colors_filename, "r") as f:
+                    self._territories_color = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read colors file. error {e}")
+                self._territories_color = {}
 
     def returnTerritoryData(self, area):
         # load territories population
@@ -395,7 +406,6 @@ class Scraper:
             new_absolute["nome_territorio_corto"] = territory_data["nome_corto"]
             new_absolute["totale_dosi_consegnate"] = territory["dosi_consegnate"]
             new_absolute["totale_vaccinati"] = territory["dosi_somministrate"]
-
             # calculations
             new_absolute["percentuale_dosi_utilizzate"] = new_absolute["totale_vaccinati"] / new_absolute["totale_dosi_consegnate"] * 100
             new_absolute["percentuale_popolazione_vaccinata"] = new_absolute["totale_vaccinati"] / territory_data["popolazione"] * 100
@@ -413,6 +423,7 @@ class Scraper:
 
             # calculate variations
             yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == territory_data["codice"]][0]
+
             new_variation = {}
             new_variation["codice_territorio"] = territory_data["codice"]
             new_variation["nome_territorio"] = territory_data["nome"]
@@ -441,6 +452,7 @@ class Scraper:
             new_italy_variation["nuove_dosi_consegnate"] = new_italy_variation.get("nuove_dosi_consegnate", 0) + new_variation["nuove_dosi_consegnate"]
             # add dict to data
             new_data["variazioni"].append(new_variation)
+
 
         # compute italy
         italy_data = self.returnTerritoryData("ITA")
@@ -489,6 +501,9 @@ class Scraper:
             age_range["nome_categoria"] = age["fascia_anagrafica"]
             age_range["totale_vaccinati"] = age["totale"]
             age_range["totale_vaccinati_formattato"] = f'{age["totale"]:n}'
+            age_range["prima_dose"] = age["prima_dose"]
+            age_range["sprima_dose_formattato"] = f'{age["prima_dose"]:n}'
+            age_range["seconda_dose"] = age["seconda_dose"]
             age_range["seconda_dose_formattato"] = f'{age["seconda_dose"]:n}'
             # add variation
 
@@ -521,6 +536,7 @@ class Scraper:
         for gender in genders:
             gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
             gender["totale_vaccinati_formattato"] = f'{gender["totale_vaccinati"]:n}'
+            gender["nuovi_vaccinati_formattato"] = f'{gender["nuovi_vaccinati"]:n}'
             new_data["sesso"].append(gender)
 
         for subministration in subministrations:
@@ -567,21 +583,94 @@ class Scraper:
 
         self._territories_color = copy.deepcopy(new_territories_colors)
 
+    def territoryHistory(self, territory_code):
+        self.loadData(history=True)
+        territory_history = []
+
+        for day in self._history:
+            new_dict = {
+                "assoluti": None,
+                "variazioni": None,
+            }
+
+            for key in new_dict:
+                for territory in day[key]:
+                    if territory["codice_territorio"] == territory_code:
+                        new_dict[key] = territory
+                        break
+            new_dict["timestamp"] = day["timestamp"]
+
+            territory_history.append(new_dict)
+
+        return territory_history
+
     def scrapeAll(self):
         self.scrapeHistory()
         self.scrapeData()
         self.scrapeColors()
+        self.saveData()
 
-    def printJson(self, data, indent=2):
+    def printJson(self, data, indent=2, exit=True):
         print(ujson.dumps(data, indent=indent))
+        if exit:
+            quit()
 
     @property
     def italy(self):
+        self.loadData(italy=True)
         return self._italy
 
     @property
     def territories_list(self):
         return self._territories_list
+
+    @property
+    def absolute_territories(self):
+        self.loadData(today=True)
+        return self._data["assoluti"]
+
+    @property
+    def variation_territories(self):
+        self.loadData(today=True)
+        return self._data["variazioni"]
+
+
+    @property
+    def categories(self):
+        self.loadData(today=True)
+        return self._data["categorie"]
+
+
+    @property
+    def genders(self):
+        self.loadData(today=True)
+        return self._data["sesso"]
+
+    @property
+    def age_ranges(self):
+        self.loadData(today=True)
+        return self._data["fasce_eta"]
+
+    @property
+    def history(self):
+        self.loadData(history=True)
+        return self._history
+
+    @property
+    def territories_color(self):
+        self.loadData(colors=True)
+        return self._territories_color
+
+    @property
+    def vaccine_producers(self):
+        self.loadData(producers=True)
+        return self._vaccine_producers
+
+    @property
+    def subministrations(self):
+        self.loadData(today=True)
+        return self._data["somministrazioni"]
+
 
 if __name__ == "__main__":
     s = Scraper()

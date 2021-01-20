@@ -117,22 +117,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 6178,
-          "ospiti_rsa": 284,
+          "operatori_sanitari_sociosanitari": 6297,
+          "ospiti_rsa": 301,
           "over_80": 0,
-          "personale_non_sanitario": 1456
+          "personale_non_sanitario": 1321
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 7918,
+        "prime_dosi": 7919,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 4174,
+          "donne": 4175,
           "uomini": 3744
         },
         "totale_dosi_consegnate": 9750,
-        "totale_vaccinati": 7918
+        "totale_vaccinati": 7919
       },
       {
         "categoria": {
@@ -345,22 +345,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 460,
-          "ospiti_rsa": 13,
+          "operatori_sanitari_sociosanitari": 579,
+          "ospiti_rsa": 30,
           "over_80": 0,
-          "personale_non_sanitario": 146
+          "personale_non_sanitario": 11
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 619,
+        "prime_dosi": 620,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 352,
+          "donne": 353,
           "uomini": 267
         },
         "totale_dosi_consegnate": 620,
-        "totale_vaccinati": 619
+        "totale_vaccinati": 620
       },
       {
         "categoria": {
@@ -960,22 +960,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 6972,
-          "ospiti_rsa": 305,
+          "operatori_sanitari_sociosanitari": 7091,
+          "ospiti_rsa": 322,
           "over_80": 0,
-          "personale_non_sanitario": 1567
+          "personale_non_sanitario": 1432
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 8844,
+        "prime_dosi": 8845,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 4698,
+          "donne": 4699,
           "uomini": 4146
         },
         "totale_dosi_consegnate": 9750,
-        "totale_vaccinati": 8844
+        "totale_vaccinati": 8845
       },
       {
         "categoria": {
@@ -1188,22 +1188,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 460,
-          "ospiti_rsa": 13,
+          "operatori_sanitari_sociosanitari": 579,
+          "ospiti_rsa": 30,
           "over_80": 0,
-          "personale_non_sanitario": 146
+          "personale_non_sanitario": 11
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 619,
+        "prime_dosi": 620,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 352,
+          "donne": 353,
           "uomini": 267
         },
         "totale_dosi_consegnate": 620,
-        "totale_vaccinati": 619
+        "totale_vaccinati": 620
       },
       {
         "categoria": {
@@ -1803,22 +1803,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 10750,
-          "ospiti_rsa": 629,
+          "operatori_sanitari_sociosanitari": 10869,
+          "ospiti_rsa": 645,
           "over_80": 0,
-          "personale_non_sanitario": 2154
+          "personale_non_sanitario": 2020
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 13533,
+        "prime_dosi": 13534,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 7501,
+          "donne": 7502,
           "uomini": 6032
         },
         "totale_dosi_consegnate": 9750,
-        "totale_vaccinati": 13533
+        "totale_vaccinati": 13534
       },
       {
         "categoria": {
@@ -2031,22 +2031,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 494,
-          "ospiti_rsa": 275,
+          "operatori_sanitari_sociosanitari": 613,
+          "ospiti_rsa": 291,
           "over_80": 0,
-          "personale_non_sanitario": 152
+          "personale_non_sanitario": 18
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 921,
+        "prime_dosi": 922,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 558,
+          "donne": 559,
           "uomini": 363
         },
         "totale_dosi_consegnate": 620,
-        "totale_vaccinati": 921
+        "totale_vaccinati": 922
       },
       {
         "categoria": {
@@ -2231,9 +2231,9 @@
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 3778,
-          "categoria_ospiti_rsa": 324,
+          "categoria_ospiti_rsa": 323,
           "over_80": 0,
-          "personale_non_sanitario": 587
+          "personale_non_sanitario": 588
         },
         "nuovi_sesso": {
           "donne": 2803,
@@ -2459,9 +2459,9 @@
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 34,
-          "categoria_ospiti_rsa": 262,
+          "categoria_ospiti_rsa": 261,
           "over_80": 0,
-          "personale_non_sanitario": 6
+          "personale_non_sanitario": 7
         },
         "nuovi_sesso": {
           "donne": 206,
@@ -2646,22 +2646,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 29174,
-          "ospiti_rsa": 2434,
+          "operatori_sanitari_sociosanitari": 29293,
+          "ospiti_rsa": 2450,
           "over_80": 28,
-          "personale_non_sanitario": 6756
+          "personale_non_sanitario": 6622
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 38392,
+        "prime_dosi": 38393,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 22713,
+          "donne": 22714,
           "uomini": 15679
         },
         "totale_dosi_consegnate": 369525,
-        "totale_vaccinati": 38392
+        "totale_vaccinati": 38393
       },
       {
         "categoria": {
@@ -2874,22 +2874,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 591,
-          "ospiti_rsa": 935,
+          "operatori_sanitari_sociosanitari": 710,
+          "ospiti_rsa": 951,
           "over_80": 0,
-          "personale_non_sanitario": 156
+          "personale_non_sanitario": 22
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 1682,
+        "prime_dosi": 1683,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 1131,
+          "donne": 1132,
           "uomini": 551
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 1682
+        "totale_vaccinati": 1683
       },
       {
         "categoria": {
@@ -3489,22 +3489,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 38720,
-          "ospiti_rsa": 3151,
+          "operatori_sanitari_sociosanitari": 38839,
+          "ospiti_rsa": 3178,
           "over_80": 28,
-          "personale_non_sanitario": 7457
+          "personale_non_sanitario": 7323
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 49356,
+        "prime_dosi": 49368,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 29442,
-          "uomini": 19914
+          "donne": 29451,
+          "uomini": 19917
         },
         "totale_dosi_consegnate": 470925,
-        "totale_vaccinati": 49356
+        "totale_vaccinati": 49368
       },
       {
         "categoria": {
@@ -3717,22 +3717,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 2305,
-          "ospiti_rsa": 1584,
+          "operatori_sanitari_sociosanitari": 2424,
+          "ospiti_rsa": 1611,
           "over_80": 0,
-          "personale_non_sanitario": 158
+          "personale_non_sanitario": 24
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 4047,
+        "prime_dosi": 4059,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 2711,
-          "uomini": 1336
+          "donne": 2720,
+          "uomini": 1339
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 4047
+        "totale_vaccinati": 4059
       },
       {
         "categoria": {
@@ -3913,19 +3913,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 10964,
+        "nuove_prime_dosi": 10975,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 9546,
-          "categoria_ospiti_rsa": 717,
+          "categoria_ospiti_rsa": 728,
           "over_80": 0,
           "personale_non_sanitario": 701
         },
         "nuovi_sesso": {
-          "donne": 6729,
-          "uomini": 4235
+          "donne": 6737,
+          "uomini": 4238
         },
-        "nuovi_vaccinati": 10964
+        "nuovi_vaccinati": 10975
       },
       {
         "codice_territorio": "08",
@@ -4141,19 +4141,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 2365,
+        "nuove_prime_dosi": 2376,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 1714,
-          "categoria_ospiti_rsa": 649,
+          "categoria_ospiti_rsa": 660,
           "over_80": 0,
           "personale_non_sanitario": 2
         },
         "nuovi_sesso": {
-          "donne": 1580,
-          "uomini": 785
+          "donne": 1588,
+          "uomini": 788
         },
-        "nuovi_vaccinati": 2365
+        "nuovi_vaccinati": 2376
       },
       {
         "codice_territorio": "19",
@@ -4332,22 +4332,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 71464,
-          "ospiti_rsa": 5058,
+          "operatori_sanitari_sociosanitari": 71583,
+          "ospiti_rsa": 5085,
           "over_80": 30,
-          "personale_non_sanitario": 11179
+          "personale_non_sanitario": 11045
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 87731,
+        "prime_dosi": 87743,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 52572,
-          "uomini": 35159
+          "donne": 52581,
+          "uomini": 35162
         },
         "totale_dosi_consegnate": 479700,
-        "totale_vaccinati": 87731
+        "totale_vaccinati": 87743
       },
       {
         "categoria": {
@@ -4560,22 +4560,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 4985,
-          "ospiti_rsa": 2384,
+          "operatori_sanitari_sociosanitari": 5104,
+          "ospiti_rsa": 2411,
           "over_80": 0,
-          "personale_non_sanitario": 173
+          "personale_non_sanitario": 39
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 7542,
+        "prime_dosi": 7554,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 5109,
-          "uomini": 2433
+          "donne": 5118,
+          "uomini": 2436
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 7542
+        "totale_vaccinati": 7554
       },
       {
         "categoria": {
@@ -5175,22 +5175,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 100741,
-          "ospiti_rsa": 6499,
+          "operatori_sanitari_sociosanitari": 100861,
+          "ospiti_rsa": 6548,
           "over_80": 30,
-          "personale_non_sanitario": 15405
+          "personale_non_sanitario": 15271
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 122675,
+        "prime_dosi": 122710,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 73814,
-          "uomini": 48861
+          "donne": 73834,
+          "uomini": 48876
         },
         "totale_dosi_consegnate": 479700,
-        "totale_vaccinati": 122675
+        "totale_vaccinati": 122710
       },
       {
         "categoria": {
@@ -5403,22 +5403,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 7548,
-          "ospiti_rsa": 3146,
+          "operatori_sanitari_sociosanitari": 7668,
+          "ospiti_rsa": 3195,
           "over_80": 0,
-          "personale_non_sanitario": 182
+          "personale_non_sanitario": 48
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 10876,
+        "prime_dosi": 10911,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 7392,
-          "uomini": 3484
+          "donne": 7412,
+          "uomini": 3499
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 10876
+        "totale_vaccinati": 10911
       },
       {
         "categoria": {
@@ -5599,19 +5599,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 34944,
+        "nuove_prime_dosi": 34967,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 29277,
-          "categoria_ospiti_rsa": 1441,
+          "categoria_operatori_sanitari_sociosanitari": 29278,
+          "categoria_ospiti_rsa": 1463,
           "over_80": 0,
           "personale_non_sanitario": 4226
         },
         "nuovi_sesso": {
-          "donne": 21242,
-          "uomini": 13702
+          "donne": 21253,
+          "uomini": 13714
         },
-        "nuovi_vaccinati": 34944
+        "nuovi_vaccinati": 34967
       },
       {
         "codice_territorio": "08",
@@ -5827,19 +5827,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 3334,
+        "nuove_prime_dosi": 3357,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 2563,
-          "categoria_ospiti_rsa": 762,
+          "categoria_operatori_sanitari_sociosanitari": 2564,
+          "categoria_ospiti_rsa": 784,
           "over_80": 0,
           "personale_non_sanitario": 9
         },
         "nuovi_sesso": {
-          "donne": 2283,
-          "uomini": 1051
+          "donne": 2294,
+          "uomini": 1063
         },
-        "nuovi_vaccinati": 3334
+        "nuovi_vaccinati": 3357
       },
       {
         "codice_territorio": "19",
@@ -6018,22 +6018,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 153593,
-          "ospiti_rsa": 9431,
+          "operatori_sanitari_sociosanitari": 153712,
+          "ospiti_rsa": 9480,
           "over_80": 31,
-          "personale_non_sanitario": 27250
+          "personale_non_sanitario": 27116
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 190305,
+        "prime_dosi": 190339,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 114977,
-          "uomini": 75328
+          "donne": 114997,
+          "uomini": 75342
         },
         "totale_dosi_consegnate": 479700,
-        "totale_vaccinati": 190305
+        "totale_vaccinati": 190339
       },
       {
         "categoria": {
@@ -6246,22 +6246,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 11638,
-          "ospiti_rsa": 4075,
+          "operatori_sanitari_sociosanitari": 11757,
+          "ospiti_rsa": 4124,
           "over_80": 0,
-          "personale_non_sanitario": 214
+          "personale_non_sanitario": 80
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 15927,
+        "prime_dosi": 15961,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 10553,
-          "uomini": 5374
+          "donne": 10573,
+          "uomini": 5388
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 15927
+        "totale_vaccinati": 15961
       },
       {
         "categoria": {
@@ -6442,19 +6442,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 67630,
+        "nuove_prime_dosi": 67629,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 52852,
+          "categoria_operatori_sanitari_sociosanitari": 52851,
           "categoria_ospiti_rsa": 2932,
           "over_80": 1,
           "personale_non_sanitario": 11845
         },
         "nuovi_sesso": {
           "donne": 41163,
-          "uomini": 26467
+          "uomini": 26466
         },
-        "nuovi_vaccinati": 67630
+        "nuovi_vaccinati": 67629
       },
       {
         "codice_territorio": "08",
@@ -6670,19 +6670,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 5051,
+        "nuove_prime_dosi": 5050,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 4090,
+          "categoria_operatori_sanitari_sociosanitari": 4089,
           "categoria_ospiti_rsa": 929,
           "over_80": 0,
           "personale_non_sanitario": 32
         },
         "nuovi_sesso": {
           "donne": 3161,
-          "uomini": 1890
+          "uomini": 1889
         },
-        "nuovi_vaccinati": 5051
+        "nuovi_vaccinati": 5050
       },
       {
         "codice_territorio": "19",
@@ -6861,22 +6861,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 212489,
-          "ospiti_rsa": 13686,
+          "operatori_sanitari_sociosanitari": 212608,
+          "ospiti_rsa": 13735,
           "over_80": 36,
-          "personale_non_sanitario": 42595
+          "personale_non_sanitario": 42461
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 268806,
+        "prime_dosi": 268840,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 163462,
-          "uomini": 105344
+          "donne": 163482,
+          "uomini": 105358
         },
         "totale_dosi_consegnate": 479700,
-        "totale_vaccinati": 268806
+        "totale_vaccinati": 268840
       },
       {
         "categoria": {
@@ -7089,22 +7089,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 15986,
-          "ospiti_rsa": 4954,
+          "operatori_sanitari_sociosanitari": 16105,
+          "ospiti_rsa": 5003,
           "over_80": 0,
-          "personale_non_sanitario": 225
+          "personale_non_sanitario": 91
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 21165,
+        "prime_dosi": 21199,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 14039,
-          "uomini": 7126
+          "donne": 14059,
+          "uomini": 7140
         },
         "totale_dosi_consegnate": 27920,
-        "totale_vaccinati": 21165
+        "totale_vaccinati": 21199
       },
       {
         "categoria": {
@@ -7704,22 +7704,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 259219,
-          "ospiti_rsa": 17404,
+          "operatori_sanitari_sociosanitari": 259337,
+          "ospiti_rsa": 17421,
           "over_80": 101,
-          "personale_non_sanitario": 56072
+          "personale_non_sanitario": 55938
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 332796,
+        "prime_dosi": 332797,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 202601,
-          "uomini": 130195
+          "donne": 202603,
+          "uomini": 130194
         },
         "totale_dosi_consegnate": 695175,
-        "totale_vaccinati": 332796
+        "totale_vaccinati": 332797
       },
       {
         "categoria": {
@@ -7932,22 +7932,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 19966,
-          "ospiti_rsa": 5477,
+          "operatori_sanitari_sociosanitari": 20084,
+          "ospiti_rsa": 5494,
           "over_80": 0,
-          "personale_non_sanitario": 235
+          "personale_non_sanitario": 101
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 25678,
+        "prime_dosi": 25679,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 17093,
-          "uomini": 8585
+          "donne": 17095,
+          "uomini": 8584
         },
         "totale_dosi_consegnate": 31820,
-        "totale_vaccinati": 25678
+        "totale_vaccinati": 25679
       },
       {
         "categoria": {
@@ -8128,19 +8128,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 63990,
+        "nuove_prime_dosi": 63957,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 46730,
-          "categoria_ospiti_rsa": 3718,
+          "categoria_operatori_sanitari_sociosanitari": 46729,
+          "categoria_ospiti_rsa": 3686,
           "over_80": 65,
           "personale_non_sanitario": 13477
         },
         "nuovi_sesso": {
-          "donne": 39139,
-          "uomini": 24851
+          "donne": 39121,
+          "uomini": 24836
         },
-        "nuovi_vaccinati": 63990
+        "nuovi_vaccinati": 63957
       },
       {
         "codice_territorio": "08",
@@ -8356,19 +8356,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 4513,
+        "nuove_prime_dosi": 4480,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 3980,
-          "categoria_ospiti_rsa": 523,
+          "categoria_operatori_sanitari_sociosanitari": 3979,
+          "categoria_ospiti_rsa": 491,
           "over_80": 0,
           "personale_non_sanitario": 10
         },
         "nuovi_sesso": {
-          "donne": 3054,
-          "uomini": 1459
+          "donne": 3036,
+          "uomini": 1444
         },
-        "nuovi_vaccinati": 4513
+        "nuovi_vaccinati": 4480
       },
       {
         "codice_territorio": "19",
@@ -8547,22 +8547,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 321087,
-          "ospiti_rsa": 23246,
+          "operatori_sanitari_sociosanitari": 321205,
+          "ospiti_rsa": 23278,
           "over_80": 101,
-          "personale_non_sanitario": 79331
+          "personale_non_sanitario": 79199
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 423765,
+        "prime_dosi": 423783,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 260433,
+          "donne": 260451,
           "uomini": 163332
         },
         "totale_dosi_consegnate": 695175,
-        "totale_vaccinati": 423765
+        "totale_vaccinati": 423783
       },
       {
         "categoria": {
@@ -8775,22 +8775,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 25265,
-          "ospiti_rsa": 6133,
+          "operatori_sanitari_sociosanitari": 25383,
+          "ospiti_rsa": 6165,
           "over_80": 0,
-          "personale_non_sanitario": 265
+          "personale_non_sanitario": 133
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 31663,
+        "prime_dosi": 31681,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 21337,
+          "donne": 21355,
           "uomini": 10326
         },
         "totale_dosi_consegnate": 31820,
-        "totale_vaccinati": 31663
+        "totale_vaccinati": 31681
       },
       {
         "categoria": {
@@ -8971,19 +8971,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 90969,
+        "nuove_prime_dosi": 90986,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 61868,
-          "categoria_ospiti_rsa": 5842,
+          "categoria_ospiti_rsa": 5857,
           "over_80": 0,
-          "personale_non_sanitario": 23259
+          "personale_non_sanitario": 23261
         },
         "nuovi_sesso": {
-          "donne": 57832,
-          "uomini": 33137
+          "donne": 57848,
+          "uomini": 33138
         },
-        "nuovi_vaccinati": 90969
+        "nuovi_vaccinati": 90986
       },
       {
         "codice_territorio": "08",
@@ -9199,19 +9199,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 40950,
-        "nuove_prime_dosi": 5985,
+        "nuove_prime_dosi": 6002,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 5299,
-          "categoria_ospiti_rsa": 656,
+          "categoria_ospiti_rsa": 671,
           "over_80": 0,
-          "personale_non_sanitario": 30
+          "personale_non_sanitario": 32
         },
         "nuovi_sesso": {
-          "donne": 4244,
-          "uomini": 1741
+          "donne": 4260,
+          "uomini": 1742
         },
-        "nuovi_vaccinati": 5985
+        "nuovi_vaccinati": 6002
       },
       {
         "codice_territorio": "19",
@@ -9390,22 +9390,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 380241,
-          "ospiti_rsa": 29498,
+          "operatori_sanitari_sociosanitari": 380359,
+          "ospiti_rsa": 29546,
           "over_80": 104,
-          "personale_non_sanitario": 106274
+          "personale_non_sanitario": 106140
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 516117,
+        "prime_dosi": 516149,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 319423,
-          "uomini": 196694
+          "donne": 319456,
+          "uomini": 196693
         },
         "totale_dosi_consegnate": 918450,
-        "totale_vaccinati": 516117
+        "totale_vaccinati": 516149
       },
       {
         "categoria": {
@@ -9618,22 +9618,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 30623,
-          "ospiti_rsa": 6652,
+          "operatori_sanitari_sociosanitari": 30741,
+          "ospiti_rsa": 6700,
           "over_80": 0,
-          "personale_non_sanitario": 304
+          "personale_non_sanitario": 170
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 37579,
+        "prime_dosi": 37611,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 25616,
-          "uomini": 11963
+          "donne": 25649,
+          "uomini": 11962
         },
         "totale_dosi_consegnate": 93245,
-        "totale_vaccinati": 37579
+        "totale_vaccinati": 37611
       },
       {
         "categoria": {
@@ -9814,19 +9814,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 92352,
+        "nuove_prime_dosi": 92366,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 59154,
-          "categoria_ospiti_rsa": 6252,
+          "categoria_ospiti_rsa": 6268,
           "over_80": 3,
-          "personale_non_sanitario": 26943
+          "personale_non_sanitario": 26941
         },
         "nuovi_sesso": {
-          "donne": 58990,
-          "uomini": 33362
+          "donne": 59005,
+          "uomini": 33361
         },
-        "nuovi_vaccinati": 92352
+        "nuovi_vaccinati": 92366
       },
       {
         "codice_territorio": "08",
@@ -10042,19 +10042,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 5916,
+        "nuove_prime_dosi": 5930,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
           "categoria_operatori_sanitari_sociosanitari": 5358,
-          "categoria_ospiti_rsa": 519,
+          "categoria_ospiti_rsa": 535,
           "over_80": 0,
-          "personale_non_sanitario": 39
+          "personale_non_sanitario": 37
         },
         "nuovi_sesso": {
-          "donne": 4279,
-          "uomini": 1637
+          "donne": 4294,
+          "uomini": 1636
         },
-        "nuovi_vaccinati": 5916
+        "nuovi_vaccinati": 5930
       },
       {
         "codice_territorio": "19",
@@ -10233,22 +10233,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 432283,
-          "ospiti_rsa": 36015,
+          "operatori_sanitari_sociosanitari": 432401,
+          "ospiti_rsa": 36063,
           "over_80": 111,
-          "personale_non_sanitario": 131720
+          "personale_non_sanitario": 131586
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 600129,
+        "prime_dosi": 600161,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 370687,
-          "uomini": 229442
+          "donne": 370720,
+          "uomini": 229441
         },
         "totale_dosi_consegnate": 918450,
-        "totale_vaccinati": 600129
+        "totale_vaccinati": 600161
       },
       {
         "categoria": {
@@ -10461,22 +10461,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 34401,
-          "ospiti_rsa": 7210,
+          "operatori_sanitari_sociosanitari": 34519,
+          "ospiti_rsa": 7258,
           "over_80": 0,
-          "personale_non_sanitario": 448
+          "personale_non_sanitario": 314
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 42059,
+        "prime_dosi": 42091,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 28502,
-          "uomini": 13557
+          "donne": 28535,
+          "uomini": 13556
         },
         "totale_dosi_consegnate": 93245,
-        "totale_vaccinati": 42059
+        "totale_vaccinati": 42091
       },
       {
         "categoria": {
@@ -11076,22 +11076,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 466864,
-          "ospiti_rsa": 39417,
+          "operatori_sanitari_sociosanitari": 466983,
+          "ospiti_rsa": 39430,
           "over_80": 113,
-          "personale_non_sanitario": 153037
+          "personale_non_sanitario": 152902
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 659431,
+        "prime_dosi": 659428,
         "seconde_dosi": 0,
         "sesso": {
           "donne": 406518,
-          "uomini": 252913
+          "uomini": 252910
         },
         "totale_dosi_consegnate": 918450,
-        "totale_vaccinati": 659431
+        "totale_vaccinati": 659428
       },
       {
         "categoria": {
@@ -11304,22 +11304,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 36833,
-          "ospiti_rsa": 7635,
+          "operatori_sanitari_sociosanitari": 36952,
+          "ospiti_rsa": 7648,
           "over_80": 0,
-          "personale_non_sanitario": 586
+          "personale_non_sanitario": 451
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 45054,
+        "prime_dosi": 45051,
         "seconde_dosi": 0,
         "sesso": {
           "donne": 30397,
-          "uomini": 14657
+          "uomini": 14654
         },
         "totale_dosi_consegnate": 93245,
-        "totale_vaccinati": 45054
+        "totale_vaccinati": 45051
       },
       {
         "categoria": {
@@ -11500,19 +11500,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 59302,
+        "nuove_prime_dosi": 59267,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 34581,
-          "categoria_ospiti_rsa": 3402,
+          "categoria_operatori_sanitari_sociosanitari": 34582,
+          "categoria_ospiti_rsa": 3367,
           "over_80": 2,
-          "personale_non_sanitario": 21317
+          "personale_non_sanitario": 21316
         },
         "nuovi_sesso": {
-          "donne": 35831,
-          "uomini": 23471
+          "donne": 35798,
+          "uomini": 23469
         },
-        "nuovi_vaccinati": 59302
+        "nuovi_vaccinati": 59267
       },
       {
         "codice_territorio": "08",
@@ -11728,19 +11728,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 2995,
+        "nuove_prime_dosi": 2960,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 2432,
-          "categoria_ospiti_rsa": 425,
+          "categoria_operatori_sanitari_sociosanitari": 2433,
+          "categoria_ospiti_rsa": 390,
           "over_80": 0,
-          "personale_non_sanitario": 138
+          "personale_non_sanitario": 137
         },
         "nuovi_sesso": {
-          "donne": 1895,
-          "uomini": 1100
+          "donne": 1862,
+          "uomini": 1098
         },
-        "nuovi_vaccinati": 2995
+        "nuovi_vaccinati": 2960
       },
       {
         "codice_territorio": "19",
@@ -11919,10 +11919,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 508747,
-          "ospiti_rsa": 45955,
+          "operatori_sanitari_sociosanitari": 508865,
+          "ospiti_rsa": 45971,
           "over_80": 360,
-          "personale_non_sanitario": 181590
+          "personale_non_sanitario": 181456
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
@@ -11930,8 +11930,8 @@
         "prime_dosi": 736652,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 455928,
-          "uomini": 280724
+          "donne": 455930,
+          "uomini": 280722
         },
         "totale_dosi_consegnate": 918450,
         "totale_vaccinati": 736652
@@ -12147,10 +12147,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 41189,
-          "ospiti_rsa": 8156,
+          "operatori_sanitari_sociosanitari": 41307,
+          "ospiti_rsa": 8172,
           "over_80": 0,
-          "personale_non_sanitario": 796
+          "personale_non_sanitario": 662
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
@@ -12158,8 +12158,8 @@
         "prime_dosi": 50141,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 33797,
-          "uomini": 16344
+          "donne": 33799,
+          "uomini": 16342
         },
         "totale_dosi_consegnate": 93245,
         "totale_vaccinati": 50141
@@ -12343,19 +12343,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 77221,
+        "nuove_prime_dosi": 77224,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 41883,
-          "categoria_ospiti_rsa": 6538,
+          "categoria_operatori_sanitari_sociosanitari": 41882,
+          "categoria_ospiti_rsa": 6541,
           "over_80": 247,
-          "personale_non_sanitario": 28553
+          "personale_non_sanitario": 28554
         },
         "nuovi_sesso": {
-          "donne": 49410,
-          "uomini": 27811
+          "donne": 49412,
+          "uomini": 27812
         },
-        "nuovi_vaccinati": 77221
+        "nuovi_vaccinati": 77224
       },
       {
         "codice_territorio": "08",
@@ -12571,19 +12571,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 5087,
+        "nuove_prime_dosi": 5090,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 4356,
-          "categoria_ospiti_rsa": 521,
+          "categoria_operatori_sanitari_sociosanitari": 4355,
+          "categoria_ospiti_rsa": 524,
           "over_80": 0,
-          "personale_non_sanitario": 210
+          "personale_non_sanitario": 211
         },
         "nuovi_sesso": {
-          "donne": 3400,
-          "uomini": 1687
+          "donne": 3402,
+          "uomini": 1688
         },
-        "nuovi_vaccinati": 5087
+        "nuovi_vaccinati": 5090
       },
       {
         "codice_territorio": "19",
@@ -12762,10 +12762,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 547922,
-          "ospiti_rsa": 53490,
+          "operatori_sanitari_sociosanitari": 548040,
+          "ospiti_rsa": 53506,
           "over_80": 531,
-          "personale_non_sanitario": 212950
+          "personale_non_sanitario": 212816
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
@@ -12773,8 +12773,8 @@
         "prime_dosi": 814893,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 505682,
-          "uomini": 309211
+          "donne": 505684,
+          "uomini": 309209
         },
         "totale_dosi_consegnate": 993525,
         "totale_vaccinati": 814893
@@ -12990,10 +12990,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 44132,
-          "ospiti_rsa": 8510,
+          "operatori_sanitari_sociosanitari": 44250,
+          "ospiti_rsa": 8526,
           "over_80": 0,
-          "personale_non_sanitario": 1079
+          "personale_non_sanitario": 945
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
@@ -13001,8 +13001,8 @@
         "prime_dosi": 53721,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 35981,
-          "uomini": 17740
+          "donne": 35983,
+          "uomini": 17738
         },
         "totale_dosi_consegnate": 93245,
         "totale_vaccinati": 53721
@@ -13605,22 +13605,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 588906,
-          "ospiti_rsa": 61730,
+          "operatori_sanitari_sociosanitari": 589023,
+          "ospiti_rsa": 61746,
           "over_80": 540,
-          "personale_non_sanitario": 252389
+          "personale_non_sanitario": 252255
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 903565,
+        "prime_dosi": 903564,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 563296,
-          "uomini": 340269
+          "donne": 563297,
+          "uomini": 340267
         },
         "totale_dosi_consegnate": 1408875,
-        "totale_vaccinati": 903565
+        "totale_vaccinati": 903564
       },
       {
         "categoria": {
@@ -13833,22 +13833,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 47432,
-          "ospiti_rsa": 8885,
+          "operatori_sanitari_sociosanitari": 47549,
+          "ospiti_rsa": 8901,
           "over_80": 0,
-          "personale_non_sanitario": 1427
+          "personale_non_sanitario": 1293
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 57744,
+        "prime_dosi": 57743,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 38611,
-          "uomini": 19133
+          "donne": 38612,
+          "uomini": 19131
         },
         "totale_dosi_consegnate": 121520,
-        "totale_vaccinati": 57744
+        "totale_vaccinati": 57743
       },
       {
         "categoria": {
@@ -14029,19 +14029,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 88672,
+        "nuove_prime_dosi": 88671,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 40984,
+          "categoria_operatori_sanitari_sociosanitari": 40983,
           "categoria_ospiti_rsa": 8240,
           "over_80": 9,
           "personale_non_sanitario": 39439
         },
         "nuovi_sesso": {
-          "donne": 57614,
+          "donne": 57613,
           "uomini": 31058
         },
-        "nuovi_vaccinati": 88672
+        "nuovi_vaccinati": 88671
       },
       {
         "codice_territorio": "08",
@@ -14257,19 +14257,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 4023,
+        "nuove_prime_dosi": 4022,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 3300,
+          "categoria_operatori_sanitari_sociosanitari": 3299,
           "categoria_ospiti_rsa": 375,
           "over_80": 0,
           "personale_non_sanitario": 348
         },
         "nuovi_sesso": {
-          "donne": 2630,
+          "donne": 2629,
           "uomini": 1393
         },
-        "nuovi_vaccinati": 4023
+        "nuovi_vaccinati": 4022
       },
       {
         "codice_territorio": "19",
@@ -14448,22 +14448,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 626666,
-          "ospiti_rsa": 70949,
+          "operatori_sanitari_sociosanitari": 626784,
+          "ospiti_rsa": 70964,
           "over_80": 795,
-          "personale_non_sanitario": 292310
+          "personale_non_sanitario": 292176
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 990720,
+        "prime_dosi": 990719,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 620670,
-          "uomini": 370050
+          "donne": 620671,
+          "uomini": 370048
         },
         "totale_dosi_consegnate": 1455675,
-        "totale_vaccinati": 990720
+        "totale_vaccinati": 990719
       },
       {
         "categoria": {
@@ -14676,22 +14676,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 49889,
-          "ospiti_rsa": 9205,
+          "operatori_sanitari_sociosanitari": 50007,
+          "ospiti_rsa": 9220,
           "over_80": 0,
-          "personale_non_sanitario": 1902
+          "personale_non_sanitario": 1768
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 60996,
+        "prime_dosi": 60995,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 40685,
-          "uomini": 20311
+          "donne": 40686,
+          "uomini": 20309
         },
         "totale_dosi_consegnate": 126820,
-        "totale_vaccinati": 60996
+        "totale_vaccinati": 60995
       },
       {
         "categoria": {
@@ -14875,8 +14875,8 @@
         "nuove_prime_dosi": 87155,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 37760,
-          "categoria_ospiti_rsa": 9219,
+          "categoria_operatori_sanitari_sociosanitari": 37761,
+          "categoria_ospiti_rsa": 9218,
           "over_80": 255,
           "personale_non_sanitario": 39921
         },
@@ -15103,8 +15103,8 @@
         "nuove_prime_dosi": 3252,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 2457,
-          "categoria_ospiti_rsa": 320,
+          "categoria_operatori_sanitari_sociosanitari": 2458,
+          "categoria_ospiti_rsa": 319,
           "over_80": 0,
           "personale_non_sanitario": 475
         },
@@ -15291,22 +15291,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 662226,
-          "ospiti_rsa": 78659,
+          "operatori_sanitari_sociosanitari": 662344,
+          "ospiti_rsa": 78674,
           "over_80": 1203,
-          "personale_non_sanitario": 333268
+          "personale_non_sanitario": 333134
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 1075356,
+        "prime_dosi": 1075355,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 675760,
-          "uomini": 399596
+          "donne": 675761,
+          "uomini": 399594
         },
         "totale_dosi_consegnate": 1455675,
-        "totale_vaccinati": 1075356
+        "totale_vaccinati": 1075355
       },
       {
         "categoria": {
@@ -15519,22 +15519,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 52646,
-          "ospiti_rsa": 9646,
+          "operatori_sanitari_sociosanitari": 52764,
+          "ospiti_rsa": 9661,
           "over_80": 0,
-          "personale_non_sanitario": 2578
+          "personale_non_sanitario": 2444
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 64870,
+        "prime_dosi": 64869,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 43213,
-          "uomini": 21657
+          "donne": 43214,
+          "uomini": 21655
         },
         "totale_dosi_consegnate": 126820,
-        "totale_vaccinati": 64870
+        "totale_vaccinati": 64869
       },
       {
         "categoria": {
@@ -16134,10 +16134,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 688294,
-          "ospiti_rsa": 84715,
+          "operatori_sanitari_sociosanitari": 688413,
+          "ospiti_rsa": 84730,
           "over_80": 2634,
-          "personale_non_sanitario": 358400
+          "personale_non_sanitario": 358266
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
@@ -16145,8 +16145,8 @@
         "prime_dosi": 1134043,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 712341,
-          "uomini": 421702
+          "donne": 712342,
+          "uomini": 421701
         },
         "totale_dosi_consegnate": 1455675,
         "totale_vaccinati": 1134043
@@ -16362,10 +16362,10 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 55138,
-          "ospiti_rsa": 9863,
+          "operatori_sanitari_sociosanitari": 55257,
+          "ospiti_rsa": 9878,
           "over_80": 0,
-          "personale_non_sanitario": 3115
+          "personale_non_sanitario": 2981
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
@@ -16373,8 +16373,8 @@
         "prime_dosi": 68116,
         "seconde_dosi": 0,
         "sesso": {
-          "donne": 45423,
-          "uomini": 22693
+          "donne": 45424,
+          "uomini": 22692
         },
         "totale_dosi_consegnate": 126820,
         "totale_vaccinati": 68116
@@ -16558,19 +16558,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 58687,
+        "nuove_prime_dosi": 58688,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 26068,
+          "categoria_operatori_sanitari_sociosanitari": 26069,
           "categoria_ospiti_rsa": 6056,
           "over_80": 1431,
           "personale_non_sanitario": 25132
         },
         "nuovi_sesso": {
           "donne": 36581,
-          "uomini": 22106
+          "uomini": 22107
         },
-        "nuovi_vaccinati": 58687
+        "nuovi_vaccinati": 58688
       },
       {
         "codice_territorio": "08",
@@ -16786,19 +16786,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 3246,
+        "nuove_prime_dosi": 3247,
         "nuove_seconde_dosi": 0,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 2492,
+          "categoria_operatori_sanitari_sociosanitari": 2493,
           "categoria_ospiti_rsa": 217,
           "over_80": 0,
           "personale_non_sanitario": 537
         },
         "nuovi_sesso": {
           "donne": 2210,
-          "uomini": 1036
+          "uomini": 1037
         },
-        "nuovi_vaccinati": 3246
+        "nuovi_vaccinati": 3247
       },
       {
         "codice_territorio": "19",
@@ -16977,22 +16977,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 702608,
-          "ospiti_rsa": 87355,
+          "operatori_sanitari_sociosanitari": 703201,
+          "ospiti_rsa": 87403,
           "over_80": 4767,
-          "personale_non_sanitario": 372909
+          "personale_non_sanitario": 372779
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 1167306,
-        "seconde_dosi": 333,
+        "prime_dosi": 1167304,
+        "seconde_dosi": 846,
         "sesso": {
-          "donne": 732813,
-          "uomini": 434826
+          "donne": 733114,
+          "uomini": 435036
         },
         "totale_dosi_consegnate": 1455675,
-        "totale_vaccinati": 1167639
+        "totale_vaccinati": 1168150
       },
       {
         "categoria": {
@@ -17205,22 +17205,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 56658,
-          "ospiti_rsa": 10027,
+          "operatori_sanitari_sociosanitari": 57251,
+          "ospiti_rsa": 10075,
           "over_80": 0,
-          "personale_non_sanitario": 3404
+          "personale_non_sanitario": 3274
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 70089,
-        "seconde_dosi": 0,
+        "prime_dosi": 70087,
+        "seconde_dosi": 513,
         "sesso": {
-          "donne": 46771,
-          "uomini": 23318
+          "donne": 47072,
+          "uomini": 23528
         },
         "totale_dosi_consegnate": 126820,
-        "totale_vaccinati": 70089
+        "totale_vaccinati": 70600
       },
       {
         "categoria": {
@@ -17401,19 +17401,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 33263,
-        "nuove_seconde_dosi": 333,
+        "nuove_prime_dosi": 33261,
+        "nuove_seconde_dosi": 846,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 14314,
-          "categoria_ospiti_rsa": 2640,
+          "categoria_operatori_sanitari_sociosanitari": 14788,
+          "categoria_ospiti_rsa": 2673,
           "over_80": 2133,
-          "personale_non_sanitario": 14509
+          "personale_non_sanitario": 14513
         },
         "nuovi_sesso": {
-          "donne": 20472,
-          "uomini": 13124
+          "donne": 20772,
+          "uomini": 13335
         },
-        "nuovi_vaccinati": 33596
+        "nuovi_vaccinati": 34107
       },
       {
         "codice_territorio": "08",
@@ -17629,19 +17629,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 1973,
-        "nuove_seconde_dosi": 0,
+        "nuove_prime_dosi": 1971,
+        "nuove_seconde_dosi": 513,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 1520,
-          "categoria_ospiti_rsa": 164,
+          "categoria_operatori_sanitari_sociosanitari": 1994,
+          "categoria_ospiti_rsa": 197,
           "over_80": 0,
-          "personale_non_sanitario": 289
+          "personale_non_sanitario": 293
         },
         "nuovi_sesso": {
-          "donne": 1348,
-          "uomini": 625
+          "donne": 1648,
+          "uomini": 836
         },
-        "nuovi_vaccinati": 1973
+        "nuovi_vaccinati": 2484
       },
       {
         "codice_territorio": "19",
@@ -17820,22 +17820,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 717598,
-          "ospiti_rsa": 92383,
+          "operatori_sanitari_sociosanitari": 718276,
+          "ospiti_rsa": 92431,
           "over_80": 5914,
-          "personale_non_sanitario": 387224
+          "personale_non_sanitario": 387099
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 1198961,
-        "seconde_dosi": 4158,
+        "prime_dosi": 1198959,
+        "seconde_dosi": 4761,
         "sesso": {
-          "donne": 755752,
-          "uomini": 447367
+          "donne": 756095,
+          "uomini": 447625
         },
         "totale_dosi_consegnate": 1455675,
-        "totale_vaccinati": 1203119
+        "totale_vaccinati": 1203720
       },
       {
         "categoria": {
@@ -18048,22 +18048,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 57003,
-          "ospiti_rsa": 10402,
+          "operatori_sanitari_sociosanitari": 57681,
+          "ospiti_rsa": 10450,
           "over_80": 0,
-          "personale_non_sanitario": 3713
+          "personale_non_sanitario": 3588
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 71110,
-        "seconde_dosi": 8,
+        "prime_dosi": 71108,
+        "seconde_dosi": 611,
         "sesso": {
-          "donne": 47212,
-          "uomini": 23906
+          "donne": 47555,
+          "uomini": 24164
         },
         "totale_dosi_consegnate": 126820,
-        "totale_vaccinati": 71118
+        "totale_vaccinati": 71719
       },
       {
         "categoria": {
@@ -18245,18 +18245,18 @@
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
         "nuove_prime_dosi": 31655,
-        "nuove_seconde_dosi": 3825,
+        "nuove_seconde_dosi": 3915,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 14990,
+          "categoria_operatori_sanitari_sociosanitari": 15075,
           "categoria_ospiti_rsa": 5028,
           "over_80": 1147,
-          "personale_non_sanitario": 14315
+          "personale_non_sanitario": 14320
         },
         "nuovi_sesso": {
-          "donne": 22939,
-          "uomini": 12541
+          "donne": 22981,
+          "uomini": 12589
         },
-        "nuovi_vaccinati": 35480
+        "nuovi_vaccinati": 35570
       },
       {
         "codice_territorio": "08",
@@ -18473,18 +18473,18 @@
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
         "nuove_prime_dosi": 1021,
-        "nuove_seconde_dosi": 8,
+        "nuove_seconde_dosi": 98,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 345,
+          "categoria_operatori_sanitari_sociosanitari": 430,
           "categoria_ospiti_rsa": 375,
           "over_80": 0,
-          "personale_non_sanitario": 309
+          "personale_non_sanitario": 314
         },
         "nuovi_sesso": {
-          "donne": 441,
-          "uomini": 588
+          "donne": 483,
+          "uomini": 636
         },
-        "nuovi_vaccinati": 1029
+        "nuovi_vaccinati": 1119
       },
       {
         "codice_territorio": "19",
@@ -18663,22 +18663,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 729446,
-          "ospiti_rsa": 96592,
+          "operatori_sanitari_sociosanitari": 730124,
+          "ospiti_rsa": 96640,
           "over_80": 6775,
-          "personale_non_sanitario": 396335
+          "personale_non_sanitario": 396210
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 1223504,
-        "seconde_dosi": 5644,
+        "prime_dosi": 1223502,
+        "seconde_dosi": 6247,
         "sesso": {
-          "donne": 772715,
-          "uomini": 456433
+          "donne": 773058,
+          "uomini": 456691
         },
         "totale_dosi_consegnate": 1558635,
-        "totale_vaccinati": 1229148
+        "totale_vaccinati": 1229749
       },
       {
         "categoria": {
@@ -18891,22 +18891,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 57394,
-          "ospiti_rsa": 10887,
+          "operatori_sanitari_sociosanitari": 58072,
+          "ospiti_rsa": 10935,
           "over_80": 0,
-          "personale_non_sanitario": 3934
+          "personale_non_sanitario": 3809
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 72207,
-        "seconde_dosi": 8,
+        "prime_dosi": 72205,
+        "seconde_dosi": 611,
         "sesso": {
-          "donne": 47781,
-          "uomini": 24434
+          "donne": 48124,
+          "uomini": 24692
         },
         "totale_dosi_consegnate": 133840,
-        "totale_vaccinati": 72215
+        "totale_vaccinati": 72816
       },
       {
         "categoria": {
@@ -19506,22 +19506,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 733360,
-          "ospiti_rsa": 97670,
+          "operatori_sanitari_sociosanitari": 734136,
+          "ospiti_rsa": 97823,
           "over_80": 6909,
-          "personale_non_sanitario": 398540
+          "personale_non_sanitario": 398460
         },
         "codice_territorio": "00",
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
-        "prime_dosi": 1229536,
-        "seconde_dosi": 6943,
+        "prime_dosi": 1229733,
+        "seconde_dosi": 7595,
         "sesso": {
-          "donne": 777290,
-          "uomini": 459189
+          "donne": 777770,
+          "uomini": 459558
         },
         "totale_dosi_consegnate": 1558635,
-        "totale_vaccinati": 1236479
+        "totale_vaccinati": 1237328
       },
       {
         "categoria": {
@@ -19734,22 +19734,22 @@
       },
       {
         "categoria": {
-          "operatori_sanitari_sociosanitari": 57583,
-          "ospiti_rsa": 11170,
+          "operatori_sanitari_sociosanitari": 58359,
+          "ospiti_rsa": 11323,
           "over_80": 0,
-          "personale_non_sanitario": 4038
+          "personale_non_sanitario": 3958
         },
         "codice_territorio": "17",
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
-        "prime_dosi": 72718,
-        "seconde_dosi": 73,
+        "prime_dosi": 72915,
+        "seconde_dosi": 725,
         "sesso": {
-          "donne": 48055,
-          "uomini": 24736
+          "donne": 48535,
+          "uomini": 25105
         },
         "totale_dosi_consegnate": 133840,
-        "totale_vaccinati": 72791
+        "totale_vaccinati": 73640
       },
       {
         "categoria": {
@@ -19930,19 +19930,19 @@
         "nome_territorio": "Italia",
         "nome_territorio_corto": "Italia",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 6032,
-        "nuove_seconde_dosi": 1299,
+        "nuove_prime_dosi": 6231,
+        "nuove_seconde_dosi": 1348,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 3914,
-          "categoria_ospiti_rsa": 1078,
+          "categoria_operatori_sanitari_sociosanitari": 4012,
+          "categoria_ospiti_rsa": 1183,
           "over_80": 134,
-          "personale_non_sanitario": 2205
+          "personale_non_sanitario": 2250
         },
         "nuovi_sesso": {
-          "donne": 4575,
-          "uomini": 2756
+          "donne": 4712,
+          "uomini": 2867
         },
-        "nuovi_vaccinati": 7331
+        "nuovi_vaccinati": 7579
       },
       {
         "codice_territorio": "08",
@@ -20158,19 +20158,19 @@
         "nome_territorio": "Toscana",
         "nome_territorio_corto": "TOS",
         "nuove_dosi_consegnate": 0,
-        "nuove_prime_dosi": 511,
-        "nuove_seconde_dosi": 65,
+        "nuove_prime_dosi": 710,
+        "nuove_seconde_dosi": 114,
         "nuovi_categoria": {
-          "categoria_operatori_sanitari_sociosanitari": 189,
-          "categoria_ospiti_rsa": 283,
+          "categoria_operatori_sanitari_sociosanitari": 287,
+          "categoria_ospiti_rsa": 388,
           "over_80": 0,
-          "personale_non_sanitario": 104
+          "personale_non_sanitario": 149
         },
         "nuovi_sesso": {
-          "donne": 274,
-          "uomini": 302
+          "donne": 411,
+          "uomini": 413
         },
-        "nuovi_vaccinati": 576
+        "nuovi_vaccinati": 824
       },
       {
         "codice_territorio": "19",

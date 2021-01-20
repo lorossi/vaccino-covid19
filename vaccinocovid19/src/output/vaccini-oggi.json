@@ -225,14 +225,14 @@
       "codice_territorio": "17",
       "nome_territorio": "Toscana",
       "nome_territorio_corto": "TOS",
-      "percentuale_dosi_utilizzate": 78.36257939498331,
-      "percentuale_dosi_utilizzate_formattato": "78.36%",
-      "percentuale_popolazione_vaccinata": 1.9712908812461831,
-      "percentuale_popolazione_vaccinata_formattato": "1.97%",
+      "percentuale_dosi_utilizzate": 79.27656367746798,
+      "percentuale_dosi_utilizzate_formattato": "79.28%",
+      "percentuale_popolazione_vaccinata": 1.9942830912471177,
+      "percentuale_popolazione_vaccinata_formattato": "1.99%",
       "totale_dosi_consegnate": 92890,
       "totale_dosi_consegnate_formattato": "92.890",
-      "totale_vaccinati": 72791,
-      "totale_vaccinati_formattato": "72.791"
+      "totale_vaccinati": 73640,
+      "totale_vaccinati_formattato": "73.640"
     },
     {
       "codice_territorio": "19",
@@ -280,30 +280,30 @@
       "nome_categoria": "categoria_operatori_sanitari_sociosanitari",
       "nome_categoria_formattato": "operatori sanitari sociosanitari",
       "nome_categoria_pulito": "operatori_sanitari_sociosanitari",
-      "nuovi_vaccinati": 3914,
-      "nuovi_vaccinati_formattato": "3.914",
-      "totale_vaccinati": 733360,
-      "totale_vaccinati_formattato": "733.360"
+      "nuovi_vaccinati": 4012,
+      "nuovi_vaccinati_formattato": "4.012",
+      "totale_vaccinati": 734136,
+      "totale_vaccinati_formattato": "734.136"
     },
     {
       "id": 1,
       "nome_categoria": "categoria_personale_non_sanitario",
       "nome_categoria_formattato": "personale non sanitario",
       "nome_categoria_pulito": "personale_non_sanitario",
-      "nuovi_vaccinati": 2205,
-      "nuovi_vaccinati_formattato": "2.205",
-      "totale_vaccinati": 398540,
-      "totale_vaccinati_formattato": "398.540"
+      "nuovi_vaccinati": 2250,
+      "nuovi_vaccinati_formattato": "2.250",
+      "totale_vaccinati": 398460,
+      "totale_vaccinati_formattato": "398.460"
     },
     {
       "id": 2,
       "nome_categoria": "categoria_ospiti_rsa",
       "nome_categoria_formattato": "ospiti rsa",
       "nome_categoria_pulito": "ospiti_rsa",
-      "nuovi_vaccinati": 1078,
-      "nuovi_vaccinati_formattato": "1.078",
-      "totale_vaccinati": 97670,
-      "totale_vaccinati_formattato": "97.670"
+      "nuovi_vaccinati": 1183,
+      "nuovi_vaccinati_formattato": "1.183",
+      "totale_vaccinati": 97823,
+      "totale_vaccinati_formattato": "97.823"
     },
     {
       "id": 3,
@@ -319,83 +319,112 @@
   "fasce_eta": [
     {
       "nome_categoria": "16-19",
-      "seconda_dose_formattato": "1",
-      "totale_vaccinati": 1547,
-      "totale_vaccinati_formattato": "1.547"
+      "prima_dose": 1959,
+      "seconda_dose": 2,
+      "seconda_dose_formattato": "2",
+      "sprima_dose_formattato": "1.959",
+      "totale_vaccinati": 1961,
+      "totale_vaccinati_formattato": "1.961"
     },
     {
       "nome_categoria": "20-29",
-      "seconda_dose_formattato": "481",
-      "totale_vaccinati": 128885,
-      "totale_vaccinati_formattato": "128.885"
+      "prima_dose": 129434,
+      "seconda_dose": 532,
+      "seconda_dose_formattato": "532",
+      "sprima_dose_formattato": "129.434",
+      "totale_vaccinati": 129966,
+      "totale_vaccinati_formattato": "129.966"
     },
     {
       "nome_categoria": "30-39",
-      "seconda_dose_formattato": "1.097",
-      "totale_vaccinati": 192335,
-      "totale_vaccinati_formattato": "192.335"
+      "prima_dose": 190923,
+      "seconda_dose": 1207,
+      "seconda_dose_formattato": "1.207",
+      "sprima_dose_formattato": "190.923",
+      "totale_vaccinati": 192130,
+      "totale_vaccinati_formattato": "192.130"
     },
     {
       "nome_categoria": "40-49",
-      "seconda_dose_formattato": "1.479",
-      "totale_vaccinati": 241935,
-      "totale_vaccinati_formattato": "241.935"
+      "prima_dose": 241079,
+      "seconda_dose": 1628,
+      "seconda_dose_formattato": "1.628",
+      "sprima_dose_formattato": "241.079",
+      "totale_vaccinati": 242707,
+      "totale_vaccinati_formattato": "242.707"
     },
     {
       "nome_categoria": "50-59",
-      "seconda_dose_formattato": "2.109",
-      "totale_vaccinati": 326007,
-      "totale_vaccinati_formattato": "326.007"
+      "prima_dose": 323815,
+      "seconda_dose": 2287,
+      "seconda_dose_formattato": "2.287",
+      "sprima_dose_formattato": "323.815",
+      "totale_vaccinati": 326102,
+      "totale_vaccinati_formattato": "326.102"
     },
     {
       "nome_categoria": "60-69",
-      "seconda_dose_formattato": "1.482",
-      "totale_vaccinati": 199273,
-      "totale_vaccinati_formattato": "199.273"
+      "prima_dose": 196656,
+      "seconda_dose": 1586,
+      "seconda_dose_formattato": "1.586",
+      "sprima_dose_formattato": "196.656",
+      "totale_vaccinati": 198242,
+      "totale_vaccinati_formattato": "198.242"
     },
     {
       "nome_categoria": "70-79",
-      "seconda_dose_formattato": "121",
-      "totale_vaccinati": 42410,
-      "totale_vaccinati_formattato": "42.410"
+      "prima_dose": 42137,
+      "seconda_dose": 132,
+      "seconda_dose_formattato": "132",
+      "sprima_dose_formattato": "42.137",
+      "totale_vaccinati": 42269,
+      "totale_vaccinati_formattato": "42.269"
     },
     {
       "nome_categoria": "80-89",
-      "seconda_dose_formattato": "99",
-      "totale_vaccinati": 59034,
-      "totale_vaccinati_formattato": "59.034"
+      "prima_dose": 59157,
+      "seconda_dose": 126,
+      "seconda_dose_formattato": "126",
+      "sprima_dose_formattato": "59.157",
+      "totale_vaccinati": 59283,
+      "totale_vaccinati_formattato": "59.283"
     },
     {
       "nome_categoria": "90+",
-      "seconda_dose_formattato": "74",
-      "totale_vaccinati": 45053,
-      "totale_vaccinati_formattato": "45.053"
+      "prima_dose": 44573,
+      "seconda_dose": 95,
+      "seconda_dose_formattato": "95",
+      "sprima_dose_formattato": "44.573",
+      "totale_vaccinati": 44668,
+      "totale_vaccinati_formattato": "44.668"
     }
   ],
   "sesso": [
     {
       "nome_categoria": "uomini",
-      "nuovi_vaccinati": 2756,
-      "totale_vaccinati": 459189,
-      "totale_vaccinati_formattato": "459.189"
+      "nuovi_vaccinati": 2867,
+      "nuovi_vaccinati_formattato": "2.867",
+      "totale_vaccinati": 459558,
+      "totale_vaccinati_formattato": "459.558"
     },
     {
       "nome_categoria": "donne",
-      "nuovi_vaccinati": 4575,
-      "totale_vaccinati": 777290,
-      "totale_vaccinati_formattato": "777.290"
+      "nuovi_vaccinati": 4712,
+      "nuovi_vaccinati_formattato": "4.712",
+      "totale_vaccinati": 777770,
+      "totale_vaccinati_formattato": "777.770"
     }
   ],
   "somministrazioni": [
     {
       "nome_categoria": "prima_dose",
-      "totale_vaccinati": 1229536,
-      "totale_vaccinati_formattato": "1.229.536"
+      "totale_vaccinati": 1229733,
+      "totale_vaccinati_formattato": "1.229.733"
     },
     {
       "nome_categoria": "seconda_dose",
-      "totale_vaccinati": 6943,
-      "totale_vaccinati_formattato": "6.943"
+      "totale_vaccinati": 7595,
+      "totale_vaccinati_formattato": "7.595"
     }
   ],
   "variazioni": [
@@ -626,12 +655,12 @@
       "nome_territorio_corto": "TOS",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 576,
-      "nuovi_vaccinati_formattato": "576",
+      "nuovi_vaccinati": 824,
+      "nuovi_vaccinati_formattato": "824",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0.00%",
-      "percentuale_nuovi_vaccinati": 0.7976182233607977,
-      "percentuale_nuovi_vaccinati_formattato": "0.80%"
+      "percentuale_nuovi_vaccinati": 1.1316194243023512,
+      "percentuale_nuovi_vaccinati_formattato": "1.13%"
     },
     {
       "codice_territorio": "19",

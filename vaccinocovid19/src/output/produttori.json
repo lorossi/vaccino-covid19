@@ -1,13 +1,13 @@
 {
   "produttori": [
     {
-      "nome_produttore": "Moderna",
-      "totale_dosi_consegnate": 46800
-    },
-    {
       "nome_produttore": "Pfizer\/BioNTech",
       "totale_dosi_consegnate": 1511835
+    },
+    {
+      "nome_produttore": "Moderna",
+      "totale_dosi_consegnate": 46800
     }
   ],
-  "timestamp": "2021-01-20T16:13:36.286538"
+  "timestamp": "2021-01-20T17:34:12.221577"
 }

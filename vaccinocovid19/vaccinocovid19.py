@@ -11,9 +11,9 @@ app = Flask(__name__)
 
 def main():
     logfile = "logging.log"
-    """logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
+    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
                         level=logging.INFO, filename=logfile,
-                        filemode="w")"""
+                        filemode="w")
 
     # scheduler setup
     scheduler = BackgroundScheduler()
@@ -38,10 +38,10 @@ def scrape_colors():
 @app.route("/")
 @app.route("/homepage")
 def index():
-    s.printJson(s.italy)
-    return render_template("index.html", italy=s.italy, territories_list=s.territories_list)
+    return render_template("index.html", italy=s.italy,
+                           territories_list=s.territories_list)
 
-"""
+
 @app.route("/get/italia", methods=["GET"])
 def get_italia():
     return jsonify(s.italy)
@@ -62,7 +62,7 @@ def get_categorie():
     return jsonify(s.categories)
 
 
-@app.route("/get/sessi", methods=["GET"])
+@app.route("/get/sesso", methods=["GET"])
 def get_sessi():
     return jsonify(s.genders)
 
@@ -77,12 +77,26 @@ def get_storico_vaccini():
     return jsonify(s.history)
 
 
+@app.route("/get/storico_vaccini/<codice_territorio>", methods=["GET"])
+def get_storico_territorio(codice_territorio):
+    return jsonify(s.territoryHistory(codice_territorio))
+
+
 @app.route("/get/colore_territori", methods=["GET"])
 def get_colore_territori():
     return jsonify(s.territories_color)
 
-"""
-"""
+
+@app.route("/get/produttori_vaccini", methods=["GET"])
+def get_produttori_vaccini():
+    return jsonify(s.vaccine_producers)
+
+
+@app.route("/get/somministrazioni", methods=["GET"])
+def get_somministrazioni():
+    return jsonify(s.subministrations)
+
+
 # error 404 page
 @app.errorhandler(404)
 def error_400(e):
@@ -90,13 +104,14 @@ def error_400(e):
     return render_template("error.html", errorcode=404,
                            errordescription="page not found"), 404
 
+
 # error 500 page
 @app.errorhandler(Exception)
 def error_500(e):
     logging.error("error 500: %s", e)
     return render_template("error.html", errorcode=500,
                            errordescription="internal server error"), 500
-"""
+
 
 main()
 
