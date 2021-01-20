@@ -3,5 +3,6 @@
 - ~Add charts~ **DONE**
 - ~Add chart and table for relative and absolute variation of new doses and new vaccines~ **DONE**
 - ~Add time chart of vaccination~ **DONE**
+- ~Calculate number of vaccines by producer~ **DONE**
+- Calculate variation in doses, ~variation by gender~, variation by age range, variation by category
 - Finally push this version to production
-- Calculate number of vaccines by producer

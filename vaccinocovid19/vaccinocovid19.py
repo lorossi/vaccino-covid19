@@ -11,52 +11,36 @@ app = Flask(__name__)
 
 def main():
     logfile = "logging.log"
-    logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
+    """logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
                         level=logging.INFO, filename=logfile,
-                        filemode="w")
+                        filemode="w")"""
 
     # scheduler setup
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(scrape_history, trigger="cron", minute="5", hour="0")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
-    s.loadData()
+    s.scrapeAll()
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
-    s.scrapeData()
+    s.scrapeAll()
     s.saveData()
-
-
-def scrape_history():
-    s.scrapeHistory()
-    s.saveData()
-
 
 def scrape_colors():
     s.scrapeTerritoriesColor()
     s.saveData()
 
 
-# error 500 page
-@app.errorhandler(Exception)
-def error_500(e):
-    logging.error("error 500: %s", e)
-    return render_template("error.html", errorcode=500,
-                           errordescription="internal server error"), 500
-
-
 # index
 @app.route("/")
 @app.route("/homepage")
 def index():
-    return render_template("index.html", last_updated=s.last_updated,
-                           territories_list=s.territories_list, italy=s.italy)
+    return render_template("index.html", italy=s.italy, territories_list=s.territories_list)
 
-
+"""
 @app.route("/get/italia", methods=["GET"])
 def get_italia():
     return jsonify(s.italy)
@@ -96,7 +80,8 @@ def get_storico_vaccini():
 def get_colore_territori():
     return jsonify(s.territories_color)
 
-
+"""
+"""
 # error 404 page
 @app.errorhandler(404)
 def error_400(e):
@@ -104,8 +89,15 @@ def error_400(e):
     return render_template("error.html", errorcode=404,
                            errordescription="page not found"), 404
 
+# error 500 page
+@app.errorhandler(Exception)
+def error_500(e):
+    logging.error("error 500: %s", e)
+    return render_template("error.html", errorcode=500,
+                           errordescription="internal server error"), 500
+"""
 
 main()
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
