@@ -6,6 +6,7 @@ import ujson
 import locale
 import logging
 import requests
+import subprocess
 from bs4 import BeautifulSoup
 from collections import Counter
 from pathlib import Path
@@ -614,6 +615,21 @@ class Scraper:
         print(ujson.dumps(data, indent=indent))
         if exit:
             quit()
+
+    def backup(self):
+        logging.info("Started backup process")
+        # now push all to to github
+        # repo folder is parent
+        subprocess.run(["git", "pull"], check=True)
+        logging.info("Repo pulled")
+        try:
+            subprocess.run(["git", "commit", "-am", '"updated data"'], check=True)
+            logging.info("Commit created")
+            subprocess.run(["git", "push"], check=True)
+            logging.info("Repo pushed")
+        except Exception as e:
+            logging.error("Cannot commit or push. Repo is probably already "
+                          f"on par with the tree. Error {e}")
 
     @property
     def italy(self):
