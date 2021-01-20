@@ -15,7 +15,7 @@ from datetime import datetime, timedelta
 
 class Scraper:
     def __init__(self, log=True, verbose=True):
-        locale.setlocale(locale.LC_ALL, '')
+        locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
         self.log = log
         self.verbose = verbose
         self._last_updated = None
