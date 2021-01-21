@@ -1,0 +1,24 @@
+{
+  "codice_territorio": "00",
+  "nome_territorio": "Italia",
+  "nome_territorio_corto": "Italia",
+  "nuove_dosi_consegnate": 0,
+  "nuove_dosi_consegnate_formattato": "0",
+  "nuovi_vaccinati": 0,
+  "nuovi_vaccinati_formattato": "0",
+  "percentuale_dosi_utilizzate": 80.57871150076829,
+  "percentuale_dosi_utilizzate_formattato": "80,58%",
+  "percentuale_popolazione_vaccinata": 2.1057958849048166,
+  "percentuale_popolazione_vaccinata_formattato": "2,11%",
+  "somministrazioni": {
+    "prima_dose": 1244497,
+    "prima_dose_formattato": "1.244.497",
+    "seconda_dose": 11431,
+    "seconda_dose_formattato": "11.431"
+  },
+  "totale_dosi_consegnate": 1558635,
+  "totale_dosi_consegnate_formattato": "1.558.635",
+  "totale_vaccinati": 1255928,
+  "totale_vaccinati_formattato": "1.255.928",
+  "ultimo_aggiornamento": "2021-01-21 ore 11:15"
+}
