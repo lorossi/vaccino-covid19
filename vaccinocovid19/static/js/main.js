@@ -1013,10 +1013,6 @@ const load_age_ranges = async (order, reverse, age_ranges) => {
     $("table#fasce_eta tbody").html("");
 
     age_ranges.forEach((t, i) => {
-      let sign, td_class;
-
-      sign = t.nuovi_vaccinati >= 0 ? "+" : "";
-      td_class = t.nuovi_vaccinati >= 0 ? "" : "warning";
 
       let new_tr = `<tr id="${t.nome_categoria}" class="territorio">`;
       new_tr += `<td>${t.nome_categoria}</td>`;
@@ -1155,6 +1151,10 @@ const load_vaccine_producers = async (order, reverse, producers) => {
       producers.sort((a, b) => a.nome_produttore > b.nome_produttore ? 1 : -1);
     } else if (order === 1) {
       producers.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+    } else if (order === 2) {
+      producers.sort((a, b) => a.nuove_dosi_consegnate > b.nuove_dosi_consegnate ? 1 : -1);
+    } else if (order === 2) {
+      producers.sort((a, b) => a.nuove_dosi_percentuale_formattato > b.nuove_dosi_percentuale_formattato ? 1 : -1);
     }
 
     if (reverse) {
@@ -1164,9 +1164,15 @@ const load_vaccine_producers = async (order, reverse, producers) => {
     $("table#produttori_vaccini tbody").html("");
 
     producers.forEach((t, i) => {
+      let sign, td_class;
+      sign = t.nuove_dosi_consegnate >= 0 ? "+" : "";
+      td_class = t.nuove_dosi_consegnate >= 0 ? "" : "warning";
+
       let new_tr = `<tr id="${t.nome_produttore}" class="territorio">`;
       new_tr += `<td>${t.nome_produttore}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate_formattato}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${t.nuove_dosi_consegnate_formattato}</td>`;
+      new_tr += `<td class="${td_class}">${sign}${t.nuove_dosi_percentuale_formattato}</td>`;
       new_tr += "</tr>";
       $("table#produttori_vaccini tbody").append(new_tr);
     });
@@ -1351,6 +1357,38 @@ const load_subministrations_chart = async (subministrations) => {
   }
 };
 
+
+const load_territories_color_chart = async () => {
+  let geojson;
+  let map;
+
+  const style = feature => {
+    return {
+    			weight: 2,
+    			opacity: 1,
+    			color: feature.properties.colore_rgb,
+    			fillOpacity: 0.7
+    		};
+  };
+
+  geojson = await get_data_json("/get/mappa_colore_territori");
+  let zoom_level = $(window).width() > 1500 ? 6 : 5;
+
+  map = L.map("mappa_colori_regioni", {
+    attributionControl: false,
+    zoomControl: false,
+    boxZoom: false,
+    minZoom: zoom_level,
+    maxZoom: zoom_level,
+    doubleClickZoom: false,
+    dragging: false
+  }).setView([42, 12.534], zoom_level);
+
+  let elem = L.DomUtil.get('mappa_colori_regioni');
+  L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
+  L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
+};
+
 // main function
 $(document).ready(async () => {
   console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19");
@@ -1382,6 +1420,8 @@ $(document).ready(async () => {
   });
   let vaccine_producers_chart = load_vaccine_producers_chart(await vaccine_producers);
   let subministrations_chart = load_subministrations_chart(await subministrations);
+
+  load_territories_color_chart();
 
   // form for all time chart
   $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {

@@ -7,6 +7,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # Objects
 s = Scraper()
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
 def main():
@@ -86,6 +87,11 @@ def get_storico_territorio(nome_territorio):
 @app.route("/get/colore_territori", methods=["GET"])
 def get_colore_territori():
     return jsonify(s.territories_color)
+
+
+@app.route("/get/mappa_colore_territori", methods=["GET"])
+def get_mappa_colore_territori():
+    return jsonify(s.territories_color_map)
 
 
 @app.route("/get/produttori_vaccini", methods=["GET"])

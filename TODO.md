@@ -8,6 +8,7 @@
 - Finally push this version to production *eheh...*
 - Add missing chart **DONE**
 - Show both first and second subministration in the first chart and on top of the page **DONE**
-- Add cloropleth map of COLORI TERRITORI SECONDO SPERANZA
-    - GeoJson https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe
-    - Cloropleth map https://leafletjs.com/examples/geojson/ - https://leafletjs.com/examples/choropleth/
+- ~Add cloropleth map of COLORI TERRITORI SECONDO SPERANZA~ **DONE**
+    - ~GeoJson https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe~
+    - ~Cloropleth map https://leafletjs.com/examples/geojson/ - https://leafletjs.com/examples/choropleth/~
+- Ragiona sulle percentuali. Come ~cazzo~ sono calcolate?

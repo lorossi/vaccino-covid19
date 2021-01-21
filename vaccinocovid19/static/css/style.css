@@ -44,7 +44,7 @@ body {
   text-align: center;
 }
 
-.datacontainer {
+.datacontainer, .leafletcontainer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -177,11 +177,11 @@ table tr {
   text-align: center;
 }
 
-table, .italia .stats, .chartcontainer, .alltimechartcontainer {
+table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 10px 10px rgba(0,0,0,0.24);
 }
 
-.chartcontainer {
+.chartcontainer, .mapcontainer {
   width: 90%;
   height: auto;
   display: flex;
@@ -190,6 +190,10 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
   align-content: center;
   padding: var(--text-size);
   margin-bottom: calc(2 * var(--title-size));
+}
+
+.mapcontainer {
+  min-height: 75vh;
 }
 
 .form {
@@ -205,6 +209,11 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
 
 .dropdown-content {
   font-size: var(--text-size);
+}
+
+.leaflet-container {
+    background: #f8f9fa;
+    outline: 0;
 }
 
 .errorcontainer {
@@ -272,6 +281,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     width: 28%;
     flex-grow: 0;
   }
+
   .datacontainer {
     justify-content: space-between;
     align-content: flex-start;
@@ -282,9 +292,23 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     max-width: 1150px;
   }
 
-  .chartcontainer {
+  .leafletcontainer {
+    justify-content: center;
+    align-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 75vw;
+    max-width: 1150px;
+  }
+
+  .chartcontainer, .mapcontainer {
     margin-top: calc(1.4 * var(--text-size) + var(--big-text-size));
     width: 40%;
+  }
+
+  .mapcontainer {
+    width: 60%;
   }
 
   table {
@@ -303,7 +327,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 5px 5px rgba(0,0,0,0.22);
   }
 
-  table, .chartcontainer {
+  table, .chartcontainer, .mapcontainer {
     margin-bottom: var(--title-size);
   }
 }
@@ -313,7 +337,7 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     width: 40%;
   }
 
-  .datacontainer {
+  .datacontainer, .leafletcontainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -327,9 +351,13 @@ table, .italia .stats, .chartcontainer, .alltimechartcontainer {
     margin-bottom: calc(var(--title-size));
   }
 
-  .chartcontainer {
+  .chartcontainer, .mapcontainer {
     width: 40%;
     margin-bottom: calc(var(--title-size) * 2);
     margin-top: 0;
+  }
+
+  .mapcontainer {
+    width: 80%;
   }
 }
