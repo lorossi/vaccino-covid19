@@ -1152,18 +1152,18 @@ const load_vaccine_producers = async (order, reverse, producers) => {
     if (!producers) producers = await get_data_json("/get/produttori_vaccini");
 
     if (order === 0) {
-      producers.produttori.sort((a, b) => a.nome_produttore > b.nome_produttore ? 1 : -1);
+      producers.sort((a, b) => a.nome_produttore > b.nome_produttore ? 1 : -1);
     } else if (order === 1) {
-      producers.produttori.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
+      producers.sort((a, b) => a.totale_dosi_consegnate > b.totale_dosi_consegnate ? 1 : -1);
     }
 
     if (reverse) {
-      producers.produttori.reverse();
+      producers.reverse();
     }
 
     $("table#produttori_vaccini tbody").html("");
 
-    producers.produttori.forEach((t, i) => {
+    producers.forEach((t, i) => {
       let new_tr = `<tr id="${t.nome_produttore}" class="territorio">`;
       new_tr += `<td>${t.nome_produttore}</td>`;
       new_tr += `<td>${t.totale_dosi_consegnate_formattato}</td>`;
@@ -1192,19 +1192,19 @@ const load_vaccine_producers_chart = async (producers) => {
     producers = await producers;
     if (!producers) producers = await get_data_json("/get/produttori_vaccini");
 
-    data = producers.produttori.map(x => x.totale_dosi_consegnate);
-    labels = producers.produttori.map(x => x.nome_produttore);
+    data = producers.map(x => x.totale_dosi_consegnate);
+    labels = producers.map(x => x.nome_produttore);
     label = "Totale vaccini consegnati";
 
-    background_colors = producers.produttori.map((x, i) => {
-      return `hsla(${i / producers.produttori.length * 360}, 60%, 60%, 1)`;
+    background_colors = producers.map((x, i) => {
+      return `hsla(${i / producers.length * 360}, 60%, 60%, 1)`;
     });
 
-    border_colors = producers.produttori.map((x, i) => {
-      return `hsla(${i / producers.produttori.length * 360}, 75%, 50%, 0.75)`;
+    border_colors = producers.map((x, i) => {
+      return `hsla(${i / producers.length * 360}, 75%, 50%, 0.75)`;
     });
-    hover_background_colors = producers.produttori.map((x, i) => {
-      return `hsla(${i / producers.produttori.length * 360}, 75%, 50%, 0.5)`;
+    hover_background_colors = producers.map((x, i) => {
+      return `hsla(${i / producers.length * 360}, 75%, 50%, 0.5)`;
     });
 
 

@@ -658,12 +658,10 @@ class Scraper:
         self.loadData(today=True)
         return self._data["variazioni"]
 
-
     @property
     def categories(self):
         self.loadData(today=True)
         return self._data["categorie"]
-
 
     @property
     def genders(self):
@@ -688,7 +686,7 @@ class Scraper:
     @property
     def vaccine_producers(self):
         self.loadData(producers=True)
-        return self._vaccine_producers
+        return self._vaccine_producers["produttori"]
 
     @property
     def subministrations(self):
