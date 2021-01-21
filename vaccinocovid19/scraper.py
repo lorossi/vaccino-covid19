@@ -630,7 +630,8 @@ class Scraper:
         subprocess.run(["git", "pull"])
         logging.info("Repo pulled")
         try:
-            subprocess.run(["git", "commit", "-am", '"updated data"'])
+            subprocess.run(["git", "add", "-A"])
+            subprocess.run(["git", "commit", "-m", '"updated data"'])
             logging.info("Commit created")
             subprocess.run(["git", "push"])
             logging.info("Repo pushed")
