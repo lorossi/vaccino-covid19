@@ -4,7 +4,7 @@ Controlla in tempo reale (o quasi) la distribuzione del vaccino contro il covid 
 # Link: https://www.vaccinocovid19.live/
 
 ## Fonte dei dati
-I dati sono presi direttamente dalla [dashboard Ministeriale](https://app.powerbi.com/view?r=eyJrIjoiMzg4YmI5NDQtZDM5ZC00ZTIyLTgxN2MtOTBkMWM4MTUyYTg0IiwidCI6ImFmZDBhNzVjLTg2NzEtNGNjZS05MDYxLTJjYTBkOTJlNDIyZiIsImMiOjh9) e vengono manipolati dal server per venire mostrati con più agio.
+I dati sono presi direttamente dalla [dashboard Ministeriale](https://www.governo.it/it/cscovid19/report-vaccini/) (o meglio, dalla [repo contenente i dati](https://github.com/italia/covid19-opendata-vaccini)) e vengono manipolati dal server per venire mostrati con più agio.
 
 **Saltuariamente** i dati forniti dal Ministero sono **errrati**: il numero di nuovi vaccinati può essere **negativo** e il totale dei vaccinati può **non coincidere** con quanto risulta dalla somma delle tabelle dei vaccinati relativi per fasce di età, impiego o sesso. Le percentuali dei vaccinati sono spesso errate in quanto oscillano di giorno in giorno, quindi questo valore viene ricalcolato riferendosi alla popolazione censita dall'ISTAT. La percentuale di vaccini utilizzati può spesso **superare il 100%** (per esempio, in Campania e Umbria).
 
