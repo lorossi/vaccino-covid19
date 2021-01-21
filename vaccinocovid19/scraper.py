@@ -571,16 +571,23 @@ class Scraper:
                 soup = BeautifulSoup(response, 'html.parser')
                 break
 
-        classes = ["redText", "orangeText", "yellowText"]
+        colors = {
+            "redText": "rossa",
+            "orangeText": "arancione",
+            "yellowText": "gialla"
+        }
+
         count = 0
-        for c in classes:
+        for c in colors:
             territories = soup.body.find("td", class_=c).p.text.strip().replace("\t", "").split("\n")
             for t in territories:
                 new_territories_colors["territori"].append({
                     "territorio": t,
-                    "codice": int(self.returnTerritoryCode(t)),
-                    "colore": count,
+                    "codice_territorio": self.returnTerritoryCode(t),
+                    "colore": colors[c],
+                    "codice_colore": count
                 })
+            count += 1
 
         self._territories_color = copy.deepcopy(new_territories_colors)
 
