@@ -1,110 +1,131 @@
 {
   "territori": [
     {
-      "codice": 10,
-      "colore": 0,
+      "codice_colore": 0,
+      "codice_territorio": "10",
+      "colore": "rossa",
       "territorio": "Lombardia"
     },
     {
-      "codice": 16,
-      "colore": 0,
+      "codice_colore": 0,
+      "codice_territorio": "16",
+      "colore": "rossa",
       "territorio": "Sicilia"
     },
     {
-      "codice": 3,
-      "colore": 0,
+      "codice_colore": 0,
+      "codice_territorio": "03",
+      "colore": "rossa",
       "territorio": "Provincia autonoma di Bolzano"
     },
     {
-      "codice": 1,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "01",
+      "colore": "arancione",
       "territorio": "Abruzzo"
     },
     {
-      "codice": 4,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "04",
+      "colore": "arancione",
       "territorio": "Calabria"
     },
     {
-      "codice": 6,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "06",
+      "colore": "arancione",
       "territorio": "Emilia Romagna"
     },
     {
-      "codice": 7,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "07",
+      "colore": "arancione",
       "territorio": "Friuli Venezia Giulia"
     },
     {
-      "codice": 8,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "08",
+      "colore": "arancione",
       "territorio": "Lazio"
     },
     {
-      "codice": 9,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "09",
+      "colore": "arancione",
       "territorio": "Liguria"
     },
     {
-      "codice": 11,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "11",
+      "colore": "arancione",
       "territorio": "Marche"
     },
     {
-      "codice": 13,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "13",
+      "colore": "arancione",
       "territorio": "Piemonte"
     },
     {
-      "codice": 14,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "14",
+      "colore": "arancione",
       "territorio": "Puglia"
     },
     {
-      "codice": 19,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "19",
+      "colore": "arancione",
       "territorio": "Umbria"
     },
     {
-      "codice": 20,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "20",
+      "colore": "arancione",
       "territorio": "Val d'Aosta"
     },
     {
-      "codice": 21,
-      "colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "21",
+      "colore": "arancione",
       "territorio": "Veneto"
     },
     {
-      "codice": 2,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "02",
+      "colore": "gialla",
       "territorio": "Basilicata"
     },
     {
-      "codice": 5,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "05",
+      "colore": "gialla",
       "territorio": "Campania"
     },
     {
-      "codice": 12,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "12",
+      "colore": "gialla",
       "territorio": "Molise"
     },
     {
-      "codice": 15,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "15",
+      "colore": "gialla",
       "territorio": "Sardegna"
     },
     {
-      "codice": 17,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "17",
+      "colore": "gialla",
       "territorio": "Toscana"
     },
     {
-      "codice": 18,
-      "colore": 0,
+      "codice_colore": 2,
+      "codice_territorio": "18",
+      "colore": "gialla",
       "territorio": "Provincia autonoma di Trento"
     }
   ],
-  "timestamp": "2021-01-21T11:15:00.708412"
+  "timestamp": "2021-01-21T23:45:00.868573"
 }
