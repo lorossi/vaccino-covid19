@@ -15,7 +15,7 @@ Infine, i dati vengono spesso aggiornati ben oltre la **mezzanotte**. Per quanto
 *I dati sono aggiornati 4 volte all'ora.*
 
 ## Dettagli tecnici
-Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling,
+Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling.
 
 ### Service setup file
 *Posizione:*
