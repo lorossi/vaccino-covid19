@@ -627,12 +627,12 @@ class Scraper:
         logging.info("Started backup process")
         # now push all to to github
         # repo folder is parent
-        subprocess.run(["git", "pull"], check=True)
+        subprocess.run(["git", "pull"])
         logging.info("Repo pulled")
         try:
-            subprocess.run(["git", "commit", "-am", '"updated data"'], check=True)
+            subprocess.run(["git", "commit", "-am", '"updated data"'])
             logging.info("Commit created")
-            subprocess.run(["git", "push"], check=True)
+            subprocess.run(["git", "push"])
             logging.info("Repo pushed")
         except Exception as e:
             logging.error("Cannot commit or push. Repo is probably already "
