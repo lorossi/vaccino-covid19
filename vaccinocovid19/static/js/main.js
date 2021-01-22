@@ -61,17 +61,26 @@ const all_time_get_options = () => {
 
 
 // load chart about Italy
-const load_italy_chart = async (values, territory_name, old_chart) => {
+const load_history_chart = async (values, territory_name, old_obj, reload_data) => {
 
   let chart;
+  let old_chart;
   let labels = []; // x axis
   let datasets = [];
   let type;
   let history_data;
 
   try {
-    old_chart = await old_chart;
-    history_data = await get_data_json(`get/storico_vaccini/${territory_name}`);
+    old_obj = await old_obj;
+
+    if (old_obj) {
+      old_chart = old_obj.chart;
+      history_data = old_obj.data;
+    }
+
+    if (!old_obj || reload_data) {
+      history_data = await get_data_json(`get/storico_vaccini/${territory_name}`);
+    }
 
     // pack the values into array
     if (values === undefined) {
@@ -80,7 +89,10 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
       // no parameters sent
       // destroy old chart
       old_chart.destroy();
-      return null;
+      return {
+        chart: null,
+        data: history_data
+      };
     }
 
     if (territory_name === undefined) {
@@ -246,7 +258,10 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
         datasets: datasets
       };
       await old_chart.update();
-      return  old_chart;
+      return  {
+        chart: old_chart,
+        data: history_data
+      };
     } else {
       let ctx = $("canvas#italia")[0].getContext('2d');
       chart = await new Chart(ctx, {
@@ -286,7 +301,10 @@ const load_italy_chart = async (values, territory_name, old_chart) => {
           }
         }
       });
-      return chart;
+      return  {
+        chart: chart,
+        data: history_data
+      };
     }
   } catch (err) {
     console.log(`Impossibile caricare il grafico storico. Errore ${err.message}`);
@@ -1359,39 +1377,82 @@ const load_subministrations_chart = async (subministrations) => {
 
 
 const load_territories_color_chart = async () => {
-  let geojson;
-  let map;
+  try {
+    let geojson;
+    let map;
 
-  const style = feature => {
-    return {
-    			weight: 2,
-    			opacity: 1,
-    			color: feature.properties.colore_rgb,
-    			fillOpacity: 0.7
-    		};
-  };
+    const style = feature => {
+      return {
+      			weight: 2,
+      			opacity: 1,
+      			color: feature.properties.colore_rgb,
+      			fillOpacity: 0.7
+      		};
+    };
 
-  geojson = await get_data_json("/get/mappa_colore_territori");
-  let zoom_level = $(window).width() > 1500 ? 6 : 5;
+    geojson = await get_data_json("/get/mappa_colore_territori");
+    let zoom_level = $(window).width() > 480 ? 6 : 5;
 
-  map = L.map("mappa_colori_regioni", {
-    attributionControl: false,
-    zoomControl: false,
-    boxZoom: false,
-    minZoom: zoom_level,
-    maxZoom: zoom_level,
-    doubleClickZoom: false,
-    dragging: false
-  }).setView([42, 12.534], zoom_level);
+    map = L.map("mappa_colori_regioni", {
+      attributionControl: false,
+      zoomControl: false,
+      minZoom: zoom_level,
+      maxZoom: zoom_level,
+      zoomDelta: 0,
+      boxZoom: false,
+      doubleClickZoom: false,
+      scrollWheelZoom: false,
+      dragging: false
+    }).setView([42, 12.534], zoom_level);
 
-  let elem = L.DomUtil.get('mappa_colori_regioni');
-  L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
-  L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
+    L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
+  } catch (err) {
+    console.log(`Impossibile caricare il la mappa del colore dei territori. Errore ${err.message}`);
+    return;
+  }
 };
+
+
+const load_territories_percentage_chart = async () => {
+  try {
+    let geojson;
+    let map;
+
+    const style = feature => {
+      return {
+      			weight: 2,
+      			opacity: 1,
+      			color: `hsl(${feature.properties.tinta}, 100%, 50%)`,
+      			fillOpacity: 0.7
+      		};
+    };
+
+    geojson = await get_data_json("/get/mappa_percentuale_territori");
+    let zoom_level = $(window).width() > 480 ? 6 : 5;
+
+    map = L.map("mappa_percentuale_territori", {
+      attributionControl: false,
+      zoomControl: false,
+      minZoom: zoom_level,
+      maxZoom: zoom_level,
+      zoomDelta: 0,
+      boxZoom: false,
+      doubleClickZoom: false,
+      scrollWheelZoom: false,
+      dragging: false
+    }).setView([42, 12.534], zoom_level);
+
+    L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.percentuale_popolazione_vaccinata_formattato}`).addTo(map);
+  } catch (err) {
+    console.log(`Impossibile caricare il la mappa del colore dei territori. Errore ${err.message}`);
+    return;
+  }
+};
+
 
 // main function
 $(document).ready(async () => {
-  console.log("Snooping around? Check the repo instead! https://github.com/lorossi/vaccino-covid19");
+  console.log("Curioso? Controlla la repo! https://github.com/lorossi/vaccino-covid19");
   // load tables
   let territories = load_territories(0, false);
   let variations = load_variations(0, false);
@@ -1404,35 +1465,28 @@ $(document).ready(async () => {
   // global charts variables
   Chart.defaults.global.defaultFontFamily = 'Roboto';
   // load charts and keep the variable
-  let italy_chart = load_italy_chart([0, 1], "Italia");
-  let territories_chart = load_territories_chart(0, false, {
-    data: await territories
-  });
-  let variations_chart = load_variations_chart(0, false, {
-    data: await variations
-  });
-  let categories_chart = load_categories_chart(0, {
-    data: await categories
-  });
+  let history_chart = load_history_chart([0, 1], "Italia");
+  let territories_chart = load_territories_chart(0, false, {data:  await territories});
+  let variations_chart = load_variations_chart(0, false, {data: await variations});
+  let categories_chart = load_categories_chart(0, {data: await categories});
   let genders_chart = load_genders_chart(await genders);
-  let ages_ranges_chart = load_age_ranges_chart(0, {
-    data: await age_ranges
-  });
+  let ages_ranges_chart = load_age_ranges_chart(0, {data: await age_ranges});
   let vaccine_producers_chart = load_vaccine_producers_chart(await vaccine_producers);
   let subministrations_chart = load_subministrations_chart(await subministrations);
 
   load_territories_color_chart();
+  load_territories_percentage_chart();
 
   // form for all time chart
   $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {
     let options = all_time_get_options();
-    italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
+    history_chart = load_history_chart(options.values, options.territory, history_chart);
   });
 
   // dropdown for all time chart
   $(".alltimechartcontainer select").on("change", () => {
     let options = all_time_get_options();
-    italy_chart = load_italy_chart(options.values, options.territory, italy_chart);
+    history_chart = load_history_chart(options.values, options.territory, history_chart, true);
   });
 
   // sorting for tables

@@ -5,5 +5,6 @@
   "today_filename": "vaccini-oggi.json",
   "italy_filename": "italia.json",
   "colors_filename": "colori.json",
-  "colors_geojson_filename": "colori.geojson"
+  "colors_geojson_filename": "colori.geojson",
+  "vaccinations_geojeson_filename": "vaccinazioni.geojson"
 }

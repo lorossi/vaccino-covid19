@@ -94,6 +94,11 @@ def get_mappa_colore_territori():
     return jsonify(s.territories_color_map)
 
 
+@app.route("/get/mappa_percentuale_territori", methods=["GET"])
+def get_mappa_percentuale_territori():
+    return jsonify(s.territories_percentage_map)
+
+
 @app.route("/get/produttori_vaccini", methods=["GET"])
 def get_produttori_vaccini():
     return jsonify(s.vaccine_producers)
