@@ -189,6 +189,28 @@ class Scraper:
             if territory["nome"] == name or territory.get("nome_alternativo", None) == name:
                 return territory["codice"]
 
+    # laod history for one particular territory
+    def territoryHistory(self, territory_name):
+        self.loadData(history=True)
+        territory_history = []
+
+        for day in self._history:
+            new_dict = {
+                "assoluti": None,
+                "variazioni": None,
+            }
+
+            for key in new_dict:
+                for territory in day[key]:
+                    if territory["nome_territorio"] == territory_name:
+                        new_dict[key] = territory
+                        break
+            new_dict["timestamp"] = day["timestamp"]
+
+            territory_history.append(new_dict)
+
+        return territory_history
+
     # load the deliveries file and get all the useful information
     def scrapeDeliveries(self):
         logging.info("Loading deliveries")
@@ -302,7 +324,7 @@ class Scraper:
         new_history = []
 
         # iterate through all the timestamps skipping the first day
-        for t in range(1, len(timestamps_list)):
+        for t in range(1, len(timestamps_list) - 1):
             # load all the data relatie to this day
             current_day = [x for x in json_response["data"] if x["data_somministrazione"] == timestamps_list[t]]
             # load all the deliveries relative to this day
