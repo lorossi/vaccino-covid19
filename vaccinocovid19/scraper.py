@@ -1,5 +1,6 @@
 # Made by Lorenzo Rossi
 # https://www.lorenzoros.si - https://github.com/lorossi
+# it's a little bit of a mess, but i'm working on it
 
 import copy
 import ujson
@@ -15,9 +16,11 @@ from datetime import datetime, timedelta
 
 class Scraper:
     def __init__(self, log=True, verbose=True):
+        # set locale for number formatting
         locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
         self.log = log
         self.verbose = verbose
+        # initialize private variables
         self._last_updated = None
         self._data = {}
         self._italy = {}
@@ -29,23 +32,28 @@ class Scraper:
         self._geojeson_percentages = {}
         self._territories_data = {}
 
+        # start logging
         if self.log:
             logfile = "logging.log"
             logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
                                 level=logging.INFO, filename=logfile,
                                 filemode="w")
+        # if necessary, tell user we are logging
         if self.verbose:
             if self.log:
                 (f"Logging in {logfile}")
             else:
                 ("No logging in file.")
 
+        # now load settigns
         self.loadSettings()
 
     def loadSettings(self):
+        # open settings file
         with open("src/settings/settings.json") as f:
             settings = ujson.loads(f.read())
 
+        # load output paths and output filenames from file
         self.output_path = settings["output_path"]
         self.producers_filename = settings["producers_filename"]
         self.history_filename = settings["history_filename"]
@@ -55,11 +63,12 @@ class Scraper:
         self.colors_geojson_filename = settings["colors_geojson_filename"]
         self.vaccinations_geojeson_filename = settings["vaccinations_geojeson_filename"]
 
+        # load territories list to be passed to dropdown selector
         self._territories_list = []
         if not self._territories_data:
-            with open("src/settings/territories_data.json", "r") as f:
+            with open("src/settings/territories-data.json", "r") as f:
                 self._territories_data = ujson.load(f)
-
+                # italy will be on top
                 for territory in self._territories_data:
                     self._territories_list.append(territory["nome"])
 
@@ -69,6 +78,7 @@ class Scraper:
         Path(self.output_path).mkdir(parents=True, exist_ok=True)
         logging.info("Saving to file")
 
+        # save variables that have a value
         if self._vaccine_producers:
             with open(self.output_path + self.producers_filename, "w") as f:
                 ujson.dump(self._vaccine_producers, f, indent=2, sort_keys=True)
@@ -89,7 +99,6 @@ class Scraper:
 
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
-                # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"JSON history file saved. Path: {self.history_filename}")
 
@@ -105,8 +114,12 @@ class Scraper:
             logging.info(f"Geojson history file saved. Path: {self.colors_geojson_filename}")
 
 
-
-    def loadData(self, all=False, producers=False, today=False, history=False, italy=False, colors=False, colors_geojson=False, percentage_geojson=False):
+    # load data from json files
+    def loadData(self, all=False, producers=False, today=False, history=False,
+                 italy=False, colors=False, colors_geojson=False,
+                 percentage_geojson=False):
+        # each variable is related to a particular file, so we don't load
+        # everything if we only need one variable
         if producers or all:
             try:
                 with open(self.output_path + self.producers_filename, "r") as f:
@@ -163,25 +176,30 @@ class Scraper:
                 logging.error(f"Cannot read geojson file. error {e}")
                 self._geojeson_percentages = {}
 
+    # returns data related to a territory (population, territory code, etc)
+    # according to its "AREA" as given by json source
     def returnTerritoryData(self, area):
         # load territories population
         if not self._territories_data:
-            with open("src/settings/territories_data.json", "r") as f:
+            with open("src/settings/territories-data.json", "r") as f:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
             if territory["area"] == area:
                 return territory
 
+    # returns data related to a territory (population, territory code, etc)
+    # according to its ISTAT territory code
     def returnTerritoryCode(self, name):
         if not self._territories_data:
-            with open("src/settings/territories_data.json", "r") as f:
+            with open("src/settings/territories-data.json", "r") as f:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
             if territory["nome"] == name or territory.get("nome_alternativo", None) == name:
                 return territory["codice"]
 
+    # load the deliveries file and get all the useful information
     def scrapeDeliveries(self):
         # initialize old data
         with open("src/settings/urls.json", "r") as f:
@@ -194,12 +212,14 @@ class Scraper:
                 json_response = ujson.loads(response)
                 break
 
-        # load vaccines brands
+        # initialize dict
         new_vaccine_producers = {
             "produttori": []
         }
         new_vaccine_producers["timestamp"] = datetime.now().isoformat()
+        # load list of unique vaccine brands
         brands = list(set(x["fornitore"] for x in json_response["data"]))
+        # populate dict
         for brand in brands:
             new_vaccine_producers["produttori"].append({
                 "nome_produttore": brand,
@@ -224,50 +244,59 @@ class Scraper:
                         producer["nuove_dosi_consegnate"] = delivery["numero_dosi"]
                         break
 
+        # format the values
         for producer in new_vaccine_producers["produttori"]:
             producer["totale_dosi_consegnate_formattato"] = f'{producer["totale_dosi_consegnate"]:n}'
             producer["nuove_dosi_consegnate_formattato"] = f'{producer["nuove_dosi_consegnate"]:n}'
             producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / producer["totale_dosi_consegnate"] * 100
             producer["nuove_dosi_percentuale_formattato"] = f'{locale.format_string("%.2f", producer["nuove_dosi_percentuale"])}'
 
+        # load list of uninque areas
         areas_list = sorted(list(set(x["area"] for x in json_response["data"])))
+        # load list of uninque timestamps list
         timestamps_list = sorted(list(set(x["data_consegna"] for x in json_response["data"])))
         new_deliveries = []
 
+        # iterate through each timestamp
         for t in range(len(timestamps_list)):
             # skip first and last (current) day
             current_day = [x for x in json_response["data"] if x["data_consegna"] == timestamps_list[t]]
             current_day_time = datetime.strptime(timestamps_list[t][:-5], "%Y-%m-%dT%H:%M:%S")
             script_timestamp = current_day_time.strftime("%Y-%m-%d")
 
-            new_delivery_day = {}
-            new_delivery_day["timestamp"] = script_timestamp
-            new_delivery_day["data_consegna"] = timestamps_list[t]
-            new_delivery_day["variazioni"] = []
+            # initialize and populate dict
+            new_delivery_day = {
+                "timestamp": script_timestamp,
+                "data_consegna": timestamps_list[t],
+                "variazioni": []
+            }
 
             total_delivered = 0
+            # iterate throught each area
             for a in range(len(areas_list)):
-                # calculate absolute
+                # calculate total number of delivered doses
                 territories = [x for x in current_day if x["area"] == areas_list[a]]
 
                 if len(territories) > 0:
-                    # init new dict
-                    new_variation = {}
                     # load data from file
                     territory_data = self.returnTerritoryData(areas_list[a])
-                    # start filling new dict
-                    new_variation["area"] = areas_list[a]
-                    new_variation["nuove_dosi_consegnate"] = 0
-
+                    # initialize and populate dict
+                    new_variation = {
+                        "area": areas_list[a],
+                        "nuove_dosi_consegnate": 0
+                    }
+                    # update total number of deliveries today
                     for territory in territories:
                         new_variation["nuove_dosi_consegnate"] += territory["numero_dosi"]
-
+                    # update total number of all time deliveries
                     total_delivered += new_variation["nuove_dosi_consegnate"]
+                # append to the dict
                 new_delivery_day["variazioni"].append(new_variation)
-
+            # data for italy is the sum of all deliveries
             new_delivery_day["variazioni"].append({"area": "ITA", "nuove_dosi_consegnate": total_delivered})
             new_deliveries.append(new_delivery_day)
 
+        # finally copy the generated dicts inside the private variables
         self._deliveries = copy.deepcopy(new_deliveries)
         self._vaccine_producers = copy.deepcopy(new_vaccine_producers)
 
@@ -285,41 +314,50 @@ class Scraper:
                 json_response = ujson.loads(response)
                 break
 
+        # load list of uninque areas
         areas_list = sorted(list(set(x["area"] for x in json_response["data"])))
+        # load list of uninque timestamps list
         timestamps_list = sorted(list(set(x["data_somministrazione"] for x in json_response["data"])))
         new_history = []
 
+        # iterate through all the timestamps skipping the first day
         for t in range(1, len(timestamps_list)):
-            # skip first and last (current) day
+            # load all the data relatie to this day
             current_day = [x for x in json_response["data"] if x["data_somministrazione"] == timestamps_list[t]]
+            # load all the deliveries relative to this day
             current_deliveries = [x for x in self._deliveries if x["data_consegna"] == timestamps_list[t]]
-
+            # load timestamp relative to this day
+            # will be used later in charts
             current_day_time = datetime.strptime(timestamps_list[t][:-5], "%Y-%m-%dT%H:%M:%S")
             script_timestamp = current_day_time.strftime("%Y-%m-%d")
 
-            new_history_day = {}
-            new_history_day["timestamp"] = script_timestamp
-            new_history_day["assoluti"] = []
-            new_history_day["variazioni"] = []
+            # initialize and populate dict
+            new_history_day = {
+                "timestamp": script_timestamp,
+                "assoluti": [],
+                "variazioni": []
+            }
 
+            # iterate through all the territories (areas)
             for a in range(len(areas_list)):
                 # calculate absolute
                 territory = [x for x in current_day if x["area"] == areas_list[a]]
-
+                # keep only the first one
                 if len(territory) > 0:
                     territory = territory[0]
                 else:
                     territory = {}
 
-                # init new dict
-                new_variation = {}
                 # load data from file
                 territory_data = self.returnTerritoryData(areas_list[a])
+
+                # init new dict
+                new_variation = {}
                 # start filling new dict
                 new_variation["codice_territorio"] = territory_data["codice"]
                 new_variation["nome_territorio"] = territory_data["nome"]
                 new_variation["nome_territorio_corto"] = territory_data["nome_corto"]
-
+                # calculate variation
                 new_variation["nuovi_vaccinati"] = territory.get("prima_dose", 0) + territory.get("seconda_dose", 0)
                 new_variation["nuove_prime_dosi"] = territory.get("prima_dose", 0)
                 new_variation["nuove_seconde_dosi"] = territory.get("seconda_dose", 0)
@@ -334,6 +372,7 @@ class Scraper:
                     "over_80": territory.get("categoria_over80", 0)
                 }
 
+                # calculate the number of new delivered doses
                 total_new_delivered = 0
                 if len(current_deliveries) > 0:
                     territory_delivery = [x for x in current_deliveries[0]["variazioni"] if x["area"] == areas_list[a]][:-1]
@@ -342,7 +381,9 @@ class Scraper:
                             total_new_delivered += delivery["nuove_dosi_consegnate"]
                 new_variation["nuove_dosi_consegnate"] = total_new_delivered
 
+                # init new dict
                 new_absolute = {}
+                # start filling new dict
                 new_absolute["codice_territorio"] = territory_data["codice"]
                 new_absolute["nome_territorio"] = territory_data["nome"]
                 new_absolute["nome_territorio_corto"] = territory_data["nome_corto"]
@@ -358,7 +399,9 @@ class Scraper:
                         total.update(day)
 
                     new_absolute["totale_vaccinati"] = total.get("prima_dose", 0) + total.get("seconda_dose", 0)
-                    new_absolute["percentuale_vaccinati"] = new_absolute["totale_vaccinati"] / territory_data["popolazione"] * 100
+                    # the percentage of vaccinated people is related to the
+                    # population that has received the FIRST DOSE ONLY
+                    new_absolute["percentuale_vaccinati"] = total.get("prima_dose", 0) / territory_data["popolazione"] * 100
                     new_absolute["percentuale_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_vaccinati"])}%'
 
                     new_absolute["prime_dosi"] = total.get("prima_dose", 0)
@@ -374,21 +417,24 @@ class Scraper:
                         "over_80": total.get("categoria_over80", 0)
                     }
 
+                    # load old deliveries and flatten list in order to calculate
+                    # the total number of deliveries relative to one day
                     old_deliveries = [x for x in self._deliveries if current_day_time > datetime.strptime(x["data_consegna"][:-5], "%Y-%m-%dT%H:%M:%S")]
                     old_deliveries = [x for sublist in old_deliveries for x in sublist["variazioni"]]
                     old_territory_deliveries = [x for x in old_deliveries if x["area"] == areas_list[a]]
-
+                    # loop throught all the deliveries to calculate the total
                     total_delivered = 0
                     if len(old_territory_deliveries) > 0:
                         for delivery in old_territory_deliveries:
                             total_delivered += delivery["nuove_dosi_consegnate"]
                     new_absolute["totale_dosi_consegnate"] = total_delivered
 
-
+                # finally append the dicts to the history list
                 new_history_day["variazioni"].append(new_variation)
                 new_history_day["assoluti"].append(new_absolute)
             new_history.append(new_history_day)
 
+        # copy the new variable inside the private variable
         self._history = copy.deepcopy(new_history)
 
     def scrapeData(self):
@@ -403,7 +449,6 @@ class Scraper:
         yesterday_time = datetime.now().replace(hour=0, second=0, microsecond=0) - timedelta(days=1)
         yesterday_timestamp = yesterday_time.strftime("%Y-%m-%d")
         yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_timestamp][0]
-
         today_deliveries = [x for x in self._deliveries if x["timestamp"] == today_timestamp]
         if len(today_deliveries) > 0:
             today_deliveries = [x for x in y for y in today_deliveries]
@@ -452,7 +497,15 @@ class Scraper:
             new_absolute["totale_vaccinati"] = territory["dosi_somministrate"]
             # calculations
             new_absolute["percentuale_dosi_utilizzate"] = new_absolute["totale_vaccinati"] / new_absolute["totale_dosi_consegnate"] * 100
-            new_absolute["percentuale_popolazione_vaccinata"] = new_absolute["totale_vaccinati"] / territory_data["popolazione"] * 100
+            # the percentage of vaccinated people is related to the
+            # population that has received the FIRST DOSE ONLY
+            # in order to calculate that, we subract the number of second
+            # doses from the precedent day to the number of total doses today
+            # it is not 100% accurate but will work
+            for yesterday_territory in yesterday_data["assoluti"]:
+                if yesterday_territory["codice_territorio"] == new_absolute["codice_territorio"]:
+                    new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
+
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
             new_absolute["totale_vaccinati_formattato"] = f'{territory["dosi_somministrate"]:n}'
