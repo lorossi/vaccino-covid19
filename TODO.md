@@ -11,4 +11,4 @@
 - ~Add cloropleth map of COLORI TERRITORI SECONDO SPERANZA~ **DONE**
     - ~GeoJson https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe~
     - ~Cloropleth map https://leafletjs.com/examples/geojson/ - https://leafletjs.com/examples/choropleth/~
-- Ragiona sulle percentuali. Come ~cazzo~ sono calcolate? *Elaboro*: attualmente, la percentuale di popolazione vaccinata è calcolata facendo il rapporto tra dosi totali inoculate e popolazione del territorio. Tuttavia, ciò non tiene conto della secoda dose. Le percentuali comunicate ufficialmente risalgono al giorno prima. Come ne esco?
+- Ragiona sulle percentuali. Come ~cazzo~ sono calcolate? *Elaboro*: attualmente, la percentuale di popolazione vaccinata è calcolata facendo il rapporto tra dosi totali inoculate e popolazione del territorio. Tuttavia, ciò non tiene conto della secoda dose. Le percentuali comunicate ufficialmente risalgono al giorno prima e sono spesso sbagliate. Come ne esco?
