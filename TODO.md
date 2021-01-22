@@ -1,11 +1,11 @@
 # TODO LIST
 
+- Finally push this version to production *eheh...*
 - ~Add charts~ **DONE**
 - ~Add chart and table for relative and absolute variation of new doses and new vaccines~ **DONE**
 - ~Add time chart of vaccination~ **DONE**
 - ~Calculate number of vaccines by producer~ **DONE**
 - ~Calculate variation in doses~, variation by gender **NOT POSSIBLE**, ~variation by age range~, ~variation by category~ **DONE**
-- Finally push this version to production *eheh...*
 - Add missing chart **DONE**
 - Show both first and second subministration in the first chart and on top of the page **DONE**
 - ~Add cloropleth map of COLORI TERRITORI SECONDO SPERANZA~ **DONE**
@@ -17,3 +17,4 @@
         2. ~Sottrarre le seconde dosi somministrate ieri~
         3. ~Calcolare così la percentuale.~
     - ~L'errore così facendo sarebbe minimo e la percentuale sarebbe accettabilmente corretta~ **HO USATO QUESTO APPROCCIO**
+- Comment and clean up the code a little bit more
