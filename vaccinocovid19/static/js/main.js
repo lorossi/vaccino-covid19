@@ -1376,7 +1376,7 @@ const load_subministrations_chart = async (subministrations) => {
 };
 
 
-const load_territories_color_chart = async () => {
+const load_territories_color_map = async () => {
   try {
     let geojson;
     let map;
@@ -1403,7 +1403,7 @@ const load_territories_color_chart = async () => {
       doubleClickZoom: false,
       scrollWheelZoom: false,
       dragging: false
-    }).setView([42, 12.534], zoom_level);
+    }).setView([42.5, 12.534], zoom_level);
 
     L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
   } catch (err) {
@@ -1413,7 +1413,7 @@ const load_territories_color_chart = async () => {
 };
 
 
-const load_territories_percentage_chart = async () => {
+const load_territories_percentage_map = async () => {
   try {
     let geojson;
     let map;
@@ -1440,11 +1440,11 @@ const load_territories_percentage_chart = async () => {
       doubleClickZoom: false,
       scrollWheelZoom: false,
       dragging: false
-    }).setView([42, 12.534], zoom_level);
+    }).setView([42.5, 12.534], zoom_level);
 
     L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.percentuale_popolazione_vaccinata_formattato}`).addTo(map);
   } catch (err) {
-    console.log(`Impossibile caricare il la mappa del colore dei territori. Errore ${err.message}`);
+    console.log(`Impossibile caricare il la mappa delle percentuali dei territori. Errore ${err.message}`);
     return;
   }
 };
@@ -1474,8 +1474,8 @@ $(document).ready(async () => {
   let vaccine_producers_chart = load_vaccine_producers_chart(await vaccine_producers);
   let subministrations_chart = load_subministrations_chart(await subministrations);
 
-  load_territories_color_chart();
-  load_territories_percentage_chart();
+  load_territories_color_map();
+  load_territories_percentage_map();
 
   // form for all time chart
   $(".alltimechartcontainer input[type=\"checkbox\"]").click(() => {

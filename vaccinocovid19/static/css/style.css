@@ -193,7 +193,7 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
 }
 
 .mapcontainer {
-  min-height: 75vh;
+  min-height: 65vh;
 }
 
 .form {
@@ -300,6 +300,10 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     flex-wrap: nowrap;
     width: 75vw;
     max-width: 1150px;
+  }
+
+  .mapcontainer {
+    min-height: 75vh;
   }
 
   .chartcontainer, .mapcontainer {
