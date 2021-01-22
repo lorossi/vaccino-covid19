@@ -1,5 +1,6 @@
 # Made by Lorenzo Rossi
 # https://www.lorenzoros.si - https://github.com/lorossi
+# it's a little bit of a mess, but i'm working on it
 
 import copy
 import ujson
