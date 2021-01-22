@@ -18,3 +18,4 @@
         3. ~Calcolare così la percentuale.~
     - ~L'errore così facendo sarebbe minimo e la percentuale sarebbe accettabilmente corretta~ **HO USATO QUESTO APPROCCIO**
 - Comment and clean up the code a little bit more
+- Add the history of delivered doses by manifacturer
