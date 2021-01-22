@@ -10,14 +10,18 @@ I dati sono presi direttamente dalla [dashboard Ministeriale](https://www.govern
 
 Non ho modo di correggere questo tipo di errori (presumo siano tali, perlomeno) che vengono quindi riportati come fossero cifre corrette. I dati esplicitamente sbagliati sono riportati con il colore rosso.
 
-Calcolare la percentuale dei vaccinati di ogni territorio si sta dimostrando affare per nulla semplice. Difatti, non è disponibile il valore in tempo reale delle prime e seconde dosi inoculate divise per territorio e le percentuali ufficiali tendono... ad oscillare. Per ora questo valore è calcolato facendo il rapporto tra il totale di dosi consegnate e la popolazione di un territorio, ma presto (grazie ai richiami, o perlomeno così mi auguro) questa stima non sarà più corretta. *Sto pensando ad un modo per risolvere.*
+Calcolare la percentuale dei vaccinati di ogni territorio si sta dimostrando affare per nulla semplice. Difatti, non è disponibile il valore in tempo reale delle prime e seconde dosi inoculate divise per territorio e le percentuali ufficiali tendono... ad oscillare. Per ora questo valore è calcolato facendo il rapporto tra il totale di dosi consegnate e la popolazione di un territorio, ma presto (grazie ai richiami, o perlomeno così mi auguro) questa stima non sarà più corretta.
+
+Attualmente, questo valore viene calcolato dapprima sommando il numero di prime e seconde dosi inoculate in ogni territorio, poi sottraendo il numero di seconde dose inoculate il giorno precedente nel territorio stesso. Così la percentuale non sarà accurata al 100% ma il valore trovato sarà molto simile a quello reale (soprattutto all'aumentare del numero totale di vaccinazioni).
 
 Infine, i dati vengono spesso aggiornati ben oltre la **mezzanotte**. Per quanto sia *abbastanza sicuro* che nessuno venga vaccinato in orario di chiusura di ospedali ed ambulatori, questi dati vengono considerati validi per il giorno corrente e non vengono conteggiati rispetto al giorno precedente.
 
 *I dati sono aggiornati 4 volte all'ora.*
 
 ## Dettagli tecnici
-Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling.
+Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling. Non so quanto sia un vantaggio, ma l'intero sito (dati esclusi) pesa solo ~200KB.
+
+Il file GeoJson della mappa italiana è stata ottenuta modificando leggermente (questa)[https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe] repository, dapprima modificando le feauture per includere i nomi "corretti" (così come forniti dal Ministero della salute) e i codici ISTAT delle province, poi per ridurne la dimensione da ~3MB a ~45KB usando (questo sito)[https://mapshaper.org/]. La dimensione totale dei file trasferiti è passata da ~6MB a ~500KB (e la banda ringrazia).
 
 ### Service setup file
 *Posizione:*
@@ -48,3 +52,6 @@ sudo systemctl enable vaccino-covid19
 sudo systemctl stop vaccino-covid19
 sudo systemctl restart vaccino-covid19
 ```
+
+# Licenza
+Il sito  è distribuito con Licenza Creative Commons - Attribuzione Non commerciale 4.0 Internazionale
