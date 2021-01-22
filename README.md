@@ -10,6 +10,8 @@ I dati sono presi direttamente dalla [dashboard Ministeriale](https://www.govern
 
 Non ho modo di correggere questo tipo di errori (presumo siano tali, perlomeno) che vengono quindi riportati come fossero cifre corrette. I dati esplicitamente sbagliati sono riportati con il colore rosso.
 
+Calcolare la percentuale dei vaccinati di ogni territorio si sta dimostrando affare per nulla semplice. Difatti, non è disponibile il valore in tempo reale delle prime e seconde dosi inoculate divise per territorio e le percentuali ufficiali tendono... ad oscillare. Per ora questo valore è calcolato facendo il rapporto tra il totale di dosi consegnate e la popolazione di un territorio, ma presto (grazie ai richiami, o perlomeno così mi auguro) questa stima non sarà più corretta. *Sto pensando ad un modo per risolvere.*
+
 Infine, i dati vengono spesso aggiornati ben oltre la **mezzanotte**. Per quanto sia *abbastanza sicuro* che nessuno venga vaccinato in orario di chiusura di ospedali ed ambulatori, questi dati vengono considerati validi per il giorno corrente e non vengono conteggiati rispetto al giorno precedente.
 
 *I dati sono aggiornati 4 volte all'ora.*
