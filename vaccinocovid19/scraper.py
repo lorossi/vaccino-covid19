@@ -20,6 +20,7 @@ class Scraper:
         locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
         self.log = log
         self.verbose = verbose
+        self._urls = {}
         # initialize private variables
         self._last_updated = None
         self._data = {}
@@ -63,6 +64,10 @@ class Scraper:
         self.colors_geojson_filename = settings["colors_geojson_filename"]
         self.vaccinations_geojeson_filename = settings["vaccinations_geojeson_filename"]
 
+        # open urls file
+        with open("src/settings/urls.json") as f:
+            self._urls = ujson.loads(f.read())
+
         # load territories list to be passed to dropdown selector
         self._territories_list = []
         if not self._territories_data:
@@ -82,7 +87,7 @@ class Scraper:
         if self._vaccine_producers:
             with open(self.output_path + self.producers_filename, "w") as f:
                 ujson.dump(self._vaccine_producers, f, indent=2, sort_keys=True)
-            logging.info(f"Today file saved. Path: {self.producers_filename}")
+            logging.info(f"Producers file saved. Path: {self.producers_filename}")
 
         if self._data:
             with open(self.output_path + self.today_filename, "w") as f:
@@ -95,23 +100,23 @@ class Scraper:
 
             with open(self.output_path + self.vaccinations_geojeson_filename, "w") as f:
                 ujson.dump(self._geojeson_percentages, f)
-            logging.info(f"Italy file saved. Path: {self.vaccinations_geojeson_filename}")
+            logging.info(f"Geojson vaccinations file saved. Path: {self.vaccinations_geojeson_filename}")
 
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
-            logging.info(f"JSON history file saved. Path: {self.history_filename}")
+            logging.info(f"History file saved. Path: {self.history_filename}")
 
         if self._territories_color:
             with open(self.output_path + self.colors_filename, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
-            logging.info(f"JSON color file saved. Path: {self.colors_filename}")
+            logging.info(f"Color file saved. Path: {self.colors_filename}")
 
             with open(self.output_path + self.colors_geojson_filename, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._geojson_colors, f))
-            logging.info(f"Geojson history file saved. Path: {self.colors_geojson_filename}")
+            logging.info(f"Geojson colors file saved. Path: {self.colors_geojson_filename}")
 
 
     # load data from json files
@@ -201,17 +206,13 @@ class Scraper:
 
     # load the deliveries file and get all the useful information
     def scrapeDeliveries(self):
-        # initialize old data
-        with open("src/settings/urls.json", "r") as f:
-            payloads = ujson.load(f)
-        # load variation territories data
-        json_response = None
-        for p in payloads:
-            if p["name"] == "consegne-vaccini":
-                response = requests.get(p["url"]).text
-                json_response = ujson.loads(response)
-                break
+        logging.info("Loading deliveries")
 
+        # load variation territories data
+        response = requests.get(self._urls["consegne-vaccini"]).text
+        json_response = ujson.loads(response)
+
+        logging.info("Scraping deliveries")
         # initialize dict
         new_vaccine_producers = {
             "produttori": []
@@ -301,19 +302,14 @@ class Scraper:
         self._vaccine_producers = copy.deepcopy(new_vaccine_producers)
 
     def scrapeHistory(self):
-        # first of all, scrape the deliveries
-        self.scrapeDeliveries()
-        # initialize old data
-        with open("src/settings/urls.json", "r") as f:
-            payloads = ujson.load(f)
-        # load variation territories data
-        json_response = None
-        for p in payloads:
-            if p["name"] == "somministrazioni-vaccini-summary-latest":
-                response = requests.get(p["url"]).text
-                json_response = ujson.loads(response)
-                break
+        # first of all, scrape the deliveries if needed
+        if not self._deliveries:
+            self.scrapeDeliveries()
 
+        response = requests.get(self._urls["somministrazioni-vaccini-summary-latest"]).text
+        json_response = ujson.loads(response)
+
+        logging.info("Scraping history")
         # load list of uninque areas
         areas_list = sorted(list(set(x["area"] for x in json_response["data"])))
         # load list of uninque timestamps list
@@ -439,10 +435,6 @@ class Scraper:
 
     def scrapeData(self):
         # initialize dictionaries
-        # load payload and url
-        with open("src/settings/urls.json", "r") as f:
-            payloads = ujson.load(f)
-
         # load today
         today_timestamp = datetime.now().strftime("%Y-%m-%d")
         # load yesterday
@@ -476,14 +468,12 @@ class Scraper:
 
         new_italy_variation = copy.deepcopy(new_italy_absolute)
 
+        logging.info("Loading data")
         # load absolute territories data
-        json_response = None
-        for p in payloads:
-            if p["name"] == "vaccini-summary-lastest":
-                response = requests.get(p["url"]).text
-                json_response = ujson.loads(response)
-                break
+        response = requests.get(self._urls["vaccini-summary-latest"]).text
+        json_response = ujson.loads(response)
 
+        logging.info("Scraping data")
         for territory in json_response["data"]:
             # init new dict
             new_absolute = {}
@@ -565,33 +555,32 @@ class Scraper:
         self._italy.update(new_italy_variation)
 
         # load categories and age ranges data
-        json_response = None
-        for p in payloads:
-            if p["name"] == "anagrafica-vaccini":
-                response = requests.get(p["url"]).text
-                json_response = ujson.loads(response)
-                break
-
+        response = requests.get(self._urls["anagrafica-vaccini"]).text
+        json_response = ujson.loads(response)
+        # load data for yesterdat
         yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == "00"][0]
-
+        # load all unique categories
         categories_list = [x for x in json_response["data"][0] if "categoria" in x]
         categories = []
         count = 0
+        # append to the list the newly created categories
         for c in categories_list:
             new_dict = {
                 "id": count,
                 "nome_categoria": c,
-                "nome_categoria_pulito": c.replace("categoria_", "").replace("over80", "over_80"),
-                "nome_categoria_formattato": c.replace("categoria_", "").replace("over80", "over_80").replace("_", " "),
+                "nome_categoria_pulito": c.replace("categoria_", "").replace("over80", "over_80"), # this is needed later
+                "nome_categoria_formattato": c.replace("categoria_", "").replace("over80", "over_80").replace("_", " "), # this is needed for the chart
                 "totale_vaccinati": 0,
                 "totale_vaccinati_formattato": "0"
             }
             categories.append(new_dict)
             count += 1
 
+        # initialize genders and subministrations dicts
         genders = [{"nome_categoria": "uomini", "totale_vaccinati": 0}, {"nome_categoria": "donne", "totale_vaccinati": 0}]
         subministrations = [{"nome_categoria": "prima_dose", "totale_vaccinati": 0}, {"nome_categoria": "seconda_dose", "totale_vaccinati": 0}]
 
+        # now load ages
         for age in json_response["data"]:
             age_range = {}
             age_range["nome_categoria"] = age["fascia_anagrafica"]
@@ -605,6 +594,7 @@ class Scraper:
 
             new_data["fasce_eta"].append(age_range)
 
+            # data for category and genders is packed inside the ages
             for category in categories:
                 for category_name in categories_list:
                     if category["nome_categoria"] == category_name:
@@ -624,6 +614,7 @@ class Scraper:
                 elif subministration["nome_categoria"] == "seconda_dose":
                     subministration["totale_vaccinati"] += age["seconda_dose"]
 
+        # now calculate new vaccinated and format everything
         for category in categories:
             category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
             category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
@@ -644,6 +635,7 @@ class Scraper:
             subministration["totale_vaccinati_formattato"] = f'{subministration["totale_vaccinati"]:n}'
             new_data["somministrazioni"].append(subministration)
 
+        # update data about italy
         self._italy["somministrazioni"] = {
             "prima_dose": subministrations[0]["totale_vaccinati"],
             "prima_dose_formattato": subministrations[0]["totale_vaccinati_formattato"],
@@ -674,17 +666,12 @@ class Scraper:
             "territori": []
         }
 
+        logging.info("Loading colors")
         # initialize old data
-        with open("src/settings/urls.json", "r") as f:
-            payloads = ujson.load(f)
-        # load variation territories data
-        soup = None
-        for p in payloads:
-            if p["name"] == "colore-territori":
-                response = requests.get(p["url"]).text
-                soup = BeautifulSoup(response, 'html.parser')
-                break
+        response = requests.get(self._urls["colore-territori"]).text
+        soup = BeautifulSoup(response, 'html.parser')
 
+        # small settings dict
         colors = {
             "redText": {
                 "nome": "Rossa",
@@ -700,6 +687,8 @@ class Scraper:
             }
         }
 
+        logging.info("Scraping colors")
+        # save geoJson related to territories color
         count = 0
         for c in colors:
             territories = soup.body.find("td", class_=c).p.text.strip().replace("\t", "").split("\n")
@@ -716,6 +705,7 @@ class Scraper:
         with open("src/settings/regioni.geojson", "r") as f:
             geojson_data = ujson.load(f)
 
+        # save geoJson related to vaccination color
         for feature in geojson_data["features"]:
             for t in new_territories_colors["territori"]:
                 if feature["properties"]["codice_regione"] == t["codice_territorio"]:
@@ -723,35 +713,14 @@ class Scraper:
                     feature["properties"]["colore_rgb"] = t["colore_rgb"]
                     break
 
+        # finally, copy inside the private variables
         self._territories_color = copy.deepcopy(new_territories_colors)
         self._geojson_colors = copy.deepcopy(geojson_data)
-
-    def territoryHistory(self, territory_name):
-        self.loadData(history=True)
-        territory_history = []
-
-        for day in self._history:
-            new_dict = {
-                "assoluti": None,
-                "variazioni": None,
-            }
-
-            for key in new_dict:
-                for territory in day[key]:
-                    if territory["nome_territorio"] == territory_name:
-                        new_dict[key] = territory
-                        break
-            new_dict["timestamp"] = day["timestamp"]
-
-            territory_history.append(new_dict)
-
-        return territory_history
 
     def scrapeAll(self):
         self.scrapeHistory()
         self.scrapeData()
         self.scrapeColors()
-        self.saveData()
 
     def printJson(self, data, indent=2, exit=True):
         print(ujson.dumps(data, indent=indent))
@@ -774,6 +743,7 @@ class Scraper:
             logging.error("Cannot commit or push. Repo is probably already "
                           f"on par with the tree. Error {e}")
 
+    # getter methods
     @property
     def italy(self):
         self.loadData(italy=True)
@@ -841,6 +811,8 @@ class Scraper:
 
 if __name__ == "__main__":
     s = Scraper()
+    started = datetime.now()
     s.scrapeAll()
-    s.scrapeColors()
     s.saveData()
+    elapsed = (datetime.now() - started).total_seconds()
+    logging.info(f"It took {elapsed} seconds")
