@@ -15,11 +15,11 @@
     <div class="content">
        <div class="italia">
           <div class="stats">
-             <p class="label">Vaccinati in Italia</p>
+             <p class="label">Vaccinazioni in Italia</p>
              <p id="vaccinati">{{ italy.totale_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
-             <p class="label">Vaccinati oggi</p>
+             <p class="label">Vaccinazioni oggi</p>
              <p id="deltavaccinati">{{ italy.nuovi_vaccinati_formattato }}</p>
           </div>
           <div class="stats">
@@ -31,7 +31,7 @@
              <p id="deltadosi">{{ italy.nuove_dosi_consegnate_formattato }}</p>
           </div>
           <div class="stats">
-             <p class="label">Percentuale popolazione</p>
+             <p class="label">Percentuale popolazione vaccinata</p>
              <p id="percentualevaccinati">{{ italy.percentuale_popolazione_vaccinata_formattato }}</p>
           </div>
           <div class="stats">
@@ -254,6 +254,8 @@
                 <tr>
                    <th class="darr" data-column="0">Produttore</th>
                    <th class="darr" data-column="1">Dosi consegnate</th>
+                   <th class="darr" data-column="2">Variazione</th>
+                   <th class="darr" data-column="3">%</th>
                 </tr>
              </thead>
              <tbody>
@@ -276,6 +278,14 @@
           <div class="chartcontainer" id="somministrazioni">
              <canvas id="somministrazioni"></canvas>
           </div>
+        </div>
+        <div class="leafletcontainer">
+          <div class="mapcontainer" id="mappa_percentuale_territori">
+            <span class="subtitle">Percentuale vaccinazioni</span>
+          </div>
+          <div class="mapcontainer" id="mappa_colori_regioni">
+              <span class="subtitle">Colore territori Italiani</span>
+          </div>
        </div>
     </div>
     <div class="credits">
@@ -283,7 +293,7 @@
           Dati forniti dal <a href="https://www.governo.it/it/cscovid19/report-vaccini/">Ministero della Salute</a>
        </p>
        <p>Questo sito non è stato finanziato da fondi pubblici</p>
-       <p>aiutami a pagare i server!</p>
+       <p>Aiutami a pagare i server!</p>
        <p>
          <form action="https://www.paypal.com/donate" method="post" target="_top">
            <input type="hidden" name="hosted_button_id" value="EWGHWEMPBBPMW" />

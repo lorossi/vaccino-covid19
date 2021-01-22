@@ -25,7 +25,10 @@ class Scraper:
         self._deliveries = {}
         self._territories_color = {}
         self._vaccine_producers = {}
-        self._territories_data = None
+        self._geojson_colors = {}
+        self._geojeson_percentages = {}
+        self._territories_data = {}
+
         if self.log:
             logfile = "logging.log"
             logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
@@ -49,6 +52,8 @@ class Scraper:
         self.today_filename = settings["today_filename"]
         self.italy_filename = settings["italy_filename"]
         self.colors_filename = settings["colors_filename"]
+        self.colors_geojson_filename = settings["colors_geojson_filename"]
+        self.vaccinations_geojeson_filename = settings["vaccinations_geojeson_filename"]
 
         self._territories_list = []
         if not self._territories_data:
@@ -78,6 +83,10 @@ class Scraper:
                 ujson.dump(self._italy, f, indent=2, sort_keys=True)
             logging.info(f"Italy file saved. Path: {self.italy_filename}")
 
+            with open(self.output_path + self.vaccinations_geojeson_filename, "w") as f:
+                ujson.dump(self._geojeson_percentages, f)
+            logging.info(f"Italy file saved. Path: {self.vaccinations_geojeson_filename}")
+
         if self._history:
             with open(self.output_path + self.history_filename, "w") as f:
                 # convert dict to json (will be read by js)
@@ -88,9 +97,16 @@ class Scraper:
             with open(self.output_path + self.colors_filename, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
-            logging.info(f"JSON history file saved. Path: {self.colors_filename}")
+            logging.info(f"JSON color file saved. Path: {self.colors_filename}")
 
-    def loadData(self, all=False, producers=False, today=False, history=False, italy=False, colors=False):
+            with open(self.output_path + self.colors_geojson_filename, "w") as f:
+                # convert dict to json (will be read by js)
+                f.write(ujson.dumps(self._geojson_colors, f))
+            logging.info(f"Geojson history file saved. Path: {self.colors_geojson_filename}")
+
+
+
+    def loadData(self, all=False, producers=False, today=False, history=False, italy=False, colors=False, colors_geojson=False, percentage_geojson=False):
         if producers or all:
             try:
                 with open(self.output_path + self.producers_filename, "r") as f:
@@ -114,6 +130,7 @@ class Scraper:
             except Exception as e:
                 logging.error(f"Cannot read history file. error {e}")
                 self._history = {}
+
         if italy or all:
             try:
                 with open(self.output_path + self.italy_filename, "r") as f:
@@ -129,6 +146,22 @@ class Scraper:
             except Exception as e:
                 logging.error(f"Cannot read colors file. error {e}")
                 self._territories_color = {}
+
+        if colors_geojson or all:
+            try:
+                with open(self.output_path + self.colors_geojson_filename, "r") as f:
+                    self._geojson_colors = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read geojson file. error {e}")
+                self._geojson_colors = {}
+
+        if percentage_geojson or all:
+            try:
+                with open(self.output_path + self.vaccinations_geojeson_filename, "r") as f:
+                    self._geojeson_percentages = ujson.load(f)
+            except Exception as e:
+                logging.error(f"Cannot read geojson file. error {e}")
+                self._geojeson_percentages = {}
 
     def returnTerritoryData(self, area):
         # load territories population
@@ -173,14 +206,29 @@ class Scraper:
                 "totale_dosi_consegnate": 0
             })
 
+        # load total number of deliveries
         for delivery in json_response["data"]:
             for producer in new_vaccine_producers["produttori"]:
                 if producer["nome_produttore"] == delivery["fornitore"]:
                     producer["totale_dosi_consegnate"] += delivery["numero_dosi"]
                     break
 
+        # load last deliveries
+        for producer in new_vaccine_producers["produttori"]:
+            # initialize producer if not found
+            producer["nuove_dosi_consegnate"] = 0
+            # reverse list
+            for delivery in json_response["data"][::-1]:
+                if producer["nome_produttore"] == delivery["fornitore"]:
+                    if datetime.fromisoformat(delivery["data_consegna"][:-1]).date == datetime.now().date:
+                        producer["nuove_dosi_consegnate"] = delivery["numero_dosi"]
+                        break
+
         for producer in new_vaccine_producers["produttori"]:
             producer["totale_dosi_consegnate_formattato"] = f'{producer["totale_dosi_consegnate"]:n}'
+            producer["nuove_dosi_consegnate_formattato"] = f'{producer["nuove_dosi_consegnate"]:n}'
+            producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / producer["totale_dosi_consegnate"] * 100
+            producer["nuove_dosi_percentuale_formattato"] = f'{locale.format_string("%.2f", producer["nuove_dosi_percentuale"])}'
 
         areas_list = sorted(list(set(x["area"] for x in json_response["data"])))
         timestamps_list = sorted(list(set(x["data_consegna"] for x in json_response["data"])))
@@ -449,7 +497,6 @@ class Scraper:
             # add dict to data
             new_data["variazioni"].append(new_variation)
 
-
         # compute italy
         italy_data = self.returnTerritoryData("ITA")
         new_italy_absolute["totale_dosi_consegnate_formattato"] = f'{new_italy_absolute["totale_dosi_consegnate"]:n}'
@@ -553,10 +600,24 @@ class Scraper:
 
         self._data = copy.deepcopy(new_data)
 
+        # now create the new geoJson file
+        with open("src/settings/regioni.geojson", "r") as f:
+            geojson_data = ujson.load(f)
+
+        for feature in geojson_data["features"]:
+            for a in new_data["assoluti"]:
+                if feature["properties"]["codice_regione"] == a["codice_territorio"]:
+                    feature["properties"]["percentuale_popolazione_vaccinata"] = a["percentuale_popolazione_vaccinata"]
+                    feature["properties"]["percentuale_popolazione_vaccinata_formattato"] = a["percentuale_popolazione_vaccinata_formattato"]
+                    feature["properties"]["tinta"] = a["percentuale_popolazione_vaccinata"] / 100 * 120
+                    break
+
+        self._geojeson_percentages = copy.deepcopy(geojson_data)
+
     def scrapeColors(self):
-        timestamp = datetime.now().isoformat()
         new_territories_colors = {
-            "timestamp": timestamp,
+            "timestamp": datetime.now().isoformat(),
+            "ultimo_aggiornamento": datetime.now().strftime("%Y-%m-%d ore %H:%M"),
             "territori": []
         }
 
@@ -572,9 +633,18 @@ class Scraper:
                 break
 
         colors = {
-            "redText": "rossa",
-            "orangeText": "arancione",
-            "yellowText": "gialla"
+            "redText": {
+                "nome": "Rossa",
+                "rgb": "#dd222a"
+            },
+            "orangeText": {
+                "nome": "Arancione",
+                "rgb": "#e78314"
+            },
+            "yellowText": {
+                "nome": "Gialla",
+                "rgb": "#f8c300"
+            }
         }
 
         count = 0
@@ -584,12 +654,24 @@ class Scraper:
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": self.returnTerritoryCode(t),
-                    "colore": colors[c],
+                    "colore": colors[c]["nome"],
+                    "colore_rgb": colors[c]["rgb"],
                     "codice_colore": count
                 })
             count += 1
 
+        with open("src/settings/regioni.geojson", "r") as f:
+            geojson_data = ujson.load(f)
+
+        for feature in geojson_data["features"]:
+            for t in new_territories_colors["territori"]:
+                if feature["properties"]["codice_regione"] == t["codice_territorio"]:
+                    feature["properties"]["colore"] = t["colore"]
+                    feature["properties"]["colore_rgb"] = t["colore_rgb"]
+                    break
+
         self._territories_color = copy.deepcopy(new_territories_colors)
+        self._geojson_colors = copy.deepcopy(geojson_data)
 
     def territoryHistory(self, territory_name):
         self.loadData(history=True)
@@ -684,6 +766,16 @@ class Scraper:
         return self._territories_color
 
     @property
+    def territories_color_map(self):
+        self.loadData(colors_geojson=True)
+        return self._geojson_colors
+
+    @property
+    def territories_percentage_map(self):
+        self.loadData(percentage_geojson=True)
+        return self._geojeson_percentages
+
+    @property
     def vaccine_producers(self):
         self.loadData(producers=True)
         return self._vaccine_producers["produttori"]
@@ -697,4 +789,5 @@ class Scraper:
 if __name__ == "__main__":
     s = Scraper()
     s.scrapeAll()
+    s.scrapeColors()
     s.saveData()
