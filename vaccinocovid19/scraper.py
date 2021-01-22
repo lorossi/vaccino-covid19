@@ -56,7 +56,6 @@ class Scraper:
 
         # load output paths and output filenames from file
         self.output_path = settings["output_path"]
-        self.producers_filename = settings["producers_filename"]
         self.history_filename = settings["history_filename"]
         self.today_filename = settings["today_filename"]
         self.italy_filename = settings["italy_filename"]
@@ -82,12 +81,6 @@ class Scraper:
         logging.info("Creating folders")
         Path(self.output_path).mkdir(parents=True, exist_ok=True)
         logging.info("Saving to file")
-
-        # save variables that have a value
-        if self._vaccine_producers:
-            with open(self.output_path + self.producers_filename, "w") as f:
-                ujson.dump(self._vaccine_producers, f, indent=2, sort_keys=True)
-            logging.info(f"Producers file saved. Path: {self.producers_filename}")
 
         if self._data:
             with open(self.output_path + self.today_filename, "w") as f:
@@ -120,18 +113,10 @@ class Scraper:
 
 
     # load data from json files
-    def loadData(self, all=False, producers=False, today=False, history=False,
-                 italy=False, colors=False, colors_geojson=False,
-                 percentage_geojson=False):
+    def loadData(self, all=False, today=False, history=False, italy=False,
+                 colors=False, colors_geojson=False, percentage_geojson=False):
         # each variable is related to a particular file, so we don't load
         # everything if we only need one variable
-        if producers or all:
-            try:
-                with open(self.output_path + self.producers_filename, "r") as f:
-                    self._vaccine_producers = ujson.load(f)
-            except Exception as e:
-                logging.error(f"Cannot read data file. error {e}")
-                self._vaccine_producers = {}
 
         if today or all:
             try:
@@ -457,7 +442,8 @@ class Scraper:
             "categorie": [],
             "sesso": [],
             "fasce_eta": [],
-            "somministrazioni": []
+            "somministrazioni": [],
+            "produttori_vaccini": self._vaccine_producers["produttori"]
             }
 
         new_italy_absolute = {
@@ -800,8 +786,8 @@ class Scraper:
 
     @property
     def vaccine_producers(self):
-        self.loadData(producers=True)
-        return self._vaccine_producers["produttori"]
+        self.loadData(today=True)
+        return self._data["produttori_vaccini"]
 
     @property
     def subministrations(self):
