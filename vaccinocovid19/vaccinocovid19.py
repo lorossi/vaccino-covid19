@@ -21,13 +21,13 @@ def main():
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
     scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
-    s.scrapeAll()
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
-    s.scrapeAll()
+    s.scrapeHistory()
+    s.scrapeData()
     s.saveData()
 
 
