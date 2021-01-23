@@ -2,13 +2,6 @@
   "territori": [
     {
       "codice_colore": 0,
-      "codice_territorio": "10",
-      "colore": "Rossa",
-      "colore_rgb": "#dd222a",
-      "territorio": "Lombardia"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "16",
       "colore": "Rossa",
       "colore_rgb": "#dd222a",
@@ -65,6 +58,13 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "10",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Lombardia"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "11",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
@@ -83,6 +83,13 @@
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Puglia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "15",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Sardegna"
     },
     {
       "codice_colore": 1,
@@ -128,13 +135,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "15",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Sardegna"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "17",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -148,6 +148,6 @@
       "territorio": "Provincia autonoma di Trento"
     }
   ],
-  "timestamp": "2021-01-22T23:45:00.756733",
-  "ultimo_aggiornamento": "2021-01-22 ore 23:45"
+  "timestamp": "2021-01-23T23:45:00.620053",
+  "ultimo_aggiornamento": "2021-01-23 ore 23:45"
 }
