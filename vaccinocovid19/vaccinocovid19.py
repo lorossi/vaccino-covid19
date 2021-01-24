@@ -20,19 +20,12 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
-    scheduler.add_job(scrape_colors, trigger="cron", minute="10", hour="0")
     # run app
     logging.info("App started!")
 
 
 def scrape_data():
-    s.scrapeHistory()
-    s.scrapeData()
-    s.saveData()
-
-
-def scrape_colors():
-    s.scrapeTerritoriesColor()
+    s.scrapeAll()
     s.saveData()
 
 
