@@ -447,7 +447,11 @@ class Scraper:
         # load yesterday
         yesterday_time = datetime.now().replace(hour=0, second=0, microsecond=0) - timedelta(days=1)
         yesterday_timestamp = yesterday_time.strftime("%Y-%m-%d")
-        yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_timestamp][0]
+        yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_timestamp]
+        if len(yesterday_data) > 0:
+            yesterday_data = yesterday_data[0]
+        else:
+            yesterday_data = None
         today_deliveries = [x for x in self._deliveries if x["timestamp"] == today_timestamp]
         if len(today_deliveries) > 0:
             today_deliveries = [x for x in y for y in today_deliveries]
@@ -500,10 +504,12 @@ class Scraper:
             # in order to calculate that, we subract the number of second
             # doses from the precedent day to the number of total doses today
             # it is not 100% accurate but will work
-            for yesterday_territory in yesterday_data["assoluti"]:
-                if yesterday_territory["codice_territorio"] == new_absolute["codice_territorio"]:
-                    new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
-
+            if yesterday_data:
+                for yesterday_territory in yesterday_data["assoluti"]:
+                    if yesterday_territory["codice_territorio"] == new_absolute["codice_territorio"]:
+                        new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
+            else:
+                new_absolute["percentuale_popolazione_vaccinata"] = 0
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
             new_absolute["totale_vaccinati_formattato"] = f'{territory["dosi_somministrate"]:n}'
@@ -516,17 +522,22 @@ class Scraper:
             # add dict to data
             new_data["assoluti"].append(new_absolute)
 
-            # calculate variations
-            yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == territory_data["codice"]][0]
-
             new_variation = {}
             new_variation["codice_territorio"] = territory_data["codice"]
             new_variation["nome_territorio"] = territory_data["nome"]
             new_variation["nome_territorio_corto"] = territory_data["nome_corto"]
 
-            new_variation["nuovi_vaccinati"] = new_absolute["totale_vaccinati"] - yesterday_absolute["totale_vaccinati"]
+            # calculate variations
+            if yesterday_data:
+                yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == territory_data["codice"]][0]
+                new_variation["nuovi_vaccinati"] = new_absolute["totale_vaccinati"] - yesterday_absolute["totale_vaccinati"]
+                new_variation["percentuale_nuovi_vaccinati"] = new_variation["nuovi_vaccinati"] / yesterday_absolute["totale_vaccinati"] * 100
+            else:
+                yesterday_absolute = None
+                new_variation["nuovi_vaccinati"] = 0
+                new_variation["percentuale_nuovi_vaccinati"] = 0
+
             new_variation["nuovi_vaccinati_formattato"] = f'{new_variation["nuovi_vaccinati"]:n}'
-            new_variation["percentuale_nuovi_vaccinati"] = new_variation["nuovi_vaccinati"] / yesterday_absolute["totale_vaccinati"] * 100
             new_variation["percentuale_nuovi_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuovi_vaccinati"])}%'
 
             # should be tied to self._deliveries, not self._history
@@ -539,7 +550,10 @@ class Scraper:
 
             new_variation["nuove_dosi_consegnate"] = territory_delivery.get("nuove_dosi_consegnate", 0)
             new_variation["nuove_dosi_consegnate_formattato"] = f'{new_variation["nuove_dosi_consegnate"]:n}'
-            new_variation["percentuale_nuove_dosi_consegnate"] = new_variation["nuove_dosi_consegnate"] / yesterday_absolute["totale_dosi_consegnate"] * 100
+            if yesterday_absolute:
+                new_variation["percentuale_nuove_dosi_consegnate"] = new_variation["nuove_dosi_consegnate"] / yesterday_absolute["totale_dosi_consegnate"] * 100
+            else:
+                new_variation["percentuale_nuove_dosi_consegnate"] = 0
             new_variation["percentuale_nuove_dosi_consegnate_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuove_dosi_consegnate"])}%'
 
             # update italy
@@ -566,7 +580,11 @@ class Scraper:
         response = requests.get(self._urls["anagrafica-vaccini"]).text
         json_response = ujson.loads(response)
         # load data for yesterdat
-        yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == "00"][0]
+        if yesterday_data:
+            yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == "00"][0]
+        else:
+            yesterday_absolute = None
+
         # load all unique categories
         categories_list = [x for x in json_response["data"][0] if "categoria" in x]
         categories = []
@@ -625,17 +643,27 @@ class Scraper:
         # now calculate new vaccinated and format everything
         for category in categories:
             category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
-            category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
+            if yesterday_absolute:
+                category["nuovi_vaccinati"] = category["totale_vaccinati"] - yesterday_absolute["categoria"][category["nome_categoria_pulito"]]
+                category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / yesterday_absolute["categoria"][category["nome_categoria_pulito"]] * 100
+            else:
+                category["nuovi_vaccinati"] = 0
+                category["nuovi_vaccinati_percentuale"] = 0
+
             category["nuovi_vaccinati_formattato"] = f'{category["nuovi_vaccinati"]:n}'
-            category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / yesterday_absolute["categoria"][category["nome_categoria_pulito"]] * 100
             category["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", category["nuovi_vaccinati_percentuale"])}%'
             new_data["categorie"].append(category)
 
         for gender in genders:
             gender["totale_vaccinati_formattato"] = f'{gender["totale_vaccinati"]:n}'
-            gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
+            if yesterday_absolute:
+                gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - yesterday_absolute["sesso"][gender["nome_categoria"]]
+                gender["nuovi_vaccinati_percentuale"] = gender["nuovi_vaccinati"] / yesterday_absolute["sesso"][gender["nome_categoria"]] * 100
+            else:
+                gender["nuovi_vaccinati"] = 0
+                gender["nuovi_vaccinati_percentuale"] = 0
+
             gender["nuovi_vaccinati_formattato"] = f'{gender["nuovi_vaccinati"]:n}'
-            gender["nuovi_vaccinati_percentuale"] = gender["nuovi_vaccinati"] / yesterday_absolute["sesso"][gender["nome_categoria"]] * 100
             gender["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", gender["nuovi_vaccinati_percentuale"])}%'
             new_data["sesso"].append(gender)
 
