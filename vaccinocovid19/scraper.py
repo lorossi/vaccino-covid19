@@ -452,14 +452,6 @@ class Scraper:
             yesterday_data = yesterday_data[0]
         else:
             yesterday_data = None
-            # fallback
-            for i in range(len(self._history)):
-                yesterday_time -= timedelta(days=1)
-                yesterday_timestamp = yesterday_time.strftime("%Y-%m-%d")
-                yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_timestamp]
-                if len(yesterday_data) > 0:
-                    yesterday_data = yesterday_data[0]
-                    break
 
         today_deliveries = [x for x in self._deliveries if x["timestamp"] == today_timestamp]
         if len(today_deliveries) > 0:
@@ -519,6 +511,21 @@ class Scraper:
                         new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
             else:
                 new_absolute["percentuale_popolazione_vaccinata"] = 0
+
+                # fallback
+                last_day = datetime.now().replace(hour=0, second=0, microsecond=0) - timedelta(days=1)
+                for i in range(len(self._history)):
+                    last_day -= timedelta(days=1)
+                    last_timestamp = last_day.strftime("%Y-%m-%d")
+                    last_data = [x for x in self._history if x["timestamp"] == last_timestamp]
+                    if len(last_data) > 0:
+                        last_data = last_data[0]
+                        break
+                # ugly af
+                if last_data:
+                    for last_territory in last_data["assoluti"]:
+                        if last_territory["codice_territorio"] == new_absolute["codice_territorio"]:
+                            new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - last_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
 
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
