@@ -452,6 +452,14 @@ class Scraper:
             yesterday_data = yesterday_data[0]
         else:
             yesterday_data = None
+            # fallback
+            for i in range(len(self._history)):
+                yesterday_time -= timedelta(days=1)
+                yesterday_timestamp = yesterday_time.strftime("%Y-%m-%d")
+                yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_data]
+                if len(yesterday_data) > 0:
+                    yesterday_data = yesterday_data[0]
+
         today_deliveries = [x for x in self._deliveries if x["timestamp"] == today_timestamp]
         if len(today_deliveries) > 0:
             today_deliveries = [x for x in y for y in today_deliveries]
@@ -510,6 +518,7 @@ class Scraper:
                         new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
             else:
                 new_absolute["percentuale_popolazione_vaccinata"] = 0
+
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
             new_absolute["totale_vaccinati_formattato"] = f'{territory["dosi_somministrate"]:n}'
