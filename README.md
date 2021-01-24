@@ -21,7 +21,7 @@ Infine, i dati vengono spesso aggiornati ben oltre la **mezzanotte**. Per quanto
 ## Dettagli tecnici
 Il back-end è scritto in *Python* facendo uso del framework *Flask*, mentre il front-end è scritto in *ECMAScript 2020* (il vecchio *JavaScript*) insieme alla librerie *jQuery* e *Chart.js* (per i grafici) senza fare uso di framework CSS per lo styling. Non so quanto sia un vantaggio, ma l'intero sito (dati esclusi) pesa solo ~200KB.
 
-Il file GeoJson della mappa italiana è stata ottenuta modificando leggermente (questa)[https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe] repository, dapprima modificando le feauture per includere i nomi "corretti" (così come forniti dal Ministero della salute) e i codici ISTAT delle province, poi per ridurne la dimensione da ~3MB a ~45KB usando (questo sito)[https://mapshaper.org/]. La dimensione totale dei file trasferiti è passata da ~6MB a ~500KB (e la banda ringrazia).
+Il file GeoJson della mappa italiana è stata ottenuta modificando leggermente [questa](https://gist.github.com/datajournalism-it/f1abb68e718b54f6a0fe) repository, dapprima modificando le feauture per includere i nomi "corretti" (così come forniti dal Ministero della salute) e i codici ISTAT delle province, poi per ridurne la dimensione da ~3MB a ~45KB usando [questo sito](https://mapshaper.org/). La dimensione totale dei file trasferiti è passata da ~6MB a ~500KB (e la banda ringrazia).
 
 ### Service setup file
 *Posizione:*
