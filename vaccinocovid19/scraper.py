@@ -456,9 +456,10 @@ class Scraper:
             for i in range(len(self._history)):
                 yesterday_time -= timedelta(days=1)
                 yesterday_timestamp = yesterday_time.strftime("%Y-%m-%d")
-                yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_data]
+                yesterday_data = [x for x in self._history if x["timestamp"] == yesterday_timestamp]
                 if len(yesterday_data) > 0:
                     yesterday_data = yesterday_data[0]
+                    break
 
         today_deliveries = [x for x in self._deliveries if x["timestamp"] == today_timestamp]
         if len(today_deliveries) > 0:

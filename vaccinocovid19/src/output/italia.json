@@ -4,8 +4,8 @@
   "nome_territorio_corto": "Italia",
   "nuove_dosi_consegnate": 0,
   "nuove_dosi_consegnate_formattato": "0",
-  "nuovi_vaccinati": 0,
-  "nuovi_vaccinati_formattato": "0",
+  "nuovi_vaccinati": 30712,
+  "nuovi_vaccinati_formattato": "30.712",
   "percentuale_dosi_utilizzate": 72.50596851859345,
   "percentuale_dosi_utilizzate_formattato": "72,51%",
   "percentuale_popolazione_vaccinata": 2.2532637012678154,
@@ -20,5 +20,5 @@
   "totale_dosi_consegnate_formattato": "1.853.475",
   "totale_vaccinati": 1343880,
   "totale_vaccinati_formattato": "1.343.880",
-  "ultimo_aggiornamento": "2021-01-24 ore 03:19"
+  "ultimo_aggiornamento": "2021-01-24 ore 03:23"
 }
