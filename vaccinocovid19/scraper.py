@@ -596,9 +596,13 @@ class Scraper:
         # load categories and age ranges data
         response = requests.get(self._urls["anagrafica-vaccini"]).text
         json_response = ujson.loads(response)
-        # load data for yesterdat
+        # load data for yesterday
         if yesterday_data:
-            yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == "00"][0]
+            yesterday_absolute = [x for x in yesterday_data["assoluti"] if x["codice_territorio"] == "00"]
+            if len(yesterday_absolute) > 0:
+                yesterday_absolute = yesterday_absolute[0]
+            else:
+                yesterday_absolute = None
         else:
             yesterday_absolute = None
 
