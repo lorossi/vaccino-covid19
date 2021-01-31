@@ -127,7 +127,7 @@
     "popolazione": 3692555
   },
   {
-    "nome": "P.A. di Trento",
+    "nome": "P.A. Trento",
     "codice": "18",
     "area": "PAT",
     "nome_corto": "P.A. Trento",
@@ -146,6 +146,7 @@
     "codice": "20",
     "area": "VDA",
     "nome_corto": "V. d'Aosta",
+    "nome_alternativo": "Valle Aosta",
     "popolazione": 125034
   },
   {
