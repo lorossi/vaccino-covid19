@@ -210,6 +210,7 @@ class Scraper:
 
             territory_history.append(new_dict)
 
+        self.printJson(territory_history, exit=False)
         return territory_history
 
     # load the deliveries file and get all the useful information
