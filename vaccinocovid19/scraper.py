@@ -2,6 +2,7 @@
 # https://www.lorenzoros.si - https://github.com/lorossi
 # it's a little bit of a mess, but i'm working on it
 
+
 import copy
 import ujson
 import locale
@@ -730,17 +731,21 @@ class Scraper:
 
         # small settings dict
         colors = {
-            "redText": {
+            "Area Rossa": {
                 "nome": "Rossa",
                 "rgb": "#dd222a"
             },
-            "orangeText": {
+            "Area Arancione": {
                 "nome": "Arancione",
                 "rgb": "#e78314"
             },
-            "yellowText": {
+            "Area Gialla": {
                 "nome": "Gialla",
                 "rgb": "#f8c300"
+            },
+            "Area Bianca": {
+                "nome": "Bianca",
+                "rgb": "#f7f7f7"
             }
         }
 
@@ -748,8 +753,14 @@ class Scraper:
         # save geoJson related to territories color
         count = 0
         for c in colors:
-            territories = soup.body.find("td", class_=c).p.text.strip().replace("\t", "").split("\n")
-            for t in territories:
+            territories = soup.body.find(text=lambda t: c in t).next.get_text(strip=True, separator="\n")
+
+            if territories == "Nessuna regione":
+                continue
+
+            for t in territories.split("\n"):
+                t = t.replace("PA", "P.A.")
+
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": self.returnTerritoryCode(t),
@@ -757,6 +768,7 @@ class Scraper:
                     "colore_rgb": colors[c]["rgb"],
                     "codice_colore": count
                 })
+
             count += 1
 
         with open("src/settings/regioni.geojson", "r") as f:
