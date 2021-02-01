@@ -1,146 +1,153 @@
 {
   "territori": [
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
       "codice_territorio": "03",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "P.A. Bolzano"
     },
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
       "codice_territorio": "14",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Puglia"
     },
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
       "codice_territorio": "15",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Sardegna"
     },
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
       "codice_territorio": "16",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Sicilia"
     },
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
       "codice_territorio": "19",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Umbria"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "01",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Abruzzo"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "02",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Basilicata"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "04",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Calabria"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "05",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Campania"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "06",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Emilia Romagna"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "07",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Friuli Venezia Giulia"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "08",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Lazio"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "09",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Liguria"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "10",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Lombardia"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "11",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Marche"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "12",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Molise"
     },
     {
-      "codice_colore": 1,
-      "codice_territorio": null,
+      "codice_colore": 2,
+      "codice_territorio": "18",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "P.A. Trento"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "13",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Piemonte"
     },
     {
-      "codice_colore": 1,
+      "codice_colore": 2,
       "codice_territorio": "17",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Toscana"
     },
     {
-      "codice_colore": 1,
-      "codice_territorio": null,
+      "codice_colore": 2,
+      "codice_territorio": "20",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Valle Aosta"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "21",
+      "colore": "Gialla",
+      "colore_rgb": "#f8c300",
+      "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-01-31T23:50:46.036148",
-  "ultimo_aggiornamento": "2021-01-31 ore 23:50"
+  "timestamp": "2021-02-01T23:45:00.945005",
+  "ultimo_aggiornamento": "2021-02-01 ore 23:45"
 }
