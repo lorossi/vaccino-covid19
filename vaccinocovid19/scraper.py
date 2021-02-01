@@ -112,7 +112,6 @@ class Scraper:
                 f.write(ujson.dumps(self._geojson_colors, f))
             logging.info(f"Geojson colors file saved. Path: {self.colors_geojson_filename}")
 
-
     # load data from json files
     def loadData(self, all=False, today=False, history=False, italy=False,
                  colors=False, colors_geojson=False, percentage_geojson=False):
@@ -209,8 +208,6 @@ class Scraper:
             new_dict["timestamp"] = day["timestamp"]
 
             territory_history.append(new_dict)
-
-        self.printJson(territory_history, exit=False)
         return territory_history
 
     # load the deliveries file and get all the useful information
@@ -288,8 +285,6 @@ class Scraper:
                 territories = [x for x in current_day if x["area"] == areas_list[a]]
 
                 if len(territories) > 0:
-                    # load data from file
-                    territory_data = self.returnTerritoryData(areas_list[a])
                     # initialize and populate dict
                     new_variation = {
                         "area": areas_list[a],
@@ -343,6 +338,13 @@ class Scraper:
                 "variazioni": []
             }
 
+            italy_absolute = {
+                "codice_territorio": "00",
+                "nome_territorio": "Italia",
+                "nome_territorio_corto": "Italia"
+            }
+            italy_variation = copy.deepcopy(italy_absolute)
+
             # iterate through all the territories (areas)
             for a in range(len(areas_list)):
                 # calculate absolute
@@ -385,6 +387,23 @@ class Scraper:
                         for delivery in territory_delivery:
                             total_new_delivered += delivery["nuove_dosi_consegnate"]
                 new_variation["nuove_dosi_consegnate"] = total_new_delivered
+
+                italy_variation["nuovi_vaccinati"] = italy_variation.get("nuovi_vaccinati", 0) + new_variation["nuovi_vaccinati"]
+                italy_variation["nuove_prime_dosi"] = italy_variation.get("nuove_prime_dosi", 0) + new_variation["nuove_prime_dosi"]
+                italy_variation["nuove_seconde_dosi"] = italy_variation.get("nuove_seconde_dosi", 0) + new_variation["nuove_seconde_dosi"]
+                italy_variation["nuove_dosi_consegnate"] = italy_variation.get("nuove_dosi_consegnate", 0) + new_variation["nuove_dosi_consegnate"]
+
+                if "nuovi_sesso" in italy_variation:
+                    for key, value in new_variation["nuovi_sesso"].items():
+                        italy_variation["nuovi_sesso"][key] += value
+                else:
+                    italy_variation["nuovi_sesso"] = copy.deepcopy(new_variation["nuovi_sesso"])
+
+                if "nuovi_categoria" in italy_variation:
+                    for key, value in new_variation["nuovi_categoria"].items():
+                        italy_variation["nuovi_categoria"][key] += value
+                else:
+                    italy_variation["nuovi_categoria"] = copy.deepcopy(new_variation["nuovi_categoria"])
 
                 # init new dict
                 new_absolute = {}
@@ -434,9 +453,34 @@ class Scraper:
                             total_delivered += delivery["nuove_dosi_consegnate"]
                     new_absolute["totale_dosi_consegnate"] = total_delivered
 
+                    italy_absolute["totale_vaccinati"] = italy_absolute.get("totale_vaccinati", 0) + new_absolute["totale_vaccinati"]
+                    italy_absolute["prime_dosi"] = italy_absolute.get("prime_dosi", 0) + new_absolute["prime_dosi"]
+                    italy_absolute["seconde_dosi"] = italy_absolute.get("seconde_dosi", 0) + new_absolute["seconde_dosi"]
+                    italy_absolute["totale_dosi_consegnate"] = italy_absolute.get("totale_dosi_consegnate", 0) + new_absolute["totale_dosi_consegnate"]
+
+                    if "sesso" in italy_absolute:
+                        for key, value in new_absolute["sesso"].items():
+                            italy_absolute["sesso"][key] += value
+                    else:
+                        italy_absolute["sesso"] = copy.deepcopy(new_absolute["sesso"])
+
+                    if "categoria" in italy_absolute:
+                        for key, value in new_absolute["categoria"].items():
+                            italy_absolute["categoria"][key] += value
+                    else:
+                        italy_absolute["categoria"] = copy.deepcopy(new_absolute["categoria"])
+
                 # finally append the dicts to the history list
                 new_history_day["variazioni"].append(new_variation)
                 new_history_day["assoluti"].append(new_absolute)
+
+            territory_data = self.returnTerritoryData("ITA")
+            italy_absolute["percentuale_vaccinati"] = italy_absolute.get("prime_dosi", 0) / territory_data["popolazione"] * 100
+            italy_absolute["percentuale_vaccinati_formattato"] = f'{locale.format_string("%.2f", italy_absolute["percentuale_vaccinati"])}%'
+
+            new_history_day["variazioni"].append(italy_variation)
+            new_history_day["assoluti"].append(italy_absolute)
+
             new_history.append(new_history_day)
 
         # copy the new variable inside the private variable
@@ -732,19 +776,19 @@ class Scraper:
 
         # small settings dict
         colors = {
-            "Area Rossa": {
+            "document.write(areaRossa)": {
                 "nome": "Rossa",
                 "rgb": "#dd222a"
             },
-            "Area Arancione": {
+            "document.write(areaArancione)": {
                 "nome": "Arancione",
                 "rgb": "#e78314"
             },
-            "Area Gialla": {
+            "document.write(areaGialla)": {
                 "nome": "Gialla",
                 "rgb": "#f8c300"
             },
-            "Area Bianca": {
+            "document.write(areaBianca)": {
                 "nome": "Bianca",
                 "rgb": "#f7f7f7"
             }
@@ -760,8 +804,10 @@ class Scraper:
                 continue
 
             for t in territories.split("\n"):
-                t = t.replace("PA", "P.A.")
+                if not t:
+                    continue
 
+                t = t.replace("PA", "P.A.")
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": self.returnTerritoryCode(t),
