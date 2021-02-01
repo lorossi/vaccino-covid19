@@ -338,6 +338,8 @@ class Scraper:
                 "variazioni": []
             }
 
+            # data for italy is NOT PROVIDED ANYMORE
+            # so all we have to do is treat it differently
             italy_absolute = {
                 "codice_territorio": "00",
                 "nome_territorio": "Italia",
@@ -368,10 +370,12 @@ class Scraper:
                 new_variation["nuovi_vaccinati"] = territory.get("prima_dose", 0) + territory.get("seconda_dose", 0)
                 new_variation["nuove_prime_dosi"] = territory.get("prima_dose", 0)
                 new_variation["nuove_seconde_dosi"] = territory.get("seconda_dose", 0)
+                # calculate variation by gender
                 new_variation["nuovi_sesso"] = {
                     "uomini": territory.get("sesso_maschile", 0),
                     "donne": territory.get("sesso_femminile", 0)
                 }
+                # calculate variation by category
                 new_variation["nuovi_categoria"] = {
                     "categoria_operatori_sanitari_sociosanitari": territory.get("categoria_operatori_sanitari_sociosanitari", 0),
                     "personale_non_sanitario": territory.get("categoria_personale_non_sanitario", 0),
@@ -388,11 +392,13 @@ class Scraper:
                             total_new_delivered += delivery["nuove_dosi_consegnate"]
                 new_variation["nuove_dosi_consegnate"] = total_new_delivered
 
+                # now update all data for italy
                 italy_variation["nuovi_vaccinati"] = italy_variation.get("nuovi_vaccinati", 0) + new_variation["nuovi_vaccinati"]
                 italy_variation["nuove_prime_dosi"] = italy_variation.get("nuove_prime_dosi", 0) + new_variation["nuove_prime_dosi"]
                 italy_variation["nuove_seconde_dosi"] = italy_variation.get("nuove_seconde_dosi", 0) + new_variation["nuove_seconde_dosi"]
                 italy_variation["nuove_dosi_consegnate"] = italy_variation.get("nuove_dosi_consegnate", 0) + new_variation["nuove_dosi_consegnate"]
 
+                # now update dicts inside the italy dict
                 if "nuovi_sesso" in italy_variation:
                     for key, value in new_variation["nuovi_sesso"].items():
                         italy_variation["nuovi_sesso"][key] += value
@@ -453,11 +459,13 @@ class Scraper:
                             total_delivered += delivery["nuove_dosi_consegnate"]
                     new_absolute["totale_dosi_consegnate"] = total_delivered
 
+                    # now update all data for italy
                     italy_absolute["totale_vaccinati"] = italy_absolute.get("totale_vaccinati", 0) + new_absolute["totale_vaccinati"]
                     italy_absolute["prime_dosi"] = italy_absolute.get("prime_dosi", 0) + new_absolute["prime_dosi"]
                     italy_absolute["seconde_dosi"] = italy_absolute.get("seconde_dosi", 0) + new_absolute["seconde_dosi"]
                     italy_absolute["totale_dosi_consegnate"] = italy_absolute.get("totale_dosi_consegnate", 0) + new_absolute["totale_dosi_consegnate"]
 
+                    # now update dicts inside the italy dict
                     if "sesso" in italy_absolute:
                         for key, value in new_absolute["sesso"].items():
                             italy_absolute["sesso"][key] += value
@@ -775,6 +783,10 @@ class Scraper:
         soup = BeautifulSoup(response, 'html.parser')
 
         # small settings dict
+        # now data is loaded dynamically (BUT ONLY THE REGIONS COLORS, NOT THE
+        # REGION LIST!) by a DUMB SCRIPT WITH A CLEAR DESCRIPTIVE NAME
+        # MINISTERO, IF YOU WANTED TO KEEP THIS SECRET, YOU COULD HAVE FOUND
+        # A BETTER WAY TO DO SO!
         colors = {
             "document.write(areaRossa)": {
                 "nome": "Rossa",
@@ -798,16 +810,17 @@ class Scraper:
         # save geoJson related to territories color
         count = 0
         for c in colors:
+            # find the element and get its text
             territories = soup.body.find(text=lambda t: c in t).next.get_text(strip=True, separator="\n")
 
-            if territories == "Nessuna regione":
-                continue
-
             for t in territories.split("\n"):
+                # sometimes the line is empty
                 if not t:
                     continue
 
+                # replace the acronym
                 t = t.replace("PA", "P.A.")
+                # create the new dict
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": self.returnTerritoryCode(t),
@@ -851,7 +864,7 @@ class Scraper:
         logging.info("Repo pulled")
         try:
             subprocess.run(["git", "add", "-A"])
-            subprocess.run(["git", "commit", "-m", '"updated data"'])
+            subprocess.run(["git", "commit", "-m", "updated data"])
             logging.info("Commit created")
             subprocess.run(["git", "push"])
             logging.info("Repo pushed")
