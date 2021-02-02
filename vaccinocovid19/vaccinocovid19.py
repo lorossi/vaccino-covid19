@@ -82,6 +82,11 @@ def get_colore_territori():
     return jsonify(s.territories_color)
 
 
+@app.route("/get/colore_territori_slim", methods=["GET"])
+def get_colore_territori_slim():
+    return jsonify(s.territories_color_slim)
+
+
 @app.route("/get/mappa_colore_territori", methods=["GET"])
 def get_mappa_colore_territori():
     return jsonify(s.territories_color_map)

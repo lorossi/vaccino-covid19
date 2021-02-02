@@ -29,6 +29,7 @@ class Scraper:
         self._history = {}
         self._deliveries = {}
         self._territories_color = {}
+        self._territories_color_slim = {}
         self._vaccine_producers = {}
         self._geojson_colors = {}
         self._geojeson_percentages = {}
@@ -61,6 +62,7 @@ class Scraper:
         self.today_filename = settings["today_filename"]
         self.italy_filename = settings["italy_filename"]
         self.colors_filename = settings["colors_filename"]
+        self.slim_colors_filename = settings["slim_colors_filename"]
         self.colors_geojson_filename = settings["colors_geojson_filename"]
         self.vaccinations_geojeson_filename = settings["vaccinations_geojeson_filename"]
 
@@ -107,6 +109,11 @@ class Scraper:
                 f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
             logging.info(f"Color file saved. Path: {self.colors_filename}")
 
+            with open(self.output_path + self.slim_colors_filename, "w") as f:
+                # convert dict to json (will be read by js)
+                f.write(ujson.dumps(self._territories_color_slim, indent=2, sort_keys=True))
+            logging.info(f"Slim Color file saved. Path: {self.slim_colors_filename}")
+
             with open(self.output_path + self.colors_geojson_filename, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._geojson_colors, f))
@@ -146,6 +153,10 @@ class Scraper:
             try:
                 with open(self.output_path + self.colors_filename, "r") as f:
                     self._territories_color = ujson.load(f)
+
+                with open(self.output_path + self.slim_colors_filename, "r") as f:
+                    self._territories_color_slim = ujson.load(f)
+
             except Exception as e:
                 logging.error(f"Cannot read colors file. error {e}")
                 self._territories_color = {}
@@ -775,6 +786,9 @@ class Scraper:
             "territori": []
         }
 
+        # slimmer version for light parsing
+        new_territories_colors_slim = {}
+
         logging.info("Loading colors")
         # initialize old data
         response = requests.get(self._urls["colore-territori"]).text
@@ -818,14 +832,18 @@ class Scraper:
 
                 # replace the acronym
                 t = t.replace("PA", "P.A.")
+                # get territory code
+                territory_code = self.returnTerritoryCode(t)
                 # create the new dict
                 new_territories_colors["territori"].append({
                     "territorio": t,
-                    "codice_territorio": self.returnTerritoryCode(t),
+                    "codice_territorio": territory_code,
                     "colore": colors[c]["nome"],
                     "colore_rgb": colors[c]["rgb"],
                     "codice_colore": count
                 })
+
+                new_territories_colors_slim[territory_code] = count
 
             count += 1
 
@@ -842,6 +860,7 @@ class Scraper:
 
         # finally, copy inside the private variables
         self._territories_color = copy.deepcopy(new_territories_colors)
+        self._territories_color_slim = copy.deepcopy(new_territories_colors_slim)
         self._geojson_colors = copy.deepcopy(geojson_data)
 
     def scrapeAll(self):
@@ -914,6 +933,11 @@ class Scraper:
     def territories_color(self):
         self.loadData(colors=True)
         return self._territories_color
+
+    @property
+    def territories_color_slim(self):
+        self.loadData(colors=True)
+        return self._territories_color_slim
 
     @property
     def territories_color_map(self):
