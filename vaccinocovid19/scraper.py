@@ -321,7 +321,7 @@ class Scraper:
         new_history = []
 
         # iterate through all the timestamps skipping the first day
-        for t in range(1, len(timestamps_list) - 1):
+        for t in range(1, len(timestamps_list)):
             # load all the data relatie to this day
             current_day = [x for x in json_response["data"] if x["data_somministrazione"] == timestamps_list[t]]
             # load all the deliveries relative to this day
@@ -532,7 +532,6 @@ class Scraper:
             "nome_territorio": "Italia",
             "nome_territorio_corto": "Italia",
         }
-
         new_italy_variation = copy.deepcopy(new_italy_absolute)
 
         logging.info("Loading data")
@@ -540,6 +539,8 @@ class Scraper:
         response = requests.get(self._urls["vaccini-summary-latest"]).text
         json_response = ujson.loads(response)
 
+        # used to compute percentage of italian population vaccinated
+        italy_second_doses = 0
         logging.info("Scraping data")
         for territory in json_response["data"]:
             # init new dict
@@ -559,27 +560,24 @@ class Scraper:
             # in order to calculate that, we subract the number of second
             # doses from the precedent day to the number of total doses today
             # it is not 100% accurate but will work
-            if yesterday_data:
-                for yesterday_territory in yesterday_data["assoluti"]:
-                    if yesterday_territory["codice_territorio"] == new_absolute["codice_territorio"]:
-                        new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - yesterday_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
-            else:
-                new_absolute["percentuale_popolazione_vaccinata"] = 0
-
-                # fallback
+            territory_second_doses = 0
+            if not yesterday_data:
                 last_day = datetime.now().replace(hour=0, second=0, microsecond=0) - timedelta(days=1)
                 for i in range(len(self._history)):
                     last_day -= timedelta(days=1)
                     last_timestamp = last_day.strftime("%Y-%m-%d")
                     last_data = [x for x in self._history if x["timestamp"] == last_timestamp]
                     if len(last_data) > 0:
-                        last_data = last_data[0]
+                        yesterday_data = last_data[0]
                         break
-                # ugly af
-                if last_data:
-                    for last_territory in last_data["assoluti"]:
-                        if last_territory["codice_territorio"] == new_absolute["codice_territorio"]:
-                            new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - last_territory["seconde_dosi"]) / territory_data["popolazione"] * 100
+            # there might still not be data for yesterday...
+            if yesterday_data:
+                for yesterday_territory in yesterday_data["assoluti"]:
+                    if yesterday_territory["codice_territorio"] == new_absolute["codice_territorio"]:
+                        territory_second_doses = yesterday_territory["seconde_dosi"]
+
+            italy_second_doses += territory_second_doses
+            new_absolute["percentuale_popolazione_vaccinata"] = (new_absolute["totale_vaccinati"] - territory_second_doses) / territory_data["popolazione"] * 100
 
             # format numbers
             new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
@@ -638,7 +636,7 @@ class Scraper:
         new_italy_absolute["totale_dosi_consegnate_formattato"] = f'{new_italy_absolute["totale_dosi_consegnate"]:n}'
         new_italy_absolute["totale_vaccinati_formattato"] = f'{new_italy_absolute["totale_vaccinati"]:n}'
         new_italy_absolute["percentuale_dosi_utilizzate"] = new_italy_absolute["totale_vaccinati"] / new_italy_absolute["totale_dosi_consegnate"] * 100
-        new_italy_absolute["percentuale_popolazione_vaccinata"] = new_italy_absolute["totale_vaccinati"] / italy_data["popolazione"] * 100
+        new_italy_absolute["percentuale_popolazione_vaccinata"] = (new_italy_absolute["totale_vaccinati"] - italy_second_doses) / italy_data["popolazione"] * 100
         new_italy_absolute["percentuale_dosi_utilizzate_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_dosi_utilizzate"])}%'
         new_italy_absolute["percentuale_popolazione_vaccinata_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_popolazione_vaccinata"])}%'
         new_italy_variation["nuovi_vaccinati_formattato"] = f'{new_italy_variation["nuovi_vaccinati"]:n}'
