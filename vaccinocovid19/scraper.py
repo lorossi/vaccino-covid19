@@ -79,13 +79,13 @@ class Scraper:
                 for territory in self._territories_data:
                     self._territories_list.append(territory["nome"])
 
-    def saveData(self):
+    def saveData(self, all=False, data=False, history=False, colors=False):
         # create output folders
         logging.info("Creating folders")
         Path(self.output_path).mkdir(parents=True, exist_ok=True)
         logging.info("Saving to file")
 
-        if self._data:
+        if all or data:
             with open(self.output_path + self.today_filename, "w") as f:
                 ujson.dump(self._data, f, indent=2, sort_keys=True)
             logging.info(f"Today file saved. Path: {self.today_filename}")
@@ -98,12 +98,12 @@ class Scraper:
                 ujson.dump(self._geojeson_percentages, f)
             logging.info(f"Geojson vaccinations file saved. Path: {self.vaccinations_geojeson_filename}")
 
-        if self._history:
+        if all or history:
             with open(self.output_path + self.history_filename, "w") as f:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"History file saved. Path: {self.history_filename}")
 
-        if self._territories_color:
+        if all or colors:
             with open(self.output_path + self.colors_filename, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color, indent=2, sort_keys=True))
@@ -964,6 +964,6 @@ if __name__ == "__main__":
     s = Scraper()
     started = datetime.now()
     s.scrapeAll()
-    s.saveData()
+    s.saveData(all=True)
     elapsed = (datetime.now() - started).total_seconds()
     logging.info(f"It took {elapsed} seconds")

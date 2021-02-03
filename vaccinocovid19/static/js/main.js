@@ -106,7 +106,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       let data = [];
       let label;
       history_data.forEach((a, i) => {
-        label = "Totale vaccinati";
+        label = "Totale vaccinazioni";
         let y;
         y = a.assoluti.totale_vaccinati;
         data.push({
@@ -202,7 +202,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       let data = [];
       let label;
       history_data.forEach((v, i) => {
-        label = "Vaccinati oggi";
+        label = "Vaccinazioni oggi";
         let y;
         y = v.variazioni.nuovi_vaccinati;
         data.push({
