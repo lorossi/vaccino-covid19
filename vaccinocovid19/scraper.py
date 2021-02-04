@@ -944,7 +944,7 @@ class Scraper:
     def territories_color_dummy(self):
         dummy_territories = {}
         for x in range(21):
-            dummy_territories[str(x).zfill(2)] = randint(0, 3)
+            dummy_territories[str(x+1).zfill(2)] = randint(0, 3)
         return dummy_territories
 
     @property
