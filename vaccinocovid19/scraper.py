@@ -9,6 +9,7 @@ import locale
 import logging
 import requests
 import subprocess
+from random import randint
 from bs4 import BeautifulSoup
 from collections import Counter
 from pathlib import Path
@@ -938,6 +939,13 @@ class Scraper:
     def territories_color_slim(self):
         self.loadData(colors=True)
         return self._territories_color_slim
+
+    @property
+    def territories_color_dummy(self):
+        dummy_territories = {}
+        for x in range(21):
+            dummy_territories[str(x).zfill(2)] = randint(0, 3)
+        return dummy_territories
 
     @property
     def territories_color_map(self):
