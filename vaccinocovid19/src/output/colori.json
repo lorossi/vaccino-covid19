@@ -16,13 +16,6 @@
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "15",
-      "colore": "Arancione",
-      "colore_rgb": "#e78314",
-      "territorio": "Sardegna"
-    },
-    {
-      "codice_colore": 1,
       "codice_territorio": "16",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
@@ -128,6 +121,13 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "15",
+      "colore": "Gialla",
+      "colore_rgb": "#f8c300",
+      "territorio": "Sardegna"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "17",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -148,6 +148,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-02-07T23:45:01.191157",
-  "ultimo_aggiornamento": "2021-02-07 ore 23:45"
+  "timestamp": "2021-02-08T23:45:01.338088",
+  "ultimo_aggiornamento": "2021-02-08 ore 23:45"
 }
