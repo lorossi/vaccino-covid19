@@ -9,13 +9,6 @@
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "14",
-      "colore": "Arancione",
-      "colore_rgb": "#e78314",
-      "territorio": "Puglia"
-    },
-    {
-      "codice_colore": 1,
       "codice_territorio": "16",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
@@ -121,6 +114,13 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "14",
+      "colore": "Gialla",
+      "colore_rgb": "#f8c300",
+      "territorio": "Puglia"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "15",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -148,6 +148,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-02-10T23:45:01.676880",
-  "ultimo_aggiornamento": "2021-02-10 ore 23:45"
+  "timestamp": "2021-02-11T23:45:02.207701",
+  "ultimo_aggiornamento": "2021-02-11 ore 23:45"
 }
