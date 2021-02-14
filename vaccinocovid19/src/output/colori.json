@@ -2,10 +2,31 @@
   "territori": [
     {
       "codice_colore": 1,
+      "codice_territorio": "01",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "09",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "03",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "18",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "P.A. Trento"
     },
     {
       "codice_colore": 1,
@@ -16,17 +37,17 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "17",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Toscana"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "19",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Umbria"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "01",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Abruzzo"
     },
     {
       "codice_colore": 2,
@@ -72,13 +93,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "09",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Liguria"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "10",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -97,13 +111,6 @@
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Molise"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "18",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "P.A. Trento"
     },
     {
       "codice_colore": 2,
@@ -128,13 +135,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "17",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Toscana"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "20",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -148,6 +148,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-02-13T23:45:01.957383",
-  "ultimo_aggiornamento": "2021-02-13 ore 23:45"
+  "timestamp": "2021-02-14T23:45:02.264625",
+  "ultimo_aggiornamento": "2021-02-14 ore 23:45"
 }
