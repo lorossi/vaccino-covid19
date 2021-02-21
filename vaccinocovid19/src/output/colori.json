@@ -9,10 +9,31 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "05",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Campania"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "06",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Emilia Romagna"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "09",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "12",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Molise"
     },
     {
       "codice_colore": 1,
@@ -58,20 +79,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "05",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Campania"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "06",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Emilia Romagna"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "07",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
@@ -97,13 +104,6 @@
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Marche"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "12",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Molise"
     },
     {
       "codice_colore": 2,
@@ -148,6 +148,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-02-20T23:45:03.186088",
-  "ultimo_aggiornamento": "2021-02-20 ore 23:45"
+  "timestamp": "2021-02-21T23:45:02.708715",
+  "ultimo_aggiornamento": "2021-02-21 ore 23:45"
 }
