@@ -1,6 +1,20 @@
 {
   "territori": [
     {
+      "codice_colore": 0,
+      "codice_territorio": "02",
+      "colore": "Rossa",
+      "colore_rgb": "#dd222a",
+      "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 0,
+      "codice_territorio": "12",
+      "colore": "Rossa",
+      "colore_rgb": "#dd222a",
+      "territorio": "Molise"
+    },
+    {
       "codice_colore": 1,
       "codice_territorio": "01",
       "colore": "Arancione",
@@ -23,17 +37,17 @@
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "09",
+      "codice_territorio": "10",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
-      "territorio": "Liguria"
+      "territorio": "Lombardia"
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "12",
+      "codice_territorio": "11",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
-      "territorio": "Molise"
+      "territorio": "Marche"
     },
     {
       "codice_colore": 1,
@@ -51,6 +65,13 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "13",
+      "colore": "Arancione",
+      "colore_rgb": "#e78314",
+      "territorio": "Piemonte"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "17",
       "colore": "Arancione",
       "colore_rgb": "#e78314",
@@ -62,13 +83,6 @@
       "colore": "Arancione",
       "colore_rgb": "#e78314",
       "territorio": "Umbria"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "02",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Basilicata"
     },
     {
       "codice_colore": 2,
@@ -93,24 +107,10 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "10",
+      "codice_territorio": "09",
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
-      "territorio": "Lombardia"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "11",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Marche"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "13",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Piemonte"
+      "territorio": "Liguria"
     },
     {
       "codice_colore": 2,
@@ -118,13 +118,6 @@
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Puglia"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "15",
-      "colore": "Gialla",
-      "colore_rgb": "#f8c300",
-      "territorio": "Sardegna"
     },
     {
       "codice_colore": 2,
@@ -146,8 +139,15 @@
       "colore": "Gialla",
       "colore_rgb": "#f8c300",
       "territorio": "Veneto"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "15",
+      "colore": "Bianca",
+      "colore_rgb": "#f7f7f7",
+      "territorio": "Sardegna"
     }
   ],
-  "timestamp": "2021-02-28T23:45:03.366438",
-  "ultimo_aggiornamento": "2021-02-28 ore 23:45"
+  "timestamp": "2021-03-01T23:45:03.290125",
+  "ultimo_aggiornamento": "2021-03-01 ore 23:45"
 }
