@@ -806,11 +806,16 @@ class Scraper:
         for category in categories:
             category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
             nome_categoria_pulito = category["nome_categoria_pulito"]
-            if yesterday_absolute and yesterday_absolute["categoria"].get(nome_categoria_pulito, None):
-                category["nuovi_vaccinati"] = category["totale_vaccinati"] - \
-                    yesterday_absolute["categoria"][nome_categoria_pulito]
-                category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / \
-                    yesterday_absolute["categoria"][nome_categoria_pulito] * 100
+            if yesterday_absolute:
+                if yesterday_absolute["categoria"].get(nome_categoria_pulito, None):
+                    category["nuovi_vaccinati"] = category["totale_vaccinati"] - \
+                        yesterday_absolute["categoria"][nome_categoria_pulito]
+                    category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / \
+                        yesterday_absolute["categoria"][nome_categoria_pulito] * 100
+                else:
+                    category["nuovi_vaccinati"] = category["totale_vaccinati"]
+                    category["nuovi_vaccinati_percentuale"] = 100
+
             else:
                 category["nuovi_vaccinati"] = 0
                 category["nuovi_vaccinati_percentuale"] = 0
