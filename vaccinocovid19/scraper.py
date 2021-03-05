@@ -414,7 +414,9 @@ class Scraper:
                     "categoria_operatori_sanitari_sociosanitari": territory.get("categoria_operatori_sanitari_sociosanitari", 0),
                     "personale_non_sanitario": territory.get("categoria_personale_non_sanitario", 0),
                     "categoria_ospiti_rsa": territory.get("categoria_ospiti_rsa", 0),
-                    "over_80": territory.get("categoria_over80", 0)
+                    "over_80": territory.get("categoria_over80", 0),
+                    "categoria_forze_armate": territory.get("categoria_forze_armate", 0),
+                    "categoria_personale_scolastico": territory.get("categoria_personale_scolastico", 0)
                 }
 
                 # calculate the number of new delivered doses
@@ -890,19 +892,23 @@ class Scraper:
         colors = {
             "document.write(areaRossa)": {
                 "nome": "Rossa",
-                "rgb": "#dd222a"
+                "rgb": "#dd222a",
+                "stroke": "#dd222a"
             },
             "document.write(areaArancione)": {
                 "nome": "Arancione",
-                "rgb": "#e78314"
+                "rgb": "#e78314",
+                "stroke": "#e78314"
             },
             "document.write(areaGialla)": {
                 "nome": "Gialla",
-                "rgb": "#f8c300"
+                "rgb": "#f8c300",
+                "stroke": "#f8c300"
             },
             "document.write(areaBianca)": {
                 "nome": "Bianca",
-                "rgb": "#f7f7f7"
+                "rgb": "#f7f7f7",
+                "stroke": "#1f1f1f"
             }
         }
 
@@ -927,6 +933,7 @@ class Scraper:
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": territory_code,
+                    "colore_bordo": colors[c]["stroke"],
                     "colore": colors[c]["nome"],
                     "colore_rgb": colors[c]["rgb"],
                     "codice_colore": count
@@ -945,6 +952,7 @@ class Scraper:
                 if feature["properties"]["codice_regione"] == t["codice_territorio"]:
                     feature["properties"]["colore"] = t["colore"]
                     feature["properties"]["colore_rgb"] = t["colore_rgb"]
+                    feature["properties"]["colore_bordo"] = t["colore_bordo"]
                     break
 
         # finally, copy inside the private variables

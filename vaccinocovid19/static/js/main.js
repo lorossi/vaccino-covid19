@@ -258,7 +258,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         datasets: datasets
       };
       await old_chart.update();
-      return  {
+      return {
         chart: old_chart,
         data: history_data
       };
@@ -276,7 +276,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
             xAxes: [{
               ticks: {
                 fontSize: font_size,
-                autoSkip: false,
+                autoSkip: true,
                 maxRotation: 90,
                 minRotation: 45,
               }
@@ -301,7 +301,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
           }
         }
       });
-      return  {
+      return {
         chart: chart,
         data: history_data
       };
@@ -430,7 +430,7 @@ const load_territories_chart = async (order, sort_by_name, old_obj) => {
       data = territories.filter(x => x.nome_territorio != "Italia").map(x => x.percentuale_dosi_utilizzate.toFixed(2));
       background_colors = data.map(x => `hsla(${120 - x / 100 * 120}, 100%, 50%, 0.5)`);
       border_colors = data.map(x => `hsl(${120 - x / Math.max(...data) * 120}, 100%, 50%)`);
-      hover_background_colors = data.map(x => `hsla(${120 - x /100 * 120}, 100%, 50%, 0.25)`);
+      hover_background_colors = data.map(x => `hsla(${120 - x / 100 * 120}, 100%, 50%, 0.25)`);
       labels = territories.filter(x => x.nome_territorio != "Italia").map(x => x.nome_territorio);
       label = "Percentuale vaccini utlizzati";
     }
@@ -1324,51 +1324,51 @@ const load_subministrations_chart = async (subministrations) => {
     label = "Dosi somministrate";
 
     font_size = $(window).width() > 1500 ? 14 : 10;
-      // draw the new chart
-      let ctx = $("canvas#somministrazioni")[0].getContext('2d');
-      chart = new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: labels,
-          datasets: [{
-            data: data,
-            label: label,
-            backgroundColor: background_colors,
-            borderColor: border_colors,
-            borderWidth: 2,
-            hoverBackgroundColor: hover_background_colors,
-            hoverBorderColor: hover_background_colors
-          }],
+    // draw the new chart
+    let ctx = $("canvas#somministrazioni")[0].getContext('2d');
+    chart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          label: label,
+          backgroundColor: background_colors,
+          borderColor: border_colors,
+          borderWidth: 2,
+          hoverBackgroundColor: hover_background_colors,
+          hoverBorderColor: hover_background_colors
+        }],
+      },
+      options: {
+        responsive: true,
+        aspectRatio: 1.1,
+        legend: {
+          align: "end"
         },
-        options: {
-          responsive: true,
-          aspectRatio: 1.1,
-          legend: {
-            align: "end"
-          },
-          tooltips: {},
-          scales: {
-            xAxes: [{
-              ticks: {
-                autoSkip: false,
-                maxRotation: 90,
-                minRotation: 45,
-                fontSize: font_size
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                fontSize: font_size,
-                autoSkip: true,
-                maxRotation: 30,
-                minRotation: -30,
-              }
-            }]
-          }
+        tooltips: {},
+        scales: {
+          xAxes: [{
+            ticks: {
+              autoSkip: false,
+              maxRotation: 90,
+              minRotation: 45,
+              fontSize: font_size
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              fontSize: font_size,
+              autoSkip: true,
+              maxRotation: 30,
+              minRotation: -30,
+            }
+          }]
         }
-      });
+      }
+    });
 
-      return chart;
+    return chart;
   } catch (err) {
     console.log(`Impossibile caricare il grafico delle somministrazioni. Errore ${err.message}`);
     return;
@@ -1383,11 +1383,12 @@ const load_territories_color_map = async () => {
 
     const style = feature => {
       return {
-      			weight: 2,
-      			opacity: 1,
-      			color: feature.properties.colore_rgb,
-      			fillOpacity: 0.7
-      		};
+        weight: 2,
+        opacity: 1,
+        color: feature.properties.colore_bordo,
+        fillColor: feature.properties.colore_rgb,
+        fillOpacity: 0.7
+      };
     };
 
     geojson = await get_data_json("/get/mappa_colore_territori");
@@ -1405,7 +1406,7 @@ const load_territories_color_map = async () => {
       dragging: false
     }).setView([42.5, 12.534], zoom_level);
 
-    L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
+    L.geoJson(geojson, { style: style }).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
   } catch (err) {
     console.log(`Impossibile caricare il la mappa del colore dei territori. Errore ${err.message}`);
     return;
@@ -1420,11 +1421,11 @@ const load_territories_percentage_map = async () => {
 
     const style = feature => {
       return {
-      			weight: 2,
-      			opacity: 1,
-      			color: `hsl(${feature.properties.tinta}, 100%, 50%)`,
-      			fillOpacity: 0.7
-      		};
+        weight: 2,
+        opacity: 1,
+        color: `hsl(${feature.properties.tinta}, 100%, 50%)`,
+        fillOpacity: 0.7
+      };
     };
 
     geojson = await get_data_json("/get/mappa_percentuale_territori");
@@ -1442,7 +1443,7 @@ const load_territories_percentage_map = async () => {
       dragging: false
     }).setView([42.5, 12.534], zoom_level);
 
-    L.geoJson(geojson, {style: style}).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.percentuale_popolazione_vaccinata_formattato}`).addTo(map);
+    L.geoJson(geojson, { style: style }).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.percentuale_popolazione_vaccinata_formattato}`).addTo(map);
   } catch (err) {
     console.log(`Impossibile caricare il la mappa delle percentuali dei territori. Errore ${err.message}`);
     return;
@@ -1466,11 +1467,11 @@ $(document).ready(async () => {
   Chart.defaults.global.defaultFontFamily = 'Roboto';
   // load charts and keep the variable
   let history_chart = load_history_chart([0, 1], "Italia");
-  let territories_chart = load_territories_chart(0, false, {data:  await territories});
-  let variations_chart = load_variations_chart(0, false, {data: await variations});
-  let categories_chart = load_categories_chart(0, {data: await categories});
+  let territories_chart = load_territories_chart(0, false, { data: await territories });
+  let variations_chart = load_variations_chart(0, false, { data: await variations });
+  let categories_chart = load_categories_chart(0, { data: await categories });
   let genders_chart = load_genders_chart(await genders);
-  let ages_ranges_chart = load_age_ranges_chart(0, {data: await age_ranges});
+  let ages_ranges_chart = load_age_ranges_chart(0, { data: await age_ranges });
   let vaccine_producers_chart = load_vaccine_producers_chart(await vaccine_producers);
   let subministrations_chart = load_subministrations_chart(await subministrations);
 
