@@ -19,7 +19,10 @@ from datetime import datetime, timedelta
 class Scraper:
     def __init__(self, log=True, verbose=True):
         # set locale for number formatting
-        locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+        try:
+            locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+        except Exception as e:
+            logging.warning(f"Locale not found. Error {e}")
         self.log = log
         self.verbose = verbose
         self._urls = {}
@@ -675,6 +678,7 @@ class Scraper:
                 new_variation["percentuale_nuovi_vaccinati"] = new_variation["nuovi_vaccinati"] / \
                     yesterday_absolute["totale_vaccinati"] * 100
             else:
+                # data for previous day is sometimes not available
                 yesterday_absolute = None
                 new_variation["nuovi_vaccinati"] = 0
                 new_variation["percentuale_nuovi_vaccinati"] = 0
@@ -815,8 +819,8 @@ class Scraper:
                     category["nuovi_vaccinati_percentuale"] = category["nuovi_vaccinati"] / \
                         yesterday_absolute["categoria"][nome_categoria_pulito] * 100
                 else:
-                    category["nuovi_vaccinati"] = category["totale_vaccinati"]
-                    category["nuovi_vaccinati_percentuale"] = 100
+                    category["nuovi_vaccinati"] = 0
+                    category["nuovi_vaccinati_percentuale"] = 0
 
             else:
                 category["nuovi_vaccinati"] = 0
