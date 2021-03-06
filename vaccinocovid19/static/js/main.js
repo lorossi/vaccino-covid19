@@ -815,7 +815,7 @@ const load_categories_chart = async (order, old_obj) => {
 
     // sort data and fill variables
     if (order === 0) {
-      categories.sort((a, b) => a.id_categoria > b.id_categoria ? 1 : -1);
+      categories.sort((a, b) => a.nome_categoria > b.nome_categoria ? 1 : -1);
     } else if (order === 1) {
       categories.sort((a, b) => a.totale_vaccinati > b.totale_vaccinati ? 1 : -1);
     }
