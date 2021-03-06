@@ -888,33 +888,8 @@ class Scraper:
         response = requests.get(self._urls["colore-territori"]).text
         soup = BeautifulSoup(response, 'html.parser')
 
-        # small settings dict
-        # now data is loaded dynamically (BUT ONLY THE REGIONS COLORS, NOT THE
-        # REGION LIST!) by a DUMB SCRIPT WITH A CLEAR DESCRIPTIVE NAME
-        # MINISTERO, IF YOU WANTED TO KEEP THIS SECRET, YOU COULD HAVE FOUND
-        # A BETTER WAY TO DO SO!
-        colors = {
-            "document.write(areaRossa)": {
-                "nome": "Rossa",
-                "rgb": "#dd222a",
-                "stroke": "#dd222a"
-            },
-            "document.write(areaArancione)": {
-                "nome": "Arancione",
-                "rgb": "#e78314",
-                "stroke": "#e78314"
-            },
-            "document.write(areaGialla)": {
-                "nome": "Gialla",
-                "rgb": "#f8c300",
-                "stroke": "#f8c300"
-            },
-            "document.write(areaBianca)": {
-                "nome": "Bianca",
-                "rgb": "#f7f7f7",
-                "stroke": "#1f1f1f"
-            }
-        }
+       with open("src/settings/territories-color.json", "r") as f:
+            colors = ujson.load(f)
 
         logging.info("Scraping colors")
         # save geoJson related to territories color
