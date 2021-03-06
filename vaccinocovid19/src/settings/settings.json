@@ -1,10 +1,10 @@
 {
   "output_path": "src/output/",
-  "history_filename": "storico-vaccini.json",
-  "today_filename": "vaccini-oggi.json",
-  "italy_filename": "italia.json",
-  "colors_filename": "colori.json",
-  "slim_colors_filename": "colori_slim.json",
-  "colors_geojson_filename": "colori.geojson",
-  "vaccinations_geojeson_filename": "vaccinazioni.geojson"
+  "history": "storico-vaccini.json",
+  "today": "vaccini-oggi.json",
+  "italy": "italia.json",
+  "colors": "colori.json",
+  "slim_colors": "colori_slim.json",
+  "colors_geojson": "colori.geojson",
+  "vaccinations_geojson": "vaccinazioni.geojson"
 }

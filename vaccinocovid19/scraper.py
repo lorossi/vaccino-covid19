@@ -1,7 +1,8 @@
-# Made by Lorenzo Rossi
-# https://www.lorenzoros.si - https://github.com/lorossi
-# it's a little bit of a mess, but i'm working on it
-
+"""
+Made by Lorenzo Rossi
+https://www.lorenzoros.si - https://github.com/lorossi
+it's a little bit of a mess, but i'm working on it
+"""
 
 import copy
 import ujson
@@ -17,15 +18,15 @@ from datetime import datetime, timedelta
 
 
 class Scraper:
-    def __init__(self, log=True, verbose=True):
+    def __init__(self):
         # set locale for number formatting
         try:
             locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
         except Exception as e:
             logging.warning(f"Locale not found. Error {e}")
-        self.log = log
-        self.verbose = verbose
+
         self._urls = {}
+
         # initialize private variables
         self._last_updated = None
         self._data = {}
@@ -40,17 +41,11 @@ class Scraper:
         self._territories_data = {}
 
         # start logging
-        if self.log:
-            logfile = "logging.log"
-            logging.basicConfig(format="%(asctime)s - %(levelname)s - %(message)s",
-                                level=logging.INFO, filename=logfile,
-                                filemode="w")
-        # if necessary, tell user we are logging
-        if self.verbose:
-            if self.log:
-                (f"Logging in {logfile}")
-            else:
-                ("No logging in file.")
+        format = "%(asctime)s - %(levelname)s - %(message)s"
+        filename = "logging.log"
+        logging.basicConfig(format=format,
+                            level=logging.INFO, filename=filename,
+                            filemode="w")
 
         # now load settigns
         self.loadSettings()
@@ -62,13 +57,13 @@ class Scraper:
 
         # load output paths and output filenames from file
         self.output_path = settings["output_path"]
-        self.history_filename = settings["history_filename"]
-        self.today_filename = settings["today_filename"]
-        self.italy_filename = settings["italy_filename"]
-        self.colors_filename = settings["colors_filename"]
-        self.slim_colors_filename = settings["slim_colors_filename"]
-        self.colors_geojson_filename = settings["colors_geojson_filename"]
-        self.vaccinations_geojeson_filename = settings["vaccinations_geojeson_filename"]
+        self.history = settings["history"]
+        self.today = settings["today"]
+        self.italy = settings["italy"]
+        self.colors = settings["colors"]
+        self.slim_colors = settings["slim_colors"]
+        self.colors_geojson = settings["colors_geojson"]
+        self.vaccinations_geojson = settings["vaccinations_geojson"]
 
         # open urls file
         with open("src/settings/urls.json") as f:
@@ -90,43 +85,45 @@ class Scraper:
         logging.info("Saving to file")
 
         if all or data:
-            with open(self.output_path + self.today_filename, "w") as f:
+            with open(self.output_path + self.today, "w") as f:
                 ujson.dump(self._data, f, indent=2, sort_keys=True)
-            logging.info(f"Today file saved. Path: {self.today_filename}")
+            logging.info(f"Today file saved. Path: {self.today}")
 
-            with open(self.output_path + self.italy_filename, "w") as f:
+            with open(self.output_path + self.italy, "w") as f:
                 ujson.dump(self._italy, f, indent=2, sort_keys=True)
-            logging.info(f"Italy file saved. Path: {self.italy_filename}")
+            logging.info(f"Italy file saved. Path: {self.italy}")
 
-            with open(self.output_path + self.vaccinations_geojeson_filename, "w") as f:
+            with open(self.output_path + self.vaccinations_geojson, "w") as f:
                 ujson.dump(self._geojeson_percentages, f)
             logging.info(
-                f"Geojson vaccinations file saved. Path: {self.vaccinations_geojeson_filename}")
+                f"Geojson vaccinations file saved. Path: "
+                f"{self.vaccinations_geojson}"
+                )
 
         if all or history:
-            with open(self.output_path + self.history_filename, "w") as f:
+            with open(self.output_path + self.history, "w") as f:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
-            logging.info(f"History file saved. Path: {self.history_filename}")
+            logging.info(f"History file saved. Path: {self.history}")
 
         if all or colors:
-            with open(self.output_path + self.colors_filename, "w") as f:
+            with open(self.output_path + self.colors, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color,
                                     indent=2, sort_keys=True))
-            logging.info(f"Color file saved. Path: {self.colors_filename}")
+            logging.info(f"Color file saved. Path: {self.colors}")
 
-            with open(self.output_path + self.slim_colors_filename, "w") as f:
+            with open(self.output_path + self.slim_colors, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color_slim,
                                     indent=2, sort_keys=True))
             logging.info(
-                f"Slim Color file saved. Path: {self.slim_colors_filename}")
+                f"Slim Color file saved. Path: {self.slim_colors}")
 
-            with open(self.output_path + self.colors_geojson_filename, "w") as f:
+            with open(self.output_path + self.colors_geojson, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._geojson_colors, f))
             logging.info(
-                f"Geojson colors file saved. Path: {self.colors_geojson_filename}")
+                f"Geojson colors file saved. Path: {self.colors_geojson}")
 
     # load data from json files
     def loadData(self, all=False, today=False, history=False, italy=False,
@@ -136,7 +133,8 @@ class Scraper:
 
         if today or all:
             try:
-                with open(self.output_path + self.today_filename, "r") as f:
+                path = self.output_path + self.today
+                with open(path, "r") as f:
                     self._data = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read data file. error {e}")
@@ -144,7 +142,8 @@ class Scraper:
 
         if history or all:
             try:
-                with open(self.output_path + self.history_filename, "r") as f:
+                path = self.output_path + self.history
+                with open(path, "r") as f:
                     self._history = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read history file. error {e}")
@@ -152,7 +151,8 @@ class Scraper:
 
         if italy or all:
             try:
-                with open(self.output_path + self.italy_filename, "r") as f:
+                path = self.output_path + self.italy
+                with open(path, "r") as f:
                     self._italy = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read italy file. error {e}")
@@ -160,10 +160,12 @@ class Scraper:
 
         if colors or all:
             try:
-                with open(self.output_path + self.colors_filename, "r") as f:
+                path = self.output_path + self.colors
+                with open(path, "r") as f:
                     self._territories_color = ujson.load(f)
 
-                with open(self.output_path + self.slim_colors_filename, "r") as f:
+                path = self.output_path + self.slim_colors
+                with open(path, "r") as f:
                     self._territories_color_slim = ujson.load(f)
 
             except Exception as e:
@@ -172,7 +174,8 @@ class Scraper:
 
         if colors_geojson or all:
             try:
-                with open(self.output_path + self.colors_geojson_filename, "r") as f:
+                path = self.output_path + self.colors_geojson
+                with open(path, "r") as f:
                     self._geojson_colors = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read geojson file. error {e}")
@@ -180,7 +183,8 @@ class Scraper:
 
         if percentage_geojson or all:
             try:
-                with open(self.output_path + self.vaccinations_geojeson_filename, "r") as f:
+                path = self.output_path + self.vaccinations_geojson
+                with open(path, "r") as f:
                     self._geojeson_percentages = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read geojson file. error {e}")
@@ -206,7 +210,7 @@ class Scraper:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
-            if territory["nome"] == name or territory.get("nome_alternativo", None) == name:
+            if name in [territory["nome"], territory.get("nome_alternativo")]:
                 return territory["codice"]
 
     # laod history for one particular territory
