@@ -888,7 +888,7 @@ class Scraper:
         response = requests.get(self._urls["colore-territori"]).text
         soup = BeautifulSoup(response, 'html.parser')
 
-       with open("src/settings/territories-color.json", "r") as f:
+        with open("src/settings/territories-color.json", "r") as f:
             colors = ujson.load(f)
 
         logging.info("Scraping colors")
