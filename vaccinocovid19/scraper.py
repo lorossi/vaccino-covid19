@@ -29,6 +29,7 @@ class Scraper:
 
         # initialize private variables
         self._last_updated = None
+        self._paths = {}
         self._data = {}
         self._italy = {}
         self._history = {}
@@ -50,20 +51,16 @@ class Scraper:
         # now load settigns
         self.loadSettings()
 
-    def loadSettings(self):
-        # open settings file
-        with open("src/settings/settings.json") as f:
-            settings = ujson.loads(f.read())
+    def _formatValue(self, value):
+        return f'{value:n}'
 
-        # load output paths and output filenames from file
-        self.output_path = settings["output_path"]
-        self.history = settings["history"]
-        self.today = settings["today"]
-        self.italy = settings["italy"]
-        self.colors = settings["colors"]
-        self.slim_colors = settings["slim_colors"]
-        self.colors_geojson = settings["colors_geojson"]
-        self.vaccinations_geojson = settings["vaccinations_geojson"]
+    def _formatPercentage(self, percentage):
+        return f'{locale.format_string("%.2f", percentage)}%'
+
+    def loadSettings(self):
+        # open paths file
+        with open("src/settings/settings.json") as f:
+            self._paths = ujson.loads(f.read())
 
         # open urls file
         with open("src/settings/urls.json") as f:
@@ -81,49 +78,57 @@ class Scraper:
     def saveData(self, all=False, data=False, history=False, colors=False):
         # create output folders
         logging.info("Creating folders")
-        Path(self.output_path).mkdir(parents=True, exist_ok=True)
+        Path(self._paths["folder"]).mkdir(parents=True, exist_ok=True)
         logging.info("Saving to file")
 
         if all or data:
-            with open(self.output_path + self.today, "w") as f:
+            file_path = self._paths["folder"] + self._paths["today"]
+            with open(file_path, "w") as f:
                 ujson.dump(self._data, f, indent=2, sort_keys=True)
-            logging.info(f"Today file saved. Path: {self.today}")
+            logging.info(f"Today file saved. Path: {file_path}")
 
-            with open(self.output_path + self.italy, "w") as f:
+            file_path = self._paths["folder"] + self._paths["italy"]
+            with open(file_path, "w") as f:
                 ujson.dump(self._italy, f, indent=2, sort_keys=True)
-            logging.info(f"Italy file saved. Path: {self.italy}")
+            logging.info(f"Italy file saved. Path: {file_path}")
 
-            with open(self.output_path + self.vaccinations_geojson, "w") as f:
+            file_path = self._paths["folder"] + \
+                self._paths["vaccinations_geojson"]
+            with open(file_path, "w") as f:
                 ujson.dump(self._geojeson_percentages, f)
             logging.info(
                 f"Geojson vaccinations file saved. Path: "
-                f"{self.vaccinations_geojson}"
-                )
+                f"{file_path}"
+            )
 
         if all or history:
-            with open(self.output_path + self.history, "w") as f:
+            file_path = self._paths["folder"] + self._paths["history"]
+            with open(file_path, "w") as f:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
-            logging.info(f"History file saved. Path: {self.history}")
+            logging.info(f"History file saved. Path: {file_path}")
 
         if all or colors:
-            with open(self.output_path + self.colors, "w") as f:
+            file_path = self._paths["folder"] + self._paths["colors"]
+            with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color,
                                     indent=2, sort_keys=True))
-            logging.info(f"Color file saved. Path: {self.colors}")
+            logging.info(f"Color file saved. Path: {file_path}")
 
-            with open(self.output_path + self.slim_colors, "w") as f:
+            file_path = self._paths["folder"] + self._paths["slim_colors"]
+            with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color_slim,
                                     indent=2, sort_keys=True))
             logging.info(
-                f"Slim Color file saved. Path: {self.slim_colors}")
+                f"Slim Color file saved. Path: {file_path}")
 
-            with open(self.output_path + self.colors_geojson, "w") as f:
+            file_path = self._paths["folder"] + self._paths["colors_geojson"]
+            with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._geojson_colors, f))
             logging.info(
-                f"Geojson colors file saved. Path: {self.colors_geojson}")
+                f"Geojson colors file saved. Path: {file_path}")
 
     # load data from json files
     def loadData(self, all=False, today=False, history=False, italy=False,
@@ -133,8 +138,8 @@ class Scraper:
 
         if today or all:
             try:
-                path = self.output_path + self.today
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + self._paths["today"]
+                with open(file_path, "r") as f:
                     self._data = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read data file. error {e}")
@@ -142,8 +147,8 @@ class Scraper:
 
         if history or all:
             try:
-                path = self.output_path + self.history
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + self._paths["history"]
+                with open(file_path, "r") as f:
                     self._history = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read history file. error {e}")
@@ -151,8 +156,8 @@ class Scraper:
 
         if italy or all:
             try:
-                path = self.output_path + self.italy
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + self._paths["italy"]
+                with open(file_path, "r") as f:
                     self._italy = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read italy file. error {e}")
@@ -160,12 +165,12 @@ class Scraper:
 
         if colors or all:
             try:
-                path = self.output_path + self.colors
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + self._paths["colors"]
+                with open(file_path, "r") as f:
                     self._territories_color = ujson.load(f)
 
-                path = self.output_path + self.slim_colors
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + self._paths["slim_colors"]
+                with open(file_path, "r") as f:
                     self._territories_color_slim = ujson.load(f)
 
             except Exception as e:
@@ -174,8 +179,9 @@ class Scraper:
 
         if colors_geojson or all:
             try:
-                path = self.output_path + self.colors_geojson
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + \
+                    self._paths["colors_geojson"]
+                with open(file_path, "r") as f:
                     self._geojson_colors = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read geojson file. error {e}")
@@ -183,8 +189,9 @@ class Scraper:
 
         if percentage_geojson or all:
             try:
-                path = self.output_path + self.vaccinations_geojson
-                with open(path, "r") as f:
+                file_path = self._paths["folder"] + \
+                    self._paths["vaccinations_geojson"]
+                with open(file_path, "r") as f:
                     self._geojeson_percentages = ujson.load(f)
             except Exception as e:
                 logging.error(f"Cannot read geojson file. error {e}")
@@ -235,6 +242,7 @@ class Scraper:
         return territory_history
 
     # load the deliveries file and get all the useful information
+    # this is where the real madness begins
     def scrapeDeliveries(self):
         logging.info("Loading deliveries")
 
@@ -261,7 +269,8 @@ class Scraper:
         for delivery in json_response["data"]:
             for producer in new_vaccine_producers["produttori"]:
                 if producer["nome_produttore"] == delivery["fornitore"]:
-                    producer["totale_dosi_consegnate"] += delivery["numero_dosi"]
+                    new_doses = delivery["numero_dosi"]
+                    producer["totale_dosi_consegnate"] += new_doses
                     break
 
         # load last deliveries
@@ -271,17 +280,23 @@ class Scraper:
             # reverse list
             for delivery in json_response["data"][::-1]:
                 if producer["nome_produttore"] == delivery["fornitore"]:
-                    if datetime.fromisoformat(delivery["data_consegna"][:-1]).date == datetime.now().date:
+                    delivery_date = datetime.fromisoformat(
+                        delivery["data_consegna"][:-1]).date
+                    if delivery_date == datetime.now().date:
                         producer["nuove_dosi_consegnate"] = delivery["numero_dosi"]
                         break
 
         # format the values
         for producer in new_vaccine_producers["produttori"]:
-            producer["totale_dosi_consegnate_formattato"] = f'{producer["totale_dosi_consegnate"]:n}'
-            producer["nuove_dosi_consegnate_formattato"] = f'{producer["nuove_dosi_consegnate"]:n}'
+            producer["totale_dosi_consegnate_formattato"] = self._formatValue(
+                producer["totale_dosi_consegnate"])
+
+            producer["nuove_dosi_consegnate_formattato"] = self._formatValue(
+                producer["nuove_dosi_consegnate"])
             producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / \
                 producer["totale_dosi_consegnate"] * 100
-            producer["nuove_dosi_percentuale_formattato"] = f'{locale.format_string("%.2f", producer["nuove_dosi_percentuale"])}'
+            producer["nuove_dosi_percentuale_formattato"] = self._formatPercentage(
+                producer["nuove_dosi_percentuale"])
 
         # load list of uninque areas
         areas_list = sorted(list(set(x["area"]
@@ -486,7 +501,7 @@ class Scraper:
                     new_absolute["percentuale_vaccinati"] = total.get(
                         "prima_dose", 0) / territory_data["popolazione"] * 100
                     new_absolute[
-                        "percentuale_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_vaccinati"])}%'
+                        "percentuale_vaccinati_formattato"] = self._formatPercentage(new_absolute["percentuale_vaccinati"])
 
                     new_absolute["prime_dosi"] = total.get("prima_dose", 0)
                     new_absolute["seconde_dosi"] = total.get("seconda_dose", 0)
@@ -494,11 +509,14 @@ class Scraper:
                         "uomini": total.get("sesso_maschile", 0),
                         "donne": total.get("sesso_femminile", 0)
                     }
+
                     new_absolute["categoria"] = {
                         "operatori_sanitari_sociosanitari": total.get("categoria_operatori_sanitari_sociosanitari", 0),
                         "personale_non_sanitario": total.get("categoria_personale_non_sanitario", 0),
                         "ospiti_rsa": total.get("categoria_ospiti_rsa", 0),
-                        "over_80": total.get("categoria_over80", 0)
+                        "over_80": total.get("categoria_over80", 0),
+                        "forze_armate": total.get("categoria_categoria_forze_armate", 0),
+                        "personale_scolastico": total.get("categoria_personale_scolastico", 0)
                     }
 
                     # load old deliveries and flatten list in order to calculate
@@ -549,7 +567,7 @@ class Scraper:
             italy_absolute["percentuale_vaccinati"] = italy_absolute.get(
                 "prime_dosi", 0) / territory_data["popolazione"] * 100
             italy_absolute[
-                "percentuale_vaccinati_formattato"] = f'{locale.format_string("%.2f", italy_absolute["percentuale_vaccinati"])}%'
+                "percentuale_vaccinati_formattato"] = self._formatPercentage(italy_absolute["percentuale_vaccinati"])
 
             new_history_day["variazioni"].append(italy_variation)
             new_history_day["assoluti"].append(italy_absolute)
@@ -653,12 +671,14 @@ class Scraper:
                 new_absolute["totale_vaccinati"] - territory_second_doses) / territory_data["popolazione"] * 100
 
             # format numbers
-            new_absolute["totale_dosi_consegnate_formattato"] = f'{territory["dosi_consegnate"]:n}'
-            new_absolute["totale_vaccinati_formattato"] = f'{territory["dosi_somministrate"]:n}'
+            new_absolute["totale_dosi_consegnate_formattato"] = self._formatValue(
+                territory["dosi_consegnate"])
+            new_absolute["totale_vaccinati_formattato"] = self._formatValue(
+                territory["dosi_somministrate"])
             new_absolute[
-                "percentuale_dosi_utilizzate_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_dosi_utilizzate"])}%'
+                "percentuale_dosi_utilizzate_formattato"] = self._formatPercentage(new_absolute["percentuale_dosi_utilizzate"])
             new_absolute[
-                "percentuale_popolazione_vaccinata_formattato"] = f'{locale.format_string("%.2f", new_absolute["percentuale_popolazione_vaccinata"])}%'
+                "percentuale_popolazione_vaccinata_formattato"] = self._formatPercentage(new_absolute["percentuale_popolazione_vaccinata"])
 
             # update italy
             new_italy_absolute["totale_dosi_consegnate"] = new_italy_absolute.get(
@@ -687,9 +707,10 @@ class Scraper:
                 new_variation["nuovi_vaccinati"] = 0
                 new_variation["percentuale_nuovi_vaccinati"] = 0
 
-            new_variation["nuovi_vaccinati_formattato"] = f'{new_variation["nuovi_vaccinati"]:n}'
+            new_variation["nuovi_vaccinati_formattato"] = self._formatValue(
+                new_variation["nuovi_vaccinati"])
             new_variation[
-                "percentuale_nuovi_vaccinati_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuovi_vaccinati"])}%'
+                "percentuale_nuovi_vaccinati_formattato"] = self._formatPercentage(new_variation["percentuale_nuovi_vaccinati"])
 
             # should be tied to self._deliveries, not self._history
             # BUT there isn't always data for yesterday deliveries
@@ -702,14 +723,15 @@ class Scraper:
 
             new_variation["nuove_dosi_consegnate"] = territory_delivery.get(
                 "nuove_dosi_consegnate", 0)
-            new_variation["nuove_dosi_consegnate_formattato"] = f'{new_variation["nuove_dosi_consegnate"]:n}'
+            new_variation["nuove_dosi_consegnate_formattato"] = self._formatValue(
+                new_variation["nuove_dosi_consegnate"])
             if yesterday_absolute:
                 new_variation["percentuale_nuove_dosi_consegnate"] = new_variation["nuove_dosi_consegnate"] / \
                     yesterday_absolute["totale_dosi_consegnate"] * 100
             else:
                 new_variation["percentuale_nuove_dosi_consegnate"] = 0
             new_variation[
-                "percentuale_nuove_dosi_consegnate_formattato"] = f'{locale.format_string("%.2f", new_variation["percentuale_nuove_dosi_consegnate"])}%'
+                "percentuale_nuove_dosi_consegnate_formattato"] = self._formatPercentage(new_variation["percentuale_nuove_dosi_consegnate"])
 
             # update italy
             new_italy_variation["nuovi_vaccinati"] = new_italy_variation.get(
@@ -721,18 +743,22 @@ class Scraper:
 
         # compute italy
         italy_data = self.returnTerritoryData("ITA")
-        new_italy_absolute["totale_dosi_consegnate_formattato"] = f'{new_italy_absolute["totale_dosi_consegnate"]:n}'
-        new_italy_absolute["totale_vaccinati_formattato"] = f'{new_italy_absolute["totale_vaccinati"]:n}'
+        new_italy_absolute["totale_dosi_consegnate_formattato"] = self._formatValue(
+            new_italy_absolute["totale_dosi_consegnate"])
+        new_italy_absolute["totale_vaccinati_formattato"] = self._formatValue(
+            new_italy_absolute["totale_vaccinati"])
         new_italy_absolute["percentuale_dosi_utilizzate"] = new_italy_absolute["totale_vaccinati"] / \
             new_italy_absolute["totale_dosi_consegnate"] * 100
         new_italy_absolute["percentuale_popolazione_vaccinata"] = (
             new_italy_absolute["totale_vaccinati"] - italy_second_doses) / italy_data["popolazione"] * 100
         new_italy_absolute[
-            "percentuale_dosi_utilizzate_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_dosi_utilizzate"])}%'
+            "percentuale_dosi_utilizzate_formattato"] = self._formatPercentage(new_italy_absolute["percentuale_dosi_utilizzate"])
         new_italy_absolute[
-            "percentuale_popolazione_vaccinata_formattato"] = f'{locale.format_string("%.2f", new_italy_absolute["percentuale_popolazione_vaccinata"])}%'
-        new_italy_variation["nuovi_vaccinati_formattato"] = f'{new_italy_variation["nuovi_vaccinati"]:n}'
-        new_italy_variation["nuove_dosi_consegnate_formattato"] = f'{new_italy_variation["nuove_dosi_consegnate"]:n}'
+            "percentuale_popolazione_vaccinata_formattato"] = self._formatPercentage(new_italy_absolute["percentuale_popolazione_vaccinata"])
+        new_italy_variation["nuovi_vaccinati_formattato"] = self._formatValue(
+            new_italy_variation["nuovi_vaccinati"])
+        new_italy_variation["nuove_dosi_consegnate_formattato"] = self._formatValue(
+            new_italy_variation["nuove_dosi_consegnate"])
 
         self._italy.update(new_italy_absolute)
         self._italy.update(new_italy_variation)
@@ -782,11 +808,14 @@ class Scraper:
             age_range = {}
             age_range["nome_categoria"] = age["fascia_anagrafica"]
             age_range["totale_vaccinati"] = age["totale"]
-            age_range["totale_vaccinati_formattato"] = f'{age["totale"]:n}'
+            age_range["totale_vaccinati_formattato"] = self._formatValue(
+                age["totale"])
             age_range["prima_dose"] = age["prima_dose"]
-            age_range["sprima_dose_formattato"] = f'{age["prima_dose"]:n}'
+            age_range["sprima_dose_formattato"] = self._formatValue(
+                age["prima_dose"])
             age_range["seconda_dose"] = age["seconda_dose"]
-            age_range["seconda_dose_formattato"] = f'{age["seconda_dose"]:n}'
+            age_range["seconda_dose_formattato"] = self._formatValue(
+                age["seconda_dose"])
             # add variation
 
             new_data["fasce_eta"].append(age_range)
@@ -814,7 +843,8 @@ class Scraper:
 
         # now calculate new vaccinated and format everything
         for category in categories:
-            category["totale_vaccinati_formattato"] = f'{category["totale_vaccinati"]:n}'
+            category["totale_vaccinati_formattato"] = self._formatValue(
+                category["totale_vaccinati"])
             nome_categoria_pulito = category["nome_categoria_pulito"]
             if yesterday_absolute:
                 if yesterday_absolute["categoria"].get(nome_categoria_pulito, None):
@@ -830,12 +860,15 @@ class Scraper:
                 category["nuovi_vaccinati"] = 0
                 category["nuovi_vaccinati_percentuale"] = 0
 
-            category["nuovi_vaccinati_formattato"] = f'{category["nuovi_vaccinati"]:n}'
-            category["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", category["nuovi_vaccinati_percentuale"])}%'
+            category["nuovi_vaccinati_formattato"] = self._formatValue(
+                category["nuovi_vaccinati"])
+            category["nuovi_vaccinati_percentuale_formattato"] = self._formatPercentage(
+                category["nuovi_vaccinati_percentuale"])
             new_data["categorie"].append(category)
 
         for gender in genders:
-            gender["totale_vaccinati_formattato"] = f'{gender["totale_vaccinati"]:n}'
+            gender["totale_vaccinati_formattato"] = self._formatValue(
+                gender["totale_vaccinati"])
             if yesterday_absolute:
                 gender["nuovi_vaccinati"] = gender["totale_vaccinati"] - \
                     yesterday_absolute["sesso"][gender["nome_categoria"]]
@@ -845,12 +878,15 @@ class Scraper:
                 gender["nuovi_vaccinati"] = 0
                 gender["nuovi_vaccinati_percentuale"] = 0
 
-            gender["nuovi_vaccinati_formattato"] = f'{gender["nuovi_vaccinati"]:n}'
-            gender["nuovi_vaccinati_percentuale_formattato"] = f'{locale.format_string("%.2f", gender["nuovi_vaccinati_percentuale"])}%'
+            gender["nuovi_vaccinati_formattato"] = self._formatValue(
+                gender["nuovi_vaccinati"])
+            gender["nuovi_vaccinati_percentuale_formattato"] = self._formatPercentage(
+                gender["nuovi_vaccinati_percentuale"])
             new_data["sesso"].append(gender)
 
         for subministration in subministrations:
-            subministration["totale_vaccinati_formattato"] = f'{subministration["totale_vaccinati"]:n}'
+            subministration["totale_vaccinati_formattato"] = self._formatValue(
+                subministration["totale_vaccinati"])
             new_data["somministrazioni"].append(subministration)
 
         # update data about italy
@@ -892,7 +928,7 @@ class Scraper:
         response = requests.get(self._urls["colore-territori"]).text
         soup = BeautifulSoup(response, 'html.parser')
 
-       with open("src/settings/territories-color.json", "r") as f:
+        with open("src/settings/territories-color.json", "r") as f:
             colors = ujson.load(f)
 
         logging.info("Scraping colors")

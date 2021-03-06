@@ -1,5 +1,5 @@
 {
-  "output_path": "src/output/",
+  "folder": "src/output/",
   "history": "storico-vaccini.json",
   "today": "vaccini-oggi.json",
   "italy": "italia.json",
