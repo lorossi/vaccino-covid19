@@ -10,6 +10,14 @@
     },
     {
       "codice_colore": 0,
+      "codice_territorio": "05",
+      "colore": "Rossa",
+      "colore_bordo": "#dd222a",
+      "colore_rgb": "#dd222a",
+      "territorio": "Campania"
+    },
+    {
+      "codice_colore": 0,
       "codice_territorio": "12",
       "colore": "Rossa",
       "colore_bordo": "#dd222a",
@@ -26,19 +34,19 @@
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "05",
-      "colore": "Arancione",
-      "colore_bordo": "#e78314",
-      "colore_rgb": "#e78314",
-      "territorio": "Campania"
-    },
-    {
-      "codice_colore": 1,
       "codice_territorio": "06",
       "colore": "Arancione",
       "colore_bordo": "#e78314",
       "colore_rgb": "#e78314",
       "territorio": "Emilia Romagna"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "07",
+      "colore": "Arancione",
+      "colore_bordo": "#e78314",
+      "colore_rgb": "#e78314",
+      "territorio": "Friuli Venezia Giulia"
     },
     {
       "codice_colore": 1,
@@ -97,20 +105,20 @@
       "territorio": "Umbria"
     },
     {
+      "codice_colore": 1,
+      "codice_territorio": "21",
+      "colore": "Arancione",
+      "colore_bordo": "#e78314",
+      "colore_rgb": "#e78314",
+      "territorio": "Veneto"
+    },
+    {
       "codice_colore": 2,
       "codice_territorio": "04",
       "colore": "Gialla",
       "colore_bordo": "#f8c300",
       "colore_rgb": "#f8c300",
       "territorio": "Calabria"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "07",
-      "colore": "Gialla",
-      "colore_bordo": "#f8c300",
-      "colore_rgb": "#f8c300",
-      "territorio": "Friuli Venezia Giulia"
     },
     {
       "codice_colore": 2,
@@ -153,14 +161,6 @@
       "territorio": "Valle Aosta"
     },
     {
-      "codice_colore": 2,
-      "codice_territorio": "21",
-      "colore": "Gialla",
-      "colore_bordo": "#f8c300",
-      "colore_rgb": "#f8c300",
-      "territorio": "Veneto"
-    },
-    {
       "codice_colore": 3,
       "codice_territorio": "15",
       "colore": "Bianca",
@@ -169,6 +169,6 @@
       "territorio": "Sardegna"
     }
   ],
-  "timestamp": "2021-03-07T23:45:04.281974",
-  "ultimo_aggiornamento": "2021-03-07 ore 23:45"
+  "timestamp": "2021-03-08T23:45:04.621145",
+  "ultimo_aggiornamento": "2021-03-08 ore 23:45"
 }
