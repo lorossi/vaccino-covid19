@@ -34,6 +34,7 @@ class Scraper:
         self._italy = {}
         self._history = {}
         self._deliveries = {}
+        self._colors_map = {}
         self._territories_color = {}
         self._territories_color_slim = {}
         self._vaccine_producers = {}
@@ -74,6 +75,10 @@ class Scraper:
                 # italy will be on top
                 for territory in self._territories_data:
                     self._territories_list.append(territory["nome"])
+
+    def loadColorsMap(self):
+        with open("src/settings/territories-color.json", "r") as f:
+            self._colors_map = ujson.load(f)
 
     def saveData(self, all=False, data=False, history=False, colors=False):
         # create output folders
@@ -781,9 +786,8 @@ class Scraper:
         categories_list = [
             x for x in json_response["data"][0] if "categoria" in x]
         categories = []
-        count = 0
         # append to the list the newly created categories
-        for c in categories_list:
+        for count, c in enumerate(categories_list):
             new_dict = {
                 "id": count,
                 "nome_categoria": c,
@@ -795,7 +799,6 @@ class Scraper:
                 "totale_vaccinati_formattato": "0"
             }
             categories.append(new_dict)
-            count += 1
 
         # initialize genders and subministrations dicts
         genders = [{"nome_categoria": "uomini", "totale_vaccinati": 0}, {
@@ -914,6 +917,9 @@ class Scraper:
         self._geojeson_percentages = copy.deepcopy(geojson_data)
 
     def scrapeColors(self):
+        # load colors map
+        self.loadColorsMap()
+        # initialize colors dict
         new_territories_colors = {
             "timestamp": datetime.now().isoformat(),
             "ultimo_aggiornamento": datetime.now().strftime("%Y-%m-%d ore %H:%M"),
@@ -928,13 +934,10 @@ class Scraper:
         response = requests.get(self._urls["colore-territori"]).text
         soup = BeautifulSoup(response, 'html.parser')
 
-        with open("src/settings/territories-color.json", "r") as f:
-            colors = ujson.load(f)
-
         logging.info("Scraping colors")
         # save geoJson related to territories color
         count = 0
-        for c in colors:
+        for c in self._colors_map:
             # find the element and get its text
             territories = soup.body.find(text=lambda t: c in t).next.get_text(
                 strip=True, separator="\n")
@@ -952,9 +955,9 @@ class Scraper:
                 new_territories_colors["territori"].append({
                     "territorio": t,
                     "codice_territorio": territory_code,
-                    "colore_bordo": colors[c]["stroke"],
-                    "colore": colors[c]["nome"],
-                    "colore_rgb": colors[c]["rgb"],
+                    "colore_bordo": self._colors_map[c]["stroke"],
+                    "colore": self._colors_map[c]["nome"],
+                    "colore_rgb": self._colors_map[c]["rgb"],
                     "codice_colore": count
                 })
 
@@ -1057,28 +1060,37 @@ class Scraper:
         return self._territories_color_slim
 
     @property
+    def territories_color_rgb(self):
+        self.loadColorsMap()
+        return_dict = {}
+        for i, c in enumerate(self._colors_map):
+            hex_color = "0x" + self._colors_map[c]['rgb'][1:]
+            return_dict[i] = hex_color
+        return return_dict
+
+    @ property
     def territories_color_dummy(self):
         dummy_territories = {}
         for x in range(21):
             dummy_territories[str(x+1).zfill(2)] = randint(0, 3)
         return dummy_territories
 
-    @property
+    @ property
     def territories_color_map(self):
         self.loadData(colors_geojson=True)
         return self._geojson_colors
 
-    @property
+    @ property
     def territories_percentage_map(self):
         self.loadData(percentage_geojson=True)
         return self._geojeson_percentages
 
-    @property
+    @ property
     def vaccine_producers(self):
         self.loadData(today=True)
         return self._data["produttori_vaccini"]
 
-    @property
+    @ property
     def subministrations(self):
         self.loadData(today=True)
         return self._data["somministrazioni"]

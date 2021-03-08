@@ -99,6 +99,11 @@ def get_colore_territori_slim():
     return jsonify(s.territories_color_slim)
 
 
+@app.route("/get/colore_territori_rgb", methods=["GET"])
+def get_colore_territori_rgb():
+    return jsonify(s.territories_color_rgb)
+
+
 @app.route("/get/colore_territori_slim_dummy", methods=["GET"])
 def get_colore_territori_slim_dummy():
     return jsonify(s.territories_color_dummy)
