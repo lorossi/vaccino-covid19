@@ -122,6 +122,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#4caf50",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
@@ -147,6 +148,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#2196f3",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
@@ -172,6 +174,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#4caf50",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
@@ -197,6 +200,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#2196f3",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
@@ -222,6 +226,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#c9bc1f",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
@@ -247,6 +252,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         borderColor: "#ff5722",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointRadius: 0,
+        pointHoverRadius: 5,
       });
 
       type = "line";
