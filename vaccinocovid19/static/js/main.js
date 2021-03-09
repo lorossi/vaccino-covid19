@@ -121,6 +121,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#4caf50",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
       type = "line";
@@ -145,6 +146,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#2196f3",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
       type = "line";
@@ -169,6 +171,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#4caf50",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
       type = "line";
@@ -193,6 +196,7 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#2196f3",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
       type = "line";
@@ -214,14 +218,13 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: "#ffeb3b",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#c9bc1f",
-        borderWidth: 2,
-        hoverBackgroundColor: "#ffff72",
-        hoverBorderColor: "#ffff72"
+        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
-      type = "bar";
+      type = "line";
     }
 
     if (values.includes(5)) {
@@ -243,13 +246,14 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#ff5722",
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
+        pointRadius: 0,
       });
 
       type = "line";
     }
 
     // font size and aspect ratio must me different on small screens
-    let font_size = $(window).width() > 1500 ? 16 : 8;
+    let font_size = $(window).width() > 900 ? 16 : 8;
     let aspect_ratio = $(window).width() > 480 ? 2.25 : 0.8;
 
     if (old_chart) {
@@ -285,8 +289,8 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
               ticks: {
                 fontSize: font_size,
                 autoSkip: true,
-                maxRotation: 30,
-                minRotation: -30,
+                maxRotation: 20,
+                minRotation: -20,
               }
             }]
           },
@@ -443,7 +447,7 @@ const load_territories_chart = async (order, sort_by_name, old_obj) => {
       average = average.toFixed(2);
     }
 
-    font_size = $(window).width() > 1500 ? 12 : 8;
+    font_size = $(window).width() > 900 ? 12 : 8;
     if (old_chart) {
       // update the old chart
       old_chart.data = {
@@ -652,7 +656,7 @@ const load_variations_chart = async (order, sort_by_name, old_obj) => {
       average = average.toFixed(2);
     }
 
-    font_size = $(window).width() > 1500 ? 12 : 8;
+    font_size = $(window).width() > 900 ? 12 : 8;
     if (old_chart) {
       // update the old chart
       old_chart.data = {
@@ -827,7 +831,7 @@ const load_categories_chart = async (order, old_obj) => {
     labels = categories.map(x => x.nome_categoria_formattato.split(" "));
     label = "Totale vaccinati";
 
-    font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 900 ? 14 : 10;
     if (old_chart) {
       // update the old chart
       old_chart.data = {
@@ -975,7 +979,7 @@ const load_genders_chart = async (genders) => {
     labels = genders.map(x => x.nome_categoria);
     label = "Totale vaccinati";
 
-    font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 900 ? 14 : 10;
 
     // draw the new chart
     let ctx = $("canvas#sesso")[0].getContext('2d');
@@ -1084,7 +1088,7 @@ const load_age_ranges_chart = async (order, old_obj) => {
     labels = age_ranges.map(x => x.nome_categoria);
     label = "Totale vaccinati";
 
-    font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 900 ? 14 : 10;
     if (old_chart) {
       // update the old chart
       old_chart.data = {
@@ -1232,7 +1236,7 @@ const load_vaccine_producers_chart = async (producers) => {
     });
 
 
-    font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 900 ? 14 : 10;
 
     // draw the new chart
     let ctx = $("canvas#produttori_vaccini")[0].getContext('2d');
@@ -1323,7 +1327,7 @@ const load_subministrations_chart = async (subministrations) => {
     labels = subministrations.map(x => x.nome_categoria_formattato);
     label = "Dosi somministrate";
 
-    font_size = $(window).width() > 1500 ? 14 : 10;
+    font_size = $(window).width() > 900 ? 14 : 10;
     // draw the new chart
     let ctx = $("canvas#somministrazioni")[0].getContext('2d');
     chart = new Chart(ctx, {
