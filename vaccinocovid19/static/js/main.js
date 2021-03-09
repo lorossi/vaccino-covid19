@@ -118,10 +118,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#4caf50",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -144,10 +145,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#2196f3",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -170,10 +172,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#4caf50",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -196,10 +199,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#2196f3",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -222,10 +226,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#c9bc1f",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -248,10 +253,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
       datasets.push({
         data: data,
         label: label,
-        backgroundColor: `rgba(0, 0, 0, 0)`,
         borderColor: "#ff5722",
+        backgroundColor: `rgba(0, 0, 0, 0)`,
         hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointRadius: 0,
+        pointBorderColor: `rgba(0, 0, 0, 0)`,
+        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
         pointHoverRadius: 5,
       });
 
@@ -473,7 +479,7 @@ const load_territories_chart = async (order, sort_by_name, old_obj) => {
           type: 'line',
           backgroundColor: "hsla(0, 100%, 50%, 0.05)",
           borderColor: "hsl(0, 100%, 50%)",
-          pointRadius: 0,
+          pointBorderColor: `rgba(0, 0, 0, 0)`,
           borderWidth: 1
         }],
       };
@@ -504,7 +510,7 @@ const load_territories_chart = async (order, sort_by_name, old_obj) => {
             type: 'line',
             backgroundColor: "hsla(0, 100%, 50%, 0.05)",
             borderColor: "hsl(0, 100%, 50%)",
-            pointRadius: 0,
+            pointBorderColor: `rgba(0, 0, 0, 0)`,
             borderWidth: 1
           }],
         },
@@ -682,7 +688,7 @@ const load_variations_chart = async (order, sort_by_name, old_obj) => {
           type: 'line',
           backgroundColor: "hsla(0, 100%, 50%, 0.05)",
           borderColor: "hsl(0, 100%, 50%)",
-          pointRadius: 0,
+          pointBorderColor: `rgba(0, 0, 0, 0)`,
           borderWidth: 1
         }],
       };
@@ -713,7 +719,7 @@ const load_variations_chart = async (order, sort_by_name, old_obj) => {
             type: 'line',
             backgroundColor: "hsla(0, 100%, 50%, 0.05)",
             borderColor: "hsl(0, 100%, 50%)",
-            pointRadius: 0,
+            pointBorderColor: `rgba(0, 0, 0, 0)`,
             borderWidth: 1
           }],
         },
