@@ -1065,7 +1065,7 @@ class Scraper:
         self.loadColorsMap()
         return_dict = {}
         for i, c in enumerate(self._colors_map):
-            hex_color = "0x" + self._colors_map[c]['rgb'][1:]
+            hex_color = int(self._colors_map[c]['rgb'][1:], 16)
             return_dict[i] = hex_color
         return return_dict
 
