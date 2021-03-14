@@ -266,7 +266,7 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
 
   .alltimechartcontainer {
     width: 75vw;
-    max-width: 1150px;
+    max-width: 1200px;
     margin-top: var(--title-size);
     margin-bottom: var(--title-size);
     padding: calc(2 * var(--text-size));
