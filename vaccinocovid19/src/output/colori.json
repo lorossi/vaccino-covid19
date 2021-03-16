@@ -2,14 +2,6 @@
   "territori": [
     {
       "codice_colore": 0,
-      "codice_territorio": "02",
-      "colore": "Rossa",
-      "colore_bordo": "#dd222a",
-      "colore_rgb": "#dd222a",
-      "territorio": "Basilicata"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "05",
       "colore": "Rossa",
       "colore_bordo": "#dd222a",
@@ -106,6 +98,14 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "02",
+      "colore": "Arancione",
+      "colore_bordo": "#e78314",
+      "colore_rgb": "#e78314",
+      "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "04",
       "colore": "Arancione",
       "colore_bordo": "#e78314",
@@ -169,6 +169,6 @@
       "territorio": "Sardegna"
     }
   ],
-  "timestamp": "2021-03-15T23:45:05.548718",
-  "ultimo_aggiornamento": "2021-03-15 ore 23:45"
+  "timestamp": "2021-03-16T23:45:05.407183",
+  "ultimo_aggiornamento": "2021-03-16 ore 23:45"
 }
