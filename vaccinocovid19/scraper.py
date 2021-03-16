@@ -904,7 +904,7 @@ class Scraper:
         self._data = copy.deepcopy(new_data)
 
         # now create the new geoJson file
-        with open("src/settings/regioni.geojson", "r") as f:
+        with open("src/settings/territories.geojson", "r") as f:
             geojson_data = ujson.load(f)
 
         for feature in geojson_data["features"]:
@@ -927,6 +927,10 @@ class Scraper:
             "territori": []
         }
 
+        # check if today everything is red
+        today_timestamp = datetime.now().strftime("%Y-%m-%d")
+        red_date = today_timestamp in self._colors_map["red_dates"]
+
         # slimmer version for light parsing
         new_territories_colors_slim = {}
 
@@ -936,11 +940,12 @@ class Scraper:
         soup = BeautifulSoup(response, 'html.parser')
 
         logging.info("Scraping colors")
+
         # save geoJson related to territories color
         count = 0
-        for c in self._colors_map:
+        for identifier in self._colors_map["identifier-to-code"]:
             # find the element and get its text
-            territories = soup.body.find(text=lambda t: c in t).next.get_text(
+            territories = soup.body.find(text=lambda t: identifier in t).next.get_text(
                 strip=True, separator="\n")
 
             for t in territories.split("\n"):
@@ -952,21 +957,35 @@ class Scraper:
                 t = t.replace("PA", "P.A.")
                 # get territory code
                 territory_code = self.returnTerritoryCode(t)
-                # create the new dict
-                new_territories_colors["territori"].append({
-                    "territorio": t,
-                    "codice_territorio": territory_code,
-                    "colore_bordo": self._colors_map[c]["stroke"],
-                    "colore": self._colors_map[c]["nome"],
-                    "colore_rgb": self._colors_map[c]["rgb"],
-                    "codice_colore": count
-                })
+
+                if count < 3 and red_date:
+                    # it's red today
+                    new_territories_colors["territori"].append({
+                        "territorio": t,
+                        "codice_territorio": territory_code,
+                        "colore_bordo": self._colors_map["code-to-colors"][0]["stroke"],
+                        "colore": self._colors_map["code-to-colors"][0]["nome"],
+                        "colore_rgb": self._colors_map["code-to-colors"][0]["rgb"],
+                        "codice_colore": count
+                    })
+                else:
+                    # get color code
+                    color_code = self._colors_map["identifier-to-code"][identifier]
+                    # create the new dict
+                    new_territories_colors["territori"].append({
+                        "territorio": t,
+                        "codice_territorio": territory_code,
+                        "colore_bordo": self._colors_map["code-to-colors"][color_code]["stroke"],
+                        "colore": self._colors_map["code-to-colors"][color_code]["nome"],
+                        "colore_rgb": self._colors_map["code-to-colors"][color_code]["rgb"],
+                        "codice_colore": count
+                    })
 
                 new_territories_colors_slim[territory_code] = count
 
             count += 1
 
-        with open("src/settings/regioni.geojson", "r") as f:
+        with open("src/settings/territories.geojson", "r") as f:
             geojson_data = ujson.load(f)
 
         # save geoJson related to vaccination color
@@ -1064,7 +1083,7 @@ class Scraper:
     def territories_color_rgb(self):
         self.loadColorsMap()
         return_dict = {}
-        for i, c in enumerate(self._colors_map):
+        for i, c in enumerate(self._colors_map["code-to-colors"]):
             hex_color = int(self._colors_map[c]['arduino_rgb'][1:], 16)
             return_dict[i] = hex_color
         return return_dict
