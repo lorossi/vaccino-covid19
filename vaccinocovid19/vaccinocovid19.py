@@ -137,37 +137,38 @@ def get_somministrazioni():
 @cross_origin(origin="*.github.io")
 @app.route("/post/newsletter", methods=["POST"])
 def get_email():
-    if not request:
-        error_code = 400
-        return jsonify({"response": error_code})
 
-    email = request.get_json().get("email", None)
-    # remove spaces
+    def email_parse_request(request):
 
-    if not email:
-        # no email provided
-        error_code = 400
-        return jsonify({"response": error_code})
+        if not request:
+            return 400
+        email = request.get("email", None)
+        # remove spaces
 
-    email = "".join(email.split(" "))
-    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        # point after @
-        error_code = 400
-        return jsonify({"response": error_code})
-    else:
-        # email is ok
-        error_code = 200
-        # save to "database"
-        path = "src/output/emails.json"
+        if not email:
+            # no email provided
+            return 400
 
-        with open(path, "r") as f:
-            emails = ujson.load(f)
+        email = "".join(email.split(" "))
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+            # point after @
+            return 400
+        else:
+            # save to "database"
+            path = "src/output/emails.json"
 
-        if email not in emails["emails"]:
-            emails["emails"].append(email)
+            with open(path, "r") as f:
+                emails = ujson.load(f)
 
-            with open(path, "w") as f:
-                ujson.dump(emails, f, indent=2)
+            if email not in emails["emails"]:
+                emails["emails"].append(email)
+
+                with open(path, "w") as f:
+                    ujson.dump(emails, f, indent=2)
+
+            return 200
+
+    error_code = email_parse_request(request.get_json())
 
     return jsonify({"response": error_code})
 
