@@ -3,3 +3,4 @@ tests
 __pycache__
 *test*
 *.sqlite
+vaccinocovid19/src/output/emails.json
