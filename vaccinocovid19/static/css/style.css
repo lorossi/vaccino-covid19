@@ -289,7 +289,7 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     flex-direction: row;
     flex-wrap: wrap;
     width: 75vw;
-    max-width: 1150px;
+    max-width: 1200px;
   }
 
   .leafletcontainer {
@@ -299,7 +299,7 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     flex-direction: column;
     flex-wrap: nowrap;
     width: 75vw;
-    max-width: 1150px;
+    max-width: 1200px;
   }
 
   .mapcontainer {
