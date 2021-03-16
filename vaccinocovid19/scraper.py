@@ -1083,8 +1083,8 @@ class Scraper:
     def territories_color_rgb(self):
         self.loadColorsMap()
         return_dict = {}
-        for i, c in enumerate(self._colors_map["code-to-colors"]):
-            hex_color = int(self._colors_map[c]['arduino_rgb'][1:], 16)
+        for i, code in enumerate(self._colors_map["code-to-colors"]):
+            hex_color = int(code['arduino_rgb'][1:], 16)
             return_dict[i] = hex_color
         return return_dict
 
