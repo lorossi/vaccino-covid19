@@ -137,20 +137,23 @@ def get_somministrazioni():
 @cross_origin(origin="*.github.io")
 @app.route("/post/newsletter", methods=["POST"])
 def get_email():
-    # validate email
+    if not request:
+        error_code = 400
+        return jsonify({"response": error_code})
 
-    request_data = request.get_json()
-    # get email from data
-    email = request_data.get("email", None)
+    email = request.get_json().get("email", None)
     # remove spaces
-    email = "".join(email.split(" "))
 
     if not email:
         # no email provided
         error_code = 400
-    elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-        # poin after @
+        return jsonify({"response": error_code})
+
+    email = "".join(email.split(" "))
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        # point after @
         error_code = 400
+        return jsonify({"response": error_code})
     else:
         # email is ok
         error_code = 200
