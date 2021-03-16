@@ -1,3 +1,4 @@
+from flask_cors import CORS, cross_origin
 import re
 import ujson
 import logging
@@ -9,6 +10,8 @@ from apscheduler.schedulers.background import BackgroundScheduler
 # Objects
 s = Scraper()
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 
@@ -131,6 +134,7 @@ def get_somministrazioni():
     return jsonify(s.subministrations)
 
 
+@cross_origin(origin="*")
 @app.route("/post/newsletter", methods=["POST"])
 def get_email():
     # validate email
