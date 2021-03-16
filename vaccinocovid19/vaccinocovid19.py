@@ -1,6 +1,8 @@
+import re
+import ujson
 import logging
 from scraper import Scraper
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
@@ -127,6 +129,40 @@ def get_produttori_vaccini():
 @app.route("/get/somministrazioni", methods=["GET"])
 def get_somministrazioni():
     return jsonify(s.subministrations)
+
+
+@app.route("/post/newsletter", methods=["POST"])
+def get_email():
+    # validate email
+
+    request_data = request.get_json()
+    # get email from data
+    email = request_data.get("email", None)
+    # remove spaces
+    email = "".join(email.split(" "))
+
+    if not email:
+        # no email provided
+        error_code = 400
+    elif not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        # poin after @
+        error_code = 400
+    else:
+        # email is ok
+        error_code = 200
+        # save to "database"
+        path = "src/output/emails.json"
+
+        with open(path, "r") as f:
+            emails = ujson.load(f)
+
+        if email not in emails["emails"]:
+            emails["emails"].append(email)
+
+            with open(path, "w") as f:
+                ujson.dump(emails, f, indent=2)
+
+    return jsonify({"response": error_code})
 
 
 # error 404 page
