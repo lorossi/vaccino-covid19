@@ -134,7 +134,7 @@ def get_somministrazioni():
     return jsonify(s.subministrations)
 
 
-@cross_origin(origin="null//undefined")
+@cross_origin(origin="*")
 @app.route("/post/newsletter", methods=["POST"])
 def get_email():
     # validate email
