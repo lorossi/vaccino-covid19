@@ -10,14 +10,14 @@ body {
   color: #212529;
 }
 
-
 #alpaca {
   position: absolute;
   left: 25px;
-  top: 60px;
+  top: 75px;
   width: var(--alpaca-size);
   z-index: 10;
   opacity: 0.15;
+  user-select: none;
 }
 
 .error {
