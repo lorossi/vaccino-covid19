@@ -1088,29 +1088,29 @@ class Scraper:
             return_dict[i] = hex_color
         return return_dict
 
-    @ property
+    @property
     def territories_color_dummy(self):
         dummy_territories = {}
         for x in range(21):
             dummy_territories[str(x+1).zfill(2)] = randint(0, 3)
         return dummy_territories
 
-    @ property
+    @property
     def territories_color_map(self):
         self.loadData(colors_geojson=True)
         return self._geojson_colors
 
-    @ property
+    @property
     def territories_percentage_map(self):
         self.loadData(percentage_geojson=True)
         return self._geojeson_percentages
 
-    @ property
+    @property
     def vaccine_producers(self):
         self.loadData(today=True)
         return self._data["produttori_vaccini"]
 
-    @ property
+    @property
     def subministrations(self):
         self.loadData(today=True)
         return self._data["somministrazioni"]
