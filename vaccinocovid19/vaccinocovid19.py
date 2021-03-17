@@ -25,6 +25,7 @@ def main():
     scheduler = BackgroundScheduler()
     scheduler.start()
     scheduler.add_job(scrape_data, trigger="cron", minute="*/15")
+    scheduler.add_job(scrape_colors, trigger="cron", minute="0", hour="*")
     # run app
     logging.info("App started!")
 
@@ -38,6 +39,8 @@ def scrape_data():
     except Exception as e:
         logging.error(f"Error while scraping history and data. Error {e}")
 
+
+def scrape_colors():
     try:
         s.scrapeColors()
         s.saveData(colors=True)

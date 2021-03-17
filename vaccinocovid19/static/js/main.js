@@ -1422,7 +1422,7 @@ const load_territories_color_map = async () => {
       dragging: false
     }).setView([42.5, 12.534], zoom_level);
 
-    L.geoJson(geojson, { style: style }).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.colore}`).addTo(map);
+    L.geoJson(geojson, { style: style }).bindTooltip(layer => `${layer.feature.properties.Regione} - ${layer.feature.properties.nome_colore}`).addTo(map);
   } catch (err) {
     console.log(`Impossibile caricare il la mappa del colore dei territori. Errore ${err.message}`);
     return;

@@ -964,7 +964,7 @@ class Scraper:
                         "territorio": t,
                         "codice_territorio": territory_code,
                         "colore_bordo": self._colors_map["code-to-colors"][0]["stroke"],
-                        "colore": self._colors_map["code-to-colors"][0]["nome"],
+                        "nome_colore": self._colors_map["code-to-colors"][0]["nome"],
                         "colore_rgb": self._colors_map["code-to-colors"][0]["rgb"],
                         "codice_colore": count
                     })
@@ -976,7 +976,7 @@ class Scraper:
                         "territorio": t,
                         "codice_territorio": territory_code,
                         "colore_bordo": self._colors_map["code-to-colors"][color_code]["stroke"],
-                        "colore": self._colors_map["code-to-colors"][color_code]["nome"],
+                        "nome_colore": self._colors_map["code-to-colors"][color_code]["nome"],
                         "colore_rgb": self._colors_map["code-to-colors"][color_code]["rgb"],
                         "codice_colore": count
                     })
@@ -992,7 +992,7 @@ class Scraper:
         for feature in geojson_data["features"]:
             for t in new_territories_colors["territori"]:
                 if feature["properties"]["codice_regione"] == t["codice_territorio"]:
-                    feature["properties"]["colore"] = t["colore"]
+                    feature["properties"]["nome_colore"] = t["nome_colore"]
                     feature["properties"]["colore_rgb"] = t["colore_rgb"]
                     feature["properties"]["colore_bordo"] = t["colore_bordo"]
                     break
