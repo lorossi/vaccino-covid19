@@ -13,12 +13,11 @@ body {
 
 #alpaca {
   position: absolute;
-  transform: scaleX(-1);
-  left: calc( var(--alpaca-size) / 10);
-  top: calc( var(--alpaca-size) / 10);
+  left: 25px;
+  top: 60px;
   width: var(--alpaca-size);
   z-index: 10;
-  opacity: 0.1;
+  opacity: 0.15;
 }
 
 .error {
@@ -267,13 +266,14 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     display: block;
   }
 
-  .content, .credits {
-    width: 80vw;
+  #alpaca {
+    left: 0;
+    top: calc(var(--alpaca-size) / 5);
+    opacity: 0.3;
   }
 
-  #alpaca {
-    top: calc( var(--alpaca-size) / 5);
-    left: calc( var(--alpaca-size) / 5);
+  .content, .credits {
+    width: 80vw;
   }
 
   .title {

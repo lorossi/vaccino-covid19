@@ -31,7 +31,7 @@
     crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/vars.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-1.1.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style-1.2.css') }}">
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 
@@ -55,7 +55,7 @@
       src: url("{{ url_for('static', filename='css/Roboto-Regular.ttf') }}");
     }
   </style>
-  <img id="alpaca" src="{{ url_for('static', filename='img/alpaca.svg') }}"></img>
+  <img id="alpaca" src="{{ url_for('static', filename='img/alpaca.png') }}"></img>
   {% block body %}{% endblock %}
 </body>
 
