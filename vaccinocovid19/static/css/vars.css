@@ -1,4 +1,5 @@
 :root {
+  --alpaca-size: 15px;
   --text-size: 0.65rem;
   --big-text-size: 1.1rem;
   --title-size: 2rem;
@@ -6,6 +7,7 @@
 
 @media only screen and (min-width: 480px) {
   :root{
+    --alpaca-size: 50px;
     --text-size: 1rem;
     --big-text-size: 2rem;
     --title-size: 4rem;

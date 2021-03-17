@@ -10,6 +10,17 @@ body {
   color: #212529;
 }
 
+
+#alpaca {
+  position: absolute;
+  transform: scaleX(-1);
+  left: calc( var(--alpaca-size) / 10);
+  top: calc( var(--alpaca-size) / 10);
+  width: var(--alpaca-size);
+  z-index: 10;
+  opacity: 0.1;
+}
+
 .error {
   font-size: var(--big-text-size);
   color: red;
@@ -260,8 +271,13 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     width: 80vw;
   }
 
+  #alpaca {
+    top: calc( var(--alpaca-size) / 5);
+    left: calc( var(--alpaca-size) / 5);
+  }
+
   .title {
-    margin-top: calc(0.5 *  var(--title-size));
+    margin-top: calc(var(--title-size / 2));
   }
 
   .alltimechartcontainer {
