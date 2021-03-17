@@ -20,12 +20,6 @@ from datetime import datetime, timedelta
 
 class Scraper:
     def __init__(self):
-        # set locale for number formatting
-        try:
-            locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
-        except Exception as e:
-            logging.warning(f"Locale not found. Error {e}")
-
         self._urls = {}
 
         # initialize private variables
@@ -60,6 +54,12 @@ class Scraper:
         return f'{locale.format_string("%.2f", percentage)}%'
 
     def loadSettings(self):
+        # set locale for number formatting
+        try:
+            locale.setlocale(locale.LC_ALL, 'it_IT.UTF-8')
+        except Exception as e:
+            logging.warning(f"Locale not found. Error {e}")
+
         # open paths file
         with open("src/settings/settings.json") as f:
             self._paths = ujson.loads(f.read())
