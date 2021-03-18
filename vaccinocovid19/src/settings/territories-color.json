@@ -13,27 +13,27 @@
   "code-to-colors": [
     {
       "nome": "Rossa",
-      "rgb": "#dd222a",
-      "arduino_rgb": "#dd222a",
-      "stroke": "#dd222a"
+      "rgb": "#DD222A",
+      "arduino_rgb": "#FF0000",
+      "stroke": "#DD222A"
     },
     {
       "nome": "Arancione",
-      "rgb": "#e78314",
-      "arduino_rgb": "#e78314",
-      "stroke": "#e78314"
+      "rgb": "#E78314",
+      "arduino_rgb": "#B93C00",
+      "stroke": "#E78314"
     },
     {
       "nome": "Gialla",
-      "rgb": "#f8c300",
-      "arduino_rgb": "#f8c300",
-      "stroke": "#f8c300"
+      "rgb": "#F8C300",
+      "arduino_rgb": "#FFBB00",
+      "stroke": "#F8C300"
     },
     {
       "nome": "Bianca",
-      "rgb": "#f7f7f7",
-      "arduino_rgb": "#f7f7f7",
-      "stroke": "#3d3d3d"
+      "rgb": "#F7F7F7",
+      "arduino_rgb": "#FFE1B4",
+      "stroke": "#3D3D3D"
     }
   ]
 }
