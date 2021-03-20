@@ -16,7 +16,7 @@ body {
   top: 75px;
   width: var(--alpaca-size);
   z-index: 10;
-  opacity: 0.15;
+  opacity: 0.075;
   user-select: none;
 }
 
@@ -269,7 +269,6 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
   #alpaca {
     left: 0;
     top: calc(var(--alpaca-size) / 5);
-    opacity: 0.3;
   }
 
   .content, .credits {
