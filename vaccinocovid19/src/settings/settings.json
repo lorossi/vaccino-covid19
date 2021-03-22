@@ -1,7 +1,8 @@
 {
-  "folder": "src/output/",
-  "history": "storico-vaccini.json",
-  "today": "vaccini-oggi.json",
+  "output_folder": "src/output/",
+  "emails": "emails.json",
+  "history": "storico_vaccini.json",
+  "today": "vaccini_oggi.json",
   "italy": "italia.json",
   "colors": "colori.json",
   "slim_colors": "colori_slim.json",
