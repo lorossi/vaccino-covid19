@@ -71,34 +71,34 @@ class Scraper:
         # load territories list to be passed to dropdown selector
         self._territories_list = []
         if not self._territories_data:
-            with open("src/settings/territories-data.json", "r") as f:
+            with open("src/settings/territories_data.json", "r") as f:
                 self._territories_data = ujson.load(f)
                 # italy will be on top
                 for territory in self._territories_data:
                     self._territories_list.append(territory["nome"])
 
     def loadColorsMap(self):
-        with open("src/settings/territories-color.json", "r") as f:
+        with open("src/settings/territories_color.json", "r") as f:
             self._colors_map = ujson.load(f)
 
     def saveData(self, all=False, data=False, history=False, colors=False):
         # create output folders
         logging.info("Creating folders")
-        Path(self._paths["folder"]).mkdir(parents=True, exist_ok=True)
+        Path(self._paths["output_folder"]).mkdir(parents=True, exist_ok=True)
         logging.info("Saving to file")
 
         if all or data:
-            file_path = self._paths["folder"] + self._paths["today"]
+            file_path = self._paths["output_folder"] + self._paths["today"]
             with open(file_path, "w") as f:
                 ujson.dump(self._data, f, indent=2, sort_keys=True)
             logging.info(f"Today file saved. Path: {file_path}")
 
-            file_path = self._paths["folder"] + self._paths["italy"]
+            file_path = self._paths["output_folder"] + self._paths["italy"]
             with open(file_path, "w") as f:
                 ujson.dump(self._italy, f, indent=2, sort_keys=True)
             logging.info(f"Italy file saved. Path: {file_path}")
 
-            file_path = self._paths["folder"] + \
+            file_path = self._paths["output_folder"] + \
                 self._paths["vaccinations_geojson"]
             with open(file_path, "w") as f:
                 ujson.dump(self._geojeson_percentages, f)
@@ -108,20 +108,21 @@ class Scraper:
             )
 
         if all or history:
-            file_path = self._paths["folder"] + self._paths["history"]
+            file_path = self._paths["output_folder"] + self._paths["history"]
             with open(file_path, "w") as f:
                 f.write(ujson.dumps(self._history, indent=2, sort_keys=True))
             logging.info(f"History file saved. Path: {file_path}")
 
         if all or colors:
-            file_path = self._paths["folder"] + self._paths["colors"]
+            file_path = self._paths["output_folder"] + self._paths["colors"]
             with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color,
                                     indent=2, sort_keys=True))
             logging.info(f"Color file saved. Path: {file_path}")
 
-            file_path = self._paths["folder"] + self._paths["slim_colors"]
+            file_path = self._paths["output_folder"] + \
+                self._paths["slim_colors"]
             with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._territories_color_slim,
@@ -129,7 +130,8 @@ class Scraper:
             logging.info(
                 f"Slim Color file saved. Path: {file_path}")
 
-            file_path = self._paths["folder"] + self._paths["colors_geojson"]
+            file_path = self._paths["output_folder"] + \
+                self._paths["colors_geojson"]
             with open(file_path, "w") as f:
                 # convert dict to json (will be read by js)
                 f.write(ujson.dumps(self._geojson_colors, f))
@@ -144,7 +146,7 @@ class Scraper:
 
         if today or all:
             try:
-                file_path = self._paths["folder"] + self._paths["today"]
+                file_path = self._paths["output_folder"] + self._paths["today"]
                 with open(file_path, "r") as f:
                     self._data = ujson.load(f)
             except Exception as e:
@@ -153,7 +155,8 @@ class Scraper:
 
         if history or all:
             try:
-                file_path = self._paths["folder"] + self._paths["history"]
+                file_path = self._paths["output_folder"] + \
+                    self._paths["history"]
                 with open(file_path, "r") as f:
                     self._history = ujson.load(f)
             except Exception as e:
@@ -162,7 +165,7 @@ class Scraper:
 
         if italy or all:
             try:
-                file_path = self._paths["folder"] + self._paths["italy"]
+                file_path = self._paths["output_folder"] + self._paths["italy"]
                 with open(file_path, "r") as f:
                     self._italy = ujson.load(f)
             except Exception as e:
@@ -171,11 +174,13 @@ class Scraper:
 
         if colors or all:
             try:
-                file_path = self._paths["folder"] + self._paths["colors"]
+                file_path = self._paths["output_folder"] + \
+                    self._paths["colors"]
                 with open(file_path, "r") as f:
                     self._territories_color = ujson.load(f)
 
-                file_path = self._paths["folder"] + self._paths["slim_colors"]
+                file_path = self._paths["output_folder"] + \
+                    self._paths["slim_colors"]
                 with open(file_path, "r") as f:
                     self._territories_color_slim = ujson.load(f)
 
@@ -185,7 +190,7 @@ class Scraper:
 
         if colors_geojson or all:
             try:
-                file_path = self._paths["folder"] + \
+                file_path = self._paths["output_folder"] + \
                     self._paths["colors_geojson"]
                 with open(file_path, "r") as f:
                     self._geojson_colors = ujson.load(f)
@@ -195,7 +200,7 @@ class Scraper:
 
         if percentage_geojson or all:
             try:
-                file_path = self._paths["folder"] + \
+                file_path = self._paths["output_folder"] + \
                     self._paths["vaccinations_geojson"]
                 with open(file_path, "r") as f:
                     self._geojeson_percentages = ujson.load(f)
@@ -208,7 +213,7 @@ class Scraper:
     def returnTerritoryData(self, area):
         # load territories population
         if not self._territories_data:
-            with open("src/settings/territories-data.json", "r") as f:
+            with open("src/settings/territories_data.json", "r") as f:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
@@ -219,7 +224,7 @@ class Scraper:
     # according to its ISTAT territory code
     def returnTerritoryCode(self, name):
         if not self._territories_data:
-            with open("src/settings/territories-data.json", "r") as f:
+            with open("src/settings/territories_data.json", "r") as f:
                 self._territories_data = ujson.load(f)
 
         for territory in self._territories_data:
