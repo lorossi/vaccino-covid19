@@ -50,14 +50,6 @@
     },
     {
       "codice_colore": 0,
-      "codice_territorio": "12",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Molise"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "18",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
@@ -122,11 +114,27 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "12",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Molise"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "03",
       "colore_bordo": "#E78314",
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
       "territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "15",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Sardegna"
     },
     {
       "codice_colore": 1,
@@ -159,16 +167,8 @@
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
       "territorio": "Valle Aosta"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "15",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Sardegna"
     }
   ],
-  "timestamp": "2021-03-21T23:00:00.026024",
-  "ultimo_aggiornamento": "2021-03-21 ore 23:00"
+  "timestamp": "2021-03-22T12:59:50.318329",
+  "ultimo_aggiornamento": "2021-03-22 ore 12:59"
 }

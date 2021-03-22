@@ -1,14 +1,15 @@
-from flask_cors import CORS, cross_origin
-import re
-import ujson
 import logging
-from scraper import Scraper
+from flask_cors import CORS, cross_origin
 from flask import Flask, render_template, jsonify, request
 from apscheduler.schedulers.background import BackgroundScheduler
+
+from scraper import Scraper
+from colorsofitaly import ColorsOfItaly
 
 
 # Objects
 s = Scraper()
+c = ColorsOfItaly()
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -140,40 +141,22 @@ def get_somministrazioni():
 @cross_origin(origin="*.github.io")
 @app.route("/post/newsletter", methods=["POST"])
 def get_email():
+    email = request.get_json().get("email", None)
+    return_code = c.parseEmail(email)
+    if return_code == 200:
+        c.addEmail(email)
 
-    def email_parse_request(request):
+    return jsonify({"response": return_code})
 
-        if not request:
-            return 400
-        email = request.get("email", None)
-        # remove spaces
 
-        if not email:
-            # no email provided
-            return 400
+@app.route("/get/ota_version", methods=["GET"])
+def get_ota_version():
+    return jsonify(c.otaVersion)
 
-        email = "".join(email.split(" "))
-        if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
-            # point after @
-            return 400
-        else:
-            # save to "database"
-            path = "src/output/emails.json"
 
-            with open(path, "r") as f:
-                emails = ujson.load(f)
-
-            if email not in emails["emails"]:
-                emails["emails"].append(email)
-
-                with open(path, "w") as f:
-                    ujson.dump(emails, f, indent=2)
-
-            return 200
-
-    error_code = email_parse_request(request.get_json())
-
-    return jsonify({"response": error_code})
+@app.route("/get/ota_url", methods=["GET"])
+def get_ota_url():
+    return jsonify(request.url_root + c.otaUrl)
 
 
 # error 404 page

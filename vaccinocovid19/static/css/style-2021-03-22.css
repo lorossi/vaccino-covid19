@@ -10,14 +10,15 @@ body {
   color: #212529;
 }
 
-#alpaca {
+#poison-for-kuzco {
   position: absolute;
   left: 25px;
   top: 75px;
-  width: var(--alpaca-size);
+  width: var(--poison-for-kuzco-size);
   z-index: 10;
-  opacity: 0.075;
+  opacity: 0.05;
   user-select: none;
+  pointer-events: none;
 }
 
 .error {
@@ -266,9 +267,9 @@ table, .italia .stats, .chartcontainer, .mapcontainer, .alltimechartcontainer {
     display: block;
   }
 
-  #alpaca {
+  #poison-for-kuzco {
     left: 0;
-    top: calc(var(--alpaca-size) / 5);
+    top: calc(var(--poison-for-kuzco-size) / 5);
   }
 
   .content, .credits {

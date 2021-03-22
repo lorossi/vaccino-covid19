@@ -62,7 +62,6 @@ const all_time_get_options = () => {
 
 // load chart about Italy
 const load_history_chart = async (values, territory_name, old_obj, reload_data) => {
-
   let chart;
   let old_chart;
   let labels = []; // x axis
@@ -227,14 +226,11 @@ const load_history_chart = async (values, territory_name, old_obj, reload_data) 
         data: data,
         label: label,
         borderColor: "#c9bc1f",
-        backgroundColor: `rgba(0, 0, 0, 0)`,
-        hoverBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointBorderColor: `rgba(0, 0, 0, 0)`,
-        pointBackgroundColor: `rgba(0, 0, 0, 0)`,
-        pointHoverRadius: 5,
+        backgroundColor: "#c9bc1f",
+        hoverBackgroundColor: "#c9bc1f80",
       });
 
-      type = "line";
+      type = "bar";
     }
 
     if (values.includes(5)) {

@@ -1,4 +1,5 @@
 from scraper import Scraper
+from colorsofitaly import ColorsOfItaly
 from datetime import datetime
 from string import printable
 
@@ -36,6 +37,21 @@ def main():
     try:
         started = datetime.now()
         s = Scraper()
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+        return
+
+    incipit = "Instantiating colors of italy... "
+    print(incipit, end="", flush=True)
+    try:
+        started = datetime.now()
+        c = ColorsOfItaly()
         elapsed = round((datetime.now() - started).microseconds / 1000, 2)
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -106,6 +122,38 @@ def main():
         total += 1
         started = datetime.now()
         s.saveData()
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        passed += 1
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+
+    incipit = "Loading email ... "
+    print(incipit, end="", flush=True)
+    try:
+        total += 1
+        started = datetime.now()
+        c.loadEmails()
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        passed += 1
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+
+    incipit = "Saving email... "
+    print(incipit, end="", flush=True)
+    try:
+        total += 1
+        started = datetime.now()
+        c.addEmail("test@test.it")
         elapsed = round((datetime.now() - started).microseconds / 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
@@ -377,6 +425,54 @@ def main():
         total += 1
         started = datetime.now()
         _ = s.subministrations
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        passed += 1
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+
+    incipit = "Getting emails... "
+    print(incipit, end="", flush=True)
+    try:
+        total += 1
+        started = datetime.now()
+        _ = c.loadEmails()
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        passed += 1
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+
+    incipit = "Getting ota version... "
+    print(incipit, end="", flush=True)
+    try:
+        total += 1
+        started = datetime.now()
+        _ = c.otaVersion
+        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        passed += 1
+        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
+        spacing = (width - rLen(incipit) -
+                   rLen(result))
+        print(result, spacing * " ", info, sep="")
+    except Exception as e:
+        spacing = width - rLen(incipit)
+        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
+
+    incipit = "Getting ota url... "
+    print(incipit, end="", flush=True)
+    try:
+        total += 1
+        started = datetime.now()
+        _ = c.otaUrl
         elapsed = round((datetime.now() - started).microseconds / 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
