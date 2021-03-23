@@ -56,6 +56,22 @@ sudo systemctl start vaccino-covid19
 sudo systemctl enable vaccino-covid19
 sudo systemctl stop vaccino-covid19
 sudo systemctl restart vaccino-covid19
+
+### Nginx setup file
+*Posizione:*
+
+`/etc/nginx/sites-available/vaccino-covid19`
+
+*Contenuto*
+
+```plaintext
+server {
+  server_name vaccinocovid19.live www.vaccinocovid19.live;
+  location / {
+    include proxy_params;
+    proxy_pass http://127.0.0.1:8000;
+  }
+}
 ```
 
 ## Licenza
