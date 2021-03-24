@@ -153,7 +153,7 @@ def get_email():
 def get_ota_version():
     return jsonify(
         {"version": c.otaVersion,
-         "url": request.url_root + c.otaUrl
+         "url": c.otaUrl
          }
     )
 
