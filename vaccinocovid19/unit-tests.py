@@ -451,28 +451,12 @@ def main():
         spacing = width - rLen(incipit)
         print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
 
-    incipit = "Getting ota version... "
+    incipit = "Getting ota infos... "
     print(incipit, end="", flush=True)
     try:
         total += 1
         started = datetime.now()
-        _ = c.otaVersion
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
-        passed += 1
-        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
-        spacing = (width - rLen(incipit) -
-                   rLen(result))
-        print(result, spacing * " ", info, sep="")
-    except Exception as e:
-        spacing = width - rLen(incipit)
-        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
-
-    incipit = "Getting ota url... "
-    print(incipit, end="", flush=True)
-    try:
-        total += 1
-        started = datetime.now()
-        _ = c.otaUrl
+        _ = c.ota_infos
         elapsed = round((datetime.now() - started).microseconds / 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"

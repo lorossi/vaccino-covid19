@@ -1,4 +1,10 @@
 {
-  "version": "1.0.0",
-  "url": "https://vaccinocovid19.live:443/ota/1.0.0.bin"
+  "v1": {
+    "version": "1.0.0",
+    "url": "https://vaccinocovid19.live:443/ota/v1_1.0.0.bin"
+  },
+  "v2": {
+    "version": "1.0.0",
+    "url": "https://vaccinocovid19.live:443/ota/v1_1.0.0.bin"
+  }
 }

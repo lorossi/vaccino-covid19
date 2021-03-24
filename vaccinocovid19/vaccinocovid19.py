@@ -151,11 +151,7 @@ def get_email():
 
 @app.route("/get/ota_update", methods=["GET"])
 def get_ota_version():
-    return jsonify(
-        {"version": c.otaVersion,
-         "url": c.otaUrl
-         }
-    )
+    return jsonify(c.ota_infos)
 
 
 # error 404 page

@@ -60,9 +60,5 @@ class ColorsOfItaly:
         return self._emails["emails"]
 
     @property
-    def otaVersion(self):
-        return self._ota["version"]
-
-    @property
-    def otaUrl(self):
-        return self._ota["url"]
+    def ota_infos(self):
+        return self._ota
