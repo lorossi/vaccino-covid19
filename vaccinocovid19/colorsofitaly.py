@@ -1,5 +1,6 @@
 import re
 import ujson
+from datetime import datetime
 
 
 class ColorsOfItaly:
@@ -38,9 +39,8 @@ class ColorsOfItaly:
         email = email.replace(" ", "")
         # set lowercase
         email = email.lower()
-
         if email not in self._emails["emails"]:
-            self._emails["emails"].append(email)
+            self._emails["emails"][email] = datetime.now().isoformat()
             self.saveSettings()
 
     def parseEmail(self, email):
@@ -57,7 +57,8 @@ class ColorsOfItaly:
     @property
     def emails(self):
         self.loadEmails()
-        return self._emails["emails"]
+        emails = [e for e in self._emails["emails"]]
+        return emails
 
     @property
     def ota_infos(self):
