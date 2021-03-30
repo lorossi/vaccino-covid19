@@ -34,14 +34,6 @@
     },
     {
       "codice_colore": 0,
-      "codice_territorio": "08",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Lazio"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "10",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
@@ -122,6 +114,14 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "08",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Lazio"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "09",
       "colore_bordo": "#E78314",
       "colore_rgb": "#E78314",
@@ -169,6 +169,6 @@
       "territorio": "Umbria"
     }
   ],
-  "timestamp": "2021-03-29T23:00:00.009706",
-  "ultimo_aggiornamento": "2021-03-29 ore 23:00"
+  "timestamp": "2021-03-30T23:00:00.012450",
+  "ultimo_aggiornamento": "2021-03-30 ore 23:00"
 }
