@@ -56,6 +56,7 @@ sudo systemctl start vaccino-covid19
 sudo systemctl enable vaccino-covid19
 sudo systemctl stop vaccino-covid19
 sudo systemctl restart vaccino-covid19
+```
 
 ### Nginx setup file
 *Posizione:*
@@ -76,4 +77,4 @@ server {
 
 ## Licenza
 
-Il sito  è distribuito con Licenza Creative Commons - Attribuzione Non commerciale 4.0 Internazionale
+Il sito è distribuito con Licenza Creative Commons - Attribuzione Non commerciale 4.0 Internazionale
