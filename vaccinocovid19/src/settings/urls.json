@@ -4,5 +4,5 @@
   "somministrazioni-vaccini-summary-latest": "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/somministrazioni-vaccini-summary-latest.json",
   "anagrafica-vaccini": "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/anagrafica-vaccini-summary-latest.json",
   "consegne-vaccini": "https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/consegne-vaccini-latest.json",
-  "colore-territori": "http://www.salute.gov.it/portale/nuovocoronavirus/dettaglioContenutiNuovoCoronavirus.jsp?lingua=italiano&id=5351&area=nuovoCoronavirus&menu=vuoto&gclid=CjwKCAiA_9r_BRBZEiwAHZ_v15vOt9aCzinWa1pf071eXOsKjw2APhXvymOdN5YoYi_f8wAb7p60oxoCrsEQAvD_BwE"
+  "colore-territori": "http://www.salute.gov.it/portale/nuovocoronavirus/dettaglioContenutiNuovoCoronavirus.jsp?lingua=italiano&id=5351&area=nuovoCoronavirus&menu=vuoto"
 }
