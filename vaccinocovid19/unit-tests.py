@@ -1,6 +1,6 @@
 from scraper import Scraper
 from colorsofitaly import ColorsOfItaly
-from datetime import datetime
+from time import time
 from string import printable
 
 
@@ -35,9 +35,9 @@ def main():
     incipit = "Instantiating scraper... "
     print(incipit, end="", flush=True)
     try:
-        started = datetime.now()
+        started = time()
         s = Scraper()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
                    rLen(result))
@@ -50,9 +50,9 @@ def main():
     incipit = "Instantiating colors of italy... "
     print(incipit, end="", flush=True)
     try:
-        started = datetime.now()
+        started = time()
         c = ColorsOfItaly()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
                    rLen(result))
@@ -72,9 +72,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         s.scrapeHistory()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -88,9 +88,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         s.scrapeData()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -104,9 +104,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         s.scrapeColors()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -120,41 +120,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         s.saveData()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
-        passed += 1
-        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
-        spacing = (width - rLen(incipit) -
-                   rLen(result))
-        print(result, spacing * " ", info, sep="")
-    except Exception as e:
-        spacing = width - rLen(incipit)
-        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
-
-    incipit = "Loading email ... "
-    print(incipit, end="", flush=True)
-    try:
-        total += 1
-        started = datetime.now()
-        c.loadEmails()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
-        passed += 1
-        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
-        spacing = (width - rLen(incipit) -
-                   rLen(result))
-        print(result, spacing * " ", info, sep="")
-    except Exception as e:
-        spacing = width - rLen(incipit)
-        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
-
-    incipit = "Saving email... "
-    print(incipit, end="", flush=True)
-    try:
-        total += 1
-        started = datetime.now()
-        c.addEmail("test@test.it")
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -183,9 +151,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.italy
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -199,9 +167,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_list
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -215,9 +183,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.absolute_territories
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -231,9 +199,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.variation_territories
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -247,9 +215,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.categories
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -263,9 +231,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.genders
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -279,9 +247,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.age_ranges
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -295,9 +263,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.history
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -311,9 +279,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_color
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -327,9 +295,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_color_slim
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -343,9 +311,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_color_rgb
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -359,9 +327,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_color_dummy
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -375,9 +343,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_color_map
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -391,9 +359,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.territories_percentage_map
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -407,9 +375,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.vaccine_producers
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -423,25 +391,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = s.subministrations
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
-        passed += 1
-        info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
-        spacing = (width - rLen(incipit) -
-                   rLen(result))
-        print(result, spacing * " ", info, sep="")
-    except Exception as e:
-        spacing = width - rLen(incipit)
-        print(spacing * " ", red("FAIL"), " error: ", red(e), sep="")
-
-    incipit = "Getting emails... "
-    print(incipit, end="", flush=True)
-    try:
-        total += 1
-        started = datetime.now()
-        _ = c.loadEmails()
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -
@@ -455,9 +407,9 @@ def main():
     print(incipit, end="", flush=True)
     try:
         total += 1
-        started = datetime.now()
+        started = time()
         _ = c.ota_infos
-        elapsed = round((datetime.now() - started).microseconds / 1000, 2)
+        elapsed = round((time() - started) * 1000, 2)
         passed += 1
         info = f"{green('PASS')} [{green(elapsed)}{green('ms')}]"
         spacing = (width - rLen(incipit) -

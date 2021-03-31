@@ -965,6 +965,8 @@ class Scraper:
 
                 if count < 3 and red_date:
                     # it's red today
+                    # so everything will follor the color associated with the
+                    # first code (zero)
                     new_territories_colors["territori"].append({
                         "territorio": t,
                         "codice_territorio": territory_code,

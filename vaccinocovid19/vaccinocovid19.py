@@ -1,6 +1,5 @@
 import logging
-from flask_cors import CORS, cross_origin
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from scraper import Scraper
@@ -136,17 +135,6 @@ def get_produttori_vaccini():
 @app.route("/get/somministrazioni", methods=["GET"])
 def get_somministrazioni():
     return jsonify(s.subministrations)
-
-
-@cross_origin(origin="*.github.io")
-@app.route("/post/newsletter", methods=["POST"])
-def get_email():
-    email = request.get_json().get("email", None)
-    return_code = c.parseEmail(email)
-    if return_code == 200:
-        c.addEmail(email)
-
-    return jsonify({"response": return_code})
 
 
 @app.route("/get/ota_update", methods=["GET"])
