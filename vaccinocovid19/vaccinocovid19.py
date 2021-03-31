@@ -10,7 +10,6 @@ from colorsofitaly import ColorsOfItaly
 s = Scraper()
 c = ColorsOfItaly()
 app = Flask(__name__)
-cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
