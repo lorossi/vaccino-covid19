@@ -2,22 +2,6 @@
   "territori": [
     {
       "codice_colore": 0,
-      "codice_territorio": "01",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Abruzzo"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "02",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Basilicata"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "04",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
@@ -50,59 +34,11 @@
     },
     {
       "codice_colore": 0,
-      "codice_territorio": "08",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Lazio"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "09",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Liguria"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "10",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
       "nome_colore": "Rossa",
       "territorio": "Lombardia"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "11",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Marche"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "12",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Molise"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "03",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "P.A. Bolzano"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "18",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "P.A. Trento"
     },
     {
       "codice_colore": 0,
@@ -122,35 +58,11 @@
     },
     {
       "codice_colore": 0,
-      "codice_territorio": "15",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Sardegna"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "16",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Sicilia"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "17",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
       "nome_colore": "Rossa",
       "territorio": "Toscana"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "19",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Umbria"
     },
     {
       "codice_colore": 0,
@@ -161,14 +73,102 @@
       "territorio": "Valle Aosta"
     },
     {
-      "codice_colore": 0,
+      "codice_colore": 1,
+      "codice_territorio": "01",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "02",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "08",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Lazio"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "09",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "11",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Marche"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "12",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Molise"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "03",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "18",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "15",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Sardegna"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "16",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Sicilia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "19",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Umbria"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "21",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-04-05T23:00:00.012357",
-  "ultimo_aggiornamento": "2021-04-05 ore 23:00"
+  "timestamp": "2021-04-06T23:00:00.011354",
+  "ultimo_aggiornamento": "2021-04-06 ore 23:00"
 }
