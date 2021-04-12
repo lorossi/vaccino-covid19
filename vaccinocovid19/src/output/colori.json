@@ -2,51 +2,11 @@
   "territori": [
     {
       "codice_colore": 0,
-      "codice_territorio": "04",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Calabria"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "05",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
       "nome_colore": "Rossa",
       "territorio": "Campania"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "06",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Emilia Romagna"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "07",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Friuli Venezia Giulia"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "10",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Lombardia"
-    },
-    {
-      "codice_colore": 0,
-      "codice_territorio": "13",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Piemonte"
     },
     {
       "codice_colore": 0,
@@ -58,11 +18,11 @@
     },
     {
       "codice_colore": 0,
-      "codice_territorio": "17",
+      "codice_territorio": "15",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
       "nome_colore": "Rossa",
-      "territorio": "Toscana"
+      "territorio": "Sardegna"
     },
     {
       "codice_colore": 0,
@@ -90,6 +50,30 @@
     },
     {
       "codice_colore": 1,
+      "codice_territorio": "04",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Calabria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "06",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Emilia Romagna"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "07",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Friuli Venezia Giulia"
+    },
+    {
+      "codice_colore": 1,
       "codice_territorio": "08",
       "colore_bordo": "#E78314",
       "colore_rgb": "#E78314",
@@ -103,6 +87,14 @@
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
       "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "10",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Lombardia"
     },
     {
       "codice_colore": 1,
@@ -138,11 +130,11 @@
     },
     {
       "codice_colore": 1,
-      "codice_territorio": "15",
+      "codice_territorio": "13",
       "colore_bordo": "#E78314",
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
-      "territorio": "Sardegna"
+      "territorio": "Piemonte"
     },
     {
       "codice_colore": 1,
@@ -151,6 +143,14 @@
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
       "territorio": "Sicilia"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "17",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Toscana"
     },
     {
       "codice_colore": 1,
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-04-11T23:00:00.021720",
-  "ultimo_aggiornamento": "2021-04-11 ore 23:00"
+  "timestamp": "2021-04-12T23:00:00.021994",
+  "ultimo_aggiornamento": "2021-04-12 ore 23:00"
 }
