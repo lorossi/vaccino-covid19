@@ -306,11 +306,13 @@ class Scraper:
                 producer["nuove_dosi_consegnate"])
 
             if producer["totale_dosi_consegnate"] == 0:
-                continue
-            producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / \
-                producer["totale_dosi_consegnate"] * 100
-            producer["nuove_dosi_percentuale_formattato"] = self._formatPercentage(
-                producer["nuove_dosi_percentuale"])
+                producer["nuove_dosi_percentuale"] = 0
+                producer["nuove_dosi_percentuale_formattato"] = "0%"
+            else:
+                producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / \
+                    producer["totale_dosi_consegnate"] * 100
+                producer["nuove_dosi_percentuale_formattato"] = self._formatPercentage(
+                    producer["nuove_dosi_percentuale"])
 
         # load list of uninque areas
         areas_list = sorted(list(set(x["area"]
