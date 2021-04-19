@@ -304,6 +304,9 @@ class Scraper:
 
             producer["nuove_dosi_consegnate_formattato"] = self._formatValue(
                 producer["nuove_dosi_consegnate"])
+
+            if producer["totale_dosi_consegnate"] == 0:
+                continue
             producer["nuove_dosi_percentuale"] = producer["nuove_dosi_consegnate"] / \
                 producer["totale_dosi_consegnate"] * 100
             producer["nuove_dosi_percentuale_formattato"] = self._formatPercentage(
