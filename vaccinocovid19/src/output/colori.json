@@ -2,14 +2,6 @@
   "territori": [
     {
       "codice_colore": 0,
-      "codice_territorio": "05",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Campania"
-    },
-    {
-      "codice_colore": 0,
       "codice_territorio": "14",
       "colore_bordo": "#DD222A",
       "colore_rgb": "#DD222A",
@@ -55,6 +47,14 @@
       "colore_rgb": "#E78314",
       "nome_colore": "Arancione",
       "territorio": "Calabria"
+    },
+    {
+      "codice_colore": 1,
+      "codice_territorio": "05",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Campania"
     },
     {
       "codice_colore": 1,
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-04-18T23:00:00.019602",
-  "ultimo_aggiornamento": "2021-04-18 ore 23:00"
+  "timestamp": "2021-04-19T23:00:00.033950",
+  "ultimo_aggiornamento": "2021-04-19 ore 23:00"
 }
