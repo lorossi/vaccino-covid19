@@ -1,38 +1,6 @@
 {
   "territori": [
     {
-      "codice_colore": 0,
-      "codice_territorio": "20",
-      "colore_bordo": "#DD222A",
-      "colore_rgb": "#DD222A",
-      "nome_colore": "Rossa",
-      "territorio": "Valle Aosta"
-    },
-    {
-      "codice_colore": 1,
-      "codice_territorio": "02",
-      "colore_bordo": "#E78314",
-      "colore_rgb": "#E78314",
-      "nome_colore": "Arancione",
-      "territorio": "Basilicata"
-    },
-    {
-      "codice_colore": 1,
-      "codice_territorio": "04",
-      "colore_bordo": "#E78314",
-      "colore_rgb": "#E78314",
-      "nome_colore": "Arancione",
-      "territorio": "Calabria"
-    },
-    {
-      "codice_colore": 1,
-      "codice_territorio": "14",
-      "colore_bordo": "#E78314",
-      "colore_rgb": "#E78314",
-      "nome_colore": "Arancione",
-      "territorio": "Puglia"
-    },
-    {
       "codice_colore": 1,
       "codice_territorio": "15",
       "colore_bordo": "#E78314",
@@ -49,12 +17,36 @@
       "territorio": "Sicilia"
     },
     {
+      "codice_colore": 1,
+      "codice_territorio": "20",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Valle Aosta"
+    },
+    {
       "codice_colore": 2,
       "codice_territorio": "01",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "02",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "04",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Calabria"
     },
     {
       "codice_colore": 2,
@@ -146,6 +138,14 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "14",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Puglia"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "17",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-05-09T23:00:00.027404",
-  "ultimo_aggiornamento": "2021-05-09 ore 23:00"
+  "timestamp": "2021-05-10T23:00:00.024226",
+  "ultimo_aggiornamento": "2021-05-10 ore 23:00"
 }
