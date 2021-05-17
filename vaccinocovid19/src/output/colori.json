@@ -2,22 +2,6 @@
   "territori": [
     {
       "codice_colore": 1,
-      "codice_territorio": "15",
-      "colore_bordo": "#E78314",
-      "colore_rgb": "#E78314",
-      "nome_colore": "Arancione",
-      "territorio": "Sardegna"
-    },
-    {
-      "codice_colore": 1,
-      "codice_territorio": "16",
-      "colore_bordo": "#E78314",
-      "colore_rgb": "#E78314",
-      "nome_colore": "Arancione",
-      "territorio": "Sicilia"
-    },
-    {
-      "codice_colore": 1,
       "codice_territorio": "20",
       "colore_bordo": "#E78314",
       "colore_rgb": "#E78314",
@@ -146,6 +130,22 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "15",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Sardegna"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "16",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Sicilia"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "17",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-05-16T23:00:00.016282",
-  "ultimo_aggiornamento": "2021-05-16 ore 23:00"
+  "timestamp": "2021-05-17T23:00:00.027254",
+  "ultimo_aggiornamento": "2021-05-17 ore 23:00"
 }
