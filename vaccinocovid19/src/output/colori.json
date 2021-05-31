@@ -42,14 +42,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "07",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Friuli Venezia Giulia"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "08",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -82,14 +74,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "12",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Molise"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "03",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -119,14 +103,6 @@
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "Puglia"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "15",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Sardegna"
     },
     {
       "codice_colore": 2,
@@ -167,8 +143,32 @@
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "Veneto"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "07",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Friuli Venezia Giulia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "12",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Molise"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "15",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Sardegna"
     }
   ],
-  "timestamp": "2021-05-30T23:00:00.023440",
-  "ultimo_aggiornamento": "2021-05-30 ore 23:00"
+  "timestamp": "2021-05-31T23:00:00.022053",
+  "ultimo_aggiornamento": "2021-05-31 ore 23:00"
 }
