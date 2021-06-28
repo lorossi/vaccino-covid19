@@ -1,14 +1,6 @@
 {
   "territori": [
     {
-      "codice_colore": 2,
-      "codice_territorio": "20",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Valle Aosta"
-    },
-    {
       "codice_colore": 3,
       "codice_territorio": "01",
       "colore_bordo": "#3D3D3D",
@@ -162,6 +154,14 @@
     },
     {
       "codice_colore": 3,
+      "codice_territorio": "20",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Valle Aosta"
+    },
+    {
+      "codice_colore": 3,
       "codice_territorio": "21",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-06-27T23:00:00.016805",
-  "ultimo_aggiornamento": "2021-06-27 ore 23:00"
+  "timestamp": "2021-06-28T23:00:00.017953",
+  "ultimo_aggiornamento": "2021-06-28 ore 23:00"
 }
