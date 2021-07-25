@@ -1,7 +1,182 @@
 {
   "territori": [
-
+    {
+      "codice_colore": 3,
+      "codice_territorio": "00",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Italia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "01",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "02",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "03",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "04",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Calabria"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "05",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Campania"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "06",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Emilia Romagna"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "07",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Friuli Venezia Giulia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "08",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Lazio"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "09",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "10",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Lombardia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "11",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Marche"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "12",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Molise"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "13",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Piemonte"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "14",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Puglia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "15",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Sardegna"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "16",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Sicilia"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "17",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Toscana"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "18",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "19",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Umbria"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "20",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Val d'Aosta"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "21",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Veneto"
+    }
   ],
-  "timestamp": "2021-07-24T23:00:00.022010",
-  "ultimo_aggiornamento": "2021-07-24 ore 23:00"
+  "timestamp": "2021-07-25T23:00:00.019903",
+  "ultimo_aggiornamento": "2021-07-25 ore 23:00"
 }
