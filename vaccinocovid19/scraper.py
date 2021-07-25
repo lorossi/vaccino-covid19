@@ -1143,9 +1143,7 @@ class Scraper:
 if __name__ == "__main__":
     s = Scraper()
     started = datetime.now()
-    # s.scrapeAll()
-    # s.saveData(all=True)
-    s.scrapeColors()
-    s.saveData(False, False, False, True)
+    s.scrapeAll()
+    s.saveData(all=True)
     elapsed = (datetime.now() - started).total_seconds()
     logging.info(f"It took {elapsed} seconds")
