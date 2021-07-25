@@ -4,7 +4,7 @@ from time import time
 from string import printable
 
 
-# terminal colored text
+# terminal coloured text
 def red(text):
     return f"\x1b[1m\x1b[31m{text}\x1b[0m"
 

@@ -44,7 +44,7 @@ class Scraper:
                             level=logging.INFO, filename=filename,
                             filemode="w")
 
-        # now load settigns
+        # now load settings
         self.loadSettings()
 
     def _formatValue(self, value):
@@ -231,7 +231,7 @@ class Scraper:
             if name in [territory["nome"], territory.get("nome_alternativo")]:
                 return territory["codice"]
 
-    # laod history for one particular territory
+    # load history for one particular territory
     def territoryHistory(self, territory_name):
         self.loadData(history=True)
         territory_history = []
@@ -314,10 +314,10 @@ class Scraper:
                 producer["nuove_dosi_percentuale_formattato"] = self._formatPercentage(
                     producer["nuove_dosi_percentuale"])
 
-        # load list of uninque areas
+        # load list of unique areas
         areas_list = sorted(list(set(x["area"]
                                      for x in json_response["data"])))
-        # load list of uninque timestamps list
+        # load list of unique timestamps list
         timestamps_list = sorted(
             list(set(x["data_consegna"] for x in json_response["data"])))
         new_deliveries = []
@@ -339,7 +339,7 @@ class Scraper:
             }
 
             total_delivered = 0
-            # iterate throught each area
+            # iterate through each area
             for a in range(len(areas_list)):
                 # calculate total number of delivered doses
                 territories = [
@@ -377,17 +377,17 @@ class Scraper:
         json_response = ujson.loads(response)
 
         logging.info("Scraping history")
-        # load list of uninque areas
+        # load list of unique areas
         areas_list = sorted(list(set(x["area"]
                                      for x in json_response["data"])))
-        # load list of uninque timestamps list
+        # load list of unique timestamps list
         timestamps_list = sorted(
             list(set(x["data_somministrazione"] for x in json_response["data"])))
         new_history = []
 
         # iterate through all the timestamps skipping the first day
         for t in range(1, len(timestamps_list)):
-            # load all the data relatie to this day
+            # load all the data relative to this day
             current_day = [x for x in json_response["data"]
                            if x["data_somministrazione"] == timestamps_list[t]]
             # load all the deliveries relative to this day
@@ -543,7 +543,7 @@ class Scraper:
                         x for sublist in old_deliveries for x in sublist["variazioni"]]
                     old_territory_deliveries = [
                         x for x in old_deliveries if x["area"] == areas_list[a]]
-                    # loop throught all the deliveries to calculate the total
+                    # loop through all the deliveries to calculate the total
                     total_delivered = 0
                     if len(old_territory_deliveries) > 0:
                         for delivery in old_territory_deliveries:
@@ -661,7 +661,7 @@ class Scraper:
                 new_absolute["totale_dosi_consegnate"] * 100
             # the percentage of vaccinated people is related to the
             # population that has received the FIRST DOSE ONLY
-            # in order to calculate that, we subract the number of second
+            # in order to calculate that, we subtract the number of second
             # doses from the precedent day to the number of total doses today
             # it is not 100% accurate but will work
             territory_second_doses = 0
@@ -825,7 +825,7 @@ class Scraper:
             age_range["totale_vaccinati_formattato"] = self._formatValue(
                 age["totale"])
             age_range["prima_dose"] = age["prima_dose"]
-            age_range["sprima_dose_formattato"] = self._formatValue(
+            age_range["prima_dose_formattato"] = self._formatValue(
                 age["prima_dose"])
             age_range["seconda_dose"] = age["seconda_dose"]
             age_range["seconda_dose_formattato"] = self._formatValue(
@@ -951,9 +951,9 @@ class Scraper:
 
         logging.info("Scraping colors")
 
-        # save geoJson related to territories color
-        count = 0
-        for identifier in self._colors_map["identifier-to-code"]:
+        # save geojson related to territories color
+
+        for count, identifier in enumerate(self._colors_map["identifier-to-code"]):
             # find the element and get its text
             territories = soup.body.find(text=lambda t: identifier in t).next.get_text(
                 strip=True, separator="\n")
@@ -970,7 +970,7 @@ class Scraper:
 
                 if count < 3 and red_date:
                     # it's red today
-                    # so everything will follor the color associated with the
+                    # so everything will follow the color associated with the
                     # first code (zero)
                     new_territories_colors["territori"].append({
                         "territorio": t,
@@ -995,12 +995,24 @@ class Scraper:
 
                 new_territories_colors_slim[territory_code] = count
 
-            count += 1
+        # terrible hack if no colors are set, default to white
+        # could also default to green, maybe will see
+        if not new_territories_colors["territori"]:
+            for territory in self._territories_data:
+                new_territories_colors["territori"].append({
+                    "territorio": territory["nome"],
+                    "codice_territorio": territory["codice"],
+                    "colore_bordo": self._colors_map["code-to-colors"][3]["stroke"],
+                    "nome_colore": self._colors_map["code-to-colors"][3]["nome"],
+                    "colore_rgb": self._colors_map["code-to-colors"][3]["rgb"],
+                    "codice_colore": 3
+                })
+                new_territories_colors_slim[territory["codice"]] = 3
 
         with open("src/settings/territories.geojson", "r") as f:
             geojson_data = ujson.load(f)
 
-        # save geoJson related to vaccination color
+        # save geojson related to vaccination color
         for feature in geojson_data["features"]:
             for t in new_territories_colors["territori"]:
                 if feature["properties"]["codice_regione"] == t["codice_territorio"]:
@@ -1131,7 +1143,9 @@ class Scraper:
 if __name__ == "__main__":
     s = Scraper()
     started = datetime.now()
-    s.scrapeAll()
-    s.saveData(all=True)
+    # s.scrapeAll()
+    # s.saveData(all=True)
+    s.scrapeColors()
+    s.saveData(False, False, False, True)
     elapsed = (datetime.now() - started).total_seconds()
     logging.info(f"It took {elapsed} seconds")
