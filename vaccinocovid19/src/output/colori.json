@@ -1,6 +1,14 @@
 {
   "territori": [
     {
+      "codice_colore": 2,
+      "codice_territorio": "16",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Sicilia"
+    },
+    {
       "codice_colore": 3,
       "codice_territorio": "01",
       "colore_bordo": "#3D3D3D",
@@ -130,14 +138,6 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "16",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Sicilia"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "17",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-08-29T23:00:00.017846",
-  "ultimo_aggiornamento": "2021-08-29 ore 23:00"
+  "timestamp": "2021-08-30T23:00:00.015371",
+  "ultimo_aggiornamento": "2021-08-30 ore 23:00"
 }
