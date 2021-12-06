@@ -9,6 +9,14 @@
       "territorio": "Friuli Venezia Giulia"
     },
     {
+      "codice_colore": 2,
+      "codice_territorio": "03",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "P.A. Bolzano"
+    },
+    {
       "codice_colore": 3,
       "codice_territorio": "01",
       "colore_bordo": "#3D3D3D",
@@ -90,14 +98,6 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "03",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "P.A. Bolzano"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "18",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-12-05T23:00:00.023035",
-  "ultimo_aggiornamento": "2021-12-05 ore 23:00"
+  "timestamp": "2021-12-06T23:00:00.017559",
+  "ultimo_aggiornamento": "2021-12-06 ore 23:00"
 }
