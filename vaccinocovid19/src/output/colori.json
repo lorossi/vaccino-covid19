@@ -2,6 +2,14 @@
   "territori": [
     {
       "codice_colore": 2,
+      "codice_territorio": "04",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Calabria"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "07",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -31,14 +39,6 @@
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Basilicata"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "04",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Calabria"
     },
     {
       "codice_colore": 3,
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-12-12T23:00:00.020278",
-  "ultimo_aggiornamento": "2021-12-12 ore 23:00"
+  "timestamp": "2021-12-13T23:00:00.022708",
+  "ultimo_aggiornamento": "2021-12-13 ore 23:00"
 }
