@@ -18,11 +18,43 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "09",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "11",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Marche"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "03",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "P.A. Bolzano"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "18",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "21",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Veneto"
     },
     {
       "codice_colore": 3,
@@ -66,14 +98,6 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "09",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Liguria"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "10",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -82,27 +106,11 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "11",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Marche"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "12",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Molise"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "18",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "P.A. Trento"
     },
     {
       "codice_colore": 3,
@@ -159,16 +167,8 @@
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Valle Aosta"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "21",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Veneto"
     }
   ],
-  "timestamp": "2021-12-19T23:00:00.022285",
-  "ultimo_aggiornamento": "2021-12-19 ore 23:00"
+  "timestamp": "2021-12-20T23:00:00.026877",
+  "ultimo_aggiornamento": "2021-12-20 ore 23:00"
 }
