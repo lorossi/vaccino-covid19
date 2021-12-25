@@ -4,21 +4,21 @@
   "nome_territorio_corto": "Italia",
   "nuove_dosi_consegnate": 0,
   "nuove_dosi_consegnate_formattato": "0",
-  "nuovi_vaccinati": 18625751,
-  "nuovi_vaccinati_formattato": "18.625.751",
-  "percentuale_dosi_utilizzate": 95.74710378143494,
-  "percentuale_dosi_utilizzate_formattato": "95,75%",
-  "percentuale_popolazione_vaccinata": 109.10418264547658,
-  "percentuale_popolazione_vaccinata_formattato": "109,10%",
+  "nuovi_vaccinati": 18687623,
+  "nuovi_vaccinati_formattato": "18.687.623",
+  "percentuale_dosi_utilizzate": 95.82507815721597,
+  "percentuale_dosi_utilizzate_formattato": "95,83%",
+  "percentuale_popolazione_vaccinata": 109.23259996464205,
+  "percentuale_popolazione_vaccinata_formattato": "109,23%",
   "somministrazioni": {
-    "prima_dose": 46455293,
-    "prima_dose_formattato": "46.455.293",
-    "seconda_dose": 43068942,
-    "seconda_dose_formattato": "43.068.942"
+    "prima_dose": 46461614,
+    "prima_dose_formattato": "46.461.614",
+    "seconda_dose": 43070794,
+    "seconda_dose_formattato": "43.070.794"
   },
-  "totale_dosi_consegnate": 112931653,
-  "totale_dosi_consegnate_formattato": "112.931.653",
-  "totale_vaccinati": 108128787,
-  "totale_vaccinati_formattato": "108.128.787",
-  "ultimo_aggiornamento": "2021-12-24 ore 23:46"
+  "totale_dosi_consegnate": 112931671,
+  "totale_dosi_consegnate_formattato": "112.931.671",
+  "totale_vaccinati": 108216862,
+  "totale_vaccinati_formattato": "108.216.862",
+  "ultimo_aggiornamento": "2021-12-25 ore 23:46"
 }
