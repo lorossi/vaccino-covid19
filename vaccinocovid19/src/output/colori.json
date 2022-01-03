@@ -18,11 +18,27 @@
     },
     {
       "codice_colore": 2,
+      "codice_territorio": "08",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Lazio"
+    },
+    {
+      "codice_colore": 2,
       "codice_territorio": "09",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "Liguria"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "10",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Lombardia"
     },
     {
       "codice_colore": 2,
@@ -47,6 +63,22 @@
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "13",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Piemonte"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "16",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Sicilia"
     },
     {
       "codice_colore": 2,
@@ -90,35 +122,11 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "08",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Lazio"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "10",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Lombardia"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "12",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Molise"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "13",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Piemonte"
     },
     {
       "codice_colore": 3,
@@ -135,14 +143,6 @@
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Sardegna"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "16",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Sicilia"
     },
     {
       "codice_colore": 3,
@@ -169,6 +169,6 @@
       "territorio": "Valle Aosta"
     }
   ],
-  "timestamp": "2022-01-02T23:00:00.028924",
-  "ultimo_aggiornamento": "2022-01-02 ore 23:00"
+  "timestamp": "2022-01-03T23:00:00.022178",
+  "ultimo_aggiornamento": "2022-01-03 ore 23:00"
 }
