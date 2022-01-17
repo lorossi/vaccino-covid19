@@ -1,6 +1,14 @@
 {
   "territori": [
     {
+      "codice_colore": 1,
+      "codice_territorio": "20",
+      "colore_bordo": "#E78314",
+      "colore_rgb": "#E78314",
+      "nome_colore": "Arancione",
+      "territorio": "Valle Aosta"
+    },
+    {
       "codice_colore": 2,
       "codice_territorio": "01",
       "colore_bordo": "#F8C300",
@@ -15,6 +23,14 @@
       "colore_rgb": "#F8C300",
       "nome_colore": "Gialla",
       "territorio": "Calabria"
+    },
+    {
+      "codice_colore": 2,
+      "codice_territorio": "05",
+      "colore_bordo": "#F8C300",
+      "colore_rgb": "#F8C300",
+      "nome_colore": "Gialla",
+      "territorio": "Campania"
     },
     {
       "codice_colore": 2,
@@ -106,14 +122,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "20",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Valle Aosta"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "21",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -127,14 +135,6 @@
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Basilicata"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "05",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "Campania"
     },
     {
       "codice_colore": 3,
@@ -169,6 +169,6 @@
       "territorio": "Umbria"
     }
   ],
-  "timestamp": "2022-01-16T23:00:00.028339",
-  "ultimo_aggiornamento": "2022-01-16 ore 23:00"
+  "timestamp": "2022-01-17T23:00:00.023292",
+  "ultimo_aggiornamento": "2022-01-17 ore 23:00"
 }
