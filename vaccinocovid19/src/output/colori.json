@@ -2,14 +2,6 @@
   "territori": [
     {
       "codice_colore": 2,
-      "codice_territorio": "01",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Abruzzo"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "04",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -66,22 +58,6 @@
     },
     {
       "codice_colore": 2,
-      "codice_territorio": "18",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "P.A. Trento"
-    },
-    {
-      "codice_colore": 2,
-      "codice_territorio": "13",
-      "colore_bordo": "#F8C300",
-      "colore_rgb": "#F8C300",
-      "nome_colore": "Gialla",
-      "territorio": "Piemonte"
-    },
-    {
-      "codice_colore": 2,
       "codice_territorio": "14",
       "colore_bordo": "#F8C300",
       "colore_rgb": "#F8C300",
@@ -122,6 +98,14 @@
     },
     {
       "codice_colore": 3,
+      "codice_territorio": "01",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Abruzzo"
+    },
+    {
+      "codice_colore": 3,
       "codice_territorio": "02",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -154,6 +138,22 @@
     },
     {
       "codice_colore": 3,
+      "codice_territorio": "18",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "13",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Piemonte"
+    },
+    {
+      "codice_colore": 3,
       "codice_territorio": "19",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -169,6 +169,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2022-03-06T23:00:00.018744",
-  "ultimo_aggiornamento": "2022-03-06 ore 23:00"
+  "timestamp": "2022-03-07T23:00:00.018003",
+  "ultimo_aggiornamento": "2022-03-07 ore 23:00"
 }
