@@ -2,6 +2,14 @@
   "territori": [
     {
       "codice_colore": 3,
+      "codice_territorio": "00",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "Italia"
+    },
+    {
+      "codice_colore": 3,
       "codice_territorio": "01",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -15,6 +23,14 @@
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
       "territorio": "Basilicata"
+    },
+    {
+      "codice_colore": 3,
+      "codice_territorio": "03",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "P.A. Bolzano"
     },
     {
       "codice_colore": 3,
@@ -90,22 +106,6 @@
     },
     {
       "codice_colore": 3,
-      "codice_territorio": "03",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "P.A. Bolzano"
-    },
-    {
-      "codice_colore": 3,
-      "codice_territorio": "18",
-      "colore_bordo": "#3D3D3D",
-      "colore_rgb": "#F7F7F7",
-      "nome_colore": "Bianca",
-      "territorio": "P.A. Trento"
-    },
-    {
-      "codice_colore": 3,
       "codice_territorio": "13",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -146,6 +146,14 @@
     },
     {
       "codice_colore": 3,
+      "codice_territorio": "18",
+      "colore_bordo": "#3D3D3D",
+      "colore_rgb": "#F7F7F7",
+      "nome_colore": "Bianca",
+      "territorio": "P.A. Trento"
+    },
+    {
+      "codice_colore": 3,
       "codice_territorio": "19",
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
@@ -158,7 +166,7 @@
       "colore_bordo": "#3D3D3D",
       "colore_rgb": "#F7F7F7",
       "nome_colore": "Bianca",
-      "territorio": "Valle Aosta"
+      "territorio": "Val d'Aosta"
     },
     {
       "codice_colore": 3,
@@ -169,6 +177,6 @@
       "territorio": "Veneto"
     }
   ],
-  "timestamp": "2022-04-07T23:00:00.024258",
-  "ultimo_aggiornamento": "2022-04-07 ore 23:00"
+  "timestamp": "2022-04-08T23:00:00.018076",
+  "ultimo_aggiornamento": "2022-04-08 ore 23:00"
 }
