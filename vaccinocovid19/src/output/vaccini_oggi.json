@@ -4,14 +4,14 @@
       "codice_territorio": "01",
       "nome_territorio": "Abruzzo",
       "nome_territorio_corto": "Abruzzo",
-      "percentuale_dosi_utilizzate": 94.28625960380236,
+      "percentuale_dosi_utilizzate": 94.29007047896032,
       "percentuale_dosi_utilizzate_formattato": "94,29%",
-      "percentuale_popolazione_vaccinata": 151.22289192474773,
-      "percentuale_popolazione_vaccinata_formattato": "151,22%",
+      "percentuale_popolazione_vaccinata": 151.23162493498546,
+      "percentuale_popolazione_vaccinata_formattato": "151,23%",
       "totale_dosi_consegnate": 3148883,
       "totale_dosi_consegnate_formattato": "3.148.883",
-      "totale_vaccinati": 2968964,
-      "totale_vaccinati_formattato": "2.968.964"
+      "totale_vaccinati": 2969084,
+      "totale_vaccinati_formattato": "2.969.084"
     },
     {
       "codice_territorio": "02",
@@ -19,7 +19,7 @@
       "nome_territorio_corto": "Basilicata",
       "percentuale_dosi_utilizzate": 96.43192709357959,
       "percentuale_dosi_utilizzate_formattato": "96,43%",
-      "percentuale_popolazione_vaccinata": 151.3583272782483,
+      "percentuale_popolazione_vaccinata": 151.3568812877991,
       "percentuale_popolazione_vaccinata_formattato": "151,36%",
       "totale_dosi_consegnate": 1316537,
       "totale_dosi_consegnate_formattato": "1.316.537",
@@ -30,105 +30,105 @@
       "codice_territorio": "04",
       "nome_territorio": "Calabria",
       "nome_territorio_corto": "Calabria",
-      "percentuale_dosi_utilizzate": 96.13250603853427,
+      "percentuale_dosi_utilizzate": 96.13451888329246,
       "percentuale_dosi_utilizzate_formattato": "96,13%",
-      "percentuale_popolazione_vaccinata": 141.2436975677231,
-      "percentuale_popolazione_vaccinata_formattato": "141,24%",
+      "percentuale_popolazione_vaccinata": 141.24543981078185,
+      "percentuale_popolazione_vaccinata_formattato": "141,25%",
       "totale_dosi_consegnate": 4272560,
       "totale_dosi_consegnate_formattato": "4.272.560",
-      "totale_vaccinati": 4107319,
-      "totale_vaccinati_formattato": "4.107.319"
+      "totale_vaccinati": 4107405,
+      "totale_vaccinati_formattato": "4.107.405"
     },
     {
       "codice_territorio": "05",
       "nome_territorio": "Campania",
       "nome_territorio_corto": "Campania",
-      "percentuale_dosi_utilizzate": 94.9946801370407,
-      "percentuale_dosi_utilizzate_formattato": "94,99%",
-      "percentuale_popolazione_vaccinata": 144.01966127248565,
+      "percentuale_dosi_utilizzate": 94.9976783092913,
+      "percentuale_dosi_utilizzate_formattato": "95,00%",
+      "percentuale_popolazione_vaccinata": 144.02423048582642,
       "percentuale_popolazione_vaccinata_formattato": "144,02%",
       "totale_dosi_consegnate": 13208047,
       "totale_dosi_consegnate_formattato": "13.208.047",
-      "totale_vaccinati": 12546942,
-      "totale_vaccinati_formattato": "12.546.942"
+      "totale_vaccinati": 12547338,
+      "totale_vaccinati_formattato": "12.547.338"
     },
     {
       "codice_territorio": "06",
       "nome_territorio": "Emilia Romagna",
       "nome_territorio_corto": "E.R.",
-      "percentuale_dosi_utilizzate": 99.65054466547744,
-      "percentuale_dosi_utilizzate_formattato": "99,65%",
-      "percentuale_popolazione_vaccinata": 154.7629218665542,
-      "percentuale_popolazione_vaccinata_formattato": "154,76%",
+      "percentuale_dosi_utilizzate": 99.66722912954357,
+      "percentuale_dosi_utilizzate_formattato": "99,67%",
+      "percentuale_popolazione_vaccinata": 154.79965923847462,
+      "percentuale_popolazione_vaccinata_formattato": "154,80%",
       "totale_dosi_consegnate": 10452838,
       "totale_dosi_consegnate_formattato": "10.452.838",
-      "totale_vaccinati": 10416310,
-      "totale_vaccinati_formattato": "10.416.310"
+      "totale_vaccinati": 10418054,
+      "totale_vaccinati_formattato": "10.418.054"
     },
     {
       "codice_territorio": "07",
       "nome_territorio": "Friuli Venezia Giulia",
       "nome_territorio_corto": "F.V.G.",
-      "percentuale_dosi_utilizzate": 95.10923974473283,
-      "percentuale_dosi_utilizzate_formattato": "95,11%",
-      "percentuale_popolazione_vaccinata": 149.49486659105833,
-      "percentuale_popolazione_vaccinata_formattato": "149,49%",
+      "percentuale_dosi_utilizzate": 95.11948974648797,
+      "percentuale_dosi_utilizzate_formattato": "95,12%",
+      "percentuale_popolazione_vaccinata": 149.51874291171728,
+      "percentuale_popolazione_vaccinata_formattato": "149,52%",
       "totale_dosi_consegnate": 2848780,
       "totale_dosi_consegnate_formattato": "2.848.780",
-      "totale_vaccinati": 2709453,
-      "totale_vaccinati_formattato": "2.709.453"
+      "totale_vaccinati": 2709745,
+      "totale_vaccinati_formattato": "2.709.745"
     },
     {
       "codice_territorio": "08",
       "nome_territorio": "Lazio",
       "nome_territorio_corto": "Lazio",
-      "percentuale_dosi_utilizzate": 92.46094234465016,
-      "percentuale_dosi_utilizzate_formattato": "92,46%",
-      "percentuale_popolazione_vaccinata": 156.4901575829178,
-      "percentuale_popolazione_vaccinata_formattato": "156,49%",
+      "percentuale_dosi_utilizzate": 92.46846055573299,
+      "percentuale_dosi_utilizzate_formattato": "92,47%",
+      "percentuale_popolazione_vaccinata": 156.50765328283268,
+      "percentuale_popolazione_vaccinata_formattato": "156,51%",
       "totale_dosi_consegnate": 14577936,
       "totale_dosi_consegnate_formattato": "14.577.936",
-      "totale_vaccinati": 13478897,
-      "totale_vaccinati_formattato": "13.478.897"
+      "totale_vaccinati": 13479993,
+      "totale_vaccinati_formattato": "13.479.993"
     },
     {
       "codice_territorio": "09",
       "nome_territorio": "Liguria",
       "nome_territorio_corto": "Liguria",
-      "percentuale_dosi_utilizzate": 99.26418184932815,
-      "percentuale_dosi_utilizzate_formattato": "99,26%",
-      "percentuale_popolazione_vaccinata": 150.22330416716397,
-      "percentuale_popolazione_vaccinata_formattato": "150,22%",
+      "percentuale_dosi_utilizzate": 99.26806098453585,
+      "percentuale_dosi_utilizzate_formattato": "99,27%",
+      "percentuale_popolazione_vaccinata": 150.23051810501659,
+      "percentuale_popolazione_vaccinata_formattato": "150,23%",
       "totale_dosi_consegnate": 3531715,
       "totale_dosi_consegnate_formattato": "3.531.715",
-      "totale_vaccinati": 3505728,
-      "totale_vaccinati_formattato": "3.505.728"
+      "totale_vaccinati": 3505865,
+      "totale_vaccinati_formattato": "3.505.865"
     },
     {
       "codice_territorio": "10",
       "nome_territorio": "Lombardia",
       "nome_territorio_corto": "Lombardia",
-      "percentuale_dosi_utilizzate": 97.86074640599122,
-      "percentuale_dosi_utilizzate_formattato": "97,86%",
-      "percentuale_popolazione_vaccinata": 159.23546826050733,
-      "percentuale_popolazione_vaccinata_formattato": "159,24%",
+      "percentuale_dosi_utilizzate": 97.86709827178942,
+      "percentuale_dosi_utilizzate_formattato": "97,87%",
+      "percentuale_popolazione_vaccinata": 159.24866184357936,
+      "percentuale_popolazione_vaccinata_formattato": "159,25%",
       "totale_dosi_consegnate": 24449509,
       "totale_dosi_consegnate_formattato": "24.449.509",
-      "totale_vaccinati": 23926472,
-      "totale_vaccinati_formattato": "23.926.472"
+      "totale_vaccinati": 23928025,
+      "totale_vaccinati_formattato": "23.928.025"
     },
     {
       "codice_territorio": "11",
       "nome_territorio": "Marche",
       "nome_territorio_corto": "Marche",
-      "percentuale_dosi_utilizzate": 94.63339874347328,
-      "percentuale_dosi_utilizzate_formattato": "94,63%",
-      "percentuale_popolazione_vaccinata": 146.96292388568045,
-      "percentuale_popolazione_vaccinata_formattato": "146,96%",
+      "percentuale_dosi_utilizzate": 94.63547852735562,
+      "percentuale_dosi_utilizzate_formattato": "94,64%",
+      "percentuale_popolazione_vaccinata": 146.96675816039433,
+      "percentuale_popolazione_vaccinata_formattato": "146,97%",
       "totale_dosi_consegnate": 3558062,
       "totale_dosi_consegnate_formattato": "3.558.062",
-      "totale_vaccinati": 3367115,
-      "totale_vaccinati_formattato": "3.367.115"
+      "totale_vaccinati": 3367189,
+      "totale_vaccinati_formattato": "3.367.189"
     },
     {
       "codice_territorio": "12",
@@ -136,8 +136,8 @@
       "nome_territorio_corto": "Molise",
       "percentuale_dosi_utilizzate": 98.40386519235328,
       "percentuale_dosi_utilizzate_formattato": "98,40%",
-      "percentuale_popolazione_vaccinata": 155.15546593193042,
-      "percentuale_popolazione_vaccinata_formattato": "155,16%",
+      "percentuale_popolazione_vaccinata": 155.15413488799265,
+      "percentuale_popolazione_vaccinata_formattato": "155,15%",
       "totale_dosi_consegnate": 717170,
       "totale_dosi_consegnate_formattato": "717.170",
       "totale_vaccinati": 705723,
@@ -160,92 +160,92 @@
       "codice_territorio": "18",
       "nome_territorio": "P.A. Trento",
       "nome_territorio_corto": "P.A. Trento",
-      "percentuale_dosi_utilizzate": 102.79823013824566,
+      "percentuale_dosi_utilizzate": 102.79897419447646,
       "percentuale_dosi_utilizzate_formattato": "102,80%",
-      "percentuale_popolazione_vaccinata": 152.15523759991441,
+      "percentuale_popolazione_vaccinata": 152.15597531601915,
       "percentuale_popolazione_vaccinata_formattato": "152,16%",
       "totale_dosi_consegnate": 1209586,
       "totale_dosi_consegnate_formattato": "1.209.586",
-      "totale_vaccinati": 1243433,
-      "totale_vaccinati_formattato": "1.243.433"
+      "totale_vaccinati": 1243442,
+      "totale_vaccinati_formattato": "1.243.442"
     },
     {
       "codice_territorio": "13",
       "nome_territorio": "Piemonte",
       "nome_territorio_corto": "Piemonte",
-      "percentuale_dosi_utilizzate": 98.84429071278696,
-      "percentuale_dosi_utilizzate_formattato": "98,84%",
-      "percentuale_popolazione_vaccinata": 155.31285017664385,
-      "percentuale_popolazione_vaccinata_formattato": "155,31%",
+      "percentuale_dosi_utilizzate": 98.87653828886226,
+      "percentuale_dosi_utilizzate_formattato": "98,88%",
+      "percentuale_popolazione_vaccinata": 155.38695918113146,
+      "percentuale_popolazione_vaccinata_formattato": "155,39%",
       "totale_dosi_consegnate": 10127893,
       "totale_dosi_consegnate_formattato": "10.127.893",
-      "totale_vaccinati": 10010844,
-      "totale_vaccinati_formattato": "10.010.844"
+      "totale_vaccinati": 10014110,
+      "totale_vaccinati_formattato": "10.014.110"
     },
     {
       "codice_territorio": "14",
       "nome_territorio": "Puglia",
       "nome_territorio_corto": "Puglia",
-      "percentuale_dosi_utilizzate": 96.88149194136606,
+      "percentuale_dosi_utilizzate": 96.88212215170753,
       "percentuale_dosi_utilizzate_formattato": "96,88%",
-      "percentuale_popolazione_vaccinata": 157.0626096392765,
+      "percentuale_popolazione_vaccinata": 157.06387440382161,
       "percentuale_popolazione_vaccinata_formattato": "157,06%",
       "totale_dosi_consegnate": 9679308,
       "totale_dosi_consegnate_formattato": "9.679.308",
-      "totale_vaccinati": 9377458,
-      "totale_vaccinati_formattato": "9.377.458"
+      "totale_vaccinati": 9377519,
+      "totale_vaccinati_formattato": "9.377.519"
     },
     {
       "codice_territorio": "15",
       "nome_territorio": "Sardegna",
       "nome_territorio_corto": "Sardegna",
-      "percentuale_dosi_utilizzate": 97.16417695169048,
-      "percentuale_dosi_utilizzate_formattato": "97,16%",
-      "percentuale_popolazione_vaccinata": 153.34486209847105,
-      "percentuale_popolazione_vaccinata_formattato": "153,34%",
+      "percentuale_dosi_utilizzate": 97.17038428272873,
+      "percentuale_dosi_utilizzate_formattato": "97,17%",
+      "percentuale_popolazione_vaccinata": 153.35882319726537,
+      "percentuale_popolazione_vaccinata_formattato": "153,36%",
       "totale_dosi_consegnate": 3882506,
       "totale_dosi_consegnate_formattato": "3.882.506",
-      "totale_vaccinati": 3772405,
-      "totale_vaccinati_formattato": "3.772.405"
+      "totale_vaccinati": 3772646,
+      "totale_vaccinati_formattato": "3.772.646"
     },
     {
       "codice_territorio": "16",
       "nome_territorio": "Sicilia",
       "nome_territorio_corto": "Sicilia",
-      "percentuale_dosi_utilizzate": 95.56832589238581,
+      "percentuale_dosi_utilizzate": 95.5727234418766,
       "percentuale_dosi_utilizzate_formattato": "95,57%",
-      "percentuale_popolazione_vaccinata": 138.77711889959366,
+      "percentuale_popolazione_vaccinata": 138.7847081917178,
       "percentuale_popolazione_vaccinata_formattato": "138,78%",
       "totale_dosi_consegnate": 10892430,
       "totale_dosi_consegnate_formattato": "10.892.430",
-      "totale_vaccinati": 10409713,
-      "totale_vaccinati_formattato": "10.409.713"
+      "totale_vaccinati": 10410192,
+      "totale_vaccinati_formattato": "10.410.192"
     },
     {
       "codice_territorio": "17",
       "nome_territorio": "Toscana",
       "nome_territorio_corto": "Toscana",
-      "percentuale_dosi_utilizzate": 98.10610849026051,
+      "percentuale_dosi_utilizzate": 98.11122313193856,
       "percentuale_dosi_utilizzate_formattato": "98,11%",
-      "percentuale_popolazione_vaccinata": 156.47777758218905,
-      "percentuale_popolazione_vaccinata_formattato": "156,48%",
+      "percentuale_popolazione_vaccinata": 156.48893516819655,
+      "percentuale_popolazione_vaccinata_formattato": "156,49%",
       "totale_dosi_consegnate": 8954684,
       "totale_dosi_consegnate_formattato": "8.954.684",
-      "totale_vaccinati": 8785092,
-      "totale_vaccinati_formattato": "8.785.092"
+      "totale_vaccinati": 8785550,
+      "totale_vaccinati_formattato": "8.785.550"
     },
     {
       "codice_territorio": "19",
       "nome_territorio": "Umbria",
       "nome_territorio_corto": "Umbria",
-      "percentuale_dosi_utilizzate": 97.28435383521104,
-      "percentuale_dosi_utilizzate_formattato": "97,28%",
-      "percentuale_popolazione_vaccinata": 154.5657432785736,
+      "percentuale_dosi_utilizzate": 97.28712817296945,
+      "percentuale_dosi_utilizzate_formattato": "97,29%",
+      "percentuale_popolazione_vaccinata": 154.5709147115777,
       "percentuale_popolazione_vaccinata_formattato": "154,57%",
       "totale_dosi_consegnate": 2090589,
       "totale_dosi_consegnate_formattato": "2.090.589",
-      "totale_vaccinati": 2033816,
-      "totale_vaccinati_formattato": "2.033.816"
+      "totale_vaccinati": 2033874,
+      "totale_vaccinati_formattato": "2.033.874"
     },
     {
       "codice_territorio": "20",
@@ -280,93 +280,93 @@
   "fasce_eta": [
     {
       "nome_categoria": "05-11",
-      "prima_dose": 1309407,
-      "prima_dose_formattato": "1.309.407",
-      "seconda_dose": 1181200,
-      "seconda_dose_formattato": "1.181.200",
-      "totale_vaccinati": 2567504,
-      "totale_vaccinati_formattato": "2.567.504"
+      "prima_dose": 1309454,
+      "prima_dose_formattato": "1.309.454",
+      "seconda_dose": 1181314,
+      "seconda_dose_formattato": "1.181.314",
+      "totale_vaccinati": 2567810,
+      "totale_vaccinati_formattato": "2.567.810"
     },
     {
       "nome_categoria": "12-19",
-      "prima_dose": 3822594,
-      "prima_dose_formattato": "3.822.594",
-      "seconda_dose": 3651155,
-      "seconda_dose_formattato": "3.651.155",
-      "totale_vaccinati": 9712271,
-      "totale_vaccinati_formattato": "9.712.271"
+      "prima_dose": 3822609,
+      "prima_dose_formattato": "3.822.609",
+      "seconda_dose": 3651203,
+      "seconda_dose_formattato": "3.651.203",
+      "totale_vaccinati": 9712734,
+      "totale_vaccinati_formattato": "9.712.734"
     },
     {
       "nome_categoria": "20-29",
-      "prima_dose": 5381853,
-      "prima_dose_formattato": "5.381.853",
-      "seconda_dose": 5135750,
-      "seconda_dose_formattato": "5.135.750",
-      "totale_vaccinati": 14746470,
-      "totale_vaccinati_formattato": "14.746.470"
+      "prima_dose": 5381850,
+      "prima_dose_formattato": "5.381.850",
+      "seconda_dose": 5135768,
+      "seconda_dose_formattato": "5.135.768",
+      "totale_vaccinati": 14746900,
+      "totale_vaccinati_formattato": "14.746.900"
     },
     {
       "nome_categoria": "30-39",
-      "prima_dose": 5796221,
-      "prima_dose_formattato": "5.796.221",
-      "seconda_dose": 5535009,
-      "seconda_dose_formattato": "5.535.009",
-      "totale_vaccinati": 15886871,
-      "totale_vaccinati_formattato": "15.886.871"
+      "prima_dose": 5796224,
+      "prima_dose_formattato": "5.796.224",
+      "seconda_dose": 5535042,
+      "seconda_dose_formattato": "5.535.042",
+      "totale_vaccinati": 15887372,
+      "totale_vaccinati_formattato": "15.887.372"
     },
     {
       "nome_categoria": "40-49",
-      "prima_dose": 7340403,
-      "prima_dose_formattato": "7.340.403",
-      "seconda_dose": 7015812,
-      "seconda_dose_formattato": "7.015.812",
-      "totale_vaccinati": 20618401,
-      "totale_vaccinati_formattato": "20.618.401"
+      "prima_dose": 7340392,
+      "prima_dose_formattato": "7.340.392",
+      "seconda_dose": 7015835,
+      "seconda_dose_formattato": "7.015.835",
+      "totale_vaccinati": 20618897,
+      "totale_vaccinati_formattato": "20.618.897"
     },
     {
       "nome_categoria": "50-59",
-      "prima_dose": 8431572,
-      "prima_dose_formattato": "8.431.572",
-      "seconda_dose": 7939224,
-      "seconda_dose_formattato": "7.939.224",
-      "totale_vaccinati": 24256213,
-      "totale_vaccinati_formattato": "24.256.213"
+      "prima_dose": 8431563,
+      "prima_dose_formattato": "8.431.563",
+      "seconda_dose": 7939256,
+      "seconda_dose_formattato": "7.939.256",
+      "totale_vaccinati": 24256761,
+      "totale_vaccinati_formattato": "24.256.761"
     },
     {
       "nome_categoria": "60-69",
-      "prima_dose": 6815873,
-      "prima_dose_formattato": "6.815.873",
-      "seconda_dose": 6309979,
-      "seconda_dose_formattato": "6.309.979",
-      "totale_vaccinati": 19764786,
-      "totale_vaccinati_formattato": "19.764.786"
+      "prima_dose": 6815868,
+      "prima_dose_formattato": "6.815.868",
+      "seconda_dose": 6309994,
+      "seconda_dose_formattato": "6.309.994",
+      "totale_vaccinati": 19765488,
+      "totale_vaccinati_formattato": "19.765.488"
     },
     {
       "nome_categoria": "70-79",
-      "prima_dose": 5561041,
-      "prima_dose_formattato": "5.561.041",
-      "seconda_dose": 5359525,
-      "seconda_dose_formattato": "5.359.525",
-      "totale_vaccinati": 16407042,
-      "totale_vaccinati_formattato": "16.407.042"
+      "prima_dose": 5561042,
+      "prima_dose_formattato": "5.561.042",
+      "seconda_dose": 5359539,
+      "seconda_dose_formattato": "5.359.539",
+      "totale_vaccinati": 16407844,
+      "totale_vaccinati_formattato": "16.407.844"
     },
     {
       "nome_categoria": "80-89",
-      "prima_dose": 3533492,
-      "prima_dose_formattato": "3.533.492",
-      "seconda_dose": 3482990,
-      "seconda_dose_formattato": "3.482.990",
-      "totale_vaccinati": 10707002,
-      "totale_vaccinati_formattato": "10.707.002"
+      "prima_dose": 3533487,
+      "prima_dose_formattato": "3.533.487",
+      "seconda_dose": 3483001,
+      "seconda_dose_formattato": "3.483.001",
+      "totale_vaccinati": 10711625,
+      "totale_vaccinati_formattato": "10.711.625"
     },
     {
       "nome_categoria": "90+",
-      "prima_dose": 820501,
-      "prima_dose_formattato": "820.501",
-      "seconda_dose": 795471,
-      "seconda_dose_formattato": "795.471",
-      "totale_vaccinati": 2398723,
-      "totale_vaccinati_formattato": "2.398.723"
+      "prima_dose": 820500,
+      "prima_dose_formattato": "820.500",
+      "seconda_dose": 795473,
+      "seconda_dose_formattato": "795.473",
+      "totale_vaccinati": 2399922,
+      "totale_vaccinati_formattato": "2.399.922"
     }
   ],
   "produttori_vaccini": [
@@ -410,35 +410,35 @@
   "sesso": [
     {
       "nome_categoria": "uomini",
-      "nuovi_vaccinati": 9319,
-      "nuovi_vaccinati_formattato": "9.319",
-      "nuovi_vaccinati_percentuale": 0.013954997760296984,
-      "nuovi_vaccinati_percentuale_formattato": "0,01%",
-      "totale_vaccinati": 66788262,
-      "totale_vaccinati_formattato": "66.788.262"
+      "nuovi_vaccinati": 1686,
+      "nuovi_vaccinati_formattato": "1.686",
+      "nuovi_vaccinati_percentuale": 0.002524287886559281,
+      "nuovi_vaccinati_percentuale_formattato": "0,00%",
+      "totale_vaccinati": 66792800,
+      "totale_vaccinati_formattato": "66.792.800"
     },
     {
       "nome_categoria": "donne",
-      "nuovi_vaccinati": 11003,
-      "nuovi_vaccinati_formattato": "11.003",
-      "nuovi_vaccinati_percentuale": 0.01565906296269699,
-      "nuovi_vaccinati_percentuale_formattato": "0,02%",
-      "totale_vaccinati": 70277021,
-      "totale_vaccinati_formattato": "70.277.021"
+      "nuovi_vaccinati": 1987,
+      "nuovi_vaccinati_formattato": "1.987",
+      "nuovi_vaccinati_percentuale": 0.002827239609880205,
+      "nuovi_vaccinati_percentuale_formattato": "0,00%",
+      "totale_vaccinati": 70282553,
+      "totale_vaccinati_formattato": "70.282.553"
     }
   ],
   "somministrazioni": [
     {
       "nome_categoria": "prima_dose",
       "nome_categoria_formattato": "prima dose",
-      "totale_vaccinati": 48812957,
-      "totale_vaccinati_formattato": "48.812.957"
+      "totale_vaccinati": 48812989,
+      "totale_vaccinati_formattato": "48.812.989"
     },
     {
       "nome_categoria": "seconda_dose",
       "nome_categoria_formattato": "seconda dose",
-      "totale_vaccinati": 46406115,
-      "totale_vaccinati_formattato": "46.406.115"
+      "totale_vaccinati": 46406425,
+      "totale_vaccinati_formattato": "46.406.425"
     }
   ],
   "variazioni": [
@@ -448,12 +448,12 @@
       "nome_territorio_corto": "Abruzzo",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 907970,
-      "nuovi_vaccinati_formattato": "907.970",
+      "nuovi_vaccinati": 908071,
+      "nuovi_vaccinati_formattato": "908.071",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 44.054956006664746,
-      "percentuale_nuovi_vaccinati_formattato": "44,05%"
+      "percentuale_nuovi_vaccinati": 44.059450377071855,
+      "percentuale_nuovi_vaccinati_formattato": "44,06%"
     },
     {
       "codice_territorio": "02",
@@ -461,11 +461,11 @@
       "nome_territorio_corto": "Basilicata",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 382706,
-      "nuovi_vaccinati_formattato": "382.706",
+      "nuovi_vaccinati": 382695,
+      "nuovi_vaccinati_formattato": "382.695",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 43.1531161766961,
+      "percentuale_nuovi_vaccinati": 43.15134061815357,
       "percentuale_nuovi_vaccinati_formattato": "43,15%"
     },
     {
@@ -474,11 +474,11 @@
       "nome_territorio_corto": "Calabria",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 1162571,
-      "nuovi_vaccinati_formattato": "1.162.571",
+      "nuovi_vaccinati": 1162606,
+      "nuovi_vaccinati_formattato": "1.162.606",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 39.47947328599935,
+      "percentuale_nuovi_vaccinati": 39.47997809018544,
       "percentuale_nuovi_vaccinati_formattato": "39,48%"
     },
     {
@@ -487,11 +487,11 @@
       "nome_territorio_corto": "Campania",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 3685177,
-      "nuovi_vaccinati_formattato": "3.685.177",
+      "nuovi_vaccinati": 3685409,
+      "nuovi_vaccinati_formattato": "3.685.409",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 41.58513569249467,
+      "percentuale_nuovi_vaccinati": 41.586984052794826,
       "percentuale_nuovi_vaccinati_formattato": "41,59%"
     },
     {
@@ -500,12 +500,12 @@
       "nome_territorio_corto": "E.R.",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 3249167,
-      "nuovi_vaccinati_formattato": "3.249.167",
+      "nuovi_vaccinati": 3250732,
+      "nuovi_vaccinati_formattato": "3.250.732",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 45.33420081056008,
-      "percentuale_nuovi_vaccinati_formattato": "45,33%"
+      "percentuale_nuovi_vaccinati": 45.354903826003635,
+      "percentuale_nuovi_vaccinati_formattato": "45,35%"
     },
     {
       "codice_territorio": "07",
@@ -513,12 +513,12 @@
       "nome_territorio_corto": "F.V.G.",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 849064,
-      "nuovi_vaccinati_formattato": "849.064",
+      "nuovi_vaccinati": 849353,
+      "nuovi_vaccinati_formattato": "849.353",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 45.63905720792802,
-      "percentuale_nuovi_vaccinati_formattato": "45,64%"
+      "percentuale_nuovi_vaccinati": 45.65451797255632,
+      "percentuale_nuovi_vaccinati_formattato": "45,65%"
     },
     {
       "codice_territorio": "08",
@@ -526,11 +526,11 @@
       "nome_territorio_corto": "Lazio",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 4159659,
-      "nuovi_vaccinati_formattato": "4.159.659",
+      "nuovi_vaccinati": 4160626,
+      "nuovi_vaccinati_formattato": "4.160.626",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 44.635183692057225,
+      "percentuale_nuovi_vaccinati": 44.64494208673185,
       "percentuale_nuovi_vaccinati_formattato": "44,64%"
     },
     {
@@ -539,12 +539,12 @@
       "nome_territorio_corto": "Liguria",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 1031205,
-      "nuovi_vaccinati_formattato": "1.031.205",
+      "nuovi_vaccinati": 1031293,
+      "nuovi_vaccinati_formattato": "1.031.293",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 41.672879985354754,
-      "percentuale_nuovi_vaccinati_formattato": "41,67%"
+      "percentuale_nuovi_vaccinati": 41.675610974342234,
+      "percentuale_nuovi_vaccinati_formattato": "41,68%"
     },
     {
       "codice_territorio": "10",
@@ -552,11 +552,11 @@
       "nome_territorio_corto": "Lombardia",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 7547214,
-      "nuovi_vaccinati_formattato": "7.547.214",
+      "nuovi_vaccinati": 7548447,
+      "nuovi_vaccinati_formattato": "7.548.447",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 46.07787483413473,
+      "percentuale_nuovi_vaccinati": 46.08450229914348,
       "percentuale_nuovi_vaccinati_formattato": "46,08%"
     },
     {
@@ -565,11 +565,11 @@
       "nome_territorio_corto": "Marche",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 1033495,
-      "nuovi_vaccinati_formattato": "1.033.495",
+      "nuovi_vaccinati": 1033537,
+      "nuovi_vaccinati_formattato": "1.033.537",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 44.28720185805744,
+      "percentuale_nuovi_vaccinati": 44.28839432786037,
       "percentuale_nuovi_vaccinati_formattato": "44,29%"
     },
     {
@@ -578,11 +578,11 @@
       "nome_territorio_corto": "Molise",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 214508,
-      "nuovi_vaccinati_formattato": "214.508",
+      "nuovi_vaccinati": 214501,
+      "nuovi_vaccinati_formattato": "214.501",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 43.66886190364708,
+      "percentuale_nuovi_vaccinati": 43.66681459706609,
       "percentuale_nuovi_vaccinati_formattato": "43,67%"
     },
     {
@@ -591,11 +591,11 @@
       "nome_territorio_corto": "P.A. Bolzano",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 332639,
-      "nuovi_vaccinati_formattato": "332.639",
+      "nuovi_vaccinati": 332640,
+      "nuovi_vaccinati_formattato": "332.640",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 42.64023094297442,
+      "percentuale_nuovi_vaccinati": 42.640413790451284,
       "percentuale_nuovi_vaccinati_formattato": "42,64%"
     },
     {
@@ -604,11 +604,11 @@
       "nome_territorio_corto": "P.A. Trento",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 387310,
-      "nuovi_vaccinati_formattato": "387.310",
+      "nuovi_vaccinati": 387311,
+      "nuovi_vaccinati_formattato": "387.311",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 45.2399947203848,
+      "percentuale_nuovi_vaccinati": 45.23968878594514,
       "percentuale_nuovi_vaccinati_formattato": "45,24%"
     },
     {
@@ -617,12 +617,12 @@
       "nome_territorio_corto": "Piemonte",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 3212503,
-      "nuovi_vaccinati_formattato": "3.212.503",
+      "nuovi_vaccinati": 3215633,
+      "nuovi_vaccinati_formattato": "3.215.633",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 47.254219816275764,
-      "percentuale_nuovi_vaccinati_formattato": "47,25%"
+      "percentuale_nuovi_vaccinati": 47.29931424346953,
+      "percentuale_nuovi_vaccinati_formattato": "47,30%"
     },
     {
       "codice_territorio": "14",
@@ -630,11 +630,11 @@
       "nome_territorio_corto": "Puglia",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 2878027,
-      "nuovi_vaccinati_formattato": "2.878.027",
+      "nuovi_vaccinati": 2878095,
+      "nuovi_vaccinati_formattato": "2.878.095",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 44.28121477095456,
+      "percentuale_nuovi_vaccinati": 44.28230870920254,
       "percentuale_nuovi_vaccinati_formattato": "44,28%"
     },
     {
@@ -643,12 +643,12 @@
       "nome_territorio_corto": "Sardegna",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 1126212,
-      "nuovi_vaccinati_formattato": "1.126.212",
+      "nuovi_vaccinati": 1126439,
+      "nuovi_vaccinati_formattato": "1.126.439",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 42.5597074740958,
-      "percentuale_nuovi_vaccinati_formattato": "42,56%"
+      "percentuale_nuovi_vaccinati": 42.568060624131064,
+      "percentuale_nuovi_vaccinati_formattato": "42,57%"
     },
     {
       "codice_territorio": "16",
@@ -656,12 +656,12 @@
       "nome_territorio_corto": "Sicilia",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 2919285,
-      "nuovi_vaccinati_formattato": "2.919.285",
+      "nuovi_vaccinati": 2919663,
+      "nuovi_vaccinati_formattato": "2.919.663",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 38.97354063078905,
-      "percentuale_nuovi_vaccinati_formattato": "38,97%"
+      "percentuale_nuovi_vaccinati": 38.97806149605722,
+      "percentuale_nuovi_vaccinati_formattato": "38,98%"
     },
     {
       "codice_territorio": "17",
@@ -669,11 +669,11 @@
       "nome_territorio_corto": "Toscana",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 2647125,
-      "nuovi_vaccinati_formattato": "2.647.125",
+      "nuovi_vaccinati": 2647512,
+      "nuovi_vaccinati_formattato": "2.647.512",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 43.127064710514084,
+      "percentuale_nuovi_vaccinati": 43.132870796824655,
       "percentuale_nuovi_vaccinati_formattato": "43,13%"
     },
     {
@@ -682,11 +682,11 @@
       "nome_territorio_corto": "Umbria",
       "nuove_dosi_consegnate": 0,
       "nuove_dosi_consegnate_formattato": "0",
-      "nuovi_vaccinati": 624307,
-      "nuovi_vaccinati_formattato": "624.307",
+      "nuovi_vaccinati": 624341,
+      "nuovi_vaccinati_formattato": "624.341",
       "percentuale_nuove_dosi_consegnate": 0.0,
       "percentuale_nuove_dosi_consegnate_formattato": "0,00%",
-      "percentuale_nuovi_vaccinati": 44.29251604636792,
+      "percentuale_nuovi_vaccinati": 44.29417402785178,
       "percentuale_nuovi_vaccinati_formattato": "44,29%"
     },
     {
